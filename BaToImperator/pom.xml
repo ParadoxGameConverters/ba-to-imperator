@@ -9,7 +9,7 @@
     <version>0.1.0</version>
 
     <name>BronzeAgeToImperator</name>
-    <url>https://github.com/ParadoxGameConverters/ImperatorToCk2</url>
+    <url>https://github.com/ParadoxGameConverters/ba-to-imperator</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -115,7 +115,7 @@
                           Specifies the name of subdirectory relative to the destination
                           directory in which files of generated application image are placed.
                         -->
-                        <name>ImperatorToCK2</name>
+                        <name>BaToImperator</name>
 
                         <!--
                           Specifies the type of package to
@@ -160,7 +160,7 @@
                           Either module or main-jar option can be specified
                           but not both.
                         -->
-                        <module>com.paradoxgameconverters.irtockii/com.paradoxgameconverters.irtockii.Main</module>
+                        <module>com.paradoxgameconverters.batoir/com.paradoxgameconverters.batoir.Main</module>
 
                         <!--
                           Specifies the command line arguments to pass to the main class
@@ -182,7 +182,7 @@
                         <addlaunchers>
                           <addlauncher>
                             <name>ImperatorToCK2-cli</name>
-                            <module>com.paradoxgameconverters.irtockii</module>
+                            <module>com.paradoxgameconverters.batoir</module>
                             <javaoptions>-Xms256m -Xmx512m</javaoptions>
                           </addlauncher>
                         </addlaunchers>
