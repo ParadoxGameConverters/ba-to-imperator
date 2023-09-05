@@ -40,11 +40,18 @@ public class TempFiles
                     vmm = scnr.nextLine();    
                 }
             }
+            
+            int provFlag = 0;
 
             while (flag == 1) {
                 out.println (vmm);
                 if (vmm.equals(endword)) {
-                    flag = 2;    
+                    if (type.equals("tempProvinces.txt") && provFlag == 0) { //for tempProvinces.txt, wait for 2nd endword
+                        provFlag = 1;
+                        vmm = scnr.nextLine(); 
+                    } else {
+                        flag = 2;
+                    }   
 
                 }
                 else {

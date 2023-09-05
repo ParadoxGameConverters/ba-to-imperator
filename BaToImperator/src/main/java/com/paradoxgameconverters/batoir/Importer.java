@@ -18,7 +18,7 @@ import java.io.File;
 public class Importer
 {
 
-    public static ArrayList<String[]> importProv (String name) throws IOException
+    public static ArrayList<Provinces> importProv (String name) throws IOException
     {
 
         //String provID = Integer.toString(provIDnum);
@@ -27,6 +27,10 @@ public class Importer
         Scanner scnr= new Scanner(fileIn);
 
         ArrayList<String[]> impProvList= new ArrayList<String[]>();
+        
+        ArrayList<Pop> baPopList= new ArrayList<Pop>();
+        
+        ArrayList<Provinces> baProvList= new ArrayList<Provinces>();
 
         String tab = "	";
 
@@ -55,9 +59,41 @@ public class Importer
             while (endOrNot = true){
 
                 qaaa = scnr.nextLine();
+                
+                String popLine = qaaa.split("=")[0];
+                
+                if (popLine.contains(tab+tab) && !qaaa.contains("none")) {
+                    popLine = popLine.split(tab+tab)[1];
+                    try {
+                        int popID = Integer.parseInt(popLine);
+                        String popType = scnr.nextLine();
+                        String popCulture = scnr.nextLine();
+                        String popReligion = scnr.nextLine();
+                    
+                        //System.out.println(popType);
 
-                if (qaaa.equals(keyWord)){
+                        popType = Processing.cutQuotes(popType.split("=")[1]);
+                        popCulture = Processing.cutQuotes(popCulture.split("=")[1]);
+                        popReligion = Processing.cutQuotes(popReligion.split("=")[1]);
+                        //System.out.println(popID+" "+popType+" "+popCulture+" "+popReligion);
+                        Pop combinedPop = Pop.newPop(popID,popType,popCulture,popReligion);
+                        baPopList.add(combinedPop);
+                    } catch(java.lang.NumberFormatException exception) {
+                    
+                        //System.out.println(qaaa);
+                    }
+                    
+                    
+                }
+
+                if (qaaa.equals(keyWord)){//begin prov importation
                     endOrNot = false;
+                    ArrayList<Pop> provincePopList = new ArrayList<Pop>();
+                    double citizenRatio = 0;
+                    double freemenRatio = 0;
+                    double nobleRatio = 0;
+                    double slaveRatio = 0;
+                    double tribesmenRatio = 0;
 
                     while (flag == 0) {
                         qaaa = scnr.nextLine();
@@ -72,10 +108,24 @@ public class Importer
                             output[2] = qaaa.split("=")[1];
                             output[2] = output[2].substring(1,output[2].length()-1);
                         }
+                        
+                        if (qaaa.split("=")[0].equals( tab+tab+"population_ratio" ) ) {
+                            qaaa = scnr.nextLine();
+                            qaaa = qaaa.split(tab+tab+tab)[1];
+                            String[] popRatios = qaaa.split(" ");
+                            citizenRatio = Double.parseDouble(popRatios[0]);
+                            freemenRatio = Double.parseDouble(popRatios[1]);
+                            nobleRatio = Double.parseDouble(popRatios[2]);
+                            slaveRatio = Double.parseDouble(popRatios[3]);
+                            tribesmenRatio = Double.parseDouble(popRatios[4]);
+                        }
 
-                        //popTotal
+                        //popList
                         if (qaaa.split("=")[0].equals( tab+tab+"pop" ) ) {
-                            aqq = aqq + 1; //count pop
+                            //aqq = aqq + 1; //count pop
+                            int popID = Integer.parseInt(qaaa.split("pop=")[1]);
+                            Pop indvPop = Processing.getPopFromID(popID,baPopList);
+                            provincePopList.add(indvPop);
                             output[3] = Integer.toString(aqq);
                         }
 
@@ -99,7 +149,21 @@ public class Importer
                                 aq2 = aq2 + 1;
                             }
 
-                            impProvList.add(tmpOutput);
+                            //impProvList.add(tmpOutput);
+                            
+                            //baProvList
+                            int monID = Integer.parseInt(tmpOutput[5]);
+                            
+                            Provinces baProv = Provinces.newProv(tmpOutput[0],tmpOutput[1],tmpOutput[2],monID,nobleRatio,citizenRatio,freemenRatio,
+                            tribesmenRatio,slaveRatio);
+                            //System.out.println("NobleRatio:"+baProv.getNobleRatio()+"|SlaveRatio:"+baProv.getSlaveRatio()+"|Cult:"+baProv.getCulture());
+                            
+                            if (provincePopList.size() > 0) {
+                                baProv.addPopArray(provincePopList);
+                            }
+                            
+                            
+                            baProvList.add(baProv);
 
                             output[0] = "9999"; //default for no owner, uncolonized province
                             output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
@@ -107,6 +171,10 @@ public class Importer
                             output[3] = "0"; //default for no pops, uncolonized or uninhabitible province
                             output[4] = "{ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }"; //default for no buildinga
                             output[5] = "9999"; //default for no monument
+                            
+                            provincePopList = new ArrayList<Pop>();
+                            
+                            monID = 0;
 
                             aqq = 0; //reset pop count
 
@@ -122,7 +190,7 @@ public class Importer
 
         }   
 
-        return impProvList;
+        return baProvList;
 
     }
 

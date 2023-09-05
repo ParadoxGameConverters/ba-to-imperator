@@ -97,6 +97,17 @@ public class Provinces
         }
         provPops.add(pop);
     }
+    public void addPopArray(ArrayList<Pop> popListToAdd) {
+        if (provPops == null) {
+            provPops = new ArrayList<Pop> ();
+        }
+        provPops.add(popListToAdd.get(0));
+        int count = 1;
+        while (count < popListToAdd.size()) {
+            provPops.add(popListToAdd.get(count));
+            count = count + 1;
+        }
+    }
     public ArrayList<Pop> getPops() {
         return provPops;
     }

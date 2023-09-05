@@ -1,5 +1,4 @@
 package com.paradoxgameconverters.batoir;
-
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -2017,6 +2016,16 @@ public class Processing
         
         
         return null; //if no pop found, return null
+
+    }
+    
+    public static String cutQuotes(String word)
+    //Cut off quotes ("Bob" becomes Bob)
+    {
+        String newWord = word.substring(1,word.length()-1);
+        
+        
+        return newWord; //if no pop found, return null
 
     }
 
