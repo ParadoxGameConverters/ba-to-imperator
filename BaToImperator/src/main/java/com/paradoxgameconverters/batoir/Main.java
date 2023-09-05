@@ -97,10 +97,10 @@ public class Main
             String[] impProvtoCK;   // Owner Culture Religeon PopTotal Buildings
             impProvtoCK = new String[2];
 
-            String[] impProvInfo;   // Owner Culture Religeon PopTotal Buildings
-            impProvInfo = new String[5];
+            Provinces baProvInfo;   // Owner Culture Religeon PopTotal Buildings
+            //baProvInfo = new String[5];
 
-            ArrayList<String[]> impProvInfoList = new ArrayList<String[]>();
+            ArrayList<Provinces> baProvInfoList = new ArrayList<Provinces>();
 
             String[][] ck2ProvInfo;   // Array list of array lists...
             ck2ProvInfo = new String[5][irProvTot];
@@ -291,7 +291,8 @@ public class Main
 
             LOGGER.info("temp Countries created");
 
-            TempFiles.tempCreate(impDirSave, "provinces={", "}", saveProvinces);
+            //TempFiles.tempCreate(impDirSave, "provinces={", "}", saveProvinces);
+            TempFiles.tempCreate(impDirSave, "population={", "}", saveProvinces);
 
             LOGGER.info("temp Provinces created");   
 
@@ -324,9 +325,9 @@ public class Main
 
             //processing information
 
-            impProvInfoList = importer.importProv(saveProvinces);
+            baProvInfoList = importer.importProv(saveProvinces);
             totalPop = 0;
-            try {
+            try { //Get counts of culture, religion, and TAG ownership
             while (flag == 0) {
                 //System.out.println(aqq);
                 impProvtoCK = importer.importConvList("provinceConversion.txt",aqq); 
@@ -345,33 +346,44 @@ public class Main
                         relNum = 0;
                     }
 
-                    impProvInfo = impProvInfoList.get(aqq);
+                    baProvInfo = baProvInfoList.get(aqq);
                     //System.out.println(impProvInfo);
+                    int popTotal = 0;
+                    try {
+                        popTotal = baProvInfo.getPops().size();
+                    } catch (java.lang.NullPointerException exception) {
+                        
+                    }
+                    
+                    String popTotalStr = Integer.toString(popTotal);
+                    String provOwner = baProvInfo.getOwner();
+                    String provCulture = baProvInfo.getCulture();
+                    String provReligion = baProvInfo.getReligion();
 
                     temp = 0;
                     temp2 = 0;
                     //nation
                     if (ck2TagTotals[ckProvNum] == (null)) {
 
-                        ck2TagTotals[ckProvNum] = impProvInfo[0] + "," + impProvInfo[3];
-                        System.out.println(ck2TagTotals[ckProvNum]+" = "+impProvInfo[0] + "," + impProvInfo[3]);
+                        ck2TagTotals[ckProvNum] = provOwner + "," + popTotalStr;
+                        System.out.println(ck2TagTotals[ckProvNum]+" = "+provOwner + "," + popTotalStr);
                     }else {
-                        ck2TagTotals[ckProvNum] = ck2TagTotals[ckProvNum] + "~" + impProvInfo[0] + "," + impProvInfo[3];
-                        System.out.println(ck2TagTotals[ckProvNum]+" = "+impProvInfo[0] + "," + impProvInfo[3]);
+                        ck2TagTotals[ckProvNum] = ck2TagTotals[ckProvNum] + "~" + provOwner + "," + popTotalStr;
+                        System.out.println(ck2TagTotals[ckProvNum]+" = "+provOwner + "," + popTotalStr);
                     }
                     //culture
                     if (ck2CultureTotals[ckProvNum] == (null)) {
 
-                        ck2CultureTotals[ckProvNum] = impProvInfo[1] + "," + impProvInfo[3];
+                        ck2CultureTotals[ckProvNum] = provCulture + "," + popTotalStr;
                     }else {
-                        ck2CultureTotals[ckProvNum] = ck2CultureTotals[ckProvNum] + "~" + impProvInfo[1] + "," + impProvInfo[3];
+                        ck2CultureTotals[ckProvNum] = ck2CultureTotals[ckProvNum] + "~" + provCulture + "," + popTotalStr;
                     }
                     //religeon
                     if (ck2RelTotals[ckProvNum] == (null)) {
 
-                        ck2RelTotals[ckProvNum] = impProvInfo[2] + "," + impProvInfo[3];
+                        ck2RelTotals[ckProvNum] = provReligion + "," + popTotalStr;
                     }else {
-                        ck2RelTotals[ckProvNum] = ck2RelTotals[ckProvNum] + "~" + impProvInfo[2] + "," + impProvInfo[3];
+                        ck2RelTotals[ckProvNum] = ck2RelTotals[ckProvNum] + "~" + provReligion + "," + popTotalStr;
                     }
                     //region for governor conversion
 
@@ -382,10 +394,10 @@ public class Main
                         totalPop = 0;  
                     }
 
-                    if (impProvInfo[3] == null) {
-                        impProvInfo[3] = "0";  
+                    if (popTotalStr == null) {
+                        popTotalStr = "0";  
                     }
-                    totalPop = Integer.parseInt(impProvInfo[3]) + totalPop;
+                    totalPop = Integer.parseInt(popTotalStr) + totalPop;
                     ck2ProvInfo[3][ckProvNum] = Integer.toString(totalPop);
 
                     ck2PopTotals[ckProvNum] = Integer.toString(totalPop);
@@ -483,6 +495,8 @@ public class Main
             LOGGER.finest("35%");
             aq2 = 0;
             flag = 0;
+            
+            int globalPopTotal = 4000;//Number of pops to be redistributed
 
             while( aq2 < totalCKProv) { // Combines data based off of majority ownership, 30 Roman pops and 15 Punic'll make CKII prov Roman
                 try {
