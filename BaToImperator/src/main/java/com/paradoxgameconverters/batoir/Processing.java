@@ -2002,5 +2002,22 @@ public class Processing
         Output.replaceInFile(textToReplace,startYear,techDir2);
 
     }
+    
+    public static Pop getPopFromID(int id, ArrayList<Pop> popList)
+    //Select a pop from it's ID
+    {
+        int count = 0;
+        while (count < popList.size()) {
+            Pop selectedPop = popList.get(count);
+            if (selectedPop.getID() == id) {
+                return selectedPop;
+            }
+            count = count + 1;
+        }
+        
+        
+        return null; //if no pop found, return null
+
+    }
 
 }
