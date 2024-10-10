@@ -2354,59 +2354,78 @@ public class Processing
         return lines;
     }
     
-    public static ArrayList<String> generateCountryFile(ArrayList<Country> irCountryList, ArrayList<Provinces> irProvinceList, ArrayList<String> lines)
+    public static ArrayList<String> generateCountryFile(ArrayList<Country> irCountryList, ArrayList<Provinces> irProvinceList, ArrayList<String> OldLines)
     {
         int count = 0;
-        //ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<String>();
         String tab = "	";
         String quote = '"'+"";
-        lines.add("#Converted Countries");
-        lines.add("country = {");
-        lines.add(tab+"countries = {");
         
-        while (count < irCountryList.size()) {
-            Country irCountry = irCountryList.get(count);
-            boolean hasLand = irCountry.getHasLand();
-            if (hasLand) {
-                String id = Integer.toString(irCountry.getID()); //original tag used in BA
-                String updatedTag = irCountry.getUpdatedTag(); //converted tag
-                ArrayList<Integer> ownedProvs = getAllOwnedProvinces(irProvinceList,id);
-                String government = irCountry.getGovernment();
-                String culture = irCountry.getCulture();
-                String religion = irCountry.getReligion();
-                //String culture = "roman"; //testing
-                //String religion = "indo_iranian_religion"; //testing
-
-                lines.add(tab+tab+updatedTag+" = {");
-                lines.add(tab+tab+tab+"government = "+government);
-                lines.add(tab+tab+tab+"primary_culture = "+culture);
-                lines.add(tab+tab+tab+"religion = "+religion);
-                lines.add(tab+tab+tab+"own_control_core = {");
-                int provCount = 0;
-                if (ownedProvs != null) {
-                    String ownedProvSTR = "#q";
-                    while (provCount < ownedProvs.size()) {
-                        String prov = Integer.toString(ownedProvs.get(provCount));
-                        System.out.println(prov);
-                        if (ownedProvSTR.equals("#q")) {
-                            ownedProvSTR = prov;
-                        } else {
-                            ownedProvSTR = ownedProvSTR + " " + prov;
-                        }
-                    
-                        provCount = provCount + 1;
-                    }
-                    lines.add(tab+tab+tab+tab+ownedProvSTR);
-                }
-                lines.add(tab+tab+tab+"}");    
-                lines.add(tab+tab+"}");
+        int countOldFile = 0;
+        boolean countrySectionFlag = false;
+        
+        while (countOldFile < OldLines.size()) {
+            String selectedLine = OldLines.get(countOldFile);
+            if (selectedLine.equals("country = {")) {
+                countrySectionFlag = true;
             }
             
+            if (countrySectionFlag && selectedLine.equals(tab+"}")) {
+                lines.add("#Converted Countries");
+                //lines.add("country = {");
+                //lines.add(tab+"countries = {");
+        
+                while (count < irCountryList.size()) {
+                    Country irCountry = irCountryList.get(count);
+                    boolean hasLand = irCountry.getHasLand();
+                    if (hasLand) {
+                        String id = Integer.toString(irCountry.getID()); //original tag used in BA
+                        String updatedTag = irCountry.getUpdatedTag(); //converted tag
+                        ArrayList<Integer> ownedProvs = getAllOwnedProvinces(irProvinceList,id);
+                        String government = irCountry.getGovernment();
+                        String culture = irCountry.getCulture();
+                        String religion = irCountry.getReligion();
+                        //String culture = "roman"; //testing
+                        //String religion = "indo_iranian_religion"; //testing
+
+                        lines.add(tab+tab+updatedTag+" = {");
+                        lines.add(tab+tab+tab+"government = "+government);
+                        lines.add(tab+tab+tab+"primary_culture = "+culture);
+                        lines.add(tab+tab+tab+"religion = "+religion);
+                        lines.add(tab+tab+tab+"own_control_core = {");
+                        int provCount = 0;
+                        if (ownedProvs != null) {
+                            String ownedProvSTR = "#q";
+                            while (provCount < ownedProvs.size()) {
+                                String prov = Integer.toString(ownedProvs.get(provCount));
+                                System.out.println(prov);
+                                if (ownedProvSTR.equals("#q")) {
+                                    ownedProvSTR = prov;
+                                } else {
+                                    ownedProvSTR = ownedProvSTR + " " + prov;
+                                }
+                            
+                                provCount = provCount + 1;
+                            }
+                            lines.add(tab+tab+tab+tab+ownedProvSTR);
+                        }
+                        lines.add(tab+tab+tab+"}");    
+                        lines.add(tab+tab+"}");
+                    }
             
-            count = count + 1;
+            
+                    count = count + 1;
+                }
+                lines.add(tab+"}");
+                countrySectionFlag = false;
+            } else {
+                lines.add(selectedLine);
+            }
+            countOldFile = countOldFile + 1;
         }
-        lines.add(tab+"}");
-        lines.add("}");
+        
+        
+        //lines.add("}");
 
         return lines;
     }
