@@ -54,6 +54,9 @@ public class Importer
         output[5] = "9999"; //default for no monument
 
         impProvList.add(output); //default at ID 0
+        
+        Provinces tmpProv = Provinces.newProv(output[0],output[1],output[2],0,0,0,0,0,0,aqq);
+        baProvList.add(tmpProv);
 
         try {
             while (endOrNot = true){
@@ -155,7 +158,7 @@ public class Importer
                             int monID = Integer.parseInt(tmpOutput[5]);
                             
                             Provinces baProv = Provinces.newProv(tmpOutput[0],tmpOutput[1],tmpOutput[2],monID,nobleRatio,citizenRatio,freemenRatio,
-                            tribesmenRatio,slaveRatio);
+                            tribesmenRatio,slaveRatio,aqq);
                             //System.out.println("NobleRatio:"+baProv.getNobleRatio()+"|SlaveRatio:"+baProv.getSlaveRatio()+"|Cult:"+baProv.getCulture());
                             
                             if (provincePopList.size() > 0) {
@@ -194,7 +197,7 @@ public class Importer
 
     }
 
-    public static ArrayList<String[]> importCountry (String name) throws IOException
+    public static ArrayList<Country> importCountry (String name) throws IOException
     {
 
         String tab = "	";
@@ -210,7 +213,7 @@ public class Importer
 
         int flag = 0;
 
-        ArrayList<String[]> impTagInfo = new ArrayList<String[]>();
+        ArrayList<Country> impTagInfo = new ArrayList<Country>();
 
         //double q = 0.0;
 
@@ -245,12 +248,15 @@ public class Importer
         output[14] = "0"; //default for no researcher, will either be a random character in CKII or no character 
         output[15] = "0"; //default for no researcher, will either be a random character in CKII or no character
         output[16] = "0"; //default for no leader, will either be a random character in CKII or no character
+        output[17] = "tribal_chiefdom"; //default for no government
         output[20] = "none"; //default for no governors/governorships, land will be directly held by the ruler
         output[21] = "9999"; //default for no historical tag used in nation formation
-        output[22] = "k"; //default for no rank, ranks are not stored in the save file, will be calculated during output
+        output[22] = "k"; //depreciated
         output[23] = "noFlag"; //default for no flag
 
-        impTagInfo.add(output); //default entry at ID 0
+        Country defaultCountry = Country.newCountry(0,output[0],output[6],output[7],"Debug_Loc","Debug_Adj",output[21],output[5],output[23],output[3],
+        output[16],output[17]);
+        impTagInfo.add(defaultCountry); //default entry at ID 0
 
         try {
             while (endOrNot = true){
@@ -423,10 +429,15 @@ public class Importer
                                         tmpOutput[aq2] = output[aq2];
                                         aq2 = aq2 + 1;
                                     }
-
-                                    impTagInfo.add(tmpOutput);
-
+                                    
                                     aqq = aqq + 1;
+                                    
+                                    Country countryToAdd = Country.newCountry(aqq,output[0],output[6],output[7],output[19],"Debug_Adj",output[21],
+                                    output[5],output[23],output[3],output[16],output[17]);
+
+                                    impTagInfo.add(countryToAdd);
+
+                                    //aqq = aqq + 1;
 
                                     output[0] = "9999"; //default for no tag
                                     output[1] = "6969"; //default for no flag seed
@@ -445,6 +456,7 @@ public class Importer
                                     output[14] = "0"; //default for no researcher, will either be a random character in CKII or no character 
                                     output[15] = "0"; //default for no researcher, will either be a random character in CKII or no character
                                     output[16] = "0"; //default for no leader, will either be a random character in CKII or no character
+                                    output[17] = "tribal_chiefdom"; //default for no government
                                     output[20] = "none"; //default for no governors/governorships, land will be directly held by the ruler
                                     output[21] = "9999"; //default for no historical tag used in nation formation
                                     output[22] = "k"; //default for no rank, ranks are not stored in the save file, will be calculated during output
@@ -820,6 +832,10 @@ public class Importer
                         output[1] = output[1].substring(3,output[1].length()-1);
 
                     } else {
+                        //System.out.println(output[1]);
+                        if (output[1].length() < 1) {
+                            output[1] = "1234";
+                        }
                         if (output[1].charAt(output[1].length()-1) == 'a') {
                             output[1] = output[0] + "n";    
                         } else {
@@ -850,6 +866,9 @@ public class Importer
             }
             output[0] = output[1] + " Empire"; //may change out Empire for country rank
         }
+        
+        output[0] = output[0].split("#")[0];//Remove any comments in loc
+        output[1] = output[1].split("#")[0];
 
         return output;
 
@@ -1121,7 +1140,7 @@ public class Importer
         ArrayList<String> oldFile = new ArrayList<String>();
         char quote = '"';
 
-        String name = directory + VM + "localisation" + VM + "converted_title_localisation.csv";
+        String name = directory + "/localization/english/converted_countries_l_english.yml";
 
         FileInputStream fileIn= new FileInputStream(name);
         Scanner scnr= new Scanner(fileIn);
@@ -1380,15 +1399,15 @@ public class Importer
         strQuote = strQuote.split("_")[0];
         int flag = 0;
 
-        String qaaa;
+        String line;
         String[] output;
-        output = new String[5];
+        output = new String[2];
 
         output[0] = "unnamedFlag"; //default for no tag/name
-        output[1] = "pattern_solid.tgaq"; //default for no pattern
-        output[2] = "none"; //default for color1, format = hsvOrRgb,r g b
-        output[3] = "none"; //default for color2, format = hsvOrRgb,r g b
-        output[4] = "0"; //default for no emblems, format is texture~_~color1~_~color2~_~scale~_~position~_~rotation~~(nextEmblem)
+        output[1] = "flagCore"; //default for no pattern
+        //output[2] = "none"; //default for color1, format = hsvOrRgb,r g b
+        //output[3] = "none"; //default for color2, format = hsvOrRgb,r g b
+        //output[4] = "0"; //default for no emblems, format is texture~_~color1~_~color2~_~scale~_~position~_~rotation~~(nextEmblem)
         //~_~ divides aspects of an emblem, ~~ divides emblems
 
         impFlagList.add(output); //default at ID 0
@@ -1396,291 +1415,23 @@ public class Importer
         try {
 
             while (flag == 0) {
-                qaaa = scnr.nextLine();
-                qaaa = qaaa.replace(" = ","=");
-                qaaa = qaaa.replace("= ","=");
-                qaaa = qaaa.replace(" =","=");
-                qaaa = qaaa.replace("    ",tab); //Some flags have strange formatting
-                qaaa = qaaa.replace(" color2=",tab+"color2="); //Some flags have strange formatting
-                if (qaaa.contains( "=" ) && output[0].equals("unnamedFlag")) {
-                    output[0] = qaaa.split("=")[0];
+                line = scnr.nextLine();
+                //System.out.println("Line = |"+line+"|");
+                if (output[0].equals("unnamedFlag") && line.contains("=")) {
+                    line = line.replace(" ","");
+                    line = line.split("=")[0];
+                    output[0] = line;
+                    //System.out.println("flagName = |"+output[0]+"|");
+                } else if (output[1].equals("flagCore") && !output[0].equals("unnamedFlag")) {
+                    output[1] = line;
+                    //System.out.println("flagCore Starting with |"+output[1]+"|");
+                } else if (!output[0].equals("unnamedFlag")) {
+                    output[1] = output[1] + "," + line;
+                    //System.out.println("flagCore Continuing with |"+output[1]+"|");
                 }
-                if (qaaa.split("=")[0].equals(tab+"pattern") ) {
-                    output[1] = qaaa.split("=")[1];
-                    output[1] = output[1].replace(" ","");
-                    output[1] = output[1].substring(1,output[1].length()-1);
-                }
-                if (qaaa.split("=").length != 2) { //if using unusual formatting
-                    if (qaaa.contains("color1=")) {
-                        output[2] = qaaa.split(tab+"color1=")[1];
-                        output[2] = output[2].split(tab+"color2=")[0];
-                        output[2] = output[2].replace(tab,"");
-                        output[2] = output[2].replace("  "," ");
-                    }
-                    if (qaaa.contains("color2=")) {
-                        output[3] = qaaa.split("color2=")[1];
-                        output[3] = output[3].split(tab+"color3=")[0];
-                        output[3] = output[3].split("   "+"color3=")[0];
-                        output[3] = output[3].replace(tab,"");
-                        output[3] = output[3].replace("  "," ");
-                    }
-                } else { //if using regular formatting
-                    if (qaaa.split("=")[0].equals(tab+"color1") ) {
-                        output[2] = qaaa.split("=")[1];
-                        output[2] = output[2].replace("  "," ");
-                        if (qaaa.contains("rgb ")) {
-                            output[2] = output[2].split("rgb ")[1];
-                            output[2] = output[2].split(tab)[0]; //Invictus formatting
-                            output[2] = "rgb," + output[2].substring(2,output[2].length()-2);
-                        }
-                        else if (qaaa.contains("hsv ")) {
-                            output[2] = output[2].split("hsv ")[1];
-                            output[2] = output[2].split(tab)[0]; //Invictus formatting
-                            output[2] = "hsv," + output[2].substring(2,output[2].length()-2);
-                        } else {
-                            if (output[2].contains(strQuote)) {
-                                output[2] = output[2].substring(1,output[2].length()-1);
-                            }
-                        }
-                        output[2] = output[2].replace(tab,"");
-                    }
-                    if (qaaa.split("=")[0].equals(tab+"color2") ) {
-                        output[3] = qaaa.split("=")[1];
-                        output[3] = output[3].replace("  "," ");
-                        if (qaaa.contains("rgb ")) {
-                            output[3] = output[3].split("rgb ")[1];
-                            //output[3] = output[3].split(" }")[0];
-                            //output[3] = "rgb," + output[3].substring(2,output[3].length()-1);
-                            output[3] = output[3].split(tab)[0]; //Invictus formatting
-                            output[3] = "rgb," + output[3].substring(2,output[3].length()-2);
-                        }
-                        else if (qaaa.contains("hsv ")) {
-                            output[3] = output[3].split("hsv ")[1];
-                            //output[3] = output[3].split(" }")[0];
-                            //output[3] = "hsv," + output[3].substring(2,output[3].length()-1);
-                            output[3] = output[3].split(tab)[0]; //Invictus formatting
-                            output[3] = "hsv," + output[3].substring(2,output[3].length()-2);
-                        } else {
-                            if (output[3].contains(strQuote)) {
-                                output[3] = output[3].substring(1,output[3].length()-1);
-                            }
-                        }
-                        output[3] = output[3].replace(tab,"");
-                    }
-                }
+                
 
-                //emblem
-                if (qaaa.contains("colored_emblem") || qaaa.contains("textured_emblem")) {
-                    String embTexture = "noTexture";
-                    String embColor1 = "noColor1";
-                    String embColor2 = "noColor2";
-                    String embScale = "none";
-                    String embPos = "none";
-                    String embRot = "none";
-                    int instanceYes = 0; //If emblem has no intances, use colored emblem as instance, 0 for no 1 for yes
-                    String tmpOutput = "0";
-                    int endLoop = 0;
-                    while (!qaaa.equals(tab+"}") && endLoop == 0) {
-                        qaaa = scnr.nextLine();
-                        qaaa = qaaa.replace(" = ","=");
-                        qaaa = qaaa.replace("= ","=");
-                        qaaa = qaaa.replace(" =","=");
-                        qaaa = qaaa.replace("    ",tab); // to fix Invictus Judea Countries file formatting
-                        
-                        qaaa = qaaa.replace(" color2=",tab+"color2="); // to fix Invictus Barbaricum Countries file formatting
-                        qaaa = qaaa.replace(" texture=",tab+"texture="); // to fix Invictus Barbaricum Countries file formatting
-                        if (qaaa.split("=").length != 2) { //if using unusual formatting
-                            if (qaaa.contains("texture=")) {
-                                embTexture = qaaa.split("texture=")[1];
-                                embTexture = embTexture.split(" ")[0];
-                                embTexture = embTexture.split(tab)[0];
-                                embTexture = embTexture.substring(1,embTexture.length()-1);
-                            }
-                            if (qaaa.contains("color1=")) {
-                                embColor1 = qaaa.split("color1=")[1];
-                                embColor1 = embColor1.split(" ")[0];
-                                embColor1 = embColor1.split(tab)[0];
-                                embColor1 = embColor1.replace(tab,"");
-                                embColor1 = embColor1.replace("  "," ");
-                                if (embColor1.contains("rgb ")) {
-                                    embColor1 = embColor1.split("rgb ")[1];
-                                    embColor1 = embColor1.split(tab)[0]; //Invictus formatting
-                                    embColor1 = "rgb," + embColor1.substring(2,embColor1.length()-2);
-                                }
-                                else if (qaaa.contains("hsv ")) {
-                                    embColor1 = embColor1.split("hsv ")[1];
-                                    embColor1 = embColor1.split(tab)[0]; //Invictus formatting
-                                    embColor1 = "hsv," + output[2].substring(2,output[2].length()-2);
-                                }
-                            }
-                            if (qaaa.contains("color2=")) {
-                                embColor2 = qaaa.split("color2=")[1];
-                                embColor2 = embColor2.split(tab+"color3=")[0];
-                                embColor2 = embColor2.split(" ")[0];
-                                embColor2 = embColor2.split(tab)[0];
-                                embColor2 = embColor2.replace(tab,"");
-                                embColor2 = embColor2.replace("  "," ");
-                                if (embColor2.contains("rgb ")) {
-                                    embColor2 = embColor2.split("rgb ")[1];
-                                    embColor2 = embColor2.split(tab)[0]; //Invictus formatting
-                                    embColor2 = "rgb," + embColor2.substring(2,embColor2.length()-2);
-                                }
-                                else if (qaaa.contains("hsv ")) {
-                                    embColor2 = embColor2.split("hsv ")[1];
-                                    embColor2 = embColor2.split(tab)[0]; //Invictus formatting
-                                    embColor2 = "hsv," + embColor2.substring(2,embColor2.length()-2);
-                                }
-                            }
-                        } else { //regular formatting
-
-                            if (qaaa.contains( "texture=" ) || qaaa.contains( "texture =" ) ) {
-                                embTexture = qaaa.split("=")[1];
-                                embTexture = embTexture.split(tab)[0];
-                                embTexture = embTexture.substring(1,embTexture.length()-1);
-                            }
-                            else if (qaaa.contains( "color1=" ) || qaaa.contains("color1 =") ) {
-                                embColor1 = qaaa.split("=")[1];
-                                if (embColor1.contains(strQuote)) {
-                                    embColor1 = embColor1.substring(1,embColor1.length()-1);
-                                }
-                                embColor1 = embColor1.replace(tab,"");
-                                embColor1 = embColor1.replace("  "," ");
-                                if (embColor1.contains("rgb ")) {
-                                    embColor1 = embColor1.split("rgb ")[1];
-                                    embColor1 = embColor1.split(tab)[0]; //Invictus formatting
-                                    embColor1 = "rgb," + embColor1.substring(2,embColor1.length()-2);
-                                }
-                                else if (qaaa.contains("hsv ")) {
-                                    embColor1 = embColor1.split("hsv ")[1];
-                                    embColor1 = embColor1.split(tab)[0]; //Invictus formatting
-                                    embColor1 = "hsv," + embColor1.substring(2,output[2].length()-2);
-                                }
-                            }
-                            else if (qaaa.contains( "color2=" ) || qaaa.contains("color2 =") ) {
-                                embColor2 = qaaa.split("=")[1];
-                                if (embColor2.contains(strQuote)) {
-                                    embColor2 = embColor2.substring(1,embColor2.length()-1);
-                                }
-                                embColor2 = embColor2.replace(tab,"");
-                                embColor2 = embColor2.replace("  "," ");
-                                if (embColor2.contains("rgb ")) {
-                                    embColor2 = embColor2.split("rgb ")[1];
-                                    embColor2 = embColor2.split(tab)[0]; //Invictus formatting
-                                    embColor2 = "rgb," + embColor2.substring(2,embColor2.length()-2);
-                                }
-                                else if (qaaa.contains("hsv ")) {
-                                    embColor2 = embColor2.split("hsv ")[1];
-                                    embColor2 = embColor2.split(tab)[0]; //Invictus formatting
-                                    embColor2 = "hsv," + embColor2.substring(2,output[2].length()-2);
-                                }
-                            }
-                        }
-                        if (qaaa.contains("instance=") || qaaa.contains("instance =") || qaaa.equals("}")) { //get instances
-                            instanceYes = 1;
-                            if (qaaa.equals("}")) {
-                                endLoop = 1;
-                            }
-                            if (qaaa.split("=").length != 2) { //unusual formatting
-                                if (qaaa.contains("scale=")) {
-                                    embScale = qaaa.split("scale=")[1];
-                                    embScale = embScale.replace("  "," ");
-                                    embScale = embScale.split(" }")[0];
-                                    embScale = embScale.split(tab)[0];
-                                    embScale = embScale.substring(2,embScale.length());
-                                }
-                                if (qaaa.contains("position=")) {
-                                    embPos = qaaa.split("position=")[1];
-                                    embPos = embPos.split(" }")[0];
-                                    embPos = embPos.split(tab)[0];
-                                    embPos = embPos.substring(2,embPos.length());
-                                }
-                                if (qaaa.contains("rotation=")) {
-                                    embRot = qaaa.split("rotation=")[1];
-                                    embRot = embRot.split(" ")[0];
-                                    embRot = embRot.split(tab)[0];
-                                }
-                                if (tmpOutput.equals("0")) { //build emblem
-                                    tmpOutput = embTexture+"~_~"+embColor1+"~_~"+embColor2+"~_~"+embScale+"~_~"+embPos+"~_~"+embRot;
-                                } else {
-                                    tmpOutput = tmpOutput+"~~"+embTexture+"~_~"+embColor1+"~_~"+embColor2+"~_~"+embScale+"~_~"+embPos+"~_~"+embRot;
-                                }
-                                embScale = "none";
-                                embPos = "none";
-                                embRot = "none";
-                            }
-                            else { //normal formatting
-
-                                while (!qaaa.equals(tab+"}") ) {
-                                    qaaa = scnr.nextLine();
-                                    qaaa = qaaa.replace(" = ","=");
-                                    qaaa = qaaa.replace("= ","=");
-                                    qaaa = qaaa.replace(" =","=");
-                                    qaaa = qaaa.replace("    ",tab);
-                                    if (qaaa.contains("scale=")) {
-                                        embScale = qaaa.split("=")[1];
-                                        embScale = embScale.split(tab)[0];
-                                        embScale = embScale.substring(2,embScale.length()-2);
-                                    }
-                                    if (qaaa.contains("position=")) {
-                                        embPos = qaaa.split("=")[1];
-                                        embPos = embPos.split(tab)[0];
-                                        embPos = embPos.substring(2,embPos.length()-2);
-                                    }
-                                    if (qaaa.contains("rotation=")) {
-                                        if (!qaaa.split("=")[0].contains("#")) {
-                                            embRot = qaaa.split("=")[1];
-                                            embRot = embRot.split(tab)[0];
-                                            embRot = embRot.replace(" ","");
-                                        }
-                                    }
-                                    if (qaaa.contains("texture=")) {
-                                        embTexture = qaaa.split("=")[1];
-                                        embTexture = embTexture.split(tab)[0];
-                                        embTexture = embRot.replace(" ","");
-                                    }
-                                    if (qaaa.equals(tab+tab+"}")) {
-                                        if (tmpOutput.equals("0")) {//build emblem
-                                            tmpOutput = embTexture+"~_~"+embColor1+"~_~"+embColor2+"~_~"+embScale+"~_~"+embPos+"~_~"+embRot;
-                                        } else {
-                                            tmpOutput = tmpOutput+"~~"+embTexture+"~_~"+embColor1+"~_~"+embColor2+"~_~"+embScale+"~_~"+embPos+"~_~"+embRot;
-                                        }
-                                        embScale = "none";
-                                        embPos = "none";
-                                        embRot = "none";
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                    if (embColor1.equals("noColor1")) {
-                        embColor1 = "none";
-                    }
-                    if (embColor2.equals("noColor2")) {
-                        embColor2 = "none";
-                    }
-                    if (embTexture.equals("noTexture")) {
-                        embTexture = "none";
-                    }
-                    if (instanceYes == 0) { //if emblem has no instances specified, generate instance
-                        if (output[4].equals("0")) {//build emblem
-                            output[4] = embTexture+"~_~"+embColor1+"~_~"+embColor2+"~_~"+embScale+"~_~"+embPos+"~_~"+embRot;
-                        } else {
-                            output[4] = output[4]+"~~"+embTexture+"~_~"+embColor1+"~_~"+embColor2+"~_~"+embScale+"~_~"+embPos+"~_~"+embRot;
-                        }
-                    } else {
-                        tmpOutput = tmpOutput.replace("noColor1",embColor1);
-                        tmpOutput = tmpOutput.replace("noColor2",embColor2);
-                        tmpOutput = tmpOutput.replace("noTexture",embTexture);
-                        if (output[4].equals("0")) { //build emblem
-                            output[4] = tmpOutput;
-                        } else {
-                            output[4] = output[4]+"~~"+tmpOutput;
-                        }
-                    }
-                }
-
-                if (qaaa.equals( "}" ) ) { //ends here
+                if (line.equals( "}" ) ) { //ends here
 
                     String[] tmpOutput = new String[output.length];
                     int aq2 = 0;
@@ -1692,10 +1443,10 @@ public class Importer
                     impFlagList.add(tmpOutput);
 
                     output[0] = "unnamedFlag"; //default for no tag/name
-                    output[1] = "pattern_solid.tga"; //default for no pattern
-                    output[2] = "none"; //default for color1, format = hsvOrRgb~r,g,b
-                    output[3] = "none"; //default for color2, format = hsvOrRgb~r,g,b
-                    output[4] = "0"; //default for no emblems, format is texture~_~color1~_~color2~_~scale~_~position~_~rotation~~(nextEmblem)
+                    output[1] = "flagCore"; //default for no pattern
+                    //output[2] = "none"; //default for color1, format = hsvOrRgb~r,g,b
+                    //output[3] = "none"; //default for color2, format = hsvOrRgb~r,g,b
+                    //output[4] = "0"; //default for no emblems, format is texture~_~color1~_~color2~_~scale~_~position~_~rotation~~(nextEmblem)
 
                 }
 
@@ -1709,10 +1460,10 @@ public class Importer
 
     }
 
-    public static ArrayList<String[]> importAllFlags (String name, ArrayList<String> modDirs) throws IOException
+    public static ArrayList<String[]> importAllFlags (ArrayList<String> modDirs) throws IOException
     {
         ArrayList<String[]> allFlags = new ArrayList<String[]>();
-        ArrayList<String[]> vanillaFlags = importFlag(name+"/game/common/coat_of_arms/coat_of_arms/00_pre_scripted_countries.txt");
+        //ArrayList<String[]> vanillaFlags = importFlag(name+"/game/common/coat_of_arms/coat_of_arms/00_pre_scripted_countries.txt");
         int aqq = 0;
         while (modDirs.size() > aqq) {
             if (!modDirs.get(aqq).equals("none")) {
@@ -1733,7 +1484,7 @@ public class Importer
             aqq = aqq + 1;
         }
 
-        allFlags.addAll(vanillaFlags);
+        //allFlags.addAll(vanillaFlags);
 
         return allFlags;
     }
@@ -2173,6 +1924,162 @@ public class Importer
         }   
 
         return gfxList;
+
+    }
+    
+    public static ArrayList<String[]> importProvSetup (String modDir, ArrayList<String[]> allProvInfo) throws IOException
+    //imports all basegame prov files
+    {
+        int aqq = 0;
+        File locInfo = new File (modDir);
+        String[] locList = locInfo.list();
+
+        try {
+            if (locList != null) { //get all files in directory
+                while (aqq < locList.length) {
+                    //System.out.println("Importing "+modDir+"/"+locList[aqq]);
+                    importProvSetup(modDir+"/"+locList[aqq],allProvInfo);
+                    aqq = aqq + 1;
+                }
+
+            }
+            else { //get everything in file
+                ArrayList<String> provSetupFile = importBasicFile(modDir);
+                int count = 0;
+                while (count < provSetupFile.size()) {
+                    String setupLine = provSetupFile.get(count);
+                    setupLine = setupLine.split("#")[0]; //ignore comments
+                    if (setupLine.contains("=")) { //prov detected, loop through until end bracket
+                        setupLine = setupLine.replace(" ","");
+                        String provID = setupLine.split("=")[0];
+                        count = count + 1;
+                        String provTerrain = "Debug";
+                        String provTradeGood = "Debug";
+                        while (!setupLine.equals("}")) {
+                           setupLine = provSetupFile.get(count);
+                           if (setupLine.contains("terrain")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               provTerrain = setupLine.split("=")[1];
+                               provTerrain = Processing.cutQuotes(provTerrain);
+                           }
+                           else if (setupLine.contains("trade_goods")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               provTradeGood = setupLine.split("=")[1];
+                               provTradeGood = Processing.cutQuotes(provTradeGood);
+                           }
+                           count = count + 1;
+                        }
+                        
+                        String[] provInfo = new String[3];
+                        provInfo[0] = provID;
+                        provInfo[1] = provTerrain;
+                        provInfo[2] = provTradeGood;
+                        allProvInfo.add(provInfo);
+                        
+                    } else {
+                        count = count + 1;
+                    }
+                }
+                
+                //allProvInfo.addAll(provInfo);
+            }
+        } catch (Exception e){ //if a non-existant file is accessed, cancel so that converter doesn't crash
+            
+        }
+
+        return allProvInfo;
+    }
+    
+    public static String[] importMappingFromArray (ArrayList<String> source, String provIDnum) throws IOException
+    //Simpler mapper that doesn't check for arguments and is faster, returning as soon as it finds a valid match
+    {
+        String qaaa;
+        String[] output;   // Owner Culture Religeon PopTotal Buildings
+        output = new String[2];
+
+        output[0] = "peq"; //default for no owner, uncolonized province
+        output[1] = "99999"; //default for no culture, uncolonized province with 0 pops
+        
+        int count = 0;
+
+        try {
+            while (count < source.size()){
+
+                qaaa = source.get(count);
+
+                if (qaaa.split(",")[0].equals(provIDnum)){
+                    count = 1 + source.size();
+                    output[0] = qaaa.split(",")[0];
+                    output[1] = qaaa.split(",")[1];
+
+                }
+                count = count + 1;
+            }
+
+        }catch (java.util.NoSuchElementException exception){
+            count = 1 + source.size();
+
+        }   
+
+        return output;
+
+    }
+    
+    public static ArrayList<String[]> importMappingFromArrayArgs (ArrayList<String> source, String provIDnum) throws IOException
+    //Should only be used on mapping files that support arguments
+    {
+        String line;
+        ArrayList<String[]> allMatches = new ArrayList<String[]>();
+        String[] match;
+        match = new String[2];
+
+        match[0] = "peq"; //default for no ir input
+        match[1] = "99999"; //default for no ck2 output
+        
+        int count = 0;
+
+        try {
+            while (count < source.size()){
+
+                line = source.get(count);
+                
+                if (line.contains("~META~")) { //metamapping, shoehorn several BA cultures into one I:R culture to be split later
+                    line = line.replace("~META~","");
+                    String[] metaHead = line.split(",");
+                    String[] metaMappings = metaHead[1].split("=");
+                    int metaCount = 0;
+                    while (metaCount < metaMappings.length) {
+                        if (provIDnum.equals(metaMappings[metaCount])) {
+                            provIDnum = metaHead[0];
+                            metaCount = metaMappings.length;
+                        }
+                        metaCount = metaCount + 1;
+                    }
+                }
+
+                else if (line.split(",")[0].equals(provIDnum) && !line.contains("#")){
+                    //count = 1 + source.size();
+                    if (line.split(",").length >= 3) {
+                        //return qaaa.split(","); //if mapping file has arguments, return those as well
+                        allMatches.add(line.split(","));
+                    } else {
+                        match[0] = line.split(",")[0];
+                        match[1] = line.split(",")[1];
+                        allMatches.add(match);
+                    }
+
+                }
+                count = count + 1;
+            }
+
+        }catch (java.util.NoSuchElementException exception){
+            count = 1 + source.size();
+
+        }   
+
+        return allMatches;
 
     }
 

@@ -403,7 +403,7 @@ public class Processing
 
     }
 
-    public static String[] importRegionList (int totProv, String regionDir) throws IOException
+    public static String[] importRegionList (int totProv,String[] provAreas, String regionDir) throws IOException
     {
 
         int flag = 0;
@@ -414,33 +414,31 @@ public class Processing
         String qaaa = "debug";
         String[] provList;
         provList = new String[totProv];
-        
-        ArrayList<String> regions = Importer.importRegions(regionDir+"map_data/regions.txt");
-        
-        String[] provAreas = importAreas(regionDir+"map_data/areas.txt",totProv);
 
-        
+        ArrayList<String> regions = Importer.importRegions(regionDir+"map_data/regions.txt");
+
+        //String[] provAreas = importAreas(regionDir+"map_data/areas.txt",totProv);
 
         try {
             while (endOrNot = true){ //Goes through and get's each province for each region
                 int regionID = 1;
                 while (regionID < regions.size()) {
-                qaaa = regions.get(regionID);
-                String[] regionList = qaaa.split(",");
-                String provArea = provAreas[aqq];
-                int regionCount = 1;
-                while (regionCount < regionList.length){
-                    String selectedArea = regionList[regionCount];
-                    if (selectedArea.equals(provArea)) {
-                        //System.out.println(regionList[0]+"_QA " + "Area: "+selectedArea);
-                        provList[aqq] = regionList[0];
-                        //System.out.println(provList[aqq]);
-                        regionCount = 1 + regionList.length;
+                    qaaa = regions.get(regionID);
+                    String[] regionList = qaaa.split(",");
+                    String provArea = provAreas[aqq];
+                    int regionCount = 1;
+                    while (regionCount < regionList.length){
+                        String selectedArea = regionList[regionCount];
+                        if (selectedArea.equals(provArea)) {
+                            //System.out.println(regionList[0]+"_QA " + "Area: "+selectedArea);
+                            provList[aqq] = regionList[0];
+                            //System.out.println(provList[aqq]);
+                            regionCount = 1 + regionList.length;
+                        }
+                        regionCount = regionCount + 1;
                     }
-                    regionCount = regionCount + 1;
-                }
-                
-                regionID = regionID + 1;
+
+                    regionID = regionID + 1;
                 }
                 aqq = aqq + 1;
 
@@ -495,7 +493,7 @@ public class Processing
         return provList;
 
     }
-    
+
     public static String[] importAreas (String dir,int num) throws IOException
     {
 
@@ -509,11 +507,11 @@ public class Processing
         boolean endOrNot = true;
 
         int number = 0;
-        
+
         String tab = "	";
         String endBracket = " }".replace(" ","");
         String endBracket2 = endBracket + " ";
-        
+
         String[] provList = new String [num];
 
         try {
@@ -535,7 +533,7 @@ public class Processing
                         qaaa = qaaa.replace("  ","");
                         qaaa = qaaa.replace("	","");
                         qaaa = qaaa.replace("provinces = { ","");
-                        
+
                         if (!qaaa.equals(endBracket) && !qaaa.contains("color") && !qaaa.equals(endBracket2)){
                             String[] numList = qaaa.split(" ");
                             int numCount = 0;
@@ -544,16 +542,16 @@ public class Processing
                                     int provID = Integer.parseInt(numList[numCount]);
                                     provList[provID] = provinceName;
                                 }
-                                
+
                                 catch (Exception e) {
-                                    
+
                                 }
                                 numCount = numCount + 1;
                             }
                         }
 
                     }
-                    
+
                     qaaa = qaaa.substring(1);    
                 }
 
@@ -565,6 +563,44 @@ public class Processing
         }   
 
         return provList;
+
+    }
+    
+    public static ArrayList<Provinces> applyRegionsToProvinces (String[] regionList, ArrayList<Provinces> baProvInfoListOld) throws IOException
+    {
+
+        ArrayList<Provinces> baProvInfoListNew = new ArrayList<Provinces>();
+        int count = 0;
+        while (count < baProvInfoListOld.size()) {
+            Provinces baProv = baProvInfoListOld.get(count);
+            //int provID = baProv.getID();
+            String region = regionList[count];
+            baProv.setRegion(region);
+            baProvInfoListNew.add(baProv);
+            //baProv
+            
+            count = count + 1;
+        }
+        return baProvInfoListNew;
+
+    }
+    
+    public static ArrayList<Provinces> applyAreasToProvinces (String[] regionList, ArrayList<Provinces> baProvInfoListOld) throws IOException
+    {
+
+        ArrayList<Provinces> baProvInfoListNew = new ArrayList<Provinces>();
+        int count = 0;
+        while (count < baProvInfoListOld.size()) {
+            Provinces baProv = baProvInfoListOld.get(count);
+            //int provID = baProv.getID();
+            String area = regionList[count];
+            baProv.setArea(area);
+            baProvInfoListNew.add(baProv);
+            //baProv
+            
+            count = count + 1;
+        }
+        return baProvInfoListNew;
 
     }
 
@@ -659,7 +695,7 @@ public class Processing
         output = new String[25000];
 
         output[0] = "peq"; //default for no owner, uncolonized province
-        output[1] = "99999"; //default for no culture, uncolonized province with 0 pops
+        output[1] = "animism"; //default for no culture, uncolonized province with 0 pops
 
         char bracket1 = 123;
         char bracket2 = 125;
@@ -737,7 +773,7 @@ public class Processing
         //outputProvConvList(output,outputDest);
 
     }
-    
+
     public static String[] convertProvConvListR (String name, String outputDest) throws IOException //Converts regular format into mapper tool format
     {
 
@@ -770,11 +806,11 @@ public class Processing
         bracket2Str = bracket2Str.replace(" ","");
 
         int aq2 = 0;
-        
+
         ArrayList<String> oldMappingList = Importer.importBasicFile(name);
-        
+
         //ArrayList<String> newMappingList;
-        
+
         int ck2Prov = 0;
 
         try {
@@ -789,9 +825,9 @@ public class Processing
                             newMap = newMap + " imperator = "+qaaa.split(",")[0];
                         }
                     }
-                    
+
                     line = line + 1;
-                    
+
                 }
                 if (!newMap.equals("link = {")) {
                     newMap = newMap + " ck2 = " + ck2Prov + " }";
@@ -799,10 +835,7 @@ public class Processing
                 }
                 ck2Prov = ck2Prov + 1;
 
-                
-
             }
-
         }catch (java.util.NoSuchElementException exception){
             endOrNot = false;
 
@@ -933,103 +966,21 @@ public class Processing
         return name;
     }
 
-    public static String convertTitle(String name, String rank, String title, String defaultTitle) throws IOException
-    {// Converts dynamically generated title to vanilla counterpart
-        String tmpTitle = Importer.importCultList(name,rank+"_"+title)[1];//converts title
+    public static String convertTag(String tag, int numericalID) throws IOException
+    {// Converts dynamically generated BA tag to IR counterpart (if one exists)
+        String fileName = "titleConversion.txt";
+        String tmpTag = Importer.importCultList(fileName,tag)[1];//converts title
 
-        if (tmpTitle.equals("99999") || tmpTitle.equals("peq")) {//if there is no vanilla match
-            return defaultTitle;
+        if (tmpTag.equals("99999") || tmpTag.equals("peq")) {//if there is no vanilla match
+            tag = genNewTag(numericalID);
         } else {
-            tmpTitle = tmpTitle.substring(2,tmpTitle.length());
-            title = tmpTitle;
+            tag = tmpTag;
         }
 
-        return title;
+        return tag;
     }
 
-    public static ArrayList<String> calculateDuchyNameList (String ck2Dir, String[][] ck2ProvInfo) throws IOException
-    {
-
-        ArrayList<String> output = new ArrayList<String>(); //owner,culture,duchy
-
-        int aqq = 0;
-
-        int aq2 = 0;
-
-        ArrayList<String> duchies = Importer.importDuchyNameList(ck2Dir);
-
-        ArrayList<String> provNameList = new ArrayList<String>();
-
-        while (aqq < 3000) {
-
-            String provName = importNames("a",aqq,ck2Dir)[0];
-
-            provName = formatProvName(provName);
-
-            if (aqq == 103) { //Leon in Brittany and Spain have the same name in definition.csv
-                provName = "french_leon";  
-            }
-
-            provNameList.add(provName);
-
-            aqq = aqq + 1;
-
-        }
-
-        while (aq2 < duchies.size()) {
-
-            String[] countyList = duchies.get(aq2).split(",");
-
-            String duchy = countyList[0];
-
-            if (countyList.length == 1) {
-
-            } else {
-
-                int aq4 = 0;
-
-                String provCultTotal = "QQQ";
-                String provTagTotal = "QQQ";
-                String provRegTotal = "QQQ";
-
-                while (aq4 < provNameList.size()) {
-
-                    String ckProvName = provNameList.get(aq4);
-
-                    int aq3 = 1;
-
-                    while (aq3 < countyList.length) {
-                        if (countyList[aq3].split("c_")[1].equals(ckProvName)) {
-
-                            provCultTotal = provCultTotal + "," + Output.cultureOutput(ck2ProvInfo[1][aq4]);
-                            provCultTotal = provCultTotal.replace("QQQ,","");
-                            provTagTotal = provTagTotal + "," + ck2ProvInfo[0][aq4];
-                            provTagTotal = provTagTotal.replace("QQQ,","");
-                            provRegTotal = provRegTotal + "," + ck2ProvInfo[4][aq4];
-                            provRegTotal = provRegTotal.replace("QQQ,","");
-
-                        }
-                        aq3 = aq3 + 1;
-                    }
-
-                    aq4 = aq4 + 1;
-
-                }
-
-                String culture = calcDuchyMajority(provCultTotal);
-                String tag = calcDuchyMajority(provTagTotal);
-                String region = calcDuchyMajority(provRegTotal);
-
-                output.add(tag+","+culture+","+duchy+","+region);
-
-            }
-
-            aq2 = aq2 + 1;
-
-        }
-
-        return output;
-    }
+    
 
     public static String calcDuchyMajority (String duchy) throws IOException //calculates majority dejure ownership of duchy
     {
@@ -1548,106 +1499,7 @@ public class Processing
 
     }
 
-    public static void dynamicSplit (String title,String rank,String color,String[] loc,String irFlag,String impGameDir,String capital,
-    ArrayList<String[]> flagList,ArrayList<String[]> colorList,ArrayList<String> modFlagGFX,String government,String tagCulture,
-    String ck2Dir, String modDirectory) throws IOException
-    {
-        String country = rank+"_"+title;
-        String[] easternEmpire = eastWestNames("Eastern",loc);
-        String[] westernEmpire = eastWestNames("Western",loc);
-        String eastColor = eastColor(color);
-        String westColor = westColor(color);
-        String eastTitle = title+"_east";
-        if (title.equals("roman_empire")) { //for Eastern Roman Empire, convert to Byzantium
-            eastTitle = "byzantium";
-        }
-        String westTitle = title+"_west";
-        String ck2Capital = Importer.importConvList("provinceConversion.txt",Integer.parseInt(capital))[1];
-        tagCulture = Output.cultureOutput(tagCulture);
-        //events
-        String eventDir = modDirectory+"/events/dynamic_empire_split_"+country+".txt";
-        String eventTemplateDirectory = "defaultOutput/templates/events/dynamic_empire_split.txt";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,eventDir,eventTemplateDirectory);
-
-        String eventRestorationDir = modDirectory+"/events/dynamic_empire_reunification_"+country+".txt";
-        String eventRestorationTemplateDirectory = "defaultOutput/templates/events/dynamic_empire_reunification.txt";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,eventRestorationDir,
-            eventRestorationTemplateDirectory);
-
-        //decisions
-        String decisionDir = modDirectory+"/decisions/dynamic_empire_split_decision_"+country+".txt";
-        String decisionTemplateDirectory = "defaultOutput/templates/decisions/dynamic_empire_split_decision.txt";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,
-            decisionDir,decisionTemplateDirectory);
-
-        String decisionRestorationDir = modDirectory+"/decisions/dynamic_empire_restoration_decision_"+country+".txt";
-        String decisionRestorationTemplateDirectory = "defaultOutput/templates/decisions/dynamic_empire_restoration_decision.txt";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,decisionRestorationDir,
-            decisionRestorationTemplateDirectory);
-
-        String decisionGFXDir = modDirectory+"/interface/irck2_empire_split_decision_icons_"+country+".gfx";
-        String decisionGFXTemplateDirectory = "defaultOutput/templates/interface/irck2_empire_split_decision_icons_e_TAG.gfx";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,
-            decisionGFXDir,decisionGFXTemplateDirectory);
-
-        //bloodlines 
-        String bloodlineDir = modDirectory+"/common/bloodlines/50_empireSplitBloodline_"+country+".txt";
-        String bloodlineTemplateDirectory = "defaultOutput/templates/common/bloodlines/50_empireSplitBloodline.txt";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,bloodlineDir,
-            bloodlineTemplateDirectory);
-
-        String bloodlineGFXDir = modDirectory+"/interface/irck2_bloodlines_"+country+".gfx";
-        String bloodlineGFXTemplateDirectory = "defaultOutput/templates/interface/irck2_bloodlines_e_TAG.gfx";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,bloodlineGFXDir,
-            bloodlineGFXTemplateDirectory);
-
-        //loc
-        String locDir = modDirectory+"/localisation/dynamic_empire_split_loc_"+country+".csv";
-        String locTemplateDirectory = "defaultOutput/templates/localisation/dynamic_empire_split_loc.csv";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,
-            locDir,locTemplateDirectory);
-
-        String bloodDescDir = modDirectory+"/localisation/dynamic_empire_split_bloodline_loc_"+country+".csv";
-        String bloodDescTemplateDirectory = "defaultOutput/templates/localisation/dynamic_empire_split_bloodline_loc.csv";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,bloodDescDir,
-            bloodDescTemplateDirectory);
-
-        Output.localizationCreation(easternEmpire,eastTitle,rank,modDirectory);
-        Output.localizationCreation(westernEmpire,westTitle,rank,modDirectory);
-
-        //cbs
-        String cbDir = modDirectory+"/common/cb_types/50_irck2_cb_types_"+country+".txt";
-        String cbTemplateDirectory = "defaultOutput/templates/common/cb_types/50_irck2_cb_types_e_TAG.txt";
-        Output.dynamicSplitTemplateFill(country,loc,easternEmpire,westernEmpire,eastTitle,westTitle,ck2Capital,tagCulture,
-            cbDir,cbTemplateDirectory);
-
-        //gfx
-        String eastFlagDir = modDirectory+"/gfx/flags/"+rank+"_"+eastTitle+".tga";
-        String westFlagDir = modDirectory+"/gfx/flags/"+rank+"_"+westTitle+".tga";
-        File eastFlag = new File (eastFlagDir);
-        File westFlag = new File (westFlagDir);
-
-        String irFlagSource = "none";
-
-        if (!eastTitle.equals("byzantium")) { //For Byzantium, use vanilla flag
-            if (!eastFlag.exists()) { //For custom-made flags, don't generate new one
-                Output.eastWestFlagGen(irFlag,title,color,eastColor,eastTitle,flagList,colorList,rank,capital,modFlagGFX,"no",ck2Dir,impGameDir,modDirectory);
-            }
-            Output.titleCreationCommon(eastTitle,eastColor,government,capital,rank,modDirectory);
-        }
-        if (!westFlag.exists()) { //For custom-made flags, don't generate new one
-            Output.eastWestFlagGen(irFlag,title,color,color,westTitle,flagList,colorList,rank,capital,modFlagGFX,"no",ck2Dir,impGameDir,modDirectory);
-        }
-        Output.titleCreationCommon(westTitle,westColor,government,capital,rank,modDirectory);
-
-        Output.splitBloodlineEmbGen(ck2Dir,impGameDir,rank,flagList,title,irFlag,colorList,modFlagGFX,modDirectory);
-        Output.eastWestDecisionIcon(country,modDirectory);
-        Output.eastWestRestorationIcon(country,irFlag,flagList,ck2Dir,modDirectory);
-
-        Output.eastWestTitle(eastTitle,government,capital,rank,"100.1.1",modDirectory);
-        Output.eastWestTitle(westTitle,government,capital,rank,"100.1.1",modDirectory);
-
-    }
+    
 
     public static String eastColor (String overlordColor) //Generates color for easternEmpire
     {
@@ -1913,7 +1765,7 @@ public class Processing
 
         return ck2ProvInfo;
     }
-    
+
     public static boolean checkForInvictus(ArrayList<String> modDirs) throws IOException
     //Checks whether or not user is using Imperator Invictus
     {
@@ -1938,23 +1790,23 @@ public class Processing
                                 return true;
                             }
                             else {
-                               line = scnr.nextLine(); 
+                                line = scnr.nextLine(); 
                             }
                         }
                     }
                     catch (Exception e) {
                         endOrNot = false;
                     }
-                
+
                 }
-                
+
             }
             count = count + 1;
         }
 
         return false;
     }
-    
+
     public static boolean checkForInvictusID(String modDir) throws IOException
     //Check given directory to see whether or not it has an Invictus-based mod ID in it.
     //Will create false positive if a user has a file with invModID in name, but shouldn't be an issue due to how long invModID is.
@@ -1966,18 +1818,18 @@ public class Processing
         invModIDList.add("2651142140");
         invModIDList.add("2765744228");
         invModIDList.add("2856497654");
-        
+
         int count = 0;
         while (count < invModIDList.size()) {
             if (modDir.contains(invModIDList.get(count))) {
-               return true;
+                return true;
             }
             count = count + 1;
         }
 
         return false;
     }
-    
+
     public static void setTechYear(String startDate, String directory) throws IOException
     //Sets the start year of all technology to align with startDate
     {
@@ -1988,20 +1840,20 @@ public class Processing
         String startYear = startDate.split(",")[0];
         File techFileInfo = new File (techDir);
         String[] techFileList = techFileInfo.list();
-                if (techFileList != null) {
-                    int aq2 = 0;
-                    while (aq2 < techFileList.length) {
-                        String techFile = techFileList[aq2];
-                        Output.replaceInFile(textToReplace,startYear,techDir+techFile);
-                        System.out.println("Replaced "+textToReplace+" with "+startYear+" in "+techDir+techFile);
-                        aq2 = aq2 + 1;
-                    }
+        if (techFileList != null) {
+            int aq2 = 0;
+            while (aq2 < techFileList.length) {
+                String techFile = techFileList[aq2];
+                Output.replaceInFile(textToReplace,startYear,techDir+techFile);
+                System.out.println("Replaced "+textToReplace+" with "+startYear+" in "+techDir+techFile);
+                aq2 = aq2 + 1;
+            }
 
-                }
+        }
         Output.replaceInFile(textToReplace,startYear,techDir2);
 
     }
-    
+
     public static Pop getPopFromID(int id, ArrayList<Pop> popList)
     //Select a pop from it's ID
     {
@@ -2013,20 +1865,599 @@ public class Processing
             }
             count = count + 1;
         }
-        
-        
-        return null; //if no pop found, return null
 
+        return null; //if no pop found, return null
     }
-    
+
     public static String cutQuotes(String word)
     //Cut off quotes ("Bob" becomes Bob)
     {
         String newWord = word.substring(1,word.length()-1);
-        
-        
+
         return newWord; //if no pop found, return null
+    }
+
+    public static ArrayList<String> condenseArrayStr(String[] longArray)
+    //Condenses a tag,number array into an ArrayList such that there are no repeat tags
+    {
+        //longArray;
+        int count = 0;
+        ArrayList<Integer> checkedCount = new ArrayList<Integer>();
+        ArrayList<String> shortArray = new ArrayList<String>();
+        //System.out.println("__________ Start __________");
+        while (count < longArray.length) {
+            String element = longArray[count];
+            String identifier = element.split(",")[0];
+            //System.out.println(element);
+            String numStr = element.split(",")[1];
+            if (numStr.equals("null")) {
+                numStr = "0";
+            }
+            int elementNum = Integer.parseInt(numStr);
+            //System.out.println("Checking ID "+identifier+" with "+elementNum+" elements");
+
+            int count2 = count+1;
+            while (count2 < longArray.length) {
+                String element2 = longArray[count2];
+                String identifier2 = element2.split(",")[0];
+                //System.out.println("Checking ID "+identifier2+" with "+element2.split(",")[1]+" elements");
+                if (identifier.equals(identifier2)) {
+                    String numStr2 = element2.split(",")[1];
+                    if (numStr2.equals("null")) {
+                        numStr2 = "0";
+                    }
+                    int elementNum2 = Integer.parseInt(numStr2);
+                    elementNum = elementNum + elementNum2;
+                    checkedCount.add(count2);
+                    //System.out.println(identifier+" and "+identifier2+" match, adding "+element+" and "+element2);
+                }
+                count2 = count2 + 1;
+            }
+            checkedCount.add(count);
+            String shortArrayItem = identifier+","+Integer.toString(elementNum);
+            shortArray.add(shortArrayItem);
+            count = count + 1;
+            if (checkedCount.contains(count)) {
+                while (checkedCount.contains(count)) {
+                    count = count + 1;
+                }
+            }
+            //System.out.println("__________ NewLine __________");
+        }
+
+        return shortArray;
 
     }
 
+    public static String[] countPops(ArrayList<Pop> pops, String type) {
+        int count = 0;
+        String[] longArray;
+        String longText = "";
+        while (count < pops.size()) {
+            String popType = "debug";
+            if (type.equals("culture")) {
+                popType = pops.get(count).getCulture();
+            }
+            else if (type.equals("religion")) {
+                popType = pops.get(count).getReligion();
+            }
+            else if (type.equals("culture")) {
+                popType = pops.get(count).getCulture();
+            }
+            else if (type.equals("cultureAndReligion")) {
+                popType = pops.get(count).getCulture()+"---"+pops.get(count).getReligion();
+            }
+            else if (type.equals("tag")) {
+                popType = pops.get(count).getTag();
+            }
+            else if (type.equals("type")) {
+                popType = pops.get(count).getType();
+            }
+            else if (type.equals("cultureAndReligionAndType")) {
+                popType = pops.get(count).getCulture()+"---"+pops.get(count).getReligion()+"---"+pops.get(count).getType();
+            }
+
+            if (count == 0) {
+                longText = popType+","+1;
+            } else {
+                longText = longText +"~"+popType+","+1;
+            }
+            count = count + 1;
+        }
+        longArray = longText.split("~");
+
+        return longArray;
+    }
+
+    public static ArrayList<String> convertPopCountToRatios(ArrayList<String> condensedArray) {
+        int count = 0;
+        int popTotal = 0;
+        String longText = "";
+        ArrayList<String> newArray = new ArrayList<String>();
+        while (count < condensedArray.size()) { //getPopTotal
+            String numberStr = condensedArray.get(count).split(",")[1];
+            popTotal = popTotal + Integer.parseInt(numberStr);
+            count = count + 1;
+        }
+        count = 0;
+        while (count < condensedArray.size()) { //getRatio
+            String[] info = condensedArray.get(count).split(",");
+            String numberStr = info[1];
+            double numberDouble = Double.parseDouble(numberStr);
+            double ratio = numberDouble / popTotal;
+            newArray.add(info[0]+","+ratio);
+            count = count + 1;
+        }
+
+        return newArray;
+    }
+
+    public static ArrayList<String> reallocatePops(ArrayList<String> ratioArray,int totalPops) {
+        int count = 0;
+        int popTotal = 0;
+        ArrayList<String> newArray = new ArrayList<String>();
+        while (count < ratioArray.size()) { 
+            String[] info = ratioArray.get(count).split(",");
+            double ratio = Double.parseDouble(info[1]);
+            double newNumber = ratio * totalPops;
+            int newNumberInt = round(newNumber);
+            newArray.add(info[0]+","+newNumberInt);
+            popTotal = popTotal + newNumberInt;
+            count = count + 1;
+        }
+
+        System.out.println("PopTotal is "+popTotal);
+        System.out.println("totalPops is "+totalPops);
+
+        if (popTotal > totalPops) { //If extra pops were added due to rounding, trim array
+            String majorityType = getMajority(newArray);
+            int count2 = 0;
+            //while (count2 < count-1) { //first purge pops below size 1
+            while (count2 < newArray.size()) { //first purge pops below size 1
+                String[] info = newArray.get(count2).split(",");
+                int popNumber = Integer.parseInt(info[1]);
+                if (popNumber <= 0) {
+                    newArray.remove(newArray.get(count2));
+                    count2 = count2 - 1;
+                }
+                count2 = count2+1;
+            }
+            if (popTotal > totalPops) { //if still over limit, trim non-majority pops
+                count2 = 0;
+                while (count2 < popTotal-1) {
+                    //while (count2 < newArray.size()) {
+                    System.out.println(count2+" "+(popTotal-1));
+                    System.out.println(newArray.get(count2));
+                    String[] info = newArray.get(count2).split(",");
+                    if (!info[0].equals(majorityType)) {
+                        System.out.println("Removing 1 "+info[0]);
+                        int popNumber = Integer.parseInt(info[1]) - 1;
+                        if (popNumber < 1) {
+                            newArray.remove(newArray.get(count2));
+                        }
+                        //newArray.remove(newArray.get(count2));
+                        popTotal = popTotal - 1;
+                        System.out.println("PopTotal is "+popTotal);
+                        System.out.println("totalPops is "+totalPops);
+                        if (popTotal == totalPops) {
+                            System.out.println("Returning");
+                            return newArray;
+                        }
+                    }
+                    count2 = count2+1;
+                }
+            }
+            if (popTotal > totalPops) { //if still over limit, trim into majority
+                count2 = 0;
+                while (count2 < popTotal-1) {
+                    String[] info = newArray.get(count2).split(",");
+                    newArray.remove(newArray.get(count2));
+                    popTotal = popTotal - 1;
+                    if (popTotal == totalPops) {
+                        return newArray;
+                    }
+                    count2 = count2+1;
+                }
+            }
+        }
+
+        return newArray;
+    }
+
+    public static int round(double startNumber) {
+        String[] startNumStr = Double.toString(startNumber).replace(".",",").split(",");
+        startNumStr[1] = startNumStr[1].substring(0,1);
+        int decimalInt = Integer.parseInt(startNumStr[1]);
+        int mainInt = Integer.parseInt(startNumStr[0]);
+        if (decimalInt >= 5) {
+            mainInt = mainInt + 1;
+        }
+
+        return mainInt;
+    }
+
+    public static int roundUp(double startNumber) {
+        String[] startNumStr = Double.toString(startNumber).replace(".",",").split(",");
+        startNumStr[1] = startNumStr[1].substring(0,1);
+        int decimalInt = Integer.parseInt(startNumStr[1]);
+        int mainInt = Integer.parseInt(startNumStr[0]);
+        if (decimalInt > 0) {
+            mainInt = mainInt + 1;
+        }
+
+        return mainInt;
+    }
+
+    public static int getProvByID(ArrayList<Provinces> provList,int id) {
+        int count = 0;
+        ArrayList<String> newArray = new ArrayList<String>();
+        while (count < provList.size()) { 
+            Provinces province = provList.get(count);
+            int provID = province.getID();
+            if (provID == id) {
+                return count;
+            }
+            count = count + 1;
+        }
+
+        return 0;
+    }
+    
+    public static int getArrayByID(ArrayList<String[]> provList,int id) {
+        int count = 0;
+        ArrayList<String> newArray = new ArrayList<String>();
+        while (count < provList.size()) { 
+            String[] province = provList.get(count);
+            int provID = Integer.parseInt(province[0]);
+            if (provID == id) {
+                return count;
+            }
+            count = count + 1;
+        }
+
+        return 0;
+    }
+
+    public static int calcAllocatedPops(int baPopTotal, float totalProvPops)
+    {
+
+        //int baPopTotal = 34822;
+        //float totalProvPops = 200;
+        int globalPopTotal = 6000;
+        //System.out.println("------3------");
+        float provinceRatio = (totalProvPops) /baPopTotal;
+        //System.out.println(provinceRatio);
+        int provinceTotal = Processing.round(provinceRatio * globalPopTotal);
+
+        return provinceTotal;
+    }
+
+    public static String getMajority(ArrayList<String> popList)
+    {
+
+        int count = 0;
+        int highestNumber =  0;
+        String highestPop = popList.get(count).split(",")[0];
+        while (count < popList.size()) {
+            String[] popInfo = popList.get(count).split(",");
+            int popNumber = Integer.parseInt(popInfo[1]);
+            if (popNumber > highestNumber) {
+                highestNumber = popNumber;
+                highestPop = popInfo[0];
+            }
+            count = count + 1;
+        }
+
+        return highestPop;
+    }
+
+    public static float[] getTypeRatios(ArrayList<Pop> popList)
+    {
+
+        int count = 0;
+        float nobleCount = 0;
+        float citizenCount = 0;
+        float freemenCount = 0;
+        float slaveCount = 0;
+        while (count < popList.size()) {
+            //String[] popInfo = popList.get(count).split(",");
+            String popInfo = popList.get(count).getType();
+            if (popInfo.equals("nobles")) {
+                nobleCount = nobleCount + 1;
+            }
+            else if (popInfo.equals("citizen")) {
+                citizenCount = citizenCount + 1;
+            }
+            else if (popInfo.equals("freemen")) {
+                freemenCount = freemenCount + 1;
+            }
+            else if (popInfo.equals("slaves")) {
+                slaveCount = slaveCount + 1;
+            }
+            count = count + 1;
+        }
+
+        float tribesmenCount = ((((count - nobleCount) - citizenCount) - freemenCount) - slaveCount);
+
+        float nobleRatio = nobleCount/count;
+        float citizenRatio = citizenCount/count;
+        float freemenRatio = freemenCount/count;
+        float slaveRatio = slaveCount/count;
+        float tribesmenRatio = tribesmenCount/count;
+
+        //String[] typeRatios = new String[5];
+        float[] typeRatios = new float[5];
+        //typeRatios[0] = Float.toString(nobleRatio);
+        //typeRatios[1] = Float.toString(citizenRatio);
+        //typeRatios[2] = Float.toString(freemenRatio);
+        //typeRatios[3] = Float.toString(slaveRatio);
+        //typeRatios[4] = Float.toString(tribesmenRatio);
+        typeRatios[0] = nobleRatio;
+        typeRatios[1] = citizenRatio;
+        typeRatios[2] = freemenRatio;
+        typeRatios[3] = slaveRatio;
+        typeRatios[4] = tribesmenRatio;
+
+        return typeRatios;
+    }
+
+    public static String genNewTag(int countryID)
+    {
+        int count = 0;
+        String part3 = "A";
+        String part2 = "A";
+        String part1 = "1";
+        int count2 = 0;
+        int count3 = 0;
+        int count4 = 9;
+
+        while (count < countryID) {
+            if (count3 > 25) {
+                count4 = count4 - 1;
+                count3 = 0;
+            } else if (count2 > 25) {
+                count3 = count3 + 1;
+                count2 = 0;
+            } else {
+                count2 = count2 + 1;
+            }
+            count = count + 1;
+
+            //if (count 
+        }
+        
+        part1 = getLetterFromNumber(count2);
+        part2 = getLetterFromNumber(count3);
+        part3 = Integer.toString(count4);
+        //String newTagID = part3+part2+part1;
+        String newTagID = part2+part3+part1;
+
+        return newTagID;
+    }
+
+    public static String getLetterFromNumber(int count2)
+    {
+        String part3 = "A";
+        if (count2 == 1) {
+            part3 = "B";
+        } else if (count2 == 2) {
+            part3 = "C";
+        } else if (count2 == 3) {
+            part3 = "D";
+        } else if (count2 == 4) {
+            part3 = "E";
+        } else if (count2 == 5) {
+            part3 = "F";
+        } else if (count2 == 6) {
+            part3 = "G";
+        } else if (count2 == 7) {
+            part3 = "H";
+        } else if (count2 == 8) {
+            part3 = "I";
+        } else if (count2 == 9) {
+            part3 = "J";
+        } else if (count2 == 10) {
+            part3 = "K";
+        } else if (count2 == 11) {
+            part3 = "L";
+        } else if (count2 == 12) {
+            part3 = "M";
+        } else if (count2 == 13) {
+            part3 = "N";
+        } else if (count2 == 14) {
+            part3 = "O";
+        } else if (count2 == 15) {
+            part3 = "P";
+        } else if (count2 == 16) {
+            part3 = "Q";
+        } else if (count2 == 17) {
+            part3 = "R";
+        } else if (count2 == 18) {
+            part3 = "S";
+        } else if (count2 == 19) {
+            part3 = "T";
+        } else if (count2 == 20) {
+            part3 = "U";
+        } else if (count2 == 21) {
+            part3 = "V";
+        } else if (count2 == 22) {
+            part3 = "W";
+        } else if (count2 == 23) {
+            part3 = "X";
+        } else if (count2 == 24) {
+            part3 = "Y";
+        } else if (count2 == 25) {
+            part3 = "Z";
+        }
+
+        return part3;
+    }
+    
+    public static ArrayList<String> generateProvinceFile(ArrayList<Provinces> irProvinceList)
+    {
+        int count = 1;
+        ArrayList<String> lines = new ArrayList<String>();
+        lines.add("#Converted Provinces");
+        String tab = "	";
+        String quote = '"'+"";
+        while (count < irProvinceList.size()) {
+            Provinces irProv = irProvinceList.get(count);
+            
+            int provID = irProv.getID();
+            if (provID == 0) {
+                System.out.println("Province ID 0 at count "+count+", skipping");
+                
+            } else {
+                String provCulture = irProv.getCulture();
+                String provReligion = irProv.getReligion();
+                //String provCulture = "roman";
+                //String provReligion = "indo_iranian_religion";
+            
+                lines.add(provID+" = {");
+                lines.add(tab+"barbarian_power=0");
+                lines.add(tab+"civilization_value=0");
+                lines.add(tab+"culture="+quote+provCulture+quote);
+                lines.add(tab+"province_rank="+quote+"settlement"+quote);
+                lines.add(tab+"religion="+quote+provReligion+quote);
+                lines.add(tab+"terrain="+quote+irProv.getTerrain()+quote);
+                lines.add(tab+"trade_goods="+quote+irProv.getTradeGood()+quote);
+                //pops
+                ArrayList<Pop> pops = irProv.getPops();
+                int popCount = 0;
+                if (pops != null) {
+                
+                    while (popCount < pops.size()) {
+                        Pop selectedPop = pops.get(popCount);
+                        String popCulture = selectedPop.getCulture();
+                        String popReligion = selectedPop.getReligion();
+                        //String popCulture = "roman"; //selectedPop.getCulture()
+                        //String popReligion = "indo_iranian_religion"; //selectedPop.getReligion()
+                        String popType = selectedPop.getType();
+                        if (popType.equals("debug")) {
+                            System.out.println("Pop in province "+provID+" has no type, setting type to slaves");
+                            popType = "slaves";
+                        }
+                        lines.add(tab+popType+"={");
+                        lines.add(tab+tab+"amount=1");
+                        lines.add(tab+tab+"culture="+popCulture);
+                        lines.add(tab+tab+"religion="+popReligion);
+                        lines.add(tab+"}");
+                        popCount = popCount + 1;
+                    }
+                }
+            
+                lines.add("}");
+            }
+            count = count + 1;
+        }
+
+        return lines;
+    }
+    
+    public static ArrayList<String> generateCountryFile(ArrayList<Country> irCountryList, ArrayList<Provinces> irProvinceList, ArrayList<String> lines)
+    {
+        int count = 0;
+        //ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+        lines.add("#Converted Countries");
+        lines.add("country = {");
+        lines.add(tab+"countries = {");
+        
+        while (count < irCountryList.size()) {
+            Country irCountry = irCountryList.get(count);
+            boolean hasLand = irCountry.getHasLand();
+            if (hasLand) {
+                String id = Integer.toString(irCountry.getID()); //original tag used in BA
+                String updatedTag = irCountry.getUpdatedTag(); //converted tag
+                ArrayList<Integer> ownedProvs = getAllOwnedProvinces(irProvinceList,id);
+                String government = irCountry.getGovernment();
+                String culture = irCountry.getCulture();
+                String religion = irCountry.getReligion();
+                //String culture = "roman"; //testing
+                //String religion = "indo_iranian_religion"; //testing
+
+                lines.add(tab+tab+updatedTag+" = {");
+                lines.add(tab+tab+tab+"government = "+government);
+                lines.add(tab+tab+tab+"primary_culture = "+culture);
+                lines.add(tab+tab+tab+"religion = "+religion);
+                lines.add(tab+tab+tab+"own_control_core = {");
+                int provCount = 0;
+                if (ownedProvs != null) {
+                    String ownedProvSTR = "#q";
+                    while (provCount < ownedProvs.size()) {
+                        String prov = Integer.toString(ownedProvs.get(provCount));
+                        System.out.println(prov);
+                        if (ownedProvSTR.equals("#q")) {
+                            ownedProvSTR = prov;
+                        } else {
+                            ownedProvSTR = ownedProvSTR + " " + prov;
+                        }
+                    
+                        provCount = provCount + 1;
+                    }
+                    lines.add(tab+tab+tab+tab+ownedProvSTR);
+                }
+                lines.add(tab+tab+tab+"}");    
+                lines.add(tab+tab+"}");
+            }
+            
+            
+            count = count + 1;
+        }
+        lines.add(tab+"}");
+        lines.add("}");
+
+        return lines;
+    }
+    
+    public static ArrayList<Integer> getAllOwnedProvinces(ArrayList<Provinces> provList,String tag) {
+        int count = 0;
+        ArrayList<Integer> newArray = new ArrayList<Integer>();
+        while (count < provList.size()) { 
+            Provinces province = provList.get(count);
+            String provTag = province.getOwner();
+            int provID = province.getID();
+            if (tag.equals(provTag)) {
+                newArray.add(provID);
+            }
+            count = count + 1;
+        }
+
+        return newArray;
+    }
+    
+    public static ArrayList<Provinces> convertAllPops(ArrayList<Provinces> provList,ArrayList<String> cultureMappings,
+    ArrayList<String> religionMappings) throws IOException {
+        int count = 0;
+        while (count < provList.size()) { 
+            Provinces province = provList.get(count);
+            String provRegion = province.getRegion();
+            String provArea = province.getArea();
+            ArrayList<Pop> provPops = province.getPops();
+            ArrayList<Pop> newProvPops = new ArrayList<Pop>();
+            int popCount = 0;
+            try {
+                while (popCount < provPops.size()) {
+                    Pop selectedPop = provPops.get(popCount);
+                    String popCulture = selectedPop.getCulture();
+                    String popReligion = selectedPop.getReligion();
+                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,"tagCulture","date",popCulture,provRegion,provArea);
+                    popReligion = Output.cultureOutput(religionMappings,popReligion);
+                    selectedPop.setCulture(popCulture);
+                    selectedPop.setReligion(popReligion);
+                    newProvPops.add(selectedPop);
+                
+                    popCount = popCount + 1;
+                }
+                province.replacePops(newProvPops);
+            } catch (java.lang.NullPointerException exception) {
+                
+            }
+            
+            count = count + 1;
+        }
+
+        return provList;
+    }
 }

@@ -90,17 +90,18 @@ public class Main
 
             directories.modFolders (Dir,modName); //Creating the folders to write the mod files
             //along with nessicery sub-folders
-            directories.descriptors(Dir,modName); //Basic .mod files required for the launcher
+            directories.descriptors(Dir,irModDir,modName); //Basic .mod files required for the launcher
 
             String modDirectory = Dir+VN+modName;
 
-            String[] impProvtoCK;   // Owner Culture Religeon PopTotal Buildings
-            impProvtoCK = new String[2];
+            String[] baProvtoIR;   // Owner Culture Religeon PopTotal Buildings
+            baProvtoIR = new String[2];
 
             Provinces baProvInfo;   // Owner Culture Religeon PopTotal Buildings
             //baProvInfo = new String[5];
 
-            ArrayList<Provinces> baProvInfoList = new ArrayList<Provinces>();
+            ArrayList<Provinces> baProvInfoList = new ArrayList<Provinces>(); //source (from BA) provinces
+            ArrayList<Provinces> irProvInfoList = new ArrayList<Provinces>(); //output (to IR) provinces
 
             String[][] ck2ProvInfo;   // Array list of array lists...
             ck2ProvInfo = new String[5][irProvTot];
@@ -127,7 +128,8 @@ public class Main
             String[] ck2MonumentTotals;   // Province monuments
             ck2MonumentTotals = new String[totalCKProv];
 
-            output.localizationBlankFile(modDirectory); //creates the country localization file
+            //output.localizationBlankFile(modDirectory); //creates the country localization file
+            output.coaBlankFile(modDirectory); //creates the country localization file
 
             String[] ck2HasLand;   // If country has land or not in CK II
             ck2HasLand = new String[5000];
@@ -270,7 +272,7 @@ public class Main
 
             LOGGER.info("Importing flag information...");
             
-            ArrayList<String[]> flagList = Importer.importAllFlags(impGameDir,modDirs);
+            ArrayList<String[]> flagList = Importer.importAllFlags(modDirs);
             LOGGER.info("Importing color information...");
             
             ArrayList<String[]> colorList = Importer.importAllColors(impGameDir,modDirs);
@@ -283,7 +285,14 @@ public class Main
             
             String regionDir = Importer.getRegionDir(impGameDir,regionDirList,modDirs);
             
-            String[] impProvRegions = Processing.importRegionList(9500,regionDir);
+            String[] provAreas = Processing.importAreas(regionDir+"map_data/areas.txt",9500);
+            String[] baProvRegions = Processing.importRegionList(9500,provAreas,regionDir);
+            
+            ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
+            
+            LOGGER.info("Importing province tradegoods and terrain types...");
+            
+            extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
 
             LOGGER.info("Creating temp files...");
 
@@ -326,65 +335,97 @@ public class Main
             //processing information
 
             baProvInfoList = importer.importProv(saveProvinces);
+            System.out.println(baProvInfoList.get(2200).getNobles().size());
+            System.out.println(baProvInfoList.get(2200).getCitizens().size());
+            System.out.println(baProvInfoList.get(2200).getFreemen().size());
+            System.out.println(baProvInfoList.get(2200).getTribesmen().size());
+            System.out.println(baProvInfoList.get(2200).getSlaves().size());
+            int baPopTotal = 0;//total number of pops in BA save
             totalPop = 0;
-            try { //Get counts of culture, religion, and TAG ownership
+            
+            ArrayList<String> cultureMappings = Importer.importBasicFile("cultureConversion.txt");
+            ArrayList<String> religionMappings = Importer.importBasicFile("religionConversion.txt");
+            
+            baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
+            baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
+            baProvInfoList = Processing.convertAllPops(baProvInfoList,cultureMappings,religionMappings);
+            
+            //String[] countTest = Processing.countPops(baProvInfoList.get(1974).getPops(),"cultureAndReligion");
+            //ArrayList<String> countTest2 = Processing.condenseArrayStr(countTest);
+            //ArrayList<String> countTest3 = Processing.convertPopCountToRatios(countTest2);
+            //ArrayList<String> countTest4 = Processing.reallocatePops(countTest3,30);
+            ArrayList<Provinces> irProvinceList = new ArrayList<Provinces>();//ArrayList
+            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,0);
+            irProvinceList.add(blankProv);
+            //ArrayList<String[]> irProvMappings = new ArrayList<String[]>();//ArrayList 
+            try { ////Get counts of culture, religion, and TAG ownership
+                //Calc pop total
             while (flag == 0) {
                 //System.out.println(aqq);
-                impProvtoCK = importer.importConvList("provinceConversion.txt",aqq); 
-                //System.out.println(impProvtoCK[0]+"_"+impProvtoCK[1]+"_"+impProvtoCK[2]+"_"+impProvtoCK[3]+"_"+impProvtoCK[4]);
-                //System.out.println(impProvtoCK[1]);
+                baProvtoIR = importer.importConvList("provinceConversion.txt",aqq); 
+                
 
-                if (impProvtoCK[0].equals ("peq")) {
+                if (baProvtoIR[0].equals ("peq")) {
                 }
 
                 else {
-                    if (ckProvNum != Integer.parseInt(impProvtoCK[1])) {
-                        ckProvNum = Integer.parseInt(impProvtoCK[1]);
+                    if (ckProvNum != Integer.parseInt(baProvtoIR[1])) {
+                        ckProvNum = Integer.parseInt(baProvtoIR[1]);
                         totalPop = 0;
-                        tagNum = 0;
-                        cultNum = 0;
-                        relNum = 0;
+                        ////tagNum = 0;
+                        ////cultNum = 0;
+                        ////relNum = 0;
                     }
+                    int irProvCount = 0;
+                    
 
+                    //System.out.println(ckProvNum);
                     baProvInfo = baProvInfoList.get(aqq);
+                    baProvInfo.setPopTags();
+                    ArrayList<Pop> baPops = baProvInfo.getPops();
                     //System.out.println(impProvInfo);
                     int popTotal = 0;
+                    //
+                    int createdFlag = 0;
+                    int irProvListID = Processing.getProvByID(irProvinceList,ckProvNum);
+                    Provinces irProv = irProvinceList.get(irProvListID);
+                    if (irProvListID == 0) {
+                        irProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,0);
+                        irProv.setID(ckProvNum);
+                        irProvinceList.add(blankProv);
+                        irProvListID = irProvinceList.size()-1;
+                    }
                     try {
-                        popTotal = baProvInfo.getPops().size();
+                        popTotal = baPops.size();
+                        irProv.addPopArray(baPops);
+                        irProvinceList.set(irProvListID,irProv);
+                        //irProvinceList.get(irProvListID).addPopArray(baPops);
                     } catch (java.lang.NullPointerException exception) {
                         
                     }
+                    //irProvinceList.get(irProvListID) = "";
+                    baPopTotal = baPopTotal + popTotal;
                     
                     String popTotalStr = Integer.toString(popTotal);
-                    String provOwner = baProvInfo.getOwner();
-                    String provCulture = baProvInfo.getCulture();
-                    String provReligion = baProvInfo.getReligion();
-
+                    ////String provOwner = baProvInfo.getOwner();
+                    ////String provCulture = baProvInfo.getCulture();
+                    ////String provReligion = baProvInfo.getReligion();
                     temp = 0;
                     temp2 = 0;
+                    if (ckProvNum == 356) {
+                        System.out.println("Adding BA "+aqq+" to IR "+ ckProvNum +" (" +irProvListID+ ")");
+                    }
                     //nation
-                    if (ck2TagTotals[ckProvNum] == (null)) {
+                    ////if (ck2TagTotals[ckProvNum] == (null)) {
 
-                        ck2TagTotals[ckProvNum] = provOwner + "," + popTotalStr;
-                        System.out.println(ck2TagTotals[ckProvNum]+" = "+provOwner + "," + popTotalStr);
-                    }else {
-                        ck2TagTotals[ckProvNum] = ck2TagTotals[ckProvNum] + "~" + provOwner + "," + popTotalStr;
-                        System.out.println(ck2TagTotals[ckProvNum]+" = "+provOwner + "," + popTotalStr);
-                    }
+                        ////ck2TagTotals[ckProvNum] = provOwner + "," + popTotalStr;
+                        ////System.out.println(ck2TagTotals[ckProvNum]+" = "+provOwner + "," + popTotalStr);
+                    ////}else {
+                        ////ck2TagTotals[ckProvNum] = ck2TagTotals[ckProvNum] + "~" + provOwner + "," + popTotalStr;
+                        ////System.out.println(ck2TagTotals[ckProvNum]+" = "+provOwner + "," + popTotalStr);
+                    ////}
                     //culture
-                    if (ck2CultureTotals[ckProvNum] == (null)) {
-
-                        ck2CultureTotals[ckProvNum] = provCulture + "," + popTotalStr;
-                    }else {
-                        ck2CultureTotals[ckProvNum] = ck2CultureTotals[ckProvNum] + "~" + provCulture + "," + popTotalStr;
-                    }
-                    //religeon
-                    if (ck2RelTotals[ckProvNum] == (null)) {
-
-                        ck2RelTotals[ckProvNum] = provReligion + "," + popTotalStr;
-                    }else {
-                        ck2RelTotals[ckProvNum] = ck2RelTotals[ckProvNum] + "~" + provReligion + "," + popTotalStr;
-                    }
+                    
                     //region for governor conversion
 
                     try {
@@ -398,15 +439,20 @@ public class Main
                         popTotalStr = "0";  
                     }
                     totalPop = Integer.parseInt(popTotalStr) + totalPop;
-                    ck2ProvInfo[3][ckProvNum] = Integer.toString(totalPop);
+                    ////System.out.println(totalPop+"Q");
+                    ////ck2ProvInfo[3][ckProvNum] = Integer.toString(totalPop);
+                    ////System.out.println(ck2ProvInfo[3][ckProvNum]+"Q2");
 
-                    ck2PopTotals[ckProvNum] = Integer.toString(totalPop);
+                    ////ck2PopTotals[ckProvNum] = Integer.toString(totalPop);
 
                 }
 
                 if (aqq == 9843) {
                     flag = 1;   
                 }
+                
+                
+                //irProvInfoList
 
                 aqq = aqq + 1;
             }
@@ -420,100 +466,76 @@ public class Main
             long territoryTime = System.nanoTime();
             long territoryTot = (((territoryTime - startTime) / 1000000000)/60);
             LOGGER.info("Territory data imported after "+ territoryTot + " minutes");
+            
+            ArrayList<Country> baTagInfo = new ArrayList<Country>();
+            //Country processing
+            baTagInfo = importer.importCountry(saveCountries);
 
             LOGGER.finest("25%");
 
             LOGGER.info("Combining territories into provinces...");
 
-            aq2 = 0;
+            aq2 = 1;
             flag = 0;
             flag2 = 0;
             int aq5 = 0;
             int aq6 = 0;
             String[] irOwners;
+            int globalPopTotal = 4000;//Number of pops to be redistributed
 
-            while( aq2 < totalCKProv) { // Calculate province ownership
-                if (ck2TagTotals[aq2] != null)  {
+            while( aq2 < irProvinceList.size()) { // Calculate province totals
+                //aq2 = Processing.getProvByID(irProvinceList,357);
+                //aq2 = Processing.getProvByID(irProvinceList,549);
+                //aq2 = Processing.getProvByID(irProvinceList,413);
+                Provinces irProvInfo = irProvinceList.get(aq2);
+                try {
+                    float totalProvPops = irProvInfo.getPops().size();
+                    //float provinceRatio = (totalProvPops) /baPopTotal;
+                    int provinceTotal = Processing.calcAllocatedPops(baPopTotal,totalProvPops);
 
-                    irOwners = ck2TagTotals[aq2].split("~"); 
-
-                    while (aq5 < irOwners.length) {
-                        String[] owners = irOwners[aq5].split(","); 
-
-                        //LOGGER.info(irOwners[aq5]+"_irOwners_"+aq2);  
-
-                        int[] ownerTot;
-                        ownerTot = new int[totalCKProv]; //should redefine each time
-
-                        int ownNum = Integer.parseInt(owners[0]);
-
-                        if (ownNum == 9999) {
-                            ownNum = 0;
-
-                            //LOGGER.info(aq5);
-                        }
-
-                        if (owners[1].equals ("null")) {
-                            owners[1] = "0";
-
-                            //LOGGER.info(aq5);
-                        }
-
-                        ownerTot[ownNum] = Integer.parseInt(owners[1]);
-                        //LOGGER.info(owners[0]+owners[1]+"b_owners");    
-                        ck2ProvInfo[0][aq2] = owners[0];
-                        aq6 = 1;
-                        while (aq6 < totalCKProv) {
-                            if (ownerTot[aq6] > ownerTot[aq6-1]){
-                                ck2ProvInfo[0][aq2] = owners[0];
-                                //LOGGER.info((ck2ProvInfo[0][aq2])+"_"+aq2+"cq");
-                            }
-                            aq6 = aq6 + 1;
-
-                        }
-                        aq5 = aq5 + 1;
-                        int tempQ = Integer.parseInt(ck2ProvInfo[0][aq2]);
-                        //LOGGER.info(tempQ);
-                        if (tempQ != 9999){
-                            ck2HasLand[tempQ] = "yes"; //marks country as landed in CK II
-                            ck2LandTot[tempQ] = ck2LandTot[tempQ] + 1; //adds tag's CK II province count
-                        }
-
+                    String[] relCultCount = Processing.countPops(irProvInfo.getPops(),"cultureAndReligion");
+                    ArrayList<String> relCultCount2 = Processing.condenseArrayStr(relCultCount);
+                    ArrayList<String> relCultCount3 = Processing.convertPopCountToRatios(relCultCount2);
+                    ArrayList<String> relCultCount4 = Processing.reallocatePops(relCultCount3,provinceTotal);
+                    String[] irProvRelCult = Processing.getMajority(relCultCount4).split("---");
+                    irProvInfo.setCulture(irProvRelCult[0]);
+                    irProvInfo.setReligion(irProvRelCult[1]);
+                    
+                    String[] ownerCount = Processing.countPops(irProvInfo.getPops(),"tag");
+                    ArrayList<String> ownerCount2 = Processing.condenseArrayStr(ownerCount);
+                    String irProvOwner = Processing.getMajority(ownerCount2);
+                    irProvInfo.setOwner(irProvOwner);
+                    
+                    //String[] typeCount = Processing.countPops(irProvInfo.getPops(),"type");
+                    float[] typeRatios = Processing.getTypeRatios(irProvInfo.getPops());
+                    
+                    irProvInfo.replacePopsFromStringArray(relCultCount4,typeRatios,provinceTotal);
+                    int irProvID = irProvInfo.getID();
+                    String[] terrainTradeGood = extraProvInfo.get(Processing.getArrayByID(extraProvInfo,irProvID));
+                    
+                    irProvInfo.setTerrain(terrainTradeGood[1]);
+                    irProvInfo.setTradeGood(terrainTradeGood[2]);
+                    
+                    irProvinceList.set(aq2,irProvInfo);
+                    
+                    int ownerInt = Integer.parseInt(irProvOwner);
+                    if (ownerInt != 9999) {
+                        Country irTag = baTagInfo.get(ownerInt);
+                        irTag.setHasLand(true);
+                        baTagInfo.set(ownerInt,irTag);
                     }
-                    aq5 = 0;
-
-                }
-                else if (aq2 < 380) {
-                    //LOGGER.info (ck2TagTotals[aq2] + "_" + aq2);    
+                    System.out.println(aq2);
+                } catch (java.lang.NullPointerException exception) {
+                    
                 }
                 aq2 = aq2 + 1;
 
             }
             long provinceTime = System.nanoTime();
             long provinceTimeTot = (((provinceTime - startTime) / 1000000000)/60);
-            LOGGER.info("Province ownership calculated after "+provinceTimeTot+" minutes");
+            LOGGER.info("Provinces calculated after "+provinceTimeTot+" minutes");
             LOGGER.finest("35%");
             aq2 = 0;
-            flag = 0;
-            
-            int globalPopTotal = 4000;//Number of pops to be redistributed
-
-            while( aq2 < totalCKProv) { // Combines data based off of majority ownership, 30 Roman pops and 15 Punic'll make CKII prov Roman
-                try {
-
-                    if (ck2TagTotals[aq2] == null) {
-
-                    }
-                    ck2ProvInfo[1][aq2] = Processing.basicProvinceTotal(totalCKProv,ck2CultureTotals,ck2ProvInfo,1,aq2);
-                    ck2ProvInfo[2][aq2] = Processing.basicProvinceTotal(totalCKProv,ck2RelTotals,ck2ProvInfo,2,aq2);
-                }
-                catch (java.lang.NullPointerException exception) {
-
-                }
-                aq2 = aq2 + 1;
-            }
-
-            ArrayList<String> dejureDuchies = Processing.calculateDuchyNameList(ck2Dir,ck2ProvInfo);
 
             aq2 = 0;
             LOGGER.info("Province religion and culture calculated");
@@ -524,9 +546,7 @@ public class Main
             //LOGGER.config("The region is" + ck2ProvInfo[4][343]);
             int flagCount = 0;
 
-            ArrayList<String[]> impTagInfo = new ArrayList<String[]>();
-            //Country processing
-            impTagInfo = importer.importCountry(saveCountries);
+            /////ArrayList<String[]> impTagInfo = new ArrayList<String[]>();
 
             long countryTime = System.nanoTime();
             long countryTimeTot = (((countryTime - startTime) / 1000000000)/60);
@@ -539,7 +559,7 @@ public class Main
             int aq4 = 0;
             LOGGER.config(ck2TagTotals[343]);
 
-            int totCountries = impTagInfo.size(); //ammount of IR countries in save file
+            int totCountries = baTagInfo.size(); //ammount of IR countries in save file
 
             LOGGER.info("Importing subject data...");
 
@@ -558,8 +578,8 @@ public class Main
             //Output.copyRaw("defaultOutput"+VM+"cultures"+VM+"00_cultures.txt",modDirectory+VM+"common"+VM+"cultures"+VM+"00_cultures.txt");
             //Processing.customDate(date,"defaultOutput/default/bookmarks/50_customBookmark.txt",modDirectory+VM+"common/bookmarks/50_customBookmark.txt");
             Output.copyDefaultOutput("defaultOutput/default",modDirectory);
-            Processing.customDate(date,modDirectory+"/common/bookmarks/50_customBookmark.txt",modDirectory+"/common/bookmarks/50_customBookmark.txt");
-            Processing.setTechYear(date,modDirectory);
+            //Processing.customDate(date,modDirectory+"/common/bookmarks/50_customBookmark.txt",modDirectory+"/common/bookmarks/50_customBookmark.txt");
+            //Processing.setTechYear(date,modDirectory);
             
 
             long outputTime = System.nanoTime();
@@ -567,6 +587,9 @@ public class Main
 
             LOGGER.info("defaultOutput copied after "+outputTimeTot+" minutes");
             LOGGER.finest("69%");
+            
+            ////Output.copyBAFlags(modFlagGFX,modDirectory); //Copies flag gfx, really slow, comment out during testing
+            Output.namedColorCreation(colorList,modDirectory);
 
             flag = 0;
             String[] Character;
@@ -579,191 +602,69 @@ public class Main
             String govRegID;
             String[] govCharacter;
 
-            impCharInfoList = Characters.importChar(saveCharacters,compressedOrNot);
+            //impCharInfoList = Characters.importChar(saveCharacters,compressedOrNot);
 
-            impDynList = Characters.importDynasty(saveDynasty);
+            //impDynList = Characters.importDynasty(saveDynasty);
 
             //Array
+            
+            aq4 = 1;
+            
+            int convTag = 0;
+            
+            //Output.genericBlankFile(modDirectory + "/setup/countries/converted_countries.txt","Converted Countries from Bronze Age");
+            Output.output(Dir2+"/game/setup/countries/countries.txt",modDirectory + "/setup/countries/countries.txt");
 
             try {
                 try {
-                    while (flag == 0) {
+                    while (aq4 < baTagInfo.size()) {
+                        //aq4 = 698;
+                        //aq4 = 1294;
 
-                        if (!ck2HasLand[aq4].equals ("yes") && ck2LandTot[aq4] > 0) { //if has no land but has subjects, eat subjects to prevent shattering
-                            ck2ProvInfo = Processing.annexSubjects(aq4,totCountries,ck2ProvInfo,impSubjectInfo);
-                            LOGGER.info (impTagInfo.get(aq4)[0] + "'s subjects own all of it's land! Eating subjects...");
-                            ck2HasLand[aq4] = "yes";
-                        }
-                        if (ck2HasLand[aq4] != null) {
-                            if (ck2HasLand[aq4].equals ("yes")) {
-
-                                String tempNum2 = Integer.toString( tempNum + Integer.parseInt(impTagInfo.get(aq4)[16]));
-                                String rank = "k";
-                                String oldName = impTagInfo.get(aq4)[0]; //used to determine whether or not title is converted
-
-                                int subjectOrNot = Processing.checkSubjectList(aq4,impSubjectInfo);
-                                //LOGGER.config("subjectOrNot at " + aq4 + " is " + subjectOrNot);
-                                impTagInfo.get(aq4)[17] = Processing.checkGovList(impTagInfo.get(aq4)[17],govMap); //converted government type
-                                
-                                Character = impCharInfoList.get(Integer.parseInt(impTagInfo.get(aq4)[16]));
-                                String rulerDynasty = Characters.searchDynasty(impDynList,Character[7]);
-
-                                if (subjectOrNot == 9999) { //if tag is free or independent
-                                    if (ck2LandTot[aq4] >= empireRank || impTagInfo.get(aq4)[17].equals("imperium")) {
-                                        rank = "e";
-                                    }
-                                    else if (ck2LandTot[aq4] <= duchyRank) {
-                                        rank = "d";
-                                    }
-                                    impTagInfo.get(aq4)[0] = Processing.convertTitle("titleConversion.txt",rank,impTagInfo.get(aq4)[21],impTagInfo.get(aq4)[0]);
-                                    convertedCharacters = Output.titleCreation(impTagInfo.get(aq4)[0],tempNum2,impTagInfo.get(aq4)[3],impTagInfo.get(aq4)[17],
-                                    impTagInfo.get(aq4)[5],rank,"no_liege",date,republicOption,Character[7],impDynList,impCharInfoList,convertedCharacters,aq4,
-                                    impTagInfo.get(aq4)[17],modDirectory);
-                                    //LOGGER.info("Free Nation at " + aq4);
-                                } else { //if tag is subject
-                                    String[] subjectInfo = impSubjectInfo.get(subjectOrNot).split(",");
-                                    String overlord = impTagInfo.get(Integer.parseInt(subjectInfo[0]))[0];
-                                    String overlordGov = Processing.checkGovList(impTagInfo.get(Integer.parseInt(subjectInfo[0]))[17],govMap);
-
-                                    if (ck2LandTot[Integer.parseInt(subjectInfo[0])] >= empireRank || 
-                                        impTagInfo.get(Integer.parseInt(subjectInfo[0]))[17].equals("imperium")) {
-                                        //if overlord is empire, make subject kingdom, else make duchy
-                                        rank = "k";
-                                    } else if (ck2LandTot[Integer.parseInt(subjectInfo[0])] <= duchyRank) {
-                                        //if overlord is duchy, make county
-                                        rank = "c";
-                                    } else {
-                                        rank = "d";
-                                    }
-
-                                    impTagInfo.get(aq4)[0] = Processing.convertTitle("titleConversion.txt",rank,impTagInfo.get(aq4)[21],impTagInfo.get(aq4)[0]);
-
-                                    if (subjectInfo[2].equals ("feudatory") || subjectInfo[2].equals ("satrapy") || subjectInfo[2].equals ("client_state")) { 
-                                        //convert as vassal
-                                        if (!rank.equals("c")) {//if below duchy, don't generate titular county title
-                                            convertedCharacters = Output.titleCreation(impTagInfo.get(aq4)[0],tempNum2,impTagInfo.get(aq4)[3],
-                                            impTagInfo.get(aq4)[17],impTagInfo.get(aq4)[5],rank,overlord,date,republicOption,Character[7],impDynList,
-                                            impCharInfoList,convertedCharacters,aq4,overlordGov,modDirectory);
-                                            //LOGGER.info("Subject Nation at " + aq4 + " Overlord is " + subjectInfo[0]);
-                                        }
-
-                                    }
-
-                                    else { 
-                                        //convert as CK II tributary
-                                        //WIP
-                                        if (!rank.equals("c")) {//if below duchy, don't generate titular county title
-                                            convertedCharacters = Output.titleCreation(impTagInfo.get(aq4)[0],tempNum2,impTagInfo.get(aq4)[3],impTagInfo.get(aq4)[17],
-                                            impTagInfo.get(aq4)[5],rank,overlord,date,republicOption,Character[7],impDynList,impCharInfoList,
-                                            convertedCharacters,aq4,overlordGov,modDirectory);
-                                        }
-                                        //LOGGER.info("Tributary Nation at " + aq4 + " Overlord is " + subjectInfo[0]);
-                                    }
-                                }
-
-                                //LOGGER.info (impTagInfo.get(aq4)[16] + " rules " + impTagInfo.get(aq4)[0] + "_" + aq4);
-                                
-                                convertedCharacters = Output.characterCreation(tempNum2, Output.cultureOutput(Character[1]),Output.religionOutput(Character[2]),
-                                    Character[3],Character[0],Character[7],Character[4],Character[8],Character[10],Character[11],Character[12],Character[13],Character[14],
-                                    Character[15],impTagInfo.get(aq4)[17],"q","q",convertedCharacters,impCharInfoList,date,modDirectory);
-                                //LOGGER.config ("c");
-
-
-                                Output.dynastyCreation(rulerDynasty,Character[7],Character[16],modDirectory);
-
-                                String[] locName = importer.importLocalisation(locList,impTagInfo.get(aq4)[19],rulerDynasty);
-                                Output.localizationCreation(locName,impTagInfo.get(aq4)[0],rank,modDirectory);
-                                if (oldName.equals(impTagInfo.get(aq4)[0])) { //Try to generate flag, if failure occurs, copy capital flag
-                                    int genFlag = 0;
-                                    try {
-                                        genFlag = Output.generateFlag(ck2Dir,impGameDir,rank,flagList,impTagInfo.get(aq4)[0],impTagInfo.get(aq4)[23],
-                                        colorList,modFlagGFX,modDirectory);
-                                        //File test = new File (modDirectory+"/gfx/flags/"+ck2Tag+".tga");
-                                    } catch(Exception e) { //if something goes wrong, don't crash entire converter
-                                        LOGGER.warning("Exception created while generating flag "+impTagInfo.get(aq4)[23]+" for "+impTagInfo.get(aq4)[0]+
-                                        ", aborting flag generation");
-                                    }
-                                    
-                                    if (genFlag == 0) {
-                                        Output.copyFlag(ck2Dir,modDirectory,rank,impTagInfo.get(aq4)[5],impTagInfo.get(aq4)[0]);
-                                    }
-                                    else if (genFlag == 1) {
-                                        LOGGER.info("I:R flag "+impTagInfo.get(aq4)[23]+" for "+impTagInfo.get(aq4)[0]+" successfully generated!");
-                                    }
-                                }
-
-                                //LOGGER.info(tempTest+impTagInfo.get(aq4)[16] + "_" +Character[3]+Character[0]+Character[7]);
-                                //LOGGER.info ("Name is " + locName[0] + " for " +impTagInfo.get(aq4)[0]);
-                                //LOGGER.config ("output1");
-                                aq7 = 0;
-                                String subRank = "d";//rank of governorships, 1 below primary title
-                                if (rank.equals("e")) { //Create kingdom tier title of capital region for empire title
-                                    subRank = "k";
-                                    String capitalColor = Processing.capitalColor(impTagInfo.get(aq4)[3]); //sets the capital region to use different color
-                                    
-                                    convertedCharacters = Output.titleCreation(impTagInfo.get(aq4)[0],tempNum2,capitalColor,impTagInfo.get(aq4)[17],
-                                    impTagInfo.get(aq4)[5],subRank,"no_liege",date,republicOption,Character[7],impDynList,impCharInfoList,convertedCharacters,
-                                    aq4,impTagInfo.get(aq4)[17],modDirectory);
-
-                                    
-                                    String capitalName = "PROV"+impTagInfo.get(aq4)[5]; //use name of capital for generated kingdom
-                                    String[] capitalLoc = importer.importLocalisation(locList,capitalName,rulerDynasty);
-                                    //String[] capitalLoc = Importer.importProvLocalisation(impGameDir,capitalName);
-                                    if (capitalLoc[0].equals(capitalName)) { //In the event I:R prov has no name, use CK2 prov name
-                                        capitalName = Importer.importConvList("provinceConversion.txt",Integer.parseInt(impTagInfo.get(aq4)[5]))[1];
-                                        capitalName = Processing.importNames("a",Integer.parseInt(capitalName),ck2Dir)[0];
-                                        capitalLoc = (capitalName+","+capitalName).split(",");
-                                    }
-
-                                    Output.localizationCreation(capitalLoc,impTagInfo.get(aq4)[0],subRank,modDirectory);
-                                    Output.copyFlag(ck2Dir,modDirectory,subRank,impTagInfo.get(aq4)[5],impTagInfo.get(aq4)[0]); //use flag of empire
-                                    
-                                    //generate dynamic ew split
-                                    if (ck2LandTot[aq4] >= empireRank+800 && impTagInfo.get(aq4)[17].equals("imperium") &&
-                                    !impTagInfo.get(aq4)[0].equals("byzantium") && !impTagInfo.get(aq4)[0].equals("roman_empire_west") &&
-                                    !impTagInfo.get(aq4)[21].equals("WRE")) {
-                                        Processing.dynamicSplit(impTagInfo.get(aq4)[0],rank,impTagInfo.get(aq4)[3],locName,impTagInfo.get(aq4)[23],
-                                        impGameDir,impTagInfo.get(aq4)[5],flagList,colorList,modFlagGFX,impTagInfo.get(aq4)[17],
-                                        impTagInfo.get(aq4)[6],ck2Dir,modDirectory);
-                                        LOGGER.info("Generated east/west split for "+impTagInfo.get(aq4)[0]);
-                                    }
-                                } else if (rank.equals("d")) { //For duchies, don't create governorship titles
-                                    subRank = "c";
-                                }
-                                
-                                impTagInfo.get(aq4)[22] = rank;
-
-                                //governor conversion
-                                if (impTagInfo.get(aq4)[20] != "none" && subjectOrNot == 9999) {
-                                    governorships = impTagInfo.get(aq4)[20].split(",");
-                                    while (aq7 < governorships.length) {
-                                        governor = governorships[aq7].split("~")[1]; 
-                                        governorID = Integer.toString(tempNum + Integer.parseInt(governor)); 
-                                        govReg = governorships[aq7].split("~")[0]; 
-                                        govRegID = impTagInfo.get(aq4)[0]+"__"+govReg; 
-
-                                        if (!subRank.equals("c")) {//For duchies, don't create governorship titles
-                                            convertedCharacters = Output.titleCreation(govRegID,governorID,Processing.randomizeColor(),"no","none",subRank,
-                                            impTagInfo.get(aq4)[0],date,republicOption,Character[7],impDynList,impCharInfoList,convertedCharacters,aq4,
-                                            "govq",modDirectory);
-                                            Output.copyFlag(ck2Dir,modDirectory,subRank,impTagInfo.get(aq4)[5],govRegID); //default flag for governorships
-                                        }
-                                        
-                                        govCharacter = impCharInfoList.get(Integer.parseInt(governor));
-                                        convertedCharacters = Output.characterCreation(governorID, Output.cultureOutput(govCharacter[1]),Output.religionOutput(govCharacter[2]),govCharacter[3],
-                                            govCharacter[0],govCharacter[7],govCharacter[4],govCharacter[8],govCharacter[10],govCharacter[11],govCharacter[12],govCharacter[13],
-                                            govCharacter[14],govCharacter[15],saveCharacters,"q","q",convertedCharacters,impCharInfoList,date,modDirectory);
-                                            
-                                        String governorDynasty = Characters.searchDynasty(impDynList,govCharacter[7]);
-                                        
-                                        Output.dynastyCreation(governorDynasty,govCharacter[7],govCharacter[16],modDirectory);
-
-                                        aq7 = aq7 + 1;
-                                    }
-
-                                }
-
+                        //System.out.println("Getting "+aq4);
+                        Country baTag = baTagInfo.get(aq4);
+                        boolean baHasLandYes = baTag.getHasLand();
+                        if (baHasLandYes) {
+                            convTag = convTag + 1;
+                            System.out.println("Getting "+aq4);
+                            //String newTagID = Processing.genNewTag(convTag);
+                            String histTag = baTag.getHistoricalTag();
+                            String newTagID = Processing.convertTag(histTag,convTag);
+                            //System.out.println("New Tag is "+newTagID);
+                            //3272
+                            baTag.setUpdatedTag(newTagID);
+                            //System.out.println(baTag.getUpdatedTag());
+                            String capital = baTag.getCapital();
+                            int capInt = Integer.parseInt(capital);
+                            Provinces capitalBAProv = baProvInfoList.get(capInt);
+                            String capitalArea = capitalBAProv.getArea();
+                            String capitalRegion = capitalBAProv.getRegion();
+                            
+                            String oldCulture = baTag.getCulture();
+                            String oldReligion = baTag.getReligion();
+                            String oldGovernment = baTag.getGovernment();
+                            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea);
+                            String newReligion = Output.cultureOutput(religionMappings,oldReligion);
+                            String newGovernment = Output.cultureOutput(govMap,oldGovernment);
+                            if (newCulture.equals("99999")) {
+                                newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
+                                System.out.println("Warning, culture "+oldCulture+" is unmapped, setting to 'Roman'");
                             }
+                            baTag.setCulture(newCulture);
+                            baTag.setReligion(newReligion);
+                            baTag.setGovernment(newGovernment);
+                            String[] locName = importer.importLocalisation(locList,baTag.getLoc(),"rulerDynasty");
+                            baTag.setLoc(locName[0]);
+                            baTag.setAdj(locName[1]);
+                            Output.localizationCreation(locName,newTagID,modDirectory);
+                            baTagInfo.set(aq4,baTag);
+                            
+                            String baTagFlag = baTag.getFlag();
+                            
+                            Output.generateCOA(flagList,baTagFlag,newTagID,modDirectory);
+                            
+                            String countryColor = baTag.getColor();
+                            Output.countrySetupCreation(countryColor,newTagID,modDirectory);
                         }
 
                         aq4 = aq4 + 1;
@@ -781,40 +682,30 @@ public class Main
             aq7 = 0;
             LOGGER.config(ck2HasLand[343]);
 
-            Output.dejureTitleCreation(impTagInfo,empireRank,duchyRank,ck2LandTot,dejureDuchies,impSubjectInfo,modDirectory);
+            //Output.dejureTitleCreation(impTagInfo,empireRank,duchyRank,ck2LandTot,dejureDuchies,impSubjectInfo,modDirectory);
 
             long titleTime = System.nanoTime();
             long titleTimeTot = (((titleTime - startTime) / 1000000000)/60);
             LOGGER.info("Titles and characters created after "+titleTimeTot+" minutes");
             LOGGER.finest("85%");
             LOGGER.info("Outputting Province info");
+            
+            //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
+            ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
+            ArrayList<String> convertedProvinces = Processing.generateProvinceFile(irProvinceList);
+            Output.outputBasicFile(convertedProvinces,"01_converted_provinces.txt",modDirectory+"/setup/provinces");
+            ArrayList<String> convertedTags = Processing.generateCountryFile(baTagInfo,irProvinceList,existingCountryFile);
+            Output.outputBasicFile(convertedTags,"00_default.txt",modDirectory+"/setup/main");
+            
+            
+            Provinces test01 = irProvinceList.get(Processing.getProvByID(irProvinceList,4957));
+            Provinces test02 = irProvinceList.get(Processing.getProvByID(irProvinceList,7197));
+            Provinces test03 = irProvinceList.get(Processing.getProvByID(irProvinceList,368));
 
             
-            //Output
-
-            try {
-                try {
-                    while (flag == 1) {
-
-                        
-
-                        aq4 = aq4 + 1;
-                    }
-
-                }catch (java.util.NoSuchElementException exception){
-                    flag = 1;
-                    //LOGGER.config ("Exception1");
-                }
-            }catch (java.lang.ArrayIndexOutOfBoundsException exception){
-                flag = 2;
-                //LOGGER.config ("Exception2");
-                //LOGGER.config(ck2ProvInfo[1][343] + "_343");
-                //LOGGER.config(ck2ProvInfo[1][342] + "_342");
-                //LOGGER.config(ck2ProvInfo[1][341] + "_341");
-                //LOGGER.config(ck2ProvInfo[1][340] + "_340");
-                //LOGGER.config(ck2ProvInfo[1][339] + "_339");
-
-            }
+            //Output provinces
+            
+            
             //LOGGER.config(ck2ProvInfo[1][343] + "_343");
             //LOGGER.config(ck2ProvInfo[1][342] + "_342");
             //LOGGER.config(ck2ProvInfo[1][341] + "_341");

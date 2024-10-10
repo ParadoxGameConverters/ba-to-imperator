@@ -1,5 +1,4 @@
 package com.paradoxgameconverters.batoir;
-
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -48,7 +47,7 @@ public class Output
         return 0;
     }
 
-    public static String cultureOutput(String irCulture) throws IOException
+        public static String cultureOutput(ArrayList<String> mappings,String irCulture) throws IOException
     {
 
         String VM = "\\"; 
@@ -58,24 +57,98 @@ public class Output
 
         Importer importer = new Importer();
 
-        ck2CultureInfo = importer.importCultList("cultureConversion.txt",irCulture)[1];
+        //ck2CultureInfo = importer.importCultList("cultureConversion.txt",irCulture)[1];
+        ck2CultureInfo = Importer.importMappingFromArray(mappings,irCulture)[1];
 
         return ck2CultureInfo;
     }
 
-    public static String religionOutput(String irRel) throws IOException
+    public static String paramMapOutput(ArrayList<String> mappings,String ck2Culture,String tagCulture,String date,String irRel,String region,
+    String area) throws IOException //mapping with parameters
     {
 
         String VM = "\\"; 
         VM = VM.substring(0);
+        int count = 0;
 
-        String ck2CultureInfo;   // Owner Culture Religeon PopTotal Buildings
+        String[] ck2ReligionInfo;
+        String ck2Religion = "roman"; //default in case there's no mapping
 
         Importer importer = new Importer();
 
-        ck2CultureInfo = importer.importCultList("religionConversion.txt",irRel)[1];
-
-        return ck2CultureInfo;
+        ArrayList<String[]> validMappings = Importer.importMappingFromArrayArgs(mappings,irRel);
+        
+        while (count < validMappings.size()) {
+            ck2ReligionInfo = validMappings.get(count);
+            
+            if (ck2ReligionInfo.length == 2) {
+                //System.out.println(ck2ReligionInfo[0]+" "+ck2ReligionInfo[1]);
+                ck2Religion = ck2ReligionInfo[1];
+                return ck2Religion;
+            }
+            else {
+                int numArgs = ck2ReligionInfo.length-2;
+                int count2 = 0;
+                boolean passedCheck = true;
+                while (count2 < numArgs) { //check all arguments, if all are true, return culture
+                    //System.out.println(numArgs);
+                    int argBeingChecked = count2+2;
+                    String[] relArgument = ck2ReligionInfo[argBeingChecked].split("=");
+                    if (relArgument[0].equals("culture")) {
+                        //System.out.println(relArgument[1]+" "+ck2Culture);
+                        if (!ck2Culture.equals(relArgument[1])) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
+                    else if (relArgument[0].equals("tagCulture")) {
+                        //System.out.println(relArgument[1]+" "+tagCulture);
+                        if (!tagCulture.equals(relArgument[1])) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
+                    else if (relArgument[0].equals("year")) {
+                        //System.out.println(relArgument[1]+" "+date);
+                        String tmpDate = date.replace(".",",");
+                        int saveYearInt = Integer.parseInt(tmpDate.split(",")[0]);
+                        int argumentYear = Integer.parseInt(relArgument[1]);
+                        if (saveYearInt < argumentYear) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
+                    else if (relArgument[0].equals("region")) {
+                        if (!region.equals(relArgument[1])) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
+                    else if (relArgument[0].equals("area")) {
+                        if (!area.equals(relArgument[1])) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
+                    else { //if argument is invalid, nullify whole mapping
+                       count2 = count2 + numArgs;
+                       passedCheck = false; 
+                    }
+                    
+                    count2 = count2+1;
+                }
+                if (passedCheck == true) {
+                    ck2Religion = ck2ReligionInfo[1];
+                    return ck2Religion;
+                }
+                
+            }
+            count = count + 1;
+            
+        }
+        
+        //System.out.println("Something went wrong, "+irRel+" will convert as noculture");
+        return ck2Religion;
     }
 
     public static String titleCreationCommon(String irTAG, String irColor, String government,String capital,String rank, String Directory) throws IOException
@@ -113,87 +186,6 @@ public class Output
         fileOut.close();
 
         return irColor;
-    }
-
-    public static ArrayList<String> titleCreation(String irTAG, String irKING, String irCOLOR, String government, String capital,String rank,String liege,
-    String date1,String republicOption,String irDynasty,ArrayList<String> dynList,ArrayList<String[]> impCharInfoList,ArrayList<String> convertedCharacters,
-    int tagIDNum,String liegeGov,String Directory) throws IOException
-    {
-
-        String VM = "\\"; 
-        VM = VM.substring(0);
-
-        String irKING100 = "9"+irKING;
-
-        String tab = "	";
-
-        String oldDynasty = irDynasty;
-
-        if (!government.equals("palace")) { //if palace, don't recalculate dynasty and recreate title
-            titleCreationCommon(irTAG,irCOLOR,government,capital,rank,Directory);
-            irDynasty = Processing.calcDynID(irDynasty);
-        }
-        String oldDirectory = Directory;
-        Directory = Directory + VM + "history" + VM + "titles";
-        String ck2CultureInfo ="a";   // Owner Culture Religeon PopTotal Buildings
-        Importer importer = new Importer();
-
-        FileOutputStream fileOut= new FileOutputStream(Directory + VM + rank+"_" + irTAG + ".txt");
-        PrintWriter out = new PrintWriter(fileOut);
-
-        int flag = 0;
-
-        String date2 = "1066.9.15";
-        out.println (date1+"={");
-
-        String overlordRank = "k";
-        if (rank.equals("k")){
-            overlordRank = "e";
-        } else if (rank.equals("b") && government.equals("palace")) {
-            overlordRank = liege.split(",")[0];
-            liege = liege.split(",")[1];
-            out.println (tab+"holding_dynasty = "+irDynasty);
-        }
-
-        if (!liege.equals("no_liege")) { //If country is a subject
-            out.println (tab+"liege="+overlordRank+"_"+liege);
-            if (!rank.equals("b") && !government.equals("palace")) {
-                out.println (tab+"de_jure_liege="+overlordRank+"_"+liege);
-            }
-            if (liegeGov.equals("republic") && republicOption.equals("repMer")) { //If subject, don't convert as merchant republic
-                republicOption = "repFeu";
-            }
-        }
-        out.println("\tholder="+irKING100);
-        if (government.equals("imperium") && rank.equals("e")) { //If I:R government is imperial, set government to CK II imperial (roman_imperial_government)
-            out.println (tab+"law = crown_authority_2");
-            out.println (tab+"law = succ_byzantine_elective");
-            out.println (tab+"law = centralization_3");
-            out.println (tab+"law = imperial_administration");
-            out.println (tab+"law = ze_administration_laws_2");
-            out.println (tab+"law = vice_royalty_2");
-            out.println (tab+"law = revoke_title_law_1");
-            govCreation(irTAG,rank,"i",oldDirectory);
-            imperialSuccession(irTAG,rank,oldDirectory);
-        }
-        if (government.equals("republic") && republicOption.equals("repMer")) { 
-            //If I:R government is republic and option is enabled, set to CK2 merchant republic (regardless of coastline requirements)
-
-            String palace = irDynasty+"_"+irTAG;
-            titleCreationCommon(palace,"none","none","none","b",oldDirectory); //creates merchant palace for ruler's family
-            convertedCharacters = titleCreation(palace,irKING,irCOLOR,"palace",capital,"b",rank+","+irTAG,date1,republicOption,irDynasty,
-                dynList,impCharInfoList,convertedCharacters,tagIDNum,liegeGov,oldDirectory);
-            convertedCharacters = createFamilies(dynList,irTAG,oldDynasty,rank,impCharInfoList,convertedCharacters,date1,republicOption,tagIDNum,
-                liegeGov,oldDirectory);
-
-            govCreation(irTAG,rank,"m",oldDirectory);
-        }
-        out.println ("}");
-        out.println ();
-        out.flush();
-        fileOut.close();
-
-        return convertedCharacters;
     }
 
     public static String provinceCreation(String ckProv, String ckCult, String ckRel, String Directory, String landType, 
@@ -357,248 +349,6 @@ public class Output
         return ckProv;
     }
 
-    public static ArrayList<String> characterCreation(String irKING, String cult, String rel, String age, String name, String dynasty,
-    String sex, String traits, String martial, String zeal, String charisma, String finesse, String spouse, String children,String government,String father,
-    String mother,ArrayList<String> convertedList,ArrayList<String[]> charList,String date1,String Directory) throws IOException
-    {
-
-        int characterCount = 0;
-
-        while (characterCount < convertedList.size()) { //checks if a character has been converted or not
-            if (irKING.equals(convertedList.get(characterCount))) {
-                return convertedList; //If a character has already been converted, no point to repeat and avoids children with jobs not having fathers
-            } else {
-                characterCount = characterCount + 1;    
-            }
-
-        }
-
-        String VM = "\\"; 
-        VM = VM.substring(0);
-        String tab = "	";
-        char quote = '"';
-        String[] spouseInfo;
-        String[] childInfo;
-        int childCount;
-        String spouse1066 = Integer.toString( 1000000 + Integer.parseInt(spouse));
-        String child1066;
-
-        int hasFather = 0;
-        int hasMother = 0;
-        String father100 = "9" + father;
-        String mother100 = "9" + mother;
-
-        String dead = "no";
-
-        if (sex.length() > 1) {
-            if (sex.charAt(1) == '_') {
-                dead = "yes";
-
-                sex = sex.split("_")[0];  
-            }
-        }
-
-        if (father != "q") {
-            hasFather = 1;
-
-        }
-
-        if (mother != "q") {
-            hasMother = 1;
-
-        }
-
-        int aq4 = 0;
-
-        if (spouse != "0") {//Recursively calls to get rest of family
-            int spouseID = Integer.parseInt(spouse);
-            spouseInfo = charList.get(spouseID);
-
-            characterCreation( spouse1066,  cultureOutput(spouseInfo[1]),  religionOutput(spouseInfo[2]),  spouseInfo[3],  spouseInfo[0],  spouseInfo[7],
-                spouseInfo[4],  spouseInfo[8],  martial,  zeal,  charisma,  finesse,  "0",  "0", "no","q",  "q",convertedList,charList,date1, Directory);
-        }
-
-        if (children != "0") {
-            childCount = 1;
-            try {
-                if (children.split(" ")[1] != null) {
-                    childCount = children.split(" ").length-1;   
-                }
-            }catch (java.lang.ArrayIndexOutOfBoundsException exception) {
-
-            }
-            String isPurple = "no";
-            if (government.equals("imperium") || government.equals("purple")) {
-                isPurple = "purple";
-            }
-
-            while (aq4 < childCount) {//Recursively calls to get rest of family
-
-                int childID = Integer.parseInt(children.split(" ")[aq4]);
-
-                childInfo = charList.get(childID);
-                child1066 = Integer.toString( 1000000 + Integer.parseInt(children.split(" ")[aq4]) );
-
-                characterCreation( child1066,  cultureOutput(childInfo[1]),  religionOutput(childInfo[2]),  childInfo[3],  childInfo[0],  childInfo[7],
-                    childInfo[4],  childInfo[8],  martial,  zeal,  charisma,  finesse,  childInfo[14],  childInfo[15], isPurple,irKING,spouse1066,
-                    convertedList,charList,date1,Directory);
-
-                aq4 = aq4 + 1;
-            }
-            aq4 = 0;
-        }
-
-        String irKING100 = "9" + irKING;
-
-        String spouse100 = "9" + spouse1066;
-
-        int numAge = Integer.parseInt(age);
-
-        Directory = Directory + VM + "history" + VM + "characters";
-        if (sex != "69") {
-            //for all non-generated characters
-            //dynasty = Integer.toString(Integer.parseInt(dynasty) + 700000000);
-            dynasty = Processing.calcDynID(dynasty);
-        }
-
-        String tempTrait = "a";
-        int aqq = 0;
-        int aq2 = 0;
-
-        ArrayList<String> convTraitList = new ArrayList<String>();
-
-        if (traits != "q") {
-            //oldlogPrint("traitsGood"); 
-            String[] traitList = traits.split(" ");
-
-            try {
-                while (aqq < 99) {
-                    if (traitList[aqq].charAt(0) == quote) {
-                        tempTrait = traitList[aqq].substring(1,traitList[aqq].length()-1);    
-                    } else {
-                        tempTrait = traitList[aqq];
-                    }
-
-                    tempTrait = Importer.importCultList("charTraitConverter.txt",tempTrait)[1];   
-                    if (tempTrait != "99999") {
-                        convTraitList.add (tempTrait);
-                        aq2 = aq2 + 1;
-                    }
-                    aqq = aqq + 1;
-                }
-            }catch (java.lang.ArrayIndexOutOfBoundsException exception) {
-                aqq = 999;    
-            }
-
-        }
-
-        aqq = 0;
-
-        Importer importer = new Importer();
-
-        //any filename with non-asci characters won't render in CK II, changed file output name to use GloriousCharacter instead of character name
-        //in case player created interesting names in I:R
-
-        FileOutputStream fileOut= new FileOutputStream(Directory + VM + "GloriousCharacter" + "_" + irKING + ".txt");
-        PrintWriter out = new PrintWriter(fileOut);
-
-        int flag = 0;
-
-        String tmpDate = date1.replace(".",","); //'.' character breaks .split function
-        String monthDay = "." + tmpDate.split(",")[1] + "." + tmpDate.split(",")[2];
-        monthDay = monthDay.replace(",",".");
-        String date2 = "1066.9.15";
-        int yearNum = Integer.parseInt(tmpDate.split(",")[0]);
-        int birthdayNum2 = 1066 - numAge;
-        int birthdayNum = yearNum - numAge;
-        String birthday2 = Integer.toString(birthdayNum2)+".9.15";
-        String birthday = Integer.toString(birthdayNum)+monthDay;
-
-        //Military/Martial Charisma/Stewardship Zeal/Learning
-
-        aqq = 0;
-        //100 Start date
-        out.println ();
-        out.println (irKING100+"={");
-        out.println (tab+"name="+quote+name+quote);
-        if (sex.equals("f")) {
-            out.println (tab+"female = yes");    
-        }
-        if (government.equals("purple")) {
-            out.println (tab+"trait="+quote+"born_in_the_purple"+quote);    
-        }
-        out.println (tab+"dynasty="+dynasty);
-        out.println (tab+"martial="+martial);
-        out.println (tab+"diplomacy="+zeal);
-        out.println (tab+"intrigue="+finesse);
-        out.println (tab+"stewardship="+charisma);
-        out.println (tab+"religion="+quote+rel+quote);
-        out.println (tab+"culture="+quote+cult+quote);
-        if (rel.equals("hindu") || rel.equals("buddhist") || rel.equals("jain")) { //Caste system defaults to merchant unless specified, sets to ruler
-            out.println (tab+"trait=kshatriya");
-        }
-
-        if (traits != "q") {
-            while (aqq < aq2) {
-                if (convTraitList.get(aqq).charAt(convTraitList.get(aqq).length()-1) == 'B' && hasFather == 0) { //bloodline
-                    out.println (tab+date1+"={");
-                    out.println (tab+tab+"create_bloodline = {");
-                    out.println (tab+tab+tab+"type = "+convTraitList.get(aqq).substring(0,convTraitList.get(aqq).length()-1));
-                    out.println (tab+tab+tab+"has_dlc = "+quote+"Holy Fury"+quote);
-                    out.println (tab+tab+"}");
-                    out.println (tab+"}");    
-                }else { //regular trait
-
-                    out.println (tab+"trait="+convTraitList.get(aqq));
-
-                }
-                aqq = aqq + 1;
-            }
-
-        }
-
-        if (sex != "69") { //if a character is dynamically generated or not
-            out.println (tab+"disallow_random_traits = yes");    
-        }
-
-        if (hasFather == 1) {
-            out.println (tab+"father="+father100);
-
-        }
-
-        if (hasMother == 1) {
-            out.println (tab+"mother="+mother100);
-
-        }
-
-        out.println (tab+birthday+"={");
-        out.println (tab+tab+"birth="+quote+birthday+quote);
-        out.println (tab+"}");
-
-        if (spouse != "0") {
-            out.println (tab+date1+"={");
-            out.println (tab+tab+"add_spouse="+spouse100);
-            out.println (tab+"}");
-        }
-
-        //default death date so the character will be dead in the 1066 start date
-        if (dead.equals("yes")) {
-            out.println (tab+date1+" ={");   
-        } else {
-            out.println (tab+(yearNum+250)+".1.1 ={");    
-        }
-        out.println (tab+tab+"death= yes");
-        out.println (tab+"}");
-        out.println ("}");
-
-        out.flush();
-        fileOut.close();
-
-        convertedList.add(irKING);
-
-        return convertedList;
-    }
-
     public static String dynastyCreation(String name, String id, String backupName, String Directory) throws IOException
     {
 
@@ -638,21 +388,20 @@ public class Output
         return ck2CultureInfo;
     }
 
-    public static String localizationCreation(String[] name, String title, String rank, String Directory) throws IOException
+    public static void localizationCreation(String[] name, String title, String Directory) throws IOException
     {
 
         String VM = "\\"; 
         VM = VM.substring(0);
-        char VMq = '"';
+        char quote = '"';
 
         ArrayList<String> oldFile = new ArrayList<String>();
 
         oldFile = Importer.importModLocalisation(Directory);
 
-        Directory = Directory + VM + "localisation";
-        String ck2CultureInfo ="a";   // Owner Culture Religeon PopTotal Buildings
+        Directory = Directory + "/localization/english";
 
-        FileOutputStream fileOut= new FileOutputStream(Directory + VM + "converted_title_localisation.csv");
+        FileOutputStream fileOut= new FileOutputStream(Directory + "/converted_countries_l_english.yml");
         PrintWriter out = new PrintWriter(fileOut);
 
         int flag = 0;
@@ -671,177 +420,145 @@ public class Output
 
         } 
 
-        out.println (rank+"_"+title+";"+name[0]+";"+name[0]+";"+name[0]+";;"+name[0]+";;;;;;;;;x");
-        out.println (rank+"_"+title+"_adj"+";"+name[1]+";"+name[1]+";"+name[1]+";;"+name[1]+";;;;;;;;;x");
+        out.println (title+":0 "+quote+name[0]+quote);
+        out.println (title+"_ADJ:0 "+quote+name[1]+quote);
+        out.flush();
+        fileOut.close();
+    }
+    
+    public static String namedColorCreation(ArrayList<String[]> colors, String Directory) throws IOException
+    {
+
+        String VM = "\\"; 
+        VM = VM.substring(0);
+        char quote = '"';
+        String tab = "	";
+
+        Directory = Directory + "/common/named_colors";
+        String ck2CultureInfo ="a";   // Owner Culture Religeon PopTotal Buildings
+
+        FileOutputStream fileOut= new FileOutputStream(Directory + "/converted_ba_colors.txt");
+        PrintWriter out = new PrintWriter(fileOut);
+        int count = 1;
+        out.println ("#Colors converted from Bronze Age");
+        out.println ("colors = {");
+
+        try {
+
+            while (colors.size() > count) {
+                String[] colorDef = colors.get(count);
+                int count2 = 0;
+                //String colorName = colorDef[0]+"_converted_ba";
+                String colorName = colorDef[0];
+                String colorValue = colorDef[1];
+                String colorType = colorValue.split(",")[0]; //HSV or RGB
+                colorValue = colorValue.split(",")[1];
+                out.println (tab+colorName+" = "+colorType+" { "+colorValue+" }");
+                count = count + 1;
+
+            }
+
+        }catch (java.lang.IndexOutOfBoundsException exception){
+
+        } 
+
+        out.println ("}");
         out.flush();
         fileOut.close();
 
         return ck2CultureInfo;
+    }
+    
+    public static void generateCOA(ArrayList<String[]> flagList, String flagIDTag, String updatedTag, String Directory) throws IOException
+    {
+
+        String VM = "\\"; 
+        VM = VM.substring(0);
+        char quote = '"';
+
+        ArrayList<String> oldFile = new ArrayList<String>();
+
+        Directory = Directory + "/common/coat_of_arms/coat_of_arms";
+        
+        oldFile = Importer.importBasicFile(Directory + "/00_converted_ba_countries.txt");
+
+        FileOutputStream fileOut= new FileOutputStream(Directory + "/00_converted_ba_countries.txt");
+        PrintWriter out = new PrintWriter(fileOut);
+
+        int flag = 0;
+        int aqq = 0;
+
+        try {
+
+            while (flag == 0) {
+                out.println (oldFile.get(aqq));
+                aqq = aqq + 1;
+
+            }
+
+        }catch (java.lang.IndexOutOfBoundsException exception){
+            flag = 1;
+            int count = 0;
+            while (flagList.size() > count) {
+                String[] flagInfo = flagList.get(count);
+                if (flagInfo[0].equals(flagIDTag)) {
+                    int count2 = 0;
+                    count = flagList.size() + 1;
+                    out.println(updatedTag+" = {");
+                    String[] flagDef = flagInfo[1].split(",");
+                    while (count2 < flagDef.length) {
+                        out.println(flagDef[count2]);
+                        count2 = count2+1;
+                    }
+                }
+                count = count + 1;
+
+            }
+            
+
+        } 
+
+        //out.println (title+":0"+quote+name[0]+quote);
+        //out.println (title+"_ADJ:0"+quote+name[1]+quote);
+        out.flush();
+        fileOut.close();
+
     }
 
     public static String localizationBlankFile(String Directory) throws IOException
     {
 
-        String VM = "\\"; 
-        VM = VM.substring(0);
-        char VMq = '"';
-
-        Directory = Directory + VM + "localization";
+        Directory = Directory + "/localization";
         String ck2CultureInfo ="a";   // blank default
-        FileOutputStream fileOut= new FileOutputStream(Directory + VM + "converted_title_localisation.csv");
+        FileOutputStream fileOut= new FileOutputStream(Directory + "/english/converted_countries_l_english.yml");
         PrintWriter out = new PrintWriter(fileOut);
 
-        out.println ("#Localization for all kingdom titles");
+        out.println ("#Localization for all converted BA countries");
         out.flush();
         fileOut.close();
 
         return ck2CultureInfo;
     }
-
-    public static void dejureTitleCreation(ArrayList<String[]> impTagInfo, int empireRank,int duchyRank, int[] ck2LandTot, ArrayList<String> dejureDuchies,
-    ArrayList<String> impSubjectInfo, String Directory) throws IOException
+    
+    public static void coaBlankFile(String Directory) throws IOException
     {
 
-        String tab = "	";
-        String VM = "\\"; 
-        VM = VM.substring(0);
-        Directory = Directory + VM + "common" + VM + "landed_titles";
-        FileOutputStream fileOut= new FileOutputStream(Directory + VM + "titlesDejure.txt"); //CK II's engine is picky with the file name
+        Directory = Directory + "/common/coat_of_arms/coat_of_arms";
+        FileOutputStream fileOut= new FileOutputStream(Directory + "/00_converted_ba_countries.txt");
         PrintWriter out = new PrintWriter(fileOut);
 
-        int aqq = 0;
+        out.println ("#Flags for all converted BA countries");
+        out.flush();
+        fileOut.close();
 
-        while (aqq < dejureDuchies.size()) {
+    }
+    
+    public static void genericBlankFile(String Directory, String comment) throws IOException
+    {
+        FileOutputStream fileOut= new FileOutputStream(Directory);
+        PrintWriter out = new PrintWriter(fileOut);
 
-            String duchy = dejureDuchies.get(aqq).split(",")[2];
-            String tag = dejureDuchies.get(aqq).split(",")[0];
-            String region = dejureDuchies.get(aqq).split(",")[3];
-            String culture = dejureDuchies.get(aqq).split(",")[1];
-
-            if (tag.equals("99999") || tag.equals("none") || tag.equals("null")) {
-
-            } 
-
-            else if (tag.equals("9999")) { //uncolonized province, creates dejure provinces based off of culture
-
-                String[] cultureTitles = Processing.defaultDejureConversion(culture);
-                cultureTitles = Processing.calculateUsedTitles(cultureTitles,impTagInfo,empireRank,ck2LandTot); //determines if tag exists in I:R
-
-                out.println (cultureTitles[1]+" = {");
-                out.println (tab+cultureTitles[2]+" = {");
-                out.println (tab+tab+duchy+" = {");
-                out.println (tab+tab+"}");
-                out.println (tab+"}");
-                out.println ("}");
-
-            } else {
-
-                int tagID = Integer.parseInt(tag);
-
-                String rank = "k";
-                
-                int subjectOrNot = Processing.checkSubjectList(tagID,impSubjectInfo);
-
-                if ((ck2LandTot[tagID] >= empireRank && subjectOrNot == 9999) || (impTagInfo.get(tagID)[17].equals("imperium") && subjectOrNot == 9999)) {
-                    rank = "e";
-
-                    int aq2 = 0;
-
-                    int flag = 0;
-
-                    out.println (rank+"_"+impTagInfo.get(tagID)[0]+" = {");
-
-                    if (impTagInfo.get(tagID)[20] != "none") {
-                        String[] governorships = impTagInfo.get(tagID)[20].split(",");
-                        aq2 = 0;
-                        while (aq2 < governorships.length) {
-                            String govReg = governorships[aq2].split("~")[0];
-                            if (region.equals(govReg)) {
-                                tag = impTagInfo.get(tagID)[0]+"__"+govReg;
-                                aq2 = aq2 + governorships.length;
-                                flag = 1;
-
-                            } else {
-                                aq2 = aq2 + 1;    
-                            }
-                        }
-
-                    }
-
-                    if (flag == 0) {
-                        out.println (tab+"k"+"_"+impTagInfo.get(tagID)[0]+" = {");
-                    } else {
-                        out.println (tab+"k"+"_"+tag+" = {");
-                    }
-
-                    out.println (tab+tab+duchy+" = {");
-                    out.println (tab+tab+"}");
-                    out.println (tab+"}");
-
-                    out.println ("}");
-
-                }
-                else {
-                    //int subjectOrNot = Processing.checkSubjectList(tagID,impSubjectInfo);
-                    int flag2 = 0;
-                    int hasDejureEmpire = 0;
-
-                    if (subjectOrNot != 9999) { //if tag is not free
-                        String[] subjectInfo = impSubjectInfo.get(subjectOrNot).split(",");
-                        tagID = Integer.parseInt(subjectInfo[0]);
-
-                        if (ck2LandTot[tagID] >= empireRank) { //if overlord is e tier, give subject dejure land with overlord as liege
-                            out.println ("e_"+impTagInfo.get(tagID)[0]+" = {");//+"#3_"+tagID
-                            tagID = Integer.parseInt(tag);
-                            flag2 = 1;
-                            hasDejureEmpire = 1;
-                        } else { //if overlord is k tier, calculate liege
-                            String[] cultureTitles = Processing.defaultDejureConversion(cultureOutput(impTagInfo.get(tagID)[6]));
-                            cultureTitles = Processing.calculateUsedTitles(cultureTitles,impTagInfo,empireRank,ck2LandTot); //determines if tag exists in I:R
-                            //print e_liege
-                            out.println (cultureTitles[1]+" = {");
-                            hasDejureEmpire = 1;
-                        }
-                    } else if (ck2LandTot[tagID] > duchyRank) { //if tag is independent k tier, assign appropriate dejure culture empire liege
-                        String[] cultureTitles = Processing.defaultDejureConversion(cultureOutput(impTagInfo.get(tagID)[6]));
-                        cultureTitles = Processing.calculateUsedTitles(cultureTitles,impTagInfo,empireRank,ck2LandTot); //determines if tag exists in I:R
-                        //print e_liege
-                        out.println (cultureTitles[1]+" = {#q1");
-                        flag2 = 1;
-                        hasDejureEmpire = 1;
-                    }
-                    
-                    if (ck2LandTot[tagID] <= duchyRank) { //if duchy, set rank, set kindom liege, and set dejure liege
-                            String[] cultureTitles = Processing.defaultDejureConversion(cultureOutput(impTagInfo.get(tagID)[6]));
-                            cultureTitles = Processing.calculateUsedTitles(cultureTitles,impTagInfo,empireRank,ck2LandTot); //determines if tag exists in I:R
-                            if (flag2 != 1) {
-                                if (hasDejureEmpire == 0) {
-                                    out.println (cultureTitles[1]+" = {");//emperor
-                                    hasDejureEmpire = 1;
-                                }
-                                rank = "d";
-                                out.println (tab+cultureTitles[2]+" = {"); //king
-                                out.println (tab+tab+rank+"_"+impTagInfo.get(tagID)[0]+" = {");
-                                out.println (tab+tab+"}");
-                            } else {
-                                out.println (tab+rank+"_"+impTagInfo.get(tagID)[0]+" = {");
-                            }
-                            flag2 = 1;
-                        }
-                    else {
-                        out.println (tab+rank+"_"+impTagInfo.get(tagID)[0]+" = {");
-                    }
-                    out.println (tab+tab+duchy+" = {");
-                    out.println (tab+tab+"}");
-                    out.println (tab+"}");
-                    out.println ("}");
-                }
-            }
-
-            aqq = aqq + 1;
-
-        }
-
+        out.println ("#"+comment);
         out.flush();
         fileOut.close();
 
@@ -960,6 +677,43 @@ public class Output
         }   
 
     }
+    
+    public static void copyRawFast(String dir1, String dir2) throws IOException
+    {
+
+        String VM = "\\";
+        VM = VM.substring(0);
+
+        FileInputStream fileIn= new FileInputStream(dir1);
+        FileOutputStream fileOut= new FileOutputStream(dir2);
+        
+        ArrayList<Integer> output = new ArrayList<Integer>();
+
+        boolean endOrNot = true;
+        int aqq = 0;
+
+        try {
+            while (endOrNot = true && aqq != -1){
+                if (aqq != -1) {
+                    aqq = fileIn.read();
+                    output.add(aqq);
+                    //fileOut.write(aqq);
+                }
+
+            }
+        }catch (java.util.NoSuchElementException exception){
+            endOrNot = false;
+            fileIn.close();
+            int count = 0;
+            int outputLen = output.size();
+            while (count < output.size()) {
+                fileOut.write(output.get(count));
+            }
+            fileOut.close();
+
+        }   
+
+    }
 
     public static void copyFlag(String ck2Dir, String modDirectory, String rank, String prov, String tag) throws IOException //copies flag files
     {
@@ -974,6 +728,31 @@ public class Output
             Output.copyRaw(ck2Dir+"/gfx/flags/c_"+prov+".tga",modDirectory+"/gfx/flags/"+rank+"_"+tag+".tga");
         }catch (java.io.FileNotFoundException exception) { //if flag cannot be found, will use default one
             Output.copyRaw("defaultOutput/flagDev/c_default.tga",modDirectory+"/gfx/flags/"+rank+"_"+tag+".tga");
+        }
+
+    }
+    
+    public static void copyBAFlags(ArrayList<String> baFlags,String outputDir) throws IOException //copies flag files
+    {
+
+        int count = 1;
+        while (count < baFlags.size()) {
+            String emblemDir = baFlags.get(count);
+            //String updatedEmblem = emblem.replace(".tga","_ba_converted.tga");
+            //updatedEmblem = updatedEmblem.replace(".tga","_ba_converted.tga");
+            //try {
+                int length = emblemDir.length();
+                String emblem = emblemDir.split("colored_emblems/")[1];
+                String updatedEmblem = emblem.replace(".tga","_ba_converted.tga");
+                updatedEmblem = updatedEmblem.replace(".dds","_ba_converted.dds");
+                //String extension = emblem.substring(length-3,length);
+                System.out.println("Copying "+emblem);
+                //Output.copyRaw(emblemDir,outputDir+"/gfx/coat_of_arms/colored_emblems/"+updatedEmblem);
+                Output.copyRaw(emblemDir,outputDir+"/gfx/coat_of_arms/colored_emblems/"+emblem);
+            //}catch (java.io.FileNotFoundException exception) { //if flag cannot be found, will use default one
+                //System.out.println("Error with "+emblem);
+            //}
+            count = count + 1;
         }
 
     }
@@ -1060,51 +839,6 @@ public class Output
         }
         return flagCreated;
 
-    }
-
-    public static ArrayList<String> createFamilies (ArrayList<String> dynList, String tag, String rulerFamily, String rank,
-    ArrayList<String[]> impCharInfoList,ArrayList<String> convertedCharacters,String date,String republicOption, int tagIDNum, 
-    String liegeGov,String directory) throws IOException
-    //creates families for Merchant Republics
-    {
-        int aqq = 1;
-        String VM = "\\"; 
-        VM = VM.substring(0);
-        String tagID = Integer.toString(tagIDNum);
-        String families = Characters.getMajorFamilies(dynList,tagID);
-        String[] familyList = families.split(",");
-        String rulerFamilyOld = rulerFamily;
-        rulerFamily = Processing.calcDynID(rulerFamily);
-        String bDirectory = directory;
-        while (aqq < familyList.length && aqq <= 5) {
-            String[] dynasty = Characters.searchWholeDynasty(dynList,familyList[aqq]);
-            String newDynasty = Processing.calcDynID(dynasty[1]);
-            if (!newDynasty.equals(rulerFamilyOld)) { //if not of ruler's family
-                String palace = newDynasty + "_" + tag;
-                String palaceDir = bDirectory + VM + "b_" + palace + ".txt";
-                if (Processing.checkFile(palaceDir) == false) { //if barony doesn't already exist
-                    String head = Processing.calcHead(impCharInfoList,dynasty[4]);
-                    String headNum = Processing.calcCharID(head);
-                    String[] headCharacter = impCharInfoList.get(Integer.parseInt(head));
-
-                    convertedCharacters = characterCreation(headNum, cultureOutput(headCharacter[1]),Output.religionOutput(headCharacter[2]),
-                        headCharacter[3],headCharacter[0],headCharacter[7],headCharacter[4],headCharacter[8],headCharacter[10],headCharacter[11],
-                        headCharacter[12],headCharacter[13],headCharacter[14],
-                        headCharacter[15],"palace","q","q",convertedCharacters,impCharInfoList,date,directory);
-
-                    dynastyCreation(dynasty[0],headCharacter[7],headCharacter[16],directory);
-
-                    titleCreationCommon(palace,"none","none","none","b",directory); //creates merchant palace for ruler's family
-                    convertedCharacters = titleCreation(palace,headNum,"none","palace","none","b",rank+","+tag,date,republicOption,newDynasty,dynList,
-                        impCharInfoList,convertedCharacters,tagIDNum,liegeGov,directory);
-
-                }
-            }
-            aqq = aqq + 1;
-
-        }
-
-        return convertedCharacters;
     }
 
     public static void irFlagEmblem(String eTexture,String eNameOld,String eColor1,String eColor2,String eName,String eScale,
@@ -1436,7 +1170,12 @@ public class Output
             String newFileName = fileName.substring(21,fileName.length());
             newFileName = outputDir + newFileName;
             String folder = fileInfo.getParent();
+            System.out.println(outputDir+folder);
+            //try {
             folder = outputDir + folder.substring(21,folder.length());
+            //} catch (Exception e) {
+                
+            //}
             File folderFile = new File (folder);
             if (!folderFile.exists()) { //if folders don't exist, make them
                 folderFile.mkdirs();
@@ -1887,6 +1626,82 @@ public class Output
 
         out.flush();
         fileOut.close();
+    }
+    
+    public static void countrySetupCreation(String color, String title, String Directory) throws IOException
+    {
+
+        //try {
+        String VM = "\\"; 
+        VM = VM.substring(0);
+        char quote = '"';
+
+        ArrayList<String> oldFile = new ArrayList<String>();
+
+        Directory = Directory + "/setup/countries";
+        
+        String outputFile = Directory + "/countries.txt";
+        
+        oldFile = Importer.importBasicFile(outputFile);
+
+        FileOutputStream fileOut= new FileOutputStream(outputFile);
+        PrintWriter out = new PrintWriter(fileOut);
+
+        int flag = 0;
+        int aqq = 0;
+
+        try {
+
+            while (flag == 0) {
+                out.println (oldFile.get(aqq));
+                //System.out.println("Outputting "+oldFile.get(aqq));
+                aqq = aqq + 1;
+
+            }
+
+        }catch (java.lang.IndexOutOfBoundsException exception){
+            flag = 1;
+
+        } 
+
+        //System.out.println("Outputting2 "+title+" = "+quote+"setup/countries/converted/"+title+".txt"+quote);
+        //out.println("test");
+        out.println (title+" = "+quote+"setup/countries/converted/"+title+".txt"+quote);
+        out.flush();
+        fileOut.close();
+        
+        setupForCountry(color,title,Directory);
+        
+        //}catch (Exception e) {
+        //    genericBlankFile(Directory + "/converted_countries.txt","#Converted Countries from Bronze Age");
+        //}
+
+    }
+    
+    public static void setupForCountry(String color, String title, String Directory) throws IOException
+    {
+        FileOutputStream fileOut= new FileOutputStream(Directory + "/converted/"+title+".txt");
+        PrintWriter out = new PrintWriter(fileOut);
+        out.println ("color = rgb { "+color+" }");
+        out.println ("color2 = rgb { "+color+" }");
+        out.println ("");
+        out.println ("ship_names = {");
+        out.println ("}");
+        out.flush();
+
+    }
+    
+    public static void outputBasicFile(ArrayList<String> text, String fileName, String Directory) throws IOException
+    {
+        FileOutputStream fileOut= new FileOutputStream(Directory + "/"+ fileName);
+        PrintWriter out = new PrintWriter(fileOut);
+        int count = 0;
+        while (count < text.size()) {
+            out.println (text.get(count));
+            count = count + 1;
+        }
+        out.flush();
+
     }
 
 }

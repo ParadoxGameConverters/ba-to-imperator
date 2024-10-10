@@ -8,7 +8,8 @@
 	secondary_navy = octere
 	flank_navy = liburnian
 	
-	levy_template = hattian_levy
+	#levy_template = hattian_levy
+	levy_template = levy_anatolian
 
 
 	male_names = { #Try add some hattian names
@@ -55,7 +56,7 @@
 		hattian_barb
 	}
 	
-	graphical_culture = hurrian_gfx	
+	graphical_culture = anatolian_gfx	
 	ethnicities = {
 		10 = celtic
 	}

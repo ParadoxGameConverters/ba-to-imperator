@@ -106,8 +106,10 @@
 			 }
              family = { }
         }
-		#Converter added
-		alasiyan = {}
+	#Converter added
+	alasiyan = {}
+	ugaritic = {}
+	#amorite = {}
 
 	}
 	
