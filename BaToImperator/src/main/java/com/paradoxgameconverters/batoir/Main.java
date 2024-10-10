@@ -1,4 +1,4 @@
-package com.paradoxgameconverters.batoir;   
+package com.paradoxgameconverters.batoir;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -345,6 +345,7 @@ public class Main
             
             ArrayList<String> cultureMappings = Importer.importBasicFile("cultureConversion.txt");
             ArrayList<String> religionMappings = Importer.importBasicFile("religionConversion.txt");
+            ArrayList<String> provinceMappings = Importer.importBasicFile("provinceConversion.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
@@ -362,7 +363,9 @@ public class Main
                 //Calc pop total
             while (flag == 0) {
                 //System.out.println(aqq);
-                baProvtoIR = importer.importConvList("provinceConversion.txt",aqq); 
+                //baProvtoIR = importer.importConvList("provinceConversion.txt",aqq); 
+                String aqqStr = Integer.toString(aqq);
+                baProvtoIR = Importer.importMappingFromArray(provinceMappings,aqqStr);
                 
 
                 if (baProvtoIR[0].equals ("peq")) {
@@ -646,6 +649,7 @@ public class Main
                             String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea);
                             String newReligion = Output.cultureOutput(religionMappings,oldReligion);
                             String newGovernment = Output.cultureOutput(govMap,oldGovernment);
+                            String newCapital = Importer.importMappingFromArray(provinceMappings,capital)[1];
                             if (newCulture.equals("99999")) {
                                 newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
                                 System.out.println("Warning, culture "+oldCulture+" is unmapped, setting to 'Roman'");
@@ -653,6 +657,7 @@ public class Main
                             baTag.setCulture(newCulture);
                             baTag.setReligion(newReligion);
                             baTag.setGovernment(newGovernment);
+                            baTag.setCapital(newCapital);
                             String[] locName = importer.importLocalisation(locList,baTag.getLoc(),"rulerDynasty");
                             baTag.setLoc(locName[0]);
                             baTag.setAdj(locName[1]);
@@ -692,6 +697,9 @@ public class Main
             
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
+            //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
+            //existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
+            
             ArrayList<String> convertedProvinces = Processing.generateProvinceFile(irProvinceList);
             Output.outputBasicFile(convertedProvinces,"01_converted_provinces.txt",modDirectory+"/setup/provinces");
             ArrayList<String> convertedTags = Processing.generateCountryFile(baTagInfo,irProvinceList,existingCountryFile);

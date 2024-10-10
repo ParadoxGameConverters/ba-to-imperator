@@ -2385,6 +2385,7 @@ public class Processing
                         String government = irCountry.getGovernment();
                         String culture = irCountry.getCulture();
                         String religion = irCountry.getReligion();
+                        String capital = irCountry.getCapital();
                         //String culture = "roman"; //testing
                         //String religion = "indo_iranian_religion"; //testing
 
@@ -2392,6 +2393,7 @@ public class Processing
                         lines.add(tab+tab+tab+"government = "+government);
                         lines.add(tab+tab+tab+"primary_culture = "+culture);
                         lines.add(tab+tab+tab+"religion = "+religion);
+                        lines.add(tab+tab+tab+"capital = "+capital);
                         lines.add(tab+tab+tab+"own_control_core = {");
                         int provCount = 0;
                         if (ownedProvs != null) {
@@ -2478,5 +2480,145 @@ public class Processing
         }
 
         return provList;
+    }
+    
+    public static ArrayList<Integer> getAllUncolonizedProvinces(ArrayList<Provinces> provList) {
+        int count = 0;
+        ArrayList<Integer> newArray = new ArrayList<Integer>();
+        String uncolonizedDefault = "9999";
+        while (count < provList.size()) { 
+            Provinces province = provList.get(count);
+            String provTag = province.getOwner();
+            int provID = province.getID();
+            if (provTag.equals(uncolonizedDefault)) {
+                newArray.add(provID);
+            }
+            count = count + 1;
+        }
+
+        return newArray;
+    }
+    
+    public static ArrayList<Integer> getAllProvincesInScope(ArrayList<Provinces> provList) { //get's all provinces which will be converted
+        int count = 0;
+        ArrayList<Integer> newArray = new ArrayList<Integer>();
+        while (count < provList.size()) { 
+            Provinces province = provList.get(count);
+            String provTag = province.getOwner();
+            int provID = province.getID();
+            newArray.add(provID);
+            count = count + 1;
+        }
+
+        return newArray;
+    }
+    
+    public static boolean checkIntInList(ArrayList<Integer> convProvinces, int numberBeingChecked)
+    {
+
+        int count = 0;
+        while (count < convProvinces.size()) {
+            if (numberBeingChecked == (convProvinces.get(count))) {
+                return true;
+            }
+            count = count + 1;
+        }
+
+        return false;
+    }
+    
+    public static ArrayList<String> purgeVanillaSetup(ArrayList<Provinces> irProvinceList, ArrayList<String> OldLines) { 
+        //Purges the vanilla tag setup of all provinces within conv scope
+        int count = 0;
+        ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+        
+        int countOldFile = 0;
+        boolean countrySectionFlag = false;
+        boolean coreFlag = false;
+        boolean oneLineFlag = false; //flag for when own_control_core is all on one line
+        ArrayList<Integer> convProvinces = getAllProvincesInScope(irProvinceList);
+        
+        while (countOldFile < OldLines.size()) {
+            String selectedLine = OldLines.get(countOldFile);
+            String selectedLineNoComment = selectedLine.split("#")[0];
+            if (selectedLine.equals("country = {")) {
+                countrySectionFlag = true;
+            }
+            
+            if (countrySectionFlag && selectedLineNoComment.contains("own_control_core")) {
+                coreFlag = true;
+                if (!selectedLine.contains("}")) {
+                    lines.add(selectedLine);
+                    countOldFile = countOldFile + 1;
+                    selectedLine = OldLines.get(countOldFile);
+                    oneLineFlag = false;
+                } else if (selectedLine.contains("}")) {
+                    oneLineFlag = true;
+                    System.out.println("OneLine at"+selectedLine);
+                }
+            }
+            
+            if (countrySectionFlag && coreFlag) {
+                //while (!selectedLine.contains("}")) {
+                    //lines.add(selectedLine);
+                    //countOldFile = countOldFile + 1;
+                    //selectedLine = OldLines.get(countOldFile);
+                    selectedLineNoComment = selectedLine.split("#")[0];
+                    selectedLineNoComment = selectedLineNoComment.replace(tab," ");
+                    String[] countryProvinces = selectedLineNoComment.split(" ");
+                    int count2 = 0;
+                    String newProvs = tab+tab+tab+tab;
+                    while (count2 < countryProvinces.length) {
+                        String selectedProv = countryProvinces[count2];
+                        selectedProv = selectedProv.replace(tab,"");
+                        try {
+                            //if (!selectedProv.equals(" ") && selectedProv != null && !selectedProv.equals("}") && !selectedProv.equals("")) {
+                                int selectedProvInt = Integer.parseInt(selectedProv);
+                                boolean inConvScope = checkIntInList(convProvinces,selectedProvInt);
+                                if (!inConvScope) {
+                                    newProvs = newProvs + " " + selectedProv;
+                                }
+                            
+                            //}
+                        } catch (java.lang.NumberFormatException exception) {
+                        
+                        }
+                        count2 = count2 + 1;
+                    }
+                    if (newProvs.contains(tab+tab+tab+tab+" ")) {
+                        newProvs.replace(tab+tab+tab+tab+" ",tab+tab+tab+tab);
+                        if (oneLineFlag) {
+                            System.out.println("OneLine");
+                            newProvs = newProvs.replace(tab+tab+tab+tab,tab+tab+tab+"own_control_core = {");
+                            newProvs = newProvs + " }";
+                            //coreFlag = false;
+                            //oneLineFlag = false;
+                        }
+                    }
+                    System.out.println(newProvs);
+                    
+                    lines.add(newProvs);
+                    //if (!oneLineFlag) {
+                        //lines.add("}");
+                    //}
+                        //lines.add(tab+tab+tab+"}");
+                        coreFlag = false;
+                        oneLineFlag = false;
+                        //System.out.println("OneLine False");
+                    //}
+                //}
+            } else {
+                lines.add(selectedLine);
+            }
+            
+            if (coreFlag && selectedLineNoComment.contains("}")) {
+                coreFlag = false;
+            }
+            countOldFile = countOldFile + 1;
+        }
+
+        return lines;
     }
 }
