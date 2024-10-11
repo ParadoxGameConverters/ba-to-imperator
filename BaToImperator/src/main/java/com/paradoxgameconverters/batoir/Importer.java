@@ -44,7 +44,7 @@ public class Importer
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[6];
+        output = new String[7];
 
         output[0] = "9999"; //default for no owner, uncolonized province
         output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
@@ -52,10 +52,11 @@ public class Importer
         output[3] = "0"; //default for no pops, uncolonized or uninhabitible province
         output[4] = "{ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }"; //default for no buildinga
         output[5] = "9999"; //default for no monument
+        output[6] = "settlement"; //default for no city status
 
         impProvList.add(output); //default at ID 0
         
-        Provinces tmpProv = Provinces.newProv(output[0],output[1],output[2],0,0,0,0,0,0,aqq);
+        Provinces tmpProv = Provinces.newProv(output[0],output[1],output[2],0,0,0,0,0,0,output[6],aqq);
         baProvList.add(tmpProv);
 
         try {
@@ -131,6 +132,15 @@ public class Importer
                             provincePopList.add(indvPop);
                             output[3] = Integer.toString(aqq);
                         }
+                        
+                        //cityStatus
+                        if (qaaa.split("=")[0].equals( tab+tab+"province_rank" ) ) {
+                            output[6] = qaaa.split("=")[1];
+                            output[6] = output[6].substring(1,output[6].length()-1);
+                            if (output[6].equals("city_metropolis")) {
+                                output[6] = "metropolis"; //switched to just metropolis for clarity
+                            }
+                        }
 
                         //might be used or ignored
                         if (qaaa.split("=")[0].equals( tab+tab+"buildings" ) ) {
@@ -158,11 +168,12 @@ public class Importer
                             int monID = Integer.parseInt(tmpOutput[5]);
                             
                             Provinces baProv = Provinces.newProv(tmpOutput[0],tmpOutput[1],tmpOutput[2],monID,nobleRatio,citizenRatio,freemenRatio,
-                            tribesmenRatio,slaveRatio,aqq);
+                            tribesmenRatio,slaveRatio,tmpOutput[6],aqq);
                             //System.out.println("NobleRatio:"+baProv.getNobleRatio()+"|SlaveRatio:"+baProv.getSlaveRatio()+"|Cult:"+baProv.getCulture());
                             
                             if (provincePopList.size() > 0) {
                                 baProv.addPopArray(provincePopList);
+                                baProv.setPopCS();
                             }
                             
                             
@@ -174,6 +185,7 @@ public class Importer
                             output[3] = "0"; //default for no pops, uncolonized or uninhabitible province
                             output[4] = "{ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }"; //default for no buildinga
                             output[5] = "9999"; //default for no monument
+                            output[6] = "settlement"; //default for no city status
                             
                             provincePopList = new ArrayList<Pop>();
                             

@@ -1956,6 +1956,12 @@ public class Processing
             else if (type.equals("cultureAndReligionAndType")) {
                 popType = pops.get(count).getCulture()+"---"+pops.get(count).getReligion()+"---"+pops.get(count).getType();
             }
+            else if (type.equals("cityStatus")) {
+                popType = pops.get(count).getCityStatus();
+                if (popType.equals("metropolis")) {
+                    popType = "city"; //combine cities and metropoli for the purposes of city-generation
+                }
+            }
 
             if (count == 0) {
                 longText = popType+","+1;
@@ -2310,6 +2316,10 @@ public class Processing
             } else {
                 String provCulture = irProv.getCulture();
                 String provReligion = irProv.getReligion();
+                String provCityStatus = irProv.getCityStatus();
+                if (provCityStatus.equals("metropolis")) {
+                    provCityStatus = "city_metropolis";
+                }
                 //String provCulture = "roman";
                 //String provReligion = "indo_iranian_religion";
             
@@ -2317,7 +2327,7 @@ public class Processing
                 lines.add(tab+"barbarian_power=0");
                 lines.add(tab+"civilization_value=0");
                 lines.add(tab+"culture="+quote+provCulture+quote);
-                lines.add(tab+"province_rank="+quote+"settlement"+quote);
+                lines.add(tab+"province_rank="+quote+provCityStatus+quote);
                 lines.add(tab+"religion="+quote+provReligion+quote);
                 lines.add(tab+"terrain="+quote+irProv.getTerrain()+quote);
                 lines.add(tab+"trade_goods="+quote+irProv.getTradeGood()+quote);

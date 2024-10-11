@@ -1,4 +1,4 @@
-package com.paradoxgameconverters.batoir;
+package com.paradoxgameconverters.batoir;   
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -340,6 +340,7 @@ public class Main
             System.out.println(baProvInfoList.get(2200).getFreemen().size());
             System.out.println(baProvInfoList.get(2200).getTribesmen().size());
             System.out.println(baProvInfoList.get(2200).getSlaves().size());
+            
             int baPopTotal = 0;//total number of pops in BA save
             totalPop = 0;
             
@@ -356,7 +357,7 @@ public class Main
             //ArrayList<String> countTest3 = Processing.convertPopCountToRatios(countTest2);
             //ArrayList<String> countTest4 = Processing.reallocatePops(countTest3,30);
             ArrayList<Provinces> irProvinceList = new ArrayList<Provinces>();//ArrayList
-            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,0);
+            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0);
             irProvinceList.add(blankProv);
             //ArrayList<String[]> irProvMappings = new ArrayList<String[]>();//ArrayList 
             try { ////Get counts of culture, religion, and TAG ownership
@@ -393,7 +394,7 @@ public class Main
                     int irProvListID = Processing.getProvByID(irProvinceList,ckProvNum);
                     Provinces irProv = irProvinceList.get(irProvListID);
                     if (irProvListID == 0) {
-                        irProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,0);
+                        irProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0);
                         irProv.setID(ckProvNum);
                         irProvinceList.add(blankProv);
                         irProvListID = irProvinceList.size()-1;
@@ -508,6 +509,14 @@ public class Main
                     ArrayList<String> ownerCount2 = Processing.condenseArrayStr(ownerCount);
                     String irProvOwner = Processing.getMajority(ownerCount2);
                     irProvInfo.setOwner(irProvOwner);
+                    
+                    String[] cityStatusCount = Processing.countPops(irProvInfo.getPops(),"cityStatus");
+                    ArrayList<String> cityStatusCount2 = Processing.condenseArrayStr(cityStatusCount);
+                    String irProvCS = Processing.getMajority(cityStatusCount2);
+                    if (irProvCS.equals("city") && provinceTotal >= 75) {
+                        irProvCS = "metropolis";
+                    }
+                    irProvInfo.setCityStatus(irProvCS);
                     
                     //String[] typeCount = Processing.countPops(irProvInfo.getPops(),"type");
                     float[] typeRatios = Processing.getTypeRatios(irProvInfo.getPops());

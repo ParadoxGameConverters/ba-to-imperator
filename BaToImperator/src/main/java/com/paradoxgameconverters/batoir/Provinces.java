@@ -18,6 +18,7 @@ public class Provinces
     private double slaveRatio;
     private String region;
     private String area;
+    private String cityStatus;
     public Provinces() {
         int id;
         String owner;
@@ -34,6 +35,15 @@ public class Provinces
         double slaveRatio;
         String region;
         String area;
+        String cityStatus; //is expected to be either settlement, city, or metropolis
+    }
+    
+    public void setCityStatus(String provCityStatus) {
+        cityStatus = provCityStatus;
+    }
+
+    public String getCityStatus() {
+        return cityStatus;
     }
     
     public void setArea(String provArea) {
@@ -310,9 +320,25 @@ public class Provinces
 
     }
     
+    public void setPopCS() { //sets city-status for all pops
+        int count = 0;
+        try {
+            while(count < provPops.size()) {
+                Pop selectedPop = provPops.get(count);
+                selectedPop.setCityStatus(cityStatus);
+                //System.out.println(selectedPop.getType());
+                
+                count = count + 1;
+            }
+        } catch (Exception e) {
+
+        }
+
+    }
+    
 
     public static Provinces newProv(String provOwner, String provCul, String provRel, int provMon, double provNR, double provCR, double provFR,
-    double provTR, double provSR, int provID) {
+    double provTR, double provSR, String provCS, int provID) {
         Provinces newProv = new Provinces();
         newProv.setOwner(provOwner);
         newProv.setCulture(provCul);
@@ -323,6 +349,7 @@ public class Provinces
         newProv.setFreemenRatio(provFR);
         newProv.setTribesmenRatio(provTR);
         newProv.setSlaveRatio(provSR);
+        newProv.setCityStatus(provCS);
         newProv.setID(provID);
         return newProv;
     }

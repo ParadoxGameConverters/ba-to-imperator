@@ -12,12 +12,14 @@ public class Pop
     private String culture;
     private String religion;
     private String tag;
+    private String cityStatus;
     public Pop() {
         int id;
         String type; //pop class, noble/citizen/freemen/tribesmen/slave, tag which rules over pop
         String culture;
         String religion;
         String tag;
+        String cityStatus;
     }
     
     public void setID(int popID) {
@@ -53,6 +55,13 @@ public class Pop
     }
     public String getTag() {
         return tag;
+    }
+    
+    public void setCityStatus(String name) {
+        cityStatus = name;
+    }
+    public String getCityStatus() {
+        return cityStatus;
     }
     
     public static Pop newPop(int popID, String popType, String popCul, String popRel) {
