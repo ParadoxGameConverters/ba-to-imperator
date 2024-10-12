@@ -1,5 +1,4 @@
 package com.paradoxgameconverters.batoir;
-
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -7,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.FileOutputStream;
 import java.util.Random;
 import java.util.ArrayList;
+import java.io.File;
 /**
  * Everything dealing with characters
  *
@@ -357,6 +357,51 @@ public class Characters
         }
 
         return familyList;
+    }
+    
+    public static int getAvailableID (String dir) throws IOException //get's the first available character ID
+    {
+        int count = 0;
+        String charDirectory = dir+"/setup/characters";
+        
+        File characterFolder = new File(charDirectory);
+        String[] characterFiles = characterFolder.list();
+        int highestID = 1;
+        String highestFile = "";
+
+        while (count < characterFiles.length) {
+            String charFileLocation = charDirectory+"/"+characterFiles[count];
+            ArrayList<String> charFile = Importer.importBasicFile(charFileLocation);
+            int count2 = 0;
+            while (count2 < charFile.size()) {
+                String line = charFile.get(count2);
+                if (line.contains("={")) {
+                    //System.out.println(line);
+                    line = line.split("=")[0];
+                    line = line.replace("\t","");
+                    line = line.replace(" ","");
+                    int charID = 0;
+                    try {
+                        charID = Integer.parseInt(line);
+                        if (charID > highestID) {
+                            highestID = charID;
+                            highestFile = characterFiles[count];
+                        }
+                    } catch (java.lang.NumberFormatException exception) {
+                        //System.out.println(line+" is no number!");
+                    }
+                }
+                
+                count2 = count2 + 1;
+            }
+
+            //System.out.println("The highest character is in "+highestFile);
+            count = count + 1;
+        }
+        int availableID = highestID + 1; //first available ID is the highest + 1
+        System.out.println("The highest character is in "+highestFile);
+
+        return availableID;
     }
     
 }
