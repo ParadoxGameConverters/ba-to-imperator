@@ -581,7 +581,7 @@ public class Importer
         String[] output;   // Owner Culture Religeon PopTotal Buildings
         output = new String[11];
 
-        output[0] = "bad"; //default for no CK II game directory
+        output[0] = "bad"; //default for no Bronze Age directory
         output[1] = "bad"; //default for no IR game directory
         output[2] = "bad"; //default for no IR mod directory
         output[3] = "bad"; //default for no CK II mod directory

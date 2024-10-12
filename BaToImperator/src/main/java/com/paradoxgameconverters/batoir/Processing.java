@@ -2631,4 +2631,24 @@ public class Processing
 
         return lines;
     }
+    
+    public static ArrayList<Characters> applyNewIdsToChars (ArrayList<Characters> convCharacters, int availableID) throws IOException
+    {
+
+        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        int count = 0;
+        while (count < convCharacters.size()) {
+            Characters selectedChar = convCharacters.get(count);
+            int newID = availableID;
+            selectedChar.setIrID(newID);
+            
+            convCharactersNew.add(selectedChar);
+            
+            availableID = availableID + 1;
+            
+            count = count + 1;
+        }
+        return convCharactersNew;
+
+    }
 }

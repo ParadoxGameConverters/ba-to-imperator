@@ -30,11 +30,11 @@ public class Characters
     private int spouse;
     private ArrayList<Integer> children;
     private int irID;
-    private int corruption;
+    private double corruption;
     private String birthday;
     private String deathday;
     private String name;
-    
+    private int country;
     public Characters() {
         int baID;
         String culture;
@@ -51,10 +51,11 @@ public class Characters
         Integer[] children;
         int familyName;
         int irID;
-        int corruption;
+        double corruption;
         String birthday;
         String deathday;
         String name;
+        int country;
     }
     
     public void setBaID(int charBaID) {
@@ -162,10 +163,10 @@ public class Characters
         return irID;
     }
     
-    public void setCorruption(int charCorruption) {
+    public void setCorruption(double charCorruption) {
         corruption = charCorruption;
     }
-    public int getCorruption() {
+    public double getCorruption() {
         return corruption;
     }
     
@@ -190,8 +191,15 @@ public class Characters
         return name;
     }
     
+    public void setCountry(int charCountry) {
+        country = charCountry;
+    }
+    public int getCountry() {
+        return country;
+    }
+    
     public static Characters newCharacter(int baID,String culture,String religion,String sex,int dynastyID,ArrayList<String> traits,int martial,
-    int finesse,int charisma,int zeal,int spouse,ArrayList<Integer> children,int corruption,String birthday,String deathday,String name) {
+    int finesse,int charisma,int zeal,int spouse,ArrayList<Integer> children,double corruption,String birthday,String deathday,String name, int country) {
         Characters newCharacter = new Characters();
         
         newCharacter.setBaID(baID);
@@ -210,6 +218,7 @@ public class Characters
         newCharacter.setBirthday(birthday);
         newCharacter.setDeathday(deathday);
         newCharacter.setName(name);
+        newCharacter.setCountry(country);
         return newCharacter;
     }
     
@@ -237,7 +246,7 @@ public class Characters
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[20];
+        output = new String[21];
 
         output[0] = "noName"; //default for no owner, uncolonized province
         output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
@@ -253,9 +262,10 @@ public class Characters
         output[14] = "none"; //default for unmarried character
         output[15] = "-1"; //default for character with no children
         output[16] = "0"; //default for minor character with no family name
-        output[17] = "0"; //default for no corruption
+        output[17] = "0.0"; //default for no corruption
         output[18] = "0.0.100"; //default for no birthday
         output[19] = "none"; //default for no death date
+        output[20] = "0"; //default for no country
 
         try {
             while (endOrNot = true){
@@ -273,6 +283,9 @@ public class Characters
                         output[0] = qaaa.split("=")[1];
                         output[0] = output[0].substring(1,output[0].length()-1);
                         output[0] = output[0].replace("_","'");
+                    }
+                    else if (qaaa.split("=")[0].equals( tab+"country" ) ) {
+                        output[20] = qaaa.split("=")[1];
                     }
                     else if (qaaa.split("=")[0].equals( tab+"family_name" ) ) {
                         output[16] = qaaa.split("=")[1];
@@ -371,6 +384,10 @@ public class Characters
                         flag = 1; //end loop
                         output[6] = qaaa.split("=")[1];
                     }
+                    
+                    else if (qaaa.split("=")[0].equals( tab+"corruption" ) ) {
+                        output[17] = qaaa.split("=")[1];
+                    }
 
                     else if (qaaa.split("=")[0].equals( Integer.toString(impCharList.size()+1) ) ) { //Somehow has gone past checks, immediately end
                         aqq = aqq + 1;
@@ -431,8 +448,11 @@ public class Characters
                             aq2 = aq2 + 1;
                         }
                         
+                        double tmpCorruption = Double.parseDouble(tmpOutput[17]);
+                        int tmpCountry = Integer.parseInt(tmpOutput[20]);
+                        
                         Characters convertedCharacter = newCharacter(idCount,tmpOutput[1],tmpOutput[2],tmpOutput[4],dynID,traitsList,
-                        tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,0,tmpOutput[18],tmpOutput[19],tmpOutput[0]);
+                        tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,tmpCorruption,tmpOutput[18],tmpOutput[19],tmpOutput[0],tmpCountry);
                         
                         if (!tmpOutput[16].equals("0")) {
                             convertedCharacter.setDynastyName("minor_"+tmpOutput[16]);
@@ -456,9 +476,10 @@ public class Characters
                         output[14] = "none"; //default for unmarried character
                         output[15] = "-1"; //default for character with no children
                         output[16] = "0"; //default for minor character with no family name
-                        output[17] = "0"; //default for no corruption
+                        output[17] = "0.0"; //default for no corruption
                         output[18] = "0.0.100"; //default for no birthday
                         output[19] = "none"; //default for no death date
+                        output[20] = "0"; //default for no country
                     }
 
                 }
@@ -629,6 +650,7 @@ public class Characters
         String[] characterFiles = characterFolder.list();
         int highestID = 1;
         String highestFile = "";
+        System.out.println(charDirectory);
 
         while (count < characterFiles.length) {
             String charFileLocation = charDirectory+"/"+characterFiles[count];

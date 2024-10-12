@@ -60,7 +60,7 @@ public class Main
             VM = VM.substring(0);
             String VN = "//";
             VN = VN.substring(0);
-            Dir2 = configDirectories[1];
+            Dir2 = configDirectories[1]; //I:R game dir in steamapps/
             String irModDir = configDirectories[2];
             //Dir = configDirectories[3];
             Dir = "output";
@@ -551,7 +551,12 @@ public class Main
             
             LOGGER.info("Converting characters...");
             
+            int firstAvailableCharID = Characters.getAvailableID(Dir2+"/game");
             
+            ArrayList<Characters> baCharacters = new ArrayList<Characters>();
+            baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
+            
+            baCharacters = Processing.applyNewIdsToChars(baCharacters,firstAvailableCharID);
 
             aq2 = 0;
             LOGGER.info("Province religion and culture calculated");
@@ -617,9 +622,6 @@ public class Main
             String govReg;
             String govRegID;
             String[] govCharacter;
-
-            ArrayList<Characters> baCharacters = new ArrayList<Characters>();
-            baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
 
             //impDynList = Characters.importDynasty(saveDynasty);
 
