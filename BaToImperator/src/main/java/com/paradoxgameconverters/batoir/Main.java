@@ -548,6 +548,10 @@ public class Main
             LOGGER.info("Provinces calculated after "+provinceTimeTot+" minutes");
             LOGGER.finest("35%");
             aq2 = 0;
+            
+            LOGGER.info("Converting characters...");
+            
+            
 
             aq2 = 0;
             LOGGER.info("Province religion and culture calculated");
@@ -614,7 +618,8 @@ public class Main
             String govRegID;
             String[] govCharacter;
 
-            //impCharInfoList = Characters.importChar(saveCharacters,compressedOrNot);
+            ArrayList<Characters> baCharacters = new ArrayList<Characters>();
+            baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
 
             //impDynList = Characters.importDynasty(saveDynasty);
 

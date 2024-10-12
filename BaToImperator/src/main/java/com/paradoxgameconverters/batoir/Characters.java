@@ -15,9 +15,205 @@ import java.io.File;
  */
 public class Characters
 {
-    private int x;
-
-    public static ArrayList<String[]> importChar (String name,int compressedOrNot) throws IOException
+    private int baID;
+    private String culture;
+    private String religion;
+    private int age;
+    private String sex;
+    private String dynastyName;
+    private int dynastyID;
+    private ArrayList<String> traits;
+    private int martial;
+    private int finesse;
+    private int charisma;
+    private int zeal;
+    private int spouse;
+    private ArrayList<Integer> children;
+    private int irID;
+    private int corruption;
+    private String birthday;
+    private String deathday;
+    private String name;
+    
+    public Characters() {
+        int baID;
+        String culture;
+        String religion;
+        int age;
+        String sex;
+        String dynasty;
+        String traits;
+        int martial;
+        int finesse;
+        int charisma;
+        int zeal;
+        int spouse;
+        Integer[] children;
+        int familyName;
+        int irID;
+        int corruption;
+        String birthday;
+        String deathday;
+        String name;
+    }
+    
+    public void setBaID(int charBaID) {
+        baID = charBaID;
+    }
+    public int getBaID() {
+        return baID;
+    }
+    
+    public void setCulture(String charCulture) {
+        culture = charCulture;
+    }
+    public String getCulture() {
+        return culture;
+    }
+    
+    public void setReligion(String charReligion) {
+        religion = charReligion;
+    }
+    public String getReligion() {
+        return religion;
+    }
+    
+    public void setAge(int charAge) {
+        age = charAge;
+    }
+    public int getAge() {
+        return age;
+    }
+    
+    public void setSex(String charSex) {
+        sex = charSex;
+    }
+    public String getSex() {
+        return sex;
+    }
+    
+    public void setDynastyName(String charDynastyName) {
+        dynastyName = charDynastyName;
+    }
+    public String getDynastyName() {
+        return dynastyName;
+    }
+    
+    public void setDynastyID(int charDynastyID) {
+        dynastyID = charDynastyID;
+    }
+    public int getDynastyID() {
+        return dynastyID;
+    }
+    
+    public void setTraits(ArrayList<String> charTraits) {
+        traits = charTraits;
+    }
+    public ArrayList<String> getCharTraits() {
+        return traits;
+    }
+    
+    public void setMartial(int charMartial) {
+        martial = charMartial;
+    }
+    public int getMartial() {
+        return martial;
+    }
+    
+    public void setFinesse(int charFinesse) {
+        finesse = charFinesse;
+    }
+    public int getFinesse() {
+        return finesse;
+    }
+    
+    public void setCharisma(int charCharisma) {
+        charisma = charCharisma;
+    }
+    public int getCharisma() {
+        return charisma;
+    }
+    
+    public void setZeal(int charZeal) {
+        zeal = charZeal;
+    }
+    public int getZeal() {
+        return zeal;
+    }
+    
+    public void setChildren(ArrayList<Integer> charChildren) {
+        children = charChildren;
+    }
+    public ArrayList<Integer> getChildren() {
+        return children;
+    }
+    
+    public void setSpouse(int charSpouse) {
+        spouse = charSpouse;
+    }
+    public int getSpouse() {
+        return spouse;
+    }
+    
+    public void setIrID(int charIrID) {
+        irID = charIrID;
+    }
+    public int getIrID() {
+        return irID;
+    }
+    
+    public void setCorruption(int charCorruption) {
+        corruption = charCorruption;
+    }
+    public int getCorruption() {
+        return corruption;
+    }
+    
+    public void setBirthday(String charBirthday) {
+        birthday = charBirthday;
+    }
+    public String getBirthday() {
+        return birthday;
+    }
+    
+    public void setDeathday(String charDeathday) {
+        deathday = charDeathday;
+    }
+    public String getDeathday() {
+        return deathday;
+    }
+    
+    public void setName(String charName) {
+        name = charName;
+    }
+    public String getName() {
+        return name;
+    }
+    
+    public static Characters newCharacter(int baID,String culture,String religion,String sex,int dynastyID,ArrayList<String> traits,int martial,
+    int finesse,int charisma,int zeal,int spouse,ArrayList<Integer> children,int corruption,String birthday,String deathday,String name) {
+        Characters newCharacter = new Characters();
+        
+        newCharacter.setBaID(baID);
+        newCharacter.setCulture(culture);
+        newCharacter.setReligion(religion);
+        newCharacter.setSex(sex);
+        newCharacter.setDynastyID(dynastyID);
+        newCharacter.setTraits(traits);
+        newCharacter.setMartial(martial);
+        newCharacter.setFinesse(finesse);
+        newCharacter.setCharisma(charisma);
+        newCharacter.setZeal(zeal);
+        newCharacter.setSpouse(spouse);
+        newCharacter.setChildren(children);
+        newCharacter.setCorruption(corruption);
+        newCharacter.setBirthday(birthday);
+        newCharacter.setDeathday(deathday);
+        newCharacter.setName(name);
+        return newCharacter;
+    }
+    
+    public static ArrayList<Characters> importChar (String name,int compressedOrNot) throws IOException
     {
 
         String tab = "	";
@@ -31,14 +227,17 @@ public class Characters
         String keyWord = "1={";
 
         int aqq = 0;
+        
+        int idCount = 0;
 
         ArrayList<String[]> impCharList= new ArrayList<String[]>();
+        ArrayList<Characters> baCharacters = new ArrayList<Characters>();
 
         boolean endOrNot = true;
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[17];
+        output = new String[20];
 
         output[0] = "noName"; //default for no owner, uncolonized province
         output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
@@ -51,9 +250,12 @@ public class Characters
         output[11] = "0"; //default for no finesse
         output[12] = "0"; //default for no charisma
         output[13] = "0"; //default for no zeal
-        output[14] = "0"; //default for unmarried character
-        output[15] = "0"; //default for character with no children
+        output[14] = "none"; //default for unmarried character
+        output[15] = "-1"; //default for character with no children
         output[16] = "0"; //default for minor character with no family name
+        output[17] = "0"; //default for no corruption
+        output[18] = "0.0.100"; //default for no birthday
+        output[19] = "none"; //default for no death date
 
         try {
             while (endOrNot = true){
@@ -145,8 +347,12 @@ public class Characters
                         aqq = aqq + 1;
                         output[3] = qaaa.split("=")[1];
                     }
+                    else if (qaaa.split("=")[0].equals( tab+"birth_date" ) ) {
+                        aqq = aqq + 1;
+                        output[18] = qaaa.split("=")[1];
+                    }
 
-                    //might be used or ignored
+
                     else if (qaaa.equals( tab+"female=yes" ) ) {
                         aqq = aqq + 1;
                         output[4] = "f";
@@ -155,8 +361,9 @@ public class Characters
                     else if (qaaa.split("=")[0].equals( tab+"death_date" ) ) {
                         aqq = aqq + 1;
                         flag = 1; //end loop, babies which die don't have any experience field
-                        output[4] = output[4]+"_"+qaaa.split("=")[1];
+                        //output[4] = output[4]+"_"+qaaa.split("=")[1];
                         output[6] = "0";
+                        output[19] = qaaa.split("=")[1];
                     }
 
                     else if (qaaa.split("=")[0].equals( tab+"character_experience" ) ) {
@@ -183,10 +390,61 @@ public class Characters
                         }
 
                         impCharList.add(tmpOutput);
+                        
+                        int dynID = Integer.parseInt(tmpOutput[7]);
+                        
+                        ArrayList<String> traitsList = new ArrayList<String>();
+                        String traitsArray[] = tmpOutput[8].split(" ");
+                        aq2 = 0;
+                        while (aq2 < traitsArray.length-1) {
+                            String selectedTrait = traitsArray[aq2];
+                            //System.out.println(selectedTrait);
+                            selectedTrait = Processing.cutQuotes(selectedTrait);
+                            traitsList.add(selectedTrait);
+                            aq2 = aq2 + 1;
+                        }
+                        
+                        int tmpM = Integer.parseInt(tmpOutput[10]);
+                        int tmpF = Integer.parseInt(tmpOutput[11]);
+                        int tmpC = Integer.parseInt(tmpOutput[12]);
+                        int tmpZ = Integer.parseInt(tmpOutput[13]);
+                        
+                        int tmpSpouse = -1;
+                        
+                        if (tmpOutput[14].contains(" ")) {
+                            String[] tmpSpouses = tmpOutput[14].split(" ");
+                            tmpOutput[14] = tmpSpouses[tmpSpouses.length-1];
+                        }
+                        
+                        if (!tmpOutput[14].equals("none")) {
+                            tmpSpouse = Integer.parseInt(tmpOutput[14]);
+                        }
+                        
+                        ArrayList<Integer> tmpChildren = new ArrayList<Integer>();
+                        String childrenArray[] = tmpOutput[15].split(" ");
+                        aq2 = 0;
+                        while (aq2 < childrenArray.length) {
+                            int selectedChild = Integer.parseInt(childrenArray[aq2]);
+                            if (selectedChild > -1) {
+                                tmpChildren.add(selectedChild);
+                            }
+                            aq2 = aq2 + 1;
+                        }
+                        
+                        Characters convertedCharacter = newCharacter(idCount,tmpOutput[1],tmpOutput[2],tmpOutput[4],dynID,traitsList,
+                        tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,0,tmpOutput[18],tmpOutput[19],tmpOutput[0]);
+                        
+                        if (!tmpOutput[16].equals("0")) {
+                            convertedCharacter.setDynastyName("minor_"+tmpOutput[16]);
+                        }
+                        
+                        baCharacters.add(convertedCharacter);
+                        
+                        idCount = idCount + 1;
 
                         output[0] = "noName"; //default for no owner, uncolonized province
-                        output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
-                        output[2] = "noReligion"; //default for no religion, uncolonized province with 0 pops
+                        output[1] = "noCulture"; //default for no culture
+                        output[2] = "noReligion"; //default for no religion
                         output[3] = "30"; //default age
                         output[4] = "m"; //by default all characters are male, unless specified to be female
                         output[7] = "q"; //default for no dynasty
@@ -195,9 +453,12 @@ public class Characters
                         output[11] = "0"; //default for no finesse
                         output[12] = "0"; //default for no charisma
                         output[13] = "0"; //default for no zeal
-                        output[14] = "0"; //default for unmarried character
-                        output[15] = "0"; //default for character with no children
+                        output[14] = "none"; //default for unmarried character
+                        output[15] = "-1"; //default for character with no children
                         output[16] = "0"; //default for minor character with no family name
+                        output[17] = "0"; //default for no corruption
+                        output[18] = "0.0.100"; //default for no birthday
+                        output[19] = "none"; //default for no death date
                     }
 
                 }
@@ -208,7 +469,7 @@ public class Characters
 
         }   
 
-        return impCharList;
+        return baCharacters;
 
     }
 
