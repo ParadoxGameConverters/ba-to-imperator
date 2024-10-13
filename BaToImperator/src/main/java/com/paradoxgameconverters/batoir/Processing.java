@@ -522,6 +522,17 @@ public class Processing
                     String provinceName = qaaa.split(" = ")[0];
                     while (!qaaa.equals(endBracket) && !qaaa.equals(endBracket2)) {
                         qaaa = scnr.nextLine();
+                        qaaa = qaaa.replace("0}","0 }");
+                        qaaa = qaaa.replace("1}","1 }");
+                        qaaa = qaaa.replace("2}","2 }");
+                        qaaa = qaaa.replace("3}","3 }");
+                        qaaa = qaaa.replace("4}","4 }");
+                        qaaa = qaaa.replace("5}","5 }");
+                        qaaa = qaaa.replace("6}","6 }");
+                        qaaa = qaaa.replace("7}","7 }");
+                        qaaa = qaaa.replace("8}","8 }");
+                        qaaa = qaaa.replace("9}","9 }");
+                        
                         qaaa = qaaa.replace("  }"," }");
                         qaaa = qaaa.replace(tab,"");
                         if (qaaa.contains("provinces = { ")) {
@@ -2709,13 +2720,13 @@ public class Processing
         if (birthMonth > irDateMonth && newBirthYear >= irDateYear) { //rare edge-case if birth/death occured on same year of save on or after October
             birthMonth = irDateMonth;
             newBirthYear = irDateYear;
-            System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
+            //System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
         }
         
         if (birthMonth == irDateMonth && newBirthYear >= irDateYear && birthDayOfMonth > irDateDayOfMonth) {
             birthDayOfMonth = irDateDayOfMonth;
             newBirthYear = irDateYear;
-            System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
+            //System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
         }
             
         String newBirthday = newBirthYear+"."+birthMonth+"."+birthDayOfMonth;
@@ -2731,5 +2742,48 @@ public class Processing
         int dateYear = Integer.parseInt(dateSplit[0]);
         
         return dateYear;
+    }
+    
+    public static ArrayList<Characters> adjustCharacterCultRel (ArrayList<Characters> convCharacters, ArrayList<Country> baTagInfo,
+    ArrayList<Provinces> baProvInfoList, ArrayList<String> cultureMappings, ArrayList<String> religionMappings) throws IOException
+    {
+        
+        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        int count = 0;
+        while (count < convCharacters.size()) {
+            Characters selectedChar = convCharacters.get(count);
+            int charCountry = selectedChar.getCountry();
+            Country selectedCountry = baTagInfo.get(charCountry);
+            String capital = selectedCountry.getCapital();
+            int capInt = Integer.parseInt(capital);
+            Provinces capitalBAProv = baProvInfoList.get(capInt);
+            String capitalArea = capitalBAProv.getArea();
+            String capitalRegion = capitalBAProv.getRegion();
+            
+            String oldCulture = selectedChar.getCulture();
+            String oldReligion = selectedChar.getReligion();
+            
+            if (capitalRegion == null || capitalArea == null) {
+                System.out.println("Area "+capitalArea+" of province "+capInt+" has no region!");
+                capitalRegion = "debug";
+                capitalArea = "debug";
+            }
+            
+            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea);
+            String newReligion = Output.cultureOutput(religionMappings,oldReligion);
+            
+            if (newCulture.equals("99999")) {
+                newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
+                System.out.println("Warning, culture "+oldCulture+" is unmapped, setting to 'Roman'");
+            }
+            
+            selectedChar.setCulture(newCulture);
+            selectedChar.setReligion(newReligion);
+            
+            convCharactersNew.add(selectedChar);
+            
+            count = count + 1;
+        }
+        return convCharactersNew;
     }
 }

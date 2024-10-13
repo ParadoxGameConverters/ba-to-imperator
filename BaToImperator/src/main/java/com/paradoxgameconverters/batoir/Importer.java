@@ -1629,6 +1629,8 @@ public class Importer
                     output = qaaa.split(" =")[0];
                     while (!qaaa.equals(endBracket)){
                         qaaa = scnr.nextLine();
+                        qaaa = qaaa.replace("    ",tab); //special Kydonia syntax
+                        qaaa = qaaa.replace(tab+" "+tab,tab+tab); //special Gournia syntax
                         if (qaaa.contains(tab+tab) && !qaaa.equals(tab+tab)) {
                             String area = qaaa.split(tab+tab)[1];
                             area = area.split(tab)[0]; //formatting cleanup

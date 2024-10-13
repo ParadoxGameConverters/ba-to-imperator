@@ -631,6 +631,8 @@ public class Main
 
             //Array
             
+            baCharacters = Processing.adjustCharacterCultRel (baCharacters, baTagInfo, baProvInfoList, cultureMappings, religionMappings);
+            
             aq4 = 1;
             
             int convTag = 0;
