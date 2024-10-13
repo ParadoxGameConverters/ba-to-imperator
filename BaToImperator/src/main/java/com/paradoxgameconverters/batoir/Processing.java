@@ -2764,7 +2764,7 @@ public class Processing
             String oldReligion = selectedChar.getReligion();
             
             if (capitalRegion == null || capitalArea == null) {
-                System.out.println("Area "+capitalArea+" of province "+capInt+" has no region!");
+                //System.out.println("Area "+capitalArea+" of province "+capInt+" has no region!");
                 capitalRegion = "debug";
                 capitalArea = "debug";
             }
@@ -2785,5 +2785,38 @@ public class Processing
             count = count + 1;
         }
         return convCharactersNew;
+    }
+    
+    public static ArrayList<Characters> applyDynastiesToCharacters (ArrayList<Characters> convCharacters, ArrayList<String> dynList)
+    {
+
+        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        int count = 0;
+        while (count < convCharacters.size()) {
+            Characters selectedChar = convCharacters.get(count);
+            int charDynID = selectedChar.getDynastyID();
+            String tempDyn = selectedChar.getDynastyName();
+            int count2 = 0;
+            while (count2 < dynList.size()) {
+                String[] dynInfo = dynList.get(count2).split(",");
+                int dynID = Integer.parseInt(dynInfo[1]);
+                if (tempDyn == null && charDynID == dynID) {
+                    String dynName = dynInfo[0];
+                    selectedChar.setDynastyName(dynName);
+                    count2 = dynList.size() + 1;
+                } else if (tempDyn != null) { //end loop if from a minor family
+                    count2 = dynList.size() + 1;
+                }
+                
+                count2 = count2 + 1;
+            }
+            charDynID = charDynID + 100000; //set not to conflict with regular I:R dynasties
+            selectedChar.setDynastyID(charDynID);
+            convCharactersNew.add(selectedChar);
+            
+            count = count + 1;
+        }
+        return convCharactersNew;
+
     }
 }

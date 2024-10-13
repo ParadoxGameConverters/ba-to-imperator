@@ -627,11 +627,13 @@ public class Main
             String govRegID;
             String[] govCharacter;
 
-            //impDynList = Characters.importDynasty(saveDynasty);
+            impDynList = Characters.importDynasty(saveDynasty);
 
             //Array
             
             baCharacters = Processing.adjustCharacterCultRel (baCharacters, baTagInfo, baProvInfoList, cultureMappings, religionMappings);
+            
+            baCharacters = Processing.applyDynastiesToCharacters(baCharacters,impDynList);
             
             aq4 = 1;
             
