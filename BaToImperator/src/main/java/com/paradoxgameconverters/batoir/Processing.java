@@ -2407,10 +2407,18 @@ public class Processing
                         String culture = irCountry.getCulture();
                         String religion = irCountry.getReligion();
                         String capital = irCountry.getCapital();
+                        ArrayList<Integer> families = irCountry.getMajorFamilies();
                         //String culture = "roman"; //testing
                         //String religion = "indo_iranian_religion"; //testing
 
                         lines.add(tab+tab+updatedTag+" = {");
+                        int familyCount = 0;
+                        while (familyCount < families.size()) {
+                            int family = families.get(familyCount);
+                            lines.add(tab+tab+tab+"family = "+family);
+                            familyCount = familyCount + 1;
+                        }
+                            
                         lines.add(tab+tab+tab+"government = "+government);
                         lines.add(tab+tab+tab+"primary_culture = "+culture);
                         lines.add(tab+tab+tab+"religion = "+religion);
@@ -2800,8 +2808,8 @@ public class Processing
             while (count2 < dynList.size()) {
                 String[] dynInfo = dynList.get(count2).split(",");
                 int dynID = Integer.parseInt(dynInfo[1]);
-                if (tempDyn == null && charDynID == dynID) {
-                    String dynName = dynInfo[0];
+                String dynName = dynInfo[0];
+                if (tempDyn == null && charDynID == dynID && !dynName.contains("minor ")) {
                     selectedChar.setDynastyName(dynName);
                     count2 = dynList.size() + 1;
                 } else if (tempDyn != null) { //end loop if from a minor family
@@ -2819,4 +2827,103 @@ public class Processing
         return convCharactersNew;
 
     }
+    
+    public static ArrayList<Country> applyDynastiesToCountries (ArrayList<Country> convCountries, ArrayList<String> dynList)
+    {
+
+        ArrayList<Country> convCountriesNew = new ArrayList<Country>();
+        int count = 0;
+        while (count < convCountries.size()) {
+            Country selectedCountry = convCountries.get(count);
+            ArrayList<Integer> addedDynasties = new ArrayList<Integer>();
+            ArrayList<String> addedDynastiesStr = new ArrayList<String>();
+            int count2 = 0;
+            while (count2 < dynList.size()) {
+                String[] dynInfo = dynList.get(count2).split(",");
+                int dynID = Integer.parseInt(dynInfo[1]);
+                String owner = dynInfo[2];
+                if (!owner.equals("no") && owner.length() < 10) {
+                    int countryDynasty = Integer.parseInt(owner);
+                    if (countryDynasty == count && !dynInfo[0].contains("minor ")) {
+                        addedDynastiesStr.add(dynInfo[0]);
+                        
+                        dynID = dynID + 100000; //set not to conflict with regular I:R dynasties
+                        addedDynasties.add(dynID);
+                    }
+                }
+                
+                
+                count2 = count2 + 1;
+            }
+            
+            if (addedDynasties != null) {
+                selectedCountry.setMajorFamilies(addedDynasties);
+                selectedCountry.setMajorFamiliesStr(addedDynastiesStr);
+            }
+            convCountriesNew.add(selectedCountry);
+            
+            count = count + 1;
+        }
+        return convCountriesNew;
+
+    }
+    
+    public static ArrayList<String> appendFamilies(ArrayList<Country> irCountryList, ArrayList<String> OldLines)
+    {
+        int count = 0;
+        ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+        
+        int countOldFile = 0;
+        boolean countrySectionFlag = false;
+        
+        while (countOldFile < OldLines.size()) {
+            String selectedLine = OldLines.get(countOldFile);
+            lines.add(selectedLine);
+            if (selectedLine.equals(tab+"families={")) {
+                countrySectionFlag = true;
+            }
+            
+            if (countrySectionFlag) {
+                lines.add(tab+tab+"#Converted Families");
+                //lines.add("country = {");
+                //lines.add(tab+"countries = {");
+        
+                while (count < irCountryList.size()) {
+                    Country irCountry = irCountryList.get(count);
+                    boolean hasLand = irCountry.getHasLand();
+                    if (hasLand) {
+                        ArrayList<Integer> irFamilies = irCountry.getMajorFamilies();
+                        ArrayList<String> irFamiliesStr = irCountry.getMajorFamiliesStr();
+                        String countryTag = irCountry.getUpdatedTag();
+                        String countryCulture = irCountry.getCulture();
+                        int familyCount = 0;
+                        while (familyCount < irFamilies.size()) {
+                            int selectedFamily = irFamilies.get(familyCount);
+                            String selectedFamilyStr = irFamiliesStr.get(familyCount);
+                            lines.add(tab+tab+selectedFamily+" = {");
+                            lines.add(tab+tab+tab+"key = "+quote+selectedFamilyStr+quote);
+                            lines.add(tab+tab+tab+"prestige=300");
+                            lines.add(tab+tab+tab+"culture="+countryCulture);
+                            lines.add(tab+tab+tab+"owner="+countryTag);
+                            lines.add(tab+tab+"}");
+                            System.out.println(selectedFamily);
+                            familyCount = familyCount + 1;
+                        }
+                    }
+        
+                    count = count + 1;
+        
+                }
+                
+                countrySectionFlag = false;
+            }
+            
+            countOldFile = countOldFile + 1;
+        }
+        return lines;
+    }
+    
+    
 }

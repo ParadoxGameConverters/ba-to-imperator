@@ -635,6 +635,8 @@ public class Main
             
             baCharacters = Processing.applyDynastiesToCharacters(baCharacters,impDynList);
             
+            baTagInfo = Processing.applyDynastiesToCountries(baTagInfo,impDynList);
+            
             aq4 = 1;
             
             int convTag = 0;
@@ -723,6 +725,8 @@ public class Main
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
             //existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
+            
+            existingCountryFile = Processing.appendFamilies(baTagInfo,existingCountryFile);
             
             ArrayList<String> convertedProvinces = Processing.generateProvinceFile(irProvinceList);
             Output.outputBasicFile(convertedProvinces,"01_converted_provinces.txt",modDirectory+"/setup/provinces");
