@@ -558,6 +558,10 @@ public class Main
             
             baCharacters = Processing.applyNewIdsToChars(baCharacters,firstAvailableCharID);
 
+            int dateYear = Processing.getYearFromDate(date);
+            String vanillaDate = "450.10.1";
+            baCharacters = Processing.adjustBirthdays(baCharacters,dateYear,450,vanillaDate);
+
             aq2 = 0;
             LOGGER.info("Province religion and culture calculated");
             LOGGER.info("Province data combined");

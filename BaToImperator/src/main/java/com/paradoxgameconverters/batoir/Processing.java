@@ -2632,7 +2632,7 @@ public class Processing
         return lines;
     }
     
-    public static ArrayList<Characters> applyNewIdsToChars (ArrayList<Characters> convCharacters, int availableID) throws IOException
+    public static ArrayList<Characters> applyNewIdsToChars (ArrayList<Characters> convCharacters, int availableID)
     {
 
         ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
@@ -2650,5 +2650,86 @@ public class Processing
         }
         return convCharactersNew;
 
+    }
+    
+    public static ArrayList<Characters> adjustBirthdays (ArrayList<Characters> convCharacters, int baYear, int irYear, String irDate)
+    {
+
+        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        int count = 0;
+        int difference = baYear - irYear;
+        int minYear = 1;
+        while (count < convCharacters.size()) {
+            Characters selectedChar = convCharacters.get(count);
+            String birthday = selectedChar.getBirthday();
+            String newBirthday = Processing.birthDeathLogic(difference,birthday,minYear,irDate);
+            
+            selectedChar.setBirthday(newBirthday);
+            
+            String deathday = selectedChar.getDeathday(); 
+            int age = selectedChar.getAge();
+
+            if (!deathday.equals("none")) { //if character is still alive, don't set death
+                String newDeathday = Processing.birthDeathLogic(difference,deathday,age+1,irDate);
+            
+                selectedChar.setDeathday(newDeathday);
+            }
+            
+            convCharactersNew.add(selectedChar);
+            
+            count = count + 1;
+        }
+        return convCharactersNew;
+
+    }
+    
+    public static String birthDeathLogic (int difference, String birthday, int minYear, String irDate)
+    {
+        
+        birthday = birthday.replace(".",",");
+        String[] birthdaySplit = birthday.split(",");
+        int birthYear = Integer.parseInt(birthdaySplit[0]);
+        int newBirthYear = birthYear - difference;
+        if (newBirthYear < minYear) {
+            newBirthYear = minYear;
+        }
+        
+        int birthMonth = Integer.parseInt(birthdaySplit[1]);
+        
+        int birthDayOfMonth = Integer.parseInt(birthdaySplit[2]);
+        
+        String[] irDateArray = irDate.replace(".",",").split(",");
+        
+        int irDateMonth = Integer.parseInt(irDateArray[1]);
+        
+        int irDateDayOfMonth = Integer.parseInt(irDateArray[2]);
+        
+        int irDateYear = Integer.parseInt(irDateArray[0]);
+        
+        if (birthMonth > irDateMonth && newBirthYear >= irDateYear) { //rare edge-case if birth/death occured on same year of save on or after October
+            birthMonth = irDateMonth;
+            newBirthYear = irDateYear;
+            System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
+        }
+        
+        if (birthMonth == irDateMonth && newBirthYear >= irDateYear && birthDayOfMonth > irDateDayOfMonth) {
+            birthDayOfMonth = irDateDayOfMonth;
+            newBirthYear = irDateYear;
+            System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
+        }
+            
+        String newBirthday = newBirthYear+"."+birthMonth+"."+birthDayOfMonth;
+        
+        return newBirthday;
+    }
+    
+    public static int getYearFromDate (String date)
+    {
+        
+        date = date.replace(".",",");
+        String[] dateSplit = date.split(",");
+        int dateYear = Integer.parseInt(dateSplit[0]);
+        
+        return dateYear;
     }
 }

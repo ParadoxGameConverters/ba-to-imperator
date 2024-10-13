@@ -199,7 +199,8 @@ public class Characters
     }
     
     public static Characters newCharacter(int baID,String culture,String religion,String sex,int dynastyID,ArrayList<String> traits,int martial,
-    int finesse,int charisma,int zeal,int spouse,ArrayList<Integer> children,double corruption,String birthday,String deathday,String name, int country) {
+    int finesse,int charisma,int zeal,int spouse,ArrayList<Integer> children,double corruption,String birthday,String deathday,int age,String name,
+    int country) {
         Characters newCharacter = new Characters();
         
         newCharacter.setBaID(baID);
@@ -217,6 +218,7 @@ public class Characters
         newCharacter.setCorruption(corruption);
         newCharacter.setBirthday(birthday);
         newCharacter.setDeathday(deathday);
+        newCharacter.setAge(age);
         newCharacter.setName(name);
         newCharacter.setCountry(country);
         return newCharacter;
@@ -449,10 +451,11 @@ public class Characters
                         }
                         
                         double tmpCorruption = Double.parseDouble(tmpOutput[17]);
+                        int tmpAge = Integer.parseInt(tmpOutput[3]);
                         int tmpCountry = Integer.parseInt(tmpOutput[20]);
                         
                         Characters convertedCharacter = newCharacter(idCount,tmpOutput[1],tmpOutput[2],tmpOutput[4],dynID,traitsList,
-                        tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,tmpCorruption,tmpOutput[18],tmpOutput[19],tmpOutput[0],tmpCountry);
+                        tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,tmpCorruption,tmpOutput[18],tmpOutput[19],tmpAge,tmpOutput[0],tmpCountry);
                         
                         if (!tmpOutput[16].equals("0")) {
                             convertedCharacter.setDynastyName("minor_"+tmpOutput[16]);
