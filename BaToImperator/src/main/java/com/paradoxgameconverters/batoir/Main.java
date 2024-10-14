@@ -556,6 +556,8 @@ public class Main
             ArrayList<Characters> baCharacters = new ArrayList<Characters>();
             baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
             
+            baCharacters = Processing.pruneCharacters(baCharacters,baTagInfo);
+            
             baCharacters = Processing.applyNewIdsToChars(baCharacters,firstAvailableCharID);
 
             int dateYear = Processing.getYearFromDate(date);

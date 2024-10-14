@@ -2658,12 +2658,12 @@ public class Processing
         int count = 0;
         while (count < convCharacters.size()) {
             Characters selectedChar = convCharacters.get(count);
-            int newID = availableID;
-            selectedChar.setIrID(newID);
-            
+            if (!selectedChar.isPruned()) { //if pruned, don't assign new ID
+                int newID = availableID;
+                selectedChar.setIrID(newID);
+                availableID = availableID + 1;
+            }
             convCharactersNew.add(selectedChar);
-            
-            availableID = availableID + 1;
             
             count = count + 1;
         }
@@ -2820,6 +2820,30 @@ public class Processing
             }
             charDynID = charDynID + 100000; //set not to conflict with regular I:R dynasties
             selectedChar.setDynastyID(charDynID);
+            convCharactersNew.add(selectedChar);
+            
+            count = count + 1;
+        }
+        return convCharactersNew;
+
+    }
+    
+    public static ArrayList<Characters> pruneCharacters (ArrayList<Characters> convCharacters, ArrayList<Country> convCountries)
+    //prune characters who don't have a country
+    {
+
+        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        int count = 0;
+        while (count < convCharacters.size()) {
+            Characters selectedChar = convCharacters.get(count);
+            int charCountryID = selectedChar.getCountry();
+            Country charCountry = convCountries.get(charCountryID);
+            boolean hasLand = charCountry.getHasLand();
+            if (!hasLand) {
+                selectedChar.setPruneStatus(true); // pruned
+                //System.out.println("Prunning "+count);
+            }
+            
             convCharactersNew.add(selectedChar);
             
             count = count + 1;

@@ -35,6 +35,7 @@ public class Characters
     private String deathday;
     private String name;
     private int country;
+    private boolean pruneStatus;
     public Characters() {
         int baID;
         String culture;
@@ -56,6 +57,7 @@ public class Characters
         String deathday;
         String name;
         int country;
+        boolean pruneStatus;
     }
     
     public void setBaID(int charBaID) {
@@ -198,6 +200,13 @@ public class Characters
         return country;
     }
     
+    public void setPruneStatus(boolean charPrune) {
+        pruneStatus = charPrune;
+    }
+    public boolean isPruned() {
+        return pruneStatus;
+    }
+    
     public static Characters newCharacter(int baID,String culture,String religion,String sex,int dynastyID,ArrayList<String> traits,int martial,
     int finesse,int charisma,int zeal,int spouse,ArrayList<Integer> children,double corruption,String birthday,String deathday,int age,String name,
     int country) {
@@ -221,6 +230,7 @@ public class Characters
         newCharacter.setAge(age);
         newCharacter.setName(name);
         newCharacter.setCountry(country);
+        newCharacter.setPruneStatus(false); //All characters are unpruned unless they are pruned
         return newCharacter;
     }
     
