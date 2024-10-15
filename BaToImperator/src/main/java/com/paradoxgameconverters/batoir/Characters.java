@@ -491,8 +491,8 @@ public class Characters
                         double tmpCorruption = Double.parseDouble(tmpOutput[17]);
                         int tmpAge = Integer.parseInt(tmpOutput[3]);
                         int tmpCountry = Integer.parseInt(tmpOutput[20]);
-                        int tmpMother = Integer.parseInt(tmpOutput[22]);
-                        int tmpFather = Integer.parseInt(tmpOutput[21]);
+                        int tmpMother = Integer.parseInt(tmpOutput[21]);
+                        int tmpFather = Integer.parseInt(tmpOutput[22]);
                         
                         Characters convertedCharacter = newCharacter(idCount,tmpOutput[1],tmpOutput[2],tmpOutput[4],dynID,traitsList,
                         tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,tmpCorruption,tmpOutput[18],tmpOutput[19],tmpAge,tmpOutput[0],tmpCountry,tmpMother,

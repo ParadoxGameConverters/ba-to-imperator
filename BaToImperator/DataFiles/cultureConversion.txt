@@ -393,7 +393,7 @@ tuba,syro_hurrian
 rugulutui,syro_hurrian
 aligui,syro_hurrian
 kummuhi,syro_hurrian
-hurrani,syro_hurrian 
+hurrani,syro_hurrian
 karkamisa,syro_hurrian
 urshui,syro_hurrian
 tobeh,syro_hurrian

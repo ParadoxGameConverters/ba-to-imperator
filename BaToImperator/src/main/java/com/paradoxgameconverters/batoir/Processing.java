@@ -2845,10 +2845,10 @@ public class Processing
                 //System.out.println("Prunning "+count);
             }
             
-            if (!selectedChar.getDeathday().equals("none")) {
-                selectedChar.setPruneStatus(true); // pruned
+            //if (!selectedChar.getDeathday().equals("none")) {
+            //    selectedChar.setPruneStatus(true); // pruned
                 //System.out.println("Prunning "+count);
-            }
+            //}
             
             convCharactersNew.add(selectedChar);
             
