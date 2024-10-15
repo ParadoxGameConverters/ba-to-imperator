@@ -2229,10 +2229,10 @@ public class Processing
         int count4 = 9;
 
         while (count < countryID) {
-            if (count3 > 25) {
+            if (count3 > 24) {
                 count4 = count4 - 1;
                 count3 = 0;
-            } else if (count2 > 25) {
+            } else if (count2 > 24) {
                 count3 = count3 + 1;
                 count2 = 0;
             } else {
@@ -2809,7 +2809,8 @@ public class Processing
                 String[] dynInfo = dynList.get(count2).split(",");
                 int dynID = Integer.parseInt(dynInfo[1]);
                 String dynName = dynInfo[0];
-                if (tempDyn == null && charDynID == dynID && !dynName.contains("minor ")) {
+                if (tempDyn == null && charDynID == dynID && !dynName.contains("minor ") && !dynName.equals("")) {
+                    dynName = dynName.replace(" ","_");
                     selectedChar.setDynastyName(dynName);
                     count2 = dynList.size() + 1;
                 } else if (tempDyn != null) { //end loop if from a minor family
@@ -2844,6 +2845,11 @@ public class Processing
                 //System.out.println("Prunning "+count);
             }
             
+            if (!selectedChar.getDeathday().equals("none")) {
+                selectedChar.setPruneStatus(true); // pruned
+                //System.out.println("Prunning "+count);
+            }
+            
             convCharactersNew.add(selectedChar);
             
             count = count + 1;
@@ -2869,10 +2875,16 @@ public class Processing
                 if (!owner.equals("no") && owner.length() < 10) {
                     int countryDynasty = Integer.parseInt(owner);
                     if (countryDynasty == count && !dynInfo[0].contains("minor ")) {
-                        addedDynastiesStr.add(dynInfo[0]);
+                        if (dynInfo[0].equals("")) {
+                            System.out.println("Blank dynasty detected, ignoring");
+                        } else {
+                            dynInfo[0] = dynInfo[0].replace(" ","_");
+                            addedDynastiesStr.add(dynInfo[0]);
+                            dynID = dynID + 100000; //set not to conflict with regular I:R dynasties
+                            addedDynasties.add(dynID);
+                        }
                         
-                        dynID = dynID + 100000; //set not to conflict with regular I:R dynasties
-                        addedDynasties.add(dynID);
+                        
                     }
                 }
                 
@@ -2946,6 +2958,115 @@ public class Processing
             
             countOldFile = countOldFile + 1;
         }
+        return lines;
+    }
+    
+    public static ArrayList<String> createCharFileForTag(Country baTag, ArrayList<Characters> convCharacters)
+    //Each country requires its own .txt file in setup/characters
+    {
+        int count = 0;
+        ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+
+        boolean countrySectionFlag = false;
+        
+        int countryID = baTag.getID();
+        String tag = baTag.getUpdatedTag();
+        int countryRuler = Integer.parseInt(baTag.getRuler());
+        lines.add(quote+tag+"_converted"+quote+"={");
+        lines.add(tab+"country="+quote+tag+quote);
+        Characters selectedCharRuler = convCharacters.get(countryRuler);
+        int countryRulerID = selectedCharRuler.getIrID();
+        
+        while (count < convCharacters.size()) {
+            //lines.add(selectedLine);
+            Characters selectedChar = convCharacters.get(count);
+            int charCountryID = selectedChar.getCountry();
+            boolean isPruned = selectedChar.isPruned();
+            if (charCountryID == countryID && !isPruned) {
+                int charID = selectedChar.getIrID();
+                //System.out.println("Printing " +charID+" in "+tag);
+                //if (charID == 456) { //isn't printing
+                //    System.out.println("Printing " +charID+" in "+tag);
+                //}
+                lines.add(tab+charID+"={"+tab);
+                lines.add(tab+tab+"first_name="+quote+selectedChar.getName()+quote);
+                String family = selectedChar.getDynastyName();
+                if (family == null) {
+                    lines.add(tab+tab+"#No Family");   
+                    //System.out.println("Character "+count+" ("+charID+" )"+" has a null family!");
+                }
+                else if (family.contains("minor_") || family.contains("minor ")) {
+                    family = family.replace("minor_","");
+                    family = family.replace("minor ","");
+                    lines.add(tab+tab+"family_name="+quote+family+quote);
+                } else {
+                    lines.add(tab+tab+"family = c:"+tag+".fam:"+family);
+                }
+                String sex = selectedChar.getSex();
+                if (sex.equals("f")) {
+                    lines.add(tab+tab+"female=yes");
+                }
+                lines.add(tab+tab+"birth_date="+selectedChar.getBirthday());
+                String deathday = selectedChar.getDeathday();
+                if (!deathday.equals("none")) {
+                    lines.add(tab+tab+"death_date="+deathday);
+                }
+                lines.add(tab+tab+"culture="+quote+selectedChar.getCulture()+quote);
+                lines.add(tab+tab+"religion="+quote+selectedChar.getReligion()+quote);
+                lines.add(tab+tab+"no_stats=yes");
+                lines.add(tab+tab+"add_martial="+selectedChar.getMartial());
+                lines.add(tab+tab+"add_charisma="+selectedChar.getCharisma());
+                lines.add(tab+tab+"add_finesse="+selectedChar.getFinesse());
+                lines.add(tab+tab+"add_zeal="+selectedChar.getZeal());
+                lines.add(tab+tab+"no_traits=yes");
+                int traitCount = 0;
+                ArrayList<String> traits = selectedChar.getTraits();
+                if (traits != null) {
+                    while (traitCount < traits.size()) {
+                        String selectedTrait = traits.get(traitCount);
+                        lines.add(tab+tab+"add_trait="+quote+selectedTrait+quote);
+                        traitCount = traitCount + 1;
+                    }
+                }
+                int spouse = selectedChar.getSpouse();
+                if (spouse > -1 && deathday.equals("none")) {
+                    Characters selectedCharSpouse = convCharacters.get(spouse);
+                    if (!selectedCharSpouse.isPruned()) {
+                        int spouseID = selectedCharSpouse.getIrID();
+                        lines.add(tab+tab+"marry_character=char:"+spouseID);
+                    }
+                }
+                int father = selectedChar.getFather();
+                if (father > -1) {
+                    Characters selectedCharFather = convCharacters.get(father);
+                    if (!selectedCharFather.isPruned()) {
+                        int fatherID = selectedCharFather.getIrID();
+                        lines.add(tab+tab+"father="+quote+"char:"+fatherID+quote);
+                    }
+                }
+                int mother = selectedChar.getMother();
+                if (mother > -1) {
+                    Characters selectedCharMother = convCharacters.get(mother);
+                    if (!selectedCharMother.isPruned()) {
+                        int motherID = selectedCharMother.getIrID();
+                        lines.add(tab+tab+"mother="+quote+"char:"+motherID+quote);
+                    }
+                }
+                if (countryRulerID == charID) {
+                    lines.add(tab+tab+"c:"+tag+"={");
+                    lines.add(tab+tab+tab+"set_as_ruler=char:"+charID);
+                    lines.add(tab+tab+"}");
+                }
+                lines.add(tab+"}");
+            }
+            
+            
+            count = count + 1;
+        }
+        
+        lines.add("}");
         return lines;
     }
     

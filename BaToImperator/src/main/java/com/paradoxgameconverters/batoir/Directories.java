@@ -114,6 +114,9 @@ public class Directories
         
         File f43 = new File(mainModFolder+"/setup/main");
         f43.mkdir();
+        
+        File f44 = new File(mainModFolder+"/setup/characters");
+        f44.mkdir();
 
         return aqv;
     }

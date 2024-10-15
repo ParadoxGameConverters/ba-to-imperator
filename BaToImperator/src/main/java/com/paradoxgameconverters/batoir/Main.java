@@ -1,4 +1,4 @@
-package com.paradoxgameconverters.batoir;   
+package com.paradoxgameconverters.batoir;  
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -698,6 +698,9 @@ public class Main
                             
                             String countryColor = baTag.getColor();
                             Output.countrySetupCreation(countryColor,newTagID,modDirectory);
+                            
+                            ArrayList<String> countryCharacterFile = Processing.createCharFileForTag(baTag,baCharacters);
+                            Output.outputBasicFile(countryCharacterFile,baTag.getUpdatedTag()+"_converted.txt",modDirectory+"/setup/characters");
                         }
 
                         aq4 = aq4 + 1;

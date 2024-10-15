@@ -36,6 +36,8 @@ public class Characters
     private String name;
     private int country;
     private boolean pruneStatus;
+    private int mother;
+    private int father;
     public Characters() {
         int baID;
         String culture;
@@ -58,6 +60,8 @@ public class Characters
         String name;
         int country;
         boolean pruneStatus;
+        int mother;
+        int father;
     }
     
     public void setBaID(int charBaID) {
@@ -112,7 +116,7 @@ public class Characters
     public void setTraits(ArrayList<String> charTraits) {
         traits = charTraits;
     }
-    public ArrayList<String> getCharTraits() {
+    public ArrayList<String> getTraits() {
         return traits;
     }
     
@@ -207,9 +211,23 @@ public class Characters
         return pruneStatus;
     }
     
+    public void setMother(int charMother) {
+        mother = charMother;
+    }
+    public int getMother() {
+        return mother;
+    }
+    
+    public void setFather(int charFather) {
+        father = charFather;
+    }
+    public int getFather() {
+        return father;
+    }
+    
     public static Characters newCharacter(int baID,String culture,String religion,String sex,int dynastyID,ArrayList<String> traits,int martial,
     int finesse,int charisma,int zeal,int spouse,ArrayList<Integer> children,double corruption,String birthday,String deathday,int age,String name,
-    int country) {
+    int country, int mother, int father) {
         Characters newCharacter = new Characters();
         
         newCharacter.setBaID(baID);
@@ -231,6 +249,8 @@ public class Characters
         newCharacter.setName(name);
         newCharacter.setCountry(country);
         newCharacter.setPruneStatus(false); //All characters are unpruned unless they are pruned
+        newCharacter.setMother(mother);
+        newCharacter.setFather(father);
         return newCharacter;
     }
     
@@ -258,7 +278,7 @@ public class Characters
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[21];
+        output = new String[23];
 
         output[0] = "noName"; //default for no owner, uncolonized province
         output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
@@ -278,6 +298,8 @@ public class Characters
         output[18] = "0.0.100"; //default for no birthday
         output[19] = "none"; //default for no death date
         output[20] = "0"; //default for no country
+        output[21] = "-1"; //default for no mother
+        output[22] = "-1"; //default for no father
 
         try {
             while (endOrNot = true){
@@ -302,6 +324,12 @@ public class Characters
                     else if (qaaa.split("=")[0].equals( tab+"family_name" ) ) {
                         output[16] = qaaa.split("=")[1];
                         output[16] = output[16].substring(1,output[16].length()-1);
+                    }
+                    else if (qaaa.split("=")[0].equals( tab+"father" ) ) {
+                        output[22] = qaaa.split("=")[1];
+                    }
+                    else if (qaaa.split("=")[0].equals( tab+"mother" ) ) {
+                        output[21] = qaaa.split("=")[1];
                     }
                     else if (qaaa.split("=")[0].equals( tab+"culture" ) ) {
                         output[1] = qaaa.split("=")[1];
@@ -463,9 +491,12 @@ public class Characters
                         double tmpCorruption = Double.parseDouble(tmpOutput[17]);
                         int tmpAge = Integer.parseInt(tmpOutput[3]);
                         int tmpCountry = Integer.parseInt(tmpOutput[20]);
+                        int tmpMother = Integer.parseInt(tmpOutput[22]);
+                        int tmpFather = Integer.parseInt(tmpOutput[21]);
                         
                         Characters convertedCharacter = newCharacter(idCount,tmpOutput[1],tmpOutput[2],tmpOutput[4],dynID,traitsList,
-                        tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,tmpCorruption,tmpOutput[18],tmpOutput[19],tmpAge,tmpOutput[0],tmpCountry);
+                        tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,tmpCorruption,tmpOutput[18],tmpOutput[19],tmpAge,tmpOutput[0],tmpCountry,tmpMother,
+                        tmpFather);
                         
                         if (!tmpOutput[16].equals("0")) {
                             convertedCharacter.setDynastyName("minor_"+tmpOutput[16]);
@@ -493,6 +524,8 @@ public class Characters
                         output[18] = "0.0.100"; //default for no birthday
                         output[19] = "none"; //default for no death date
                         output[20] = "0"; //default for no country
+                        output[21] = "-1"; //default for no mother
+                        output[22] = "-1"; //default for no father
                     }
 
                 }
