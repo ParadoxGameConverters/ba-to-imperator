@@ -2120,12 +2120,10 @@ public class Importer
 
                 qaaa = scnr.nextLine();
 
-                if (qaaa.contains("~~NoChange~~")){
-                    changes = "noChange";
+                if (qaaa.contains("~_")){
+                    changes = qaaa.split("_~_")[1];
                 }
-                else if (qaaa.contains("~~CultureReligion~~")){
-                    changes = "nultureReligion";
-                }
+                
                 else if (qaaa.contains("ba = ")){
                     String mapping = qaaa.split("ba = ")[1];
                     mapping = mapping.split(" } # ")[0];

@@ -3081,6 +3081,28 @@ public class Processing
             int masterProvArrayID = getProvByID(convProvinces,masterProvID);
             Provinces masterProv = convProvinces.get(masterProvArrayID);
             String owner = masterProv.getOwner();
+            String masterProvCulture = masterProv.getCulture();
+            String masterProvReligion = masterProv.getReligion();
+            String changeCulture = "none";
+            String changeReligion = "none";
+            String changes = exoProvinceArray[exoProvinceArray.length-1];
+            if (!changes.contains("NoChange")) {
+                //System.out.println(changes);
+                changes = changes.split("~~~")[1];
+                String[] changesArray = changes.split("~~");
+                int changesCount = 0;
+                while (changesCount < changesArray.length) {
+                    String[] selectedChange = changesArray[changesCount].split(",");
+                    String changeType = selectedChange[0];
+                    String changeData = selectedChange[1];
+                    if (changeType.equals("Cult")) {
+                        changeCulture = changeData;
+                    } else if (changeType.equals("Rel")) {
+                        changeReligion = changeData;
+                    }
+                    changesCount = changesCount + 1;
+                }
+            }
             
             int exoProvCount = 1;
             while (exoProvCount < exoProvinceArray.length-1) {
@@ -3095,6 +3117,19 @@ public class Processing
                 Provinces tmpProv = Provinces.newProv(owner,culture,religion,0,0,0,0,0,0,cityStatus,selectedExoProv);
                 tmpProv.setTerrain(vanillaProv.getTerrain());
                 tmpProv.setTradeGood(vanillaProv.getTradeGood());
+                if (!changeCulture.equals("none") ) {
+                    if (culture.equals(changeCulture)) {
+                        tmpProv.setCulture(masterProvCulture);
+                    }
+                    tmpPops = updatePops("culture",changeCulture,masterProvCulture,tmpPops);
+                }
+                if (!changeReligion.equals("none")) {
+                    if (religion.equals(changeReligion)) {
+                        tmpProv.setReligion(masterProvReligion);
+                    }
+                    tmpPops = updatePops("religion",changeReligion,masterProvReligion,tmpPops);
+                }
+                
                 tmpProv.addPopArray(tmpPops);
                 convProvinces.add(tmpProv);
                 exoProvCount = exoProvCount + 1;
@@ -3105,6 +3140,29 @@ public class Processing
         }
         return convProvinces;
 
+    }
+    
+    public static ArrayList<Pop> updatePops (String type, String oldData, String updatedData, ArrayList<Pop> pops)
+    {
+        int popArrayCount = 0;
+        ArrayList<Pop> newPopArray = new ArrayList<Pop>();
+        while (popArrayCount < pops.size()) {
+            Pop selectedPop = pops.get(popArrayCount);
+            if (type.equals("culture")) {
+                String popCulture = selectedPop.getCulture();
+                if (popCulture.equals(oldData)) {
+                   selectedPop.setCulture(updatedData); 
+                }
+            } else if (type.equals("religion")) {
+                String popReligion = selectedPop.getReligion();
+                if (popReligion.equals(oldData)) {
+                   selectedPop.setReligion(updatedData);
+                }
+            }
+            newPopArray.add(selectedPop);
+            popArrayCount = popArrayCount + 1;
+        }
+        return newPopArray;
     }
     
     

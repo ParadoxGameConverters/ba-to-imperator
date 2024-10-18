@@ -1,9 +1,11 @@
 0.0.0.0 = {
-	link = { comment = "~~NoChange~~" }
-	link = { ba = 5506 imperator = 5507 imperator = 5516 imperator = 5508 imperator = 5515 imperator = 5517 imperator = 5520 imperator = 5518 imperator = 5519 imperator = 5521 imperator = 5513 } # Tchonemyris -> Tchonemyris, Tabenesse, Perusekh, Kysis, Sykaminia, Precariton, Cataphri, Hameka, Simbel, Boron, Parammon
-	link = { ba = 5504 imperator = 5503 imperator = 5502 imperator = 5501 imperator = 5500 imperator = 5522 imperator = 5505 } # Hibis -> Hibis, Gibra, Gebara, Pohe, Erebe, Debiri, Amura
-	link = { ba = 5514 imperator = 5525 imperator = 5526 imperator = 5510 imperator = 5511 imperator = 5509 imperator = 5512 } # Siwa -> Siwa, Tawar, Minqar, Mothis, Trimithis, Kellis, Thenete
-	link = { ba = 5523 imperator = 5528 imperator = 5527 imperator = 5524 } # Farafra -> Farafra, Elassa, Tablamum, Bishaya
-	link = { ba = 5531 imperator = 5535 imperator = 5534 imperator = 5529 imperator = 5530 imperator = 5541 imperator = 5543 imperator = 5545 } # Parva -> Parva, Colira, Varam, Poka, Mandish, Shunne, Magrab, Thumat
-	link = { ba = 5537 imperator = 5551 imperator = 5555 imperator = 5538 imperator = 5539 imperator = 5554 imperator = 5550 imperator = 5540 imperator = 5552 imperator = 5536 imperator = 5544 imperator = 5542 imperator = 5556 imperator = 5553 } # Ammon -> Ammon, Varias, Carnasa, Gargara, Zethin, Sanus, Alexandrou Parembole, Areg, Klimax, Sitra, Gerum, Murta, Abid, Graias
+	link = { comment = "_~_NoChange~~~_~_" }
+	link = { ba = 5506 imperator = 5507 imperator = 5516 imperator = 5508 imperator = 5515 imperator = 5517 imperator = 5520 imperator = 5518 imperator = 5519 imperator = 5521 imperator = 5513 } # Tchonemyris -> Tabenesse, Perusekh, Kysis, Sykaminia, Precariton, Cataphri, Hameka, Simbel, Boron, Parammon
+	link = { ba = 5504 imperator = 5503 imperator = 5502 imperator = 5501 imperator = 5500 imperator = 5522 imperator = 5505 } # Hibis -> Gibra, Gebara, Pohe, Erebe, Debiri, Amura
+	link = { ba = 5514 imperator = 5525 imperator = 5526 imperator = 5510 imperator = 5511 imperator = 5509 imperator = 5512 } # Siwa -> Tawar, Minqar, Mothis, Trimithis, Kellis, Thenete
+	link = { ba = 5523 imperator = 5528 imperator = 5527 imperator = 5524 } # Farafra -> Elassa, Tablamum, Bishaya
+	link = { ba = 5531 imperator = 5535 imperator = 5534 imperator = 5529 imperator = 5530 imperator = 5541 imperator = 5543 imperator = 5545 } # Parva -> Colira, Varam, Poka, Mandish, Shunne, Magrab, Thumat
+	link = { ba = 5537 imperator = 5551 imperator = 5555 imperator = 5538 imperator = 5539 imperator = 5554 imperator = 5550 imperator = 5540 imperator = 5552 imperator = 5536 imperator = 5544 imperator = 5542 imperator = 5556 imperator = 5553 } # Ammon -> Varias, Carnasa, Gargara, Zethin, Sanus, Alexandrou Parembole, Areg, Klimax, Sitra, Gerum, Murta, Abid, Graias
+	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon_~_" }
+	link = { ba = 418 imperator = 84 imperator = 101 imperator = 87 imperator = 83 imperator = 7837 imperator = 82 imperator = 7838 imperator = 7840 imperator = 88 imperator = 81 imperator = 80 } # Korinthos -> Syracusae, Camarina, Acrae, Leontini, Megara, Catana, Centuripae, Menae, Murgantia, Tauromenium, Messana
 }
