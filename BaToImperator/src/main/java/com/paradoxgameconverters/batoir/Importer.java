@@ -1990,6 +1990,7 @@ public class Importer
                         provInfo[0] = provID;
                         provInfo[1] = provTerrain;
                         provInfo[2] = provTradeGood;
+                        
                         allProvInfo.add(provInfo);
                         
                     } else {
@@ -2095,6 +2096,255 @@ public class Importer
 
         return allMatches;
 
+    }
+    
+    public static ArrayList<String[]> importExoMappings (String directory) throws IOException //imports provinces which weren't in BA, but are effected by conversion
+    {
+
+        //exoMap format is ba prov, ir prov, ir prov..., changes
+        String VM = "\\";
+        VM = VM.substring(0);
+        char quote = '"';
+        FileInputStream fileIn= new FileInputStream(directory);
+        Scanner scnr= new Scanner(fileIn);
+
+        boolean endOrNot = true;
+        String changes = "test";
+        String qaaa;
+        qaaa = scnr.nextLine();
+
+        ArrayList<String[]> exoMappings = new ArrayList<String[]>();
+
+        try {
+            while (endOrNot = true){
+
+                qaaa = scnr.nextLine();
+
+                if (qaaa.contains("~~NoChange~~")){
+                    changes = "noChange";
+                }
+                else if (qaaa.contains("~~CultureReligion~~")){
+                    changes = "nultureReligion";
+                }
+                else if (qaaa.contains("ba = ")){
+                    String mapping = qaaa.split("ba = ")[1];
+                    mapping = mapping.split(" } # ")[0];
+                    mapping = mapping.replace("imperator = ","");
+                    mapping = mapping + " " + changes;
+                    String[] mappingArray = mapping.split(" ");
+                    exoMappings.add(mappingArray);
+                }
+
+            }
+
+        }catch (java.util.NoSuchElementException exception){
+            endOrNot = false;
+
+        }   
+
+        return exoMappings;
+
+    }
+    
+    public static ArrayList<Provinces> importProvSetupAdv (String modDir, ArrayList<Provinces> allProvInfo) throws IOException
+    //imports all basegame prov files as Provinces
+    {
+        int aqq = 0;
+        File locInfo = new File (modDir);
+        String[] locList = locInfo.list();
+
+        try {
+            if (locList != null) { //get all files in directory
+                while (aqq < locList.length) {
+                    //System.out.println("Importing "+modDir+"/"+locList[aqq]);
+                    importProvSetupAdv(modDir+"/"+locList[aqq],allProvInfo);
+                    aqq = aqq + 1;
+                }
+
+            }
+            else { //get everything in file
+                ArrayList<String> provSetupFile = importBasicFile(modDir);
+                int count = 0;
+                while (count < provSetupFile.size()) {
+                    String setupLine = provSetupFile.get(count);
+                    if (!setupLine.equals("#")) {
+                        setupLine = setupLine.split("#")[0]; //ignore comments
+                    }
+                    
+                    if (setupLine.contains("=")) { //prov detected, loop through until end bracket
+                        setupLine = setupLine.replace(" ","");
+                        String provID = setupLine.split("=")[0];
+                        count = count + 1;
+                        String provTerrain = "Debug";
+                        String provTradeGood = "Debug";
+                        String provCulture = "Debug";
+                        String provReligion = "Debug";
+                        String provRank = "settlement";
+                        ArrayList<Pop> provPops = new ArrayList<Pop>();
+                        //int popTot = 0;
+                        while (!setupLine.equals("}")) {
+                           setupLine = provSetupFile.get(count);
+                           if (setupLine.contains("culture")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               provCulture = setupLine.split("=")[1];
+                               provCulture = Processing.cutQuotes(provCulture);
+                           }
+                           else if (setupLine.contains("religion")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               provReligion = setupLine.split("=")[1];
+                               provReligion = Processing.cutQuotes(provReligion);
+                           }
+                           else if (setupLine.contains("terrain")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               provTerrain = setupLine.split("=")[1];
+                               provTerrain = Processing.cutQuotes(provTerrain);
+                           }
+                           else if (setupLine.contains("trade_goods")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               provTradeGood = setupLine.split("=")[1];
+                               provTradeGood = Processing.cutQuotes(provTradeGood);
+                           }
+                           else if (setupLine.contains("province_rank")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               provRank = setupLine.split("=")[1];
+                               provRank = Processing.cutQuotes(provRank);
+                           }
+                           else if (setupLine.contains("citizen") || setupLine.contains("freemen") || setupLine.contains("slaves")
+                           || setupLine.contains("tribesmen") || setupLine.contains("nobles")) {
+                               setupLine = setupLine.split("#")[0];
+                               String popClass = setupLine.split("=")[0].replace("\t","");
+                               String popCulture = provCulture;
+                               String popReligion = provReligion;
+                               //System.out.println(provID);
+                               //System.out.println(setupLine+"~~"+count);
+                               String popCount = "1";
+                               while (!setupLine.contains("}")) {
+                                   //setupLine = scnr.nextLine();
+                                   count = count + 1;
+                                   setupLine = provSetupFile.get(count);
+                                   //setupLine = setupLine.split("#")[0];
+                                   //System.out.println(setupLine+"~"+count);
+                                   if (setupLine.contains("culture")) {
+                                       popCulture = setupLine.split("=")[1];
+                                       popCulture = Processing.cutQuotes(popCulture);
+                                   }
+                                   else if (setupLine.contains("religion")) {
+                                       popReligion = setupLine.split("=")[1];
+                                       popReligion = Processing.cutQuotes(popReligion);
+                                   }
+                                   else if (setupLine.contains("amount")) {
+                                       popCount = setupLine.split("=")[1];
+                                       popCount = popCount.replace(" ","");
+                                   }
+                                   
+                               }
+                               int popTot = 0;
+                               try {
+                                  popTot = Integer.parseInt(popCount);
+                               } catch (java.lang.NumberFormatException exception) {
+                                   System.out.println("Error, something is wrong with "+popCount+" in "+modDir);
+                               }
+                               while (popTot > 0) {
+                                   //setupLine = scnr.nextLine();
+                                   Pop tmpPop = Pop.newPop(0,popClass,popCulture,popReligion);
+                                   provPops.add(tmpPop);
+                                   popTot = popTot - 1;
+                               }
+                               //popTotalCache = id+","+popTot;
+                               //System.out.println(popTotalCache);
+                               
+                           }
+                           count = count + 1;
+                        }
+                        
+                        //String[] provInfo = new String[3];
+                        //provInfo[0] = provID;
+                        //provInfo[1] = provTerrain;
+                        //provInfo[2] = provTradeGood;
+                        
+                        Provinces tmpProv = Provinces.newProv("9999",provCulture,provReligion,0,0,0,0,0,0,provRank,Integer.parseInt(provID));
+                        tmpProv.setTerrain(provTerrain);
+                        tmpProv.setTradeGood(provTradeGood);
+                        if (provPops.size() > 0) {
+                            tmpProv.addPopArray(provPops);
+                        }
+                        
+                        allProvInfo.add(tmpProv);
+                        //System.out.println("Adding "+provID+" with "+provTerrain+" "+provTradeGood);
+                        
+                    } else {
+                        count = count + 1;
+                    }
+                }
+                
+                //allProvInfo.addAll(provInfo);
+            }
+        } catch (Exception e){ //if a non-existant file is accessed, cancel so that converter doesn't crash
+            System.out.println("Error in "+modDir);
+        }
+
+        return allProvInfo;
+    }
+    
+    public static ArrayList<String> importPopNumbers(String fileName) throws IOException
+    {
+        String name = fileName;
+        FileInputStream fileIn= new FileInputStream(name);
+        Scanner scnr= new Scanner(fileIn);
+        
+        boolean tf = true;
+        boolean popFlag = false;
+        char quote = '"';
+        ArrayList<String> popTotals = new ArrayList<String>();
+        String popTotalCache = "";
+        int id = 0;
+        int popTot = 0;
+        
+        try {
+        
+        while (tf) {
+            String line = scnr.nextLine();
+            String numTest = line.split("=")[0];
+            numTest = numTest.replace(" ","");
+            numTest = numTest.replace("﻿","");//newline character
+            try {
+                id = Integer.parseInt(numTest);
+                //System.out.println(line);
+                popTotals.add(popTotalCache);
+                popTot = 0;
+            } catch (java.lang.NumberFormatException exception) {
+                //checkNumberE(numTest);
+            }
+            
+            if (line.contains("citizen") || line.contains("freemen") || line.contains("slaves") || line.contains("tribesmen")
+            || line.contains("nobles")) {
+                line = line.split("#")[0];
+                while (!line.contains("amount")) {
+                    line = scnr.nextLine();
+                    line = line.split("#")[0];
+                }
+                String popCount = line.split("=")[1];
+                popCount = popCount.replace(" ","");
+                popTot = popTot + Integer.parseInt(popCount);
+                popTotalCache = id+","+popTot;
+                //System.out.println(popTotalCache);
+                
+            }
+            
+        } 
+        }
+        
+        catch (java.util.NoSuchElementException exception) {
+            popTotals.add(popTotalCache);
+            return popTotals;
+        }
+        popTotals.add(popTotalCache);
+        return popTotals;
     }
 
     //developed originally by Shinymewtwo99

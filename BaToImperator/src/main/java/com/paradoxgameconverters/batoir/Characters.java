@@ -733,4 +733,25 @@ public class Characters
         return availableID;
     }
     
+    public static int getAvailableIDFromArray (ArrayList<Characters> baCharacters) //get's the first available character ID from array
+    {
+        int count = 0;
+        int highestID = 0;
+        while (count < baCharacters.size()) {
+            Characters selectedCharacter = baCharacters.get(count);
+            int tmpHighestID = 0;
+            if (!selectedCharacter.isPruned()) {
+                tmpHighestID = selectedCharacter.getIrID();
+                if (tmpHighestID > highestID) {
+                    highestID = tmpHighestID;
+                }
+            }
+            count = count + 1;
+            
+        }
+        int availableID = highestID + 1; //first available ID is the highest + 1
+
+        return availableID;
+    }
+    
 }

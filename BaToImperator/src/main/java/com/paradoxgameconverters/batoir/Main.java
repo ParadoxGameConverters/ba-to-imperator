@@ -1,4 +1,4 @@
-package com.paradoxgameconverters.batoir;  
+package com.paradoxgameconverters.batoir;   
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -288,11 +288,14 @@ public class Main
             String[] provAreas = Processing.importAreas(regionDir+"map_data/areas.txt",9500);
             String[] baProvRegions = Processing.importRegionList(9500,provAreas,regionDir);
             
-            ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
+            //ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
             
             LOGGER.info("Importing province tradegoods and terrain types...");
             
-            extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
+            //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
+            
+            ArrayList<Provinces> vanillaProvinces = new ArrayList<Provinces>();
+            vanillaProvinces = Importer.importProvSetupAdv(impGameDir+"/game/setup/provinces",vanillaProvinces);
 
             LOGGER.info("Creating temp files...");
 
@@ -510,9 +513,13 @@ public class Main
                     String irProvOwner = Processing.getMajority(ownerCount2);
                     irProvInfo.setOwner(irProvOwner);
                     
-                    String[] cityStatusCount = Processing.countPops(irProvInfo.getPops(),"cityStatus");
-                    ArrayList<String> cityStatusCount2 = Processing.condenseArrayStr(cityStatusCount);
-                    String irProvCS = Processing.getMajority(cityStatusCount2);
+                    String irProvCS = "settlement";
+                    if (provinceTotal > 5) {
+                        String[] cityStatusCount = Processing.countPops(irProvInfo.getPops(),"cityStatus");
+                        ArrayList<String> cityStatusCount2 = Processing.condenseArrayStr(cityStatusCount);
+                        irProvCS = Processing.getMajority(cityStatusCount2);
+                    }
+                    
                     if (irProvCS.equals("city") && provinceTotal >= 75) {
                         irProvCS = "metropolis";
                     }
@@ -523,10 +530,12 @@ public class Main
                     
                     irProvInfo.replacePopsFromStringArray(relCultCount4,typeRatios,provinceTotal);
                     int irProvID = irProvInfo.getID();
-                    String[] terrainTradeGood = extraProvInfo.get(Processing.getArrayByID(extraProvInfo,irProvID));
+                    //String[] terrainTradeGood = extraProvInfo.get(Processing.getArrayByID(extraProvInfo,irProvID));
+                    int vanillaProvID = Processing.getProvByID(vanillaProvinces,irProvID);
+                    Provinces vanillaProv = vanillaProvinces.get(vanillaProvID);
                     
-                    irProvInfo.setTerrain(terrainTradeGood[1]);
-                    irProvInfo.setTradeGood(terrainTradeGood[2]);
+                    irProvInfo.setTerrain(vanillaProv.getTerrain());
+                    irProvInfo.setTradeGood(vanillaProv.getTradeGood());
                     
                     irProvinceList.set(aq2,irProvInfo);
                     
@@ -717,6 +726,14 @@ public class Main
             aq4 = 0;
             aq7 = 0;
             LOGGER.config(ck2HasLand[343]);
+            
+            int availableCharID = Characters.getAvailableIDFromArray(baCharacters);
+            ArrayList<String> characterReadme = new ArrayList<String>();
+            characterReadme.add("#If you want to add your own custom character, all character ID's must be ordered 1 after another,");
+            characterReadme.add("#so if Bob is ID 69, for example, Billybobjoe has to be ID 70, and so on.");
+            characterReadme.add("");
+            characterReadme.add("#The next available ID is "+availableCharID);
+            Output.outputBasicFile(characterReadme,"000_README.txt",modDirectory+"/setup/characters");
 
             //Output.dejureTitleCreation(impTagInfo,empireRank,duchyRank,ck2LandTot,dejureDuchies,impSubjectInfo,modDirectory);
 
@@ -726,6 +743,8 @@ public class Main
             LOGGER.finest("85%");
             LOGGER.info("Outputting Province info");
             
+            ArrayList<String[]> exoProvinces = Importer.importExoMappings("exoMappings.txt");
+            irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces);
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized

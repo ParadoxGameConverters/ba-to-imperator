@@ -3070,5 +3070,42 @@ public class Processing
         return lines;
     }
     
+    public static ArrayList<Provinces> addExoProvinces (ArrayList<Provinces> convProvinces, ArrayList<String[]> exoProvinces,
+    ArrayList<Provinces> vanillaProvinces)
+    //Add provinces from outside BA's map
+    {
+        int count = 0;
+        while (count < exoProvinces.size()) {
+            String[] exoProvinceArray = exoProvinces.get(count);
+            int masterProvID = Integer.parseInt(exoProvinceArray[0]);
+            int masterProvArrayID = getProvByID(convProvinces,masterProvID);
+            Provinces masterProv = convProvinces.get(masterProvArrayID);
+            String owner = masterProv.getOwner();
+            
+            int exoProvCount = 1;
+            while (exoProvCount < exoProvinceArray.length-1) {
+                int selectedExoProv = Integer.parseInt(exoProvinceArray[exoProvCount]);
+                int vanillaProvID = Processing.getProvByID(vanillaProvinces,selectedExoProv);
+                Provinces vanillaProv = vanillaProvinces.get(vanillaProvID);
+                String culture = vanillaProv.getCulture();
+                String religion = vanillaProv.getReligion();
+                String cityStatus = vanillaProv.getCityStatus();
+                ArrayList<Pop> tmpPops = vanillaProv.getPops();
+                
+                Provinces tmpProv = Provinces.newProv(owner,culture,religion,0,0,0,0,0,0,cityStatus,selectedExoProv);
+                tmpProv.setTerrain(vanillaProv.getTerrain());
+                tmpProv.setTradeGood(vanillaProv.getTradeGood());
+                tmpProv.addPopArray(tmpPops);
+                convProvinces.add(tmpProv);
+                exoProvCount = exoProvCount + 1;
+            }
+            
+            
+            count = count + 1;
+        }
+        return convProvinces;
+
+    }
+    
     
 }
