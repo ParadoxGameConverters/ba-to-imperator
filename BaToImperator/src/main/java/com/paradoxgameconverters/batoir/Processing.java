@@ -2413,7 +2413,11 @@ public class Processing
 
                         lines.add(tab+tab+updatedTag+" = {");
                         int familyCount = 0;
-                        while (familyCount < families.size()) {
+                        int familySize = 0;
+                        if (families != null) {
+                            familySize = families.size();
+                        }
+                        while (familyCount < familySize) {
                             int family = families.get(familyCount);
                             lines.add(tab+tab+tab+"family = "+family);
                             familyCount = familyCount + 1;
@@ -2935,7 +2939,11 @@ public class Processing
                         String countryTag = irCountry.getUpdatedTag();
                         String countryCulture = irCountry.getCulture();
                         int familyCount = 0;
-                        while (familyCount < irFamilies.size()) {
+                        int familySize = 0;
+                        if (irFamilies != null) {
+                            familySize = irFamilies.size();
+                        }
+                        while (familyCount < familySize) {
                             int selectedFamily = irFamilies.get(familyCount);
                             String selectedFamilyStr = irFamiliesStr.get(familyCount);
                             lines.add(tab+tab+selectedFamily+" = {");
@@ -3088,7 +3096,13 @@ public class Processing
             String changes = exoProvinceArray[exoProvinceArray.length-1];
             if (!changes.contains("NoChange")) {
                 //System.out.println(changes);
-                changes = changes.split("~~~")[1];
+                String[] changesTopData = changes.split("~~~");
+                String changesHeader = changesTopData[0];
+                if (changesHeader.equals("Dyn")) {
+                    owner = Integer.toString(10000+count);
+                }
+                
+                changes = changesTopData[1];
                 String[] changesArray = changes.split("~~");
                 int changesCount = 0;
                 while (changesCount < changesArray.length) {
@@ -3163,6 +3177,60 @@ public class Processing
             popArrayCount = popArrayCount + 1;
         }
         return newPopArray;
+    }
+    
+    public static ArrayList<Country> generateExoCountries (ArrayList<Provinces> irProvinceList, int convTag, String modDirectory) throws IOException
+    {
+        int provCount = 0;
+        ArrayList<Country> exoCountries = new ArrayList<Country>();
+        while (provCount < irProvinceList.size()) {
+            Provinces selectedProvince = irProvinceList.get(provCount);
+            String owner = selectedProvince.getOwner();
+            int ownerID = Integer.parseInt(owner);
+            if (ownerID >= 10000) {
+                int exoCount = 0;
+                boolean isUsed = false;
+                while (exoCount < exoCountries.size()) {
+                    Country selectedExoCountry = exoCountries.get(exoCount);
+                    int selectedID = selectedExoCountry.getID();
+                    if (ownerID == selectedID) {
+                        exoCount = exoCountries.size();
+                        isUsed = true;
+                    }
+                    exoCount = exoCount + 1;
+                }
+                if (!isUsed) {
+                    convTag = convTag + 1;
+                    String culture = selectedProvince.getCulture();
+                    String religion = selectedProvince.getReligion();
+                    int provID = selectedProvince.getID();
+                    String capital = Integer.toString(provID);
+                    String government = "oligarchic_republic";
+                    String color = randomizeColor();
+                    String name = "Dynamic Placeholder";
+                    String adjective = "Dynamic Placeholder";
+                    Country newExoCountry = Country.newCountry(ownerID,owner,culture,religion,name,adjective,owner,capital,"none",color,"none",government);
+                    String irTag = Processing.convertTag("none",convTag);
+                    newExoCountry.setUpdatedTag(irTag);
+                    newExoCountry.setHasLand(true);
+                    Output.countrySetupCreation(color,irTag,modDirectory);
+                    exoCountries.add(newExoCountry);
+                }
+            }
+            provCount = provCount + 1;
+        }
+        return exoCountries;
+    }
+    
+    public static ArrayList<Country> appendExoCountries (ArrayList<Country> convCountries, ArrayList<Country> exoCountries) throws IOException
+    {
+        int exoCount = 0;
+        while (exoCount < exoCountries.size()) {
+            Country selectedExoCountry = exoCountries.get(exoCount);
+            convCountries.add(selectedExoCountry);
+            exoCount = exoCount + 1;
+        }
+        return convCountries;
     }
     
     

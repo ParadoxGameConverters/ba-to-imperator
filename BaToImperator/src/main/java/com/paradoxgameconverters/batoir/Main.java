@@ -745,6 +745,8 @@ public class Main
             
             ArrayList<String[]> exoProvinces = Importer.importExoMappings("exoMappings.txt");
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces);
+            ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory);
+            baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
