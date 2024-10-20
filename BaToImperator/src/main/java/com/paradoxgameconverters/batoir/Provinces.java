@@ -19,6 +19,8 @@ public class Provinces
     private String region;
     private String area;
     private String cityStatus;
+    private double civValue;
+    private ArrayList<Double> civValues;
     public Provinces() {
         int id;
         String owner;
@@ -36,6 +38,30 @@ public class Provinces
         String region;
         String area;
         String cityStatus; //is expected to be either settlement, city, or metropolis
+        double civValue;
+        ArrayList<Double> civValues;
+    }
+    
+    public void addCivValue(double provCivValue) {
+        if (civValues == null) {
+            civValues = new ArrayList<Double>();
+        }
+        civValues.add(provCivValue);
+    }
+    public void setCivValues(ArrayList<Double> provCivValues) {
+        civValues = provCivValues;
+    }
+
+    public ArrayList<Double> getCivValues() {
+        return civValues;
+    }
+    
+    public void setCivValue(double provCivValue) {
+        civValue = provCivValue;
+    }
+
+    public double getCivValue() {
+        return civValue;
     }
     
     public void setCityStatus(String provCityStatus) {
@@ -338,7 +364,7 @@ public class Provinces
     
 
     public static Provinces newProv(String provOwner, String provCul, String provRel, int provMon, double provNR, double provCR, double provFR,
-    double provTR, double provSR, String provCS, int provID) {
+    double provTR, double provSR, String provCS, double provCivValue, int provID) {
         Provinces newProv = new Provinces();
         newProv.setOwner(provOwner);
         newProv.setCulture(provCul);
@@ -350,6 +376,7 @@ public class Provinces
         newProv.setTribesmenRatio(provTR);
         newProv.setSlaveRatio(provSR);
         newProv.setCityStatus(provCS);
+        newProv.setCivValue(provCivValue);
         newProv.setID(provID);
         return newProv;
     }

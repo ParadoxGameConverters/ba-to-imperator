@@ -44,7 +44,7 @@ public class Importer
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[7];
+        output = new String[8];
 
         output[0] = "9999"; //default for no owner, uncolonized province
         output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
@@ -53,10 +53,11 @@ public class Importer
         output[4] = "{ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }"; //default for no buildinga
         output[5] = "9999"; //default for no monument
         output[6] = "settlement"; //default for no city status
+        output[7] = "0.0"; //default for no civilization value
 
         impProvList.add(output); //default at ID 0
         
-        Provinces tmpProv = Provinces.newProv(output[0],output[1],output[2],0,0,0,0,0,0,output[6],aqq);
+        Provinces tmpProv = Provinces.newProv(output[0],output[1],output[2],0,0,0,0,0,0,output[6],0.0,aqq);
         baProvList.add(tmpProv);
 
         try {
@@ -133,6 +134,10 @@ public class Importer
                             output[3] = Integer.toString(aqq);
                         }
                         
+                        if (qaaa.split("=")[0].equals( tab+tab+"civilization_value" ) ) {
+                            output[7] = qaaa.split("=")[1];
+                        }
+                        
                         //cityStatus
                         if (qaaa.split("=")[0].equals( tab+tab+"province_rank" ) ) {
                             output[6] = qaaa.split("=")[1];
@@ -167,8 +172,10 @@ public class Importer
                             //baProvList
                             int monID = Integer.parseInt(tmpOutput[5]);
                             
+                            double civValue = Double.parseDouble(tmpOutput[7]);
+                            
                             Provinces baProv = Provinces.newProv(tmpOutput[0],tmpOutput[1],tmpOutput[2],monID,nobleRatio,citizenRatio,freemenRatio,
-                            tribesmenRatio,slaveRatio,tmpOutput[6],aqq);
+                            tribesmenRatio,slaveRatio,tmpOutput[6],civValue,aqq);
                             //System.out.println("NobleRatio:"+baProv.getNobleRatio()+"|SlaveRatio:"+baProv.getSlaveRatio()+"|Cult:"+baProv.getCulture());
                             
                             if (provincePopList.size() > 0) {
@@ -186,6 +193,7 @@ public class Importer
                             output[4] = "{ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }"; //default for no buildinga
                             output[5] = "9999"; //default for no monument
                             output[6] = "settlement"; //default for no city status
+                            output[7] = "0.0"; //default for no civilization value
                             
                             provincePopList = new ArrayList<Pop>();
                             
@@ -2178,11 +2186,18 @@ public class Importer
                         String provCulture = "Debug";
                         String provReligion = "Debug";
                         String provRank = "settlement";
+                        double provCiv = 0.0;
                         ArrayList<Pop> provPops = new ArrayList<Pop>();
                         //int popTot = 0;
                         while (!setupLine.equals("}")) {
                            setupLine = provSetupFile.get(count);
-                           if (setupLine.contains("culture")) {
+                           if (setupLine.contains("civilization_value")) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.split("#")[0];
+                               String tmpCiv = setupLine.split("=")[1];
+                               provCiv = Double.parseDouble(tmpCiv);
+                           }
+                           else if (setupLine.contains("culture")) {
                                setupLine = setupLine.replace(" ","");
                                setupLine = setupLine.split("#")[0];
                                provCulture = setupLine.split("=")[1];
@@ -2265,7 +2280,7 @@ public class Importer
                         //provInfo[1] = provTerrain;
                         //provInfo[2] = provTradeGood;
                         
-                        Provinces tmpProv = Provinces.newProv("9999",provCulture,provReligion,0,0,0,0,0,0,provRank,Integer.parseInt(provID));
+                        Provinces tmpProv = Provinces.newProv("9999",provCulture,provReligion,0,0,0,0,0,0,provRank,provCiv,Integer.parseInt(provID));
                         tmpProv.setTerrain(provTerrain);
                         tmpProv.setTradeGood(provTradeGood);
                         if (provPops.size() > 0) {

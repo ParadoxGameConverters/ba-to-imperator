@@ -360,7 +360,7 @@ public class Main
             //ArrayList<String> countTest3 = Processing.convertPopCountToRatios(countTest2);
             //ArrayList<String> countTest4 = Processing.reallocatePops(countTest3,30);
             ArrayList<Provinces> irProvinceList = new ArrayList<Provinces>();//ArrayList
-            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0);
+            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0.0,0);
             irProvinceList.add(blankProv);
             //ArrayList<String[]> irProvMappings = new ArrayList<String[]>();//ArrayList 
             try { ////Get counts of culture, religion, and TAG ownership
@@ -392,12 +392,13 @@ public class Main
                     ArrayList<Pop> baPops = baProvInfo.getPops();
                     //System.out.println(impProvInfo);
                     int popTotal = 0;
+                    double civValue = baProvInfo.getCivValue();
                     //
                     int createdFlag = 0;
                     int irProvListID = Processing.getProvByID(irProvinceList,ckProvNum);
                     Provinces irProv = irProvinceList.get(irProvListID);
                     if (irProvListID == 0) {
-                        irProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0);
+                        irProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0.0,0);
                         irProv.setID(ckProvNum);
                         irProvinceList.add(blankProv);
                         irProvListID = irProvinceList.size()-1;
@@ -405,6 +406,7 @@ public class Main
                     try {
                         popTotal = baPops.size();
                         irProv.addPopArray(baPops);
+                        irProv.addCivValue(civValue);
                         irProvinceList.set(irProvListID,irProv);
                         //irProvinceList.get(irProvListID).addPopArray(baPops);
                     } catch (java.lang.NullPointerException exception) {
@@ -524,6 +526,11 @@ public class Main
                         irProvCS = "metropolis";
                     }
                     irProvInfo.setCityStatus(irProvCS);
+                    
+                    ArrayList<Double> provCivValues = irProvInfo.getCivValues();
+                    double civValue = Processing.average(provCivValues);
+                    civValue = civValue / 2; //cut final value in half to align with vanilla values on setup
+                    irProvInfo.setCivValue(civValue);
                     
                     //String[] typeCount = Processing.countPops(irProvInfo.getPops(),"type");
                     float[] typeRatios = Processing.getTypeRatios(irProvInfo.getPops());

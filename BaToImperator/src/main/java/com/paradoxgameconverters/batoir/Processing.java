@@ -2328,6 +2328,7 @@ public class Processing
                 String provCulture = irProv.getCulture();
                 String provReligion = irProv.getReligion();
                 String provCityStatus = irProv.getCityStatus();
+                double provCivValue = irProv.getCivValue();
                 if (provCityStatus.equals("metropolis")) {
                     provCityStatus = "city_metropolis";
                 }
@@ -2336,7 +2337,7 @@ public class Processing
             
                 lines.add(provID+" = {");
                 lines.add(tab+"barbarian_power=0");
-                lines.add(tab+"civilization_value=0");
+                lines.add(tab+"civilization_value="+provCivValue);
                 lines.add(tab+"culture="+quote+provCulture+quote);
                 lines.add(tab+"province_rank="+quote+provCityStatus+quote);
                 lines.add(tab+"religion="+quote+provReligion+quote);
@@ -3126,9 +3127,10 @@ public class Processing
                 String culture = vanillaProv.getCulture();
                 String religion = vanillaProv.getReligion();
                 String cityStatus = vanillaProv.getCityStatus();
+                double civValue = vanillaProv.getCivValue();
                 ArrayList<Pop> tmpPops = vanillaProv.getPops();
                 
-                Provinces tmpProv = Provinces.newProv(owner,culture,religion,0,0,0,0,0,0,cityStatus,selectedExoProv);
+                Provinces tmpProv = Provinces.newProv(owner,culture,religion,0,0,0,0,0,0,cityStatus,civValue,selectedExoProv);
                 tmpProv.setTerrain(vanillaProv.getTerrain());
                 tmpProv.setTradeGood(vanillaProv.getTradeGood());
                 if (!changeCulture.equals("none") ) {
@@ -3222,7 +3224,7 @@ public class Processing
         return exoCountries;
     }
     
-    public static ArrayList<Country> appendExoCountries (ArrayList<Country> convCountries, ArrayList<Country> exoCountries) throws IOException
+    public static ArrayList<Country> appendExoCountries (ArrayList<Country> convCountries, ArrayList<Country> exoCountries)
     {
         int exoCount = 0;
         while (exoCount < exoCountries.size()) {
@@ -3231,6 +3233,19 @@ public class Processing
             exoCount = exoCount + 1;
         }
         return convCountries;
+    }
+    
+    public static double average (ArrayList<Double> numbers)
+    {
+        int avgCount = 0;
+        double total = 0;
+        while (avgCount < numbers.size()) {
+            double number = numbers.get(avgCount);
+            total = number + total;
+            avgCount = avgCount + 1;
+        }
+        double avg = total / avgCount;
+        return avg;
     }
     
     
