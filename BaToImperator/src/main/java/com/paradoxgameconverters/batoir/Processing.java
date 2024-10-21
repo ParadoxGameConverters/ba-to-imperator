@@ -3095,6 +3095,8 @@ public class Processing
             String changeCulture = "none";
             String changeReligion = "none";
             String changes = exoProvinceArray[exoProvinceArray.length-1];
+            String exoRole = "none"; //which tag the country'll be treated as for missions
+            String exoGov = "none";
             if (!changes.contains("NoChange")) {
                 //System.out.println(changes);
                 String[] changesTopData = changes.split("~~~");
@@ -3114,6 +3116,10 @@ public class Processing
                         changeCulture = changeData;
                     } else if (changeType.equals("Rel")) {
                         changeReligion = changeData;
+                    } else if (changeType.equals("Missions")) {
+                        exoRole = changeData;
+                    } else if (changeType.equals("Gov")) {
+                        exoGov = changeData;
                     }
                     changesCount = changesCount + 1;
                 }
@@ -3145,6 +3151,8 @@ public class Processing
                     }
                     tmpPops = updatePops("religion",changeReligion,masterProvReligion,tmpPops);
                 }
+                tmpProv.setExoRole(exoRole);
+                tmpProv.setExoGov(exoGov);
                 
                 tmpProv.addPopArray(tmpPops);
                 convProvinces.add(tmpProv);
@@ -3207,14 +3215,21 @@ public class Processing
                     String religion = selectedProvince.getReligion();
                     int provID = selectedProvince.getID();
                     String capital = Integer.toString(provID);
-                    String government = "oligarchic_republic";
+                    String government = selectedProvince.getExoGov();
+                    if (government.equals("none")) {
+                        government = "oligarchic_republic";
+                    }
                     String color = randomizeColor();
                     String name = "Dynamic Placeholder";
                     String adjective = "Dynamic Placeholder";
+                    String missions = selectedProvince.getExoRole();
                     Country newExoCountry = Country.newCountry(ownerID,owner,culture,religion,name,adjective,owner,capital,"none",color,"none",government);
                     String irTag = Processing.convertTag("none",convTag);
                     newExoCountry.setUpdatedTag(irTag);
                     newExoCountry.setHasLand(true);
+                    if (!missions.equals("none")) {
+                        newExoCountry.setMissions(missions);
+                    }
                     Output.countrySetupCreation(color,irTag,modDirectory);
                     exoCountries.add(newExoCountry);
                 }
@@ -3246,6 +3261,72 @@ public class Processing
         }
         double avg = total / avgCount;
         return avg;
+    }
+    
+    public static ArrayList<String[]> getMissionTags (ArrayList<Country> convCountries)
+    {
+        int count = 0;
+        ArrayList<String[]> missionTags = new ArrayList<String[]>();
+        while (count < convCountries.size()) {
+            Country selectedCountry = convCountries.get(count);
+            String missionTag = selectedCountry.getMissions();
+            if (missionTag != null) {
+                String irTag = selectedCountry.getUpdatedTag();
+                String[] missionCombo = (missionTag+","+irTag).split(",");
+                missionTags.add(missionCombo);
+            }
+            count = count + 1;
+        }
+        
+        return missionTags;
+    }
+    
+    public static ArrayList<String> updateMission (ArrayList<String> oldMission, ArrayList<String[]> missionTags)
+    {
+        ArrayList<String> newMission = new ArrayList<String>();
+        int count = 0;
+        int oldMissionSize = oldMission.size();
+        while (count < oldMissionSize) {
+            String line = oldMission.get(count);
+            String updatedLine = line;
+            int tagCount = 0;
+            int tagSize = missionTags.size();
+            while (tagCount < tagSize) {
+                String[] missionCombo = missionTags.get(tagCount);
+                String originalTag = missionCombo[0];
+                String newTag = missionCombo[1];
+                
+                updatedLine = updatedLine.replace("c:"+originalTag,"c:"+newTag);
+                updatedLine = updatedLine.replace("tag = "+originalTag,"tag = "+newTag);
+                
+                tagCount = tagCount + 1;
+            }
+            newMission.add(updatedLine);
+            count = count + 1;
+        }
+        
+        return newMission;
+    }
+    
+    public static void updateAllMissions (String dir, String modDir, ArrayList<String[]> missionTags) throws IOException //updates all missions
+    {
+        int count = 0;
+        String missionDirectory = dir+"/common/missions";
+        String missionModDir = modDir +"/common/missions";
+        
+        File missionFolder = new File(missionDirectory);
+        String[] missionFiles = missionFolder.list();
+
+        while (count < missionFiles.length) {
+            String fileName = missionFiles[count];
+            String missionFileLocation = missionDirectory+"/"+fileName;
+            ArrayList<String> missionFile = Importer.importBasicFile(missionFileLocation);
+            ArrayList<String> updatedMission = updateMission(missionFile,missionTags);
+            Output.outputBasicFile(updatedMission,fileName,missionModDir);
+
+            System.out.println("Updated "+fileName);
+            count = count + 1;
+        }
     }
     
     

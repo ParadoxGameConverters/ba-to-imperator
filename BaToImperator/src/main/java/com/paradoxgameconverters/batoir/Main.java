@@ -758,6 +758,8 @@ public class Main
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
             //existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
+            ArrayList<String[]> missions = Processing.getMissionTags(baTagInfo);
+            Processing.updateAllMissions(Dir2+"/game",modDirectory,missions);
             
             existingCountryFile = Processing.appendFamilies(baTagInfo,existingCountryFile);
             

@@ -24,6 +24,7 @@ public class Country
     private String government;
     private ArrayList<Integer> majorFamilies;
     private ArrayList<String> majorFamiliesStr;
+    private String missions; //use missions from x tag
     public Country() {
         int id;
         String culture;
@@ -144,6 +145,13 @@ public class Country
     }
     public ArrayList<String> getMajorFamiliesStr() {
         return majorFamiliesStr;
+    }
+    
+    public void setMissions(String missionTag) {
+        missions = missionTag;
+    }
+    public String getMissions() {
+        return missions;
     }
     
     public static Country newCountry(int countryID, String countryTag, String countryCulture, String countryReligion, String countryLoc, String countryAdj, 

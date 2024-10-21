@@ -21,6 +21,8 @@ public class Provinces
     private String cityStatus;
     private double civValue;
     private ArrayList<Double> civValues;
+    private String exoRole;
+    private String exoGov;
     public Provinces() {
         int id;
         String owner;
@@ -40,6 +42,24 @@ public class Provinces
         String cityStatus; //is expected to be either settlement, city, or metropolis
         double civValue;
         ArrayList<Double> civValues;
+        String exoRole; //should only be used for exoTags to identify role for missions
+        String exoGov; //should only be used for exoTags to set government
+    }
+    
+    public void setExoGov(String provExoGov) {
+        exoGov = provExoGov;
+    }
+
+    public String getExoGov() {
+        return exoGov;
+    }
+    
+    public void setExoRole(String provExoRole) {
+        exoRole = provExoRole;
+    }
+
+    public String getExoRole() {
+        return exoRole;
     }
     
     public void addCivValue(double provCivValue) {

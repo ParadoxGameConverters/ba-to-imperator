@@ -117,6 +117,9 @@ public class Directories
         
         File f44 = new File(mainModFolder+"/setup/characters");
         f44.mkdir();
+        
+        File f45 = new File(mainModFolder+"/common/missions");
+        f45.mkdir();
 
         return aqv;
     }
