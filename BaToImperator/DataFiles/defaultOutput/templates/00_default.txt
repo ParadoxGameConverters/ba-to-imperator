@@ -5889,59 +5889,7 @@ country = {
 			
 		}
 		
-		
-	
-		#Carthage
-		CAR = {
-			family = 25
-			family = 26
-			family = 68
-			family = 69
-			government = aristocratic_republic
-			primary_culture = carthaginian
-			religion = carthaginian_pantheon
-			diplomatic_stance=trading_stance
-			republic_military_recruitment_laws = republican_recruitment_1
-			capital = 3256
-			
-			#is_antagonist = yes
-
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-			
-			pantheon = { 
-			
-			{ deity = 425 }
-			{ deity = 401 }
-			{ deity = 428 }	
-			{ deity = 426}
-			
-			}
-
-			own_control_core = 	{
-				90 92 94 95 96 97 	
-				3260 3263 3266 3261 3256 3259 3251 3250 3253 3252
-				3245 3244 3249 3270 3241 3240 3242 3243 3272 3274 3275
-				3279 3286 3282 3281 3283 3287 3285 1470
-				3483 3481 3484 3485 3490 3482 3492
-				3061 3085 3064 3062 3065 3066 3063 3068 3080 3262 3230 3229 3264 3265 3267 3271
-				3225 3226 3227 3126 3123 3122 3121 3144
-				3161 3160 3150 3145 3238 3212 3273 3236 3200 3239 3211
-				3124
-				3486 3487 3488 3489 3503 3504 3506 3505 3500 3499 3497 3494 3493 3108
-				1471 # Melita (Malta)
-				1362 1366 1367 1283 1282 1278 1276 1284 #Malaca
-				1347 1348 #Carteia
-				3092 3095 3120 6301 6478 6490 #More North African Ports
-				7841 7842 7843
-			}
-			
-			treasures = { 45 }
-		}
+		#Carthage removed to avoid crash
 		
 		MAU = {
 			government = despotic_monarchy
