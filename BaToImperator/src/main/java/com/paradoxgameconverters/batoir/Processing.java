@@ -3189,7 +3189,8 @@ public class Processing
         return newPopArray;
     }
     
-    public static ArrayList<Country> generateExoCountries (ArrayList<Provinces> irProvinceList, int convTag, String modDirectory) throws IOException
+    public static ArrayList<Country> generateExoCountries (ArrayList<Provinces> irProvinceList, int convTag, String modDirectory,
+    ArrayList<String> locList) throws IOException
     {
         int provCount = 0;
         ArrayList<Country> exoCountries = new ArrayList<Country>();
@@ -3220,8 +3221,11 @@ public class Processing
                         government = "oligarchic_republic";
                     }
                     String color = randomizeColor();
-                    String name = "Dynamic Placeholder";
+                    String name = "PROV"+capital;
                     String adjective = "Dynamic Placeholder";
+                    String[] names = Importer.importLocalisation(locList,name,"none");
+                    name = names[0];
+                    adjective = names[1];
                     String missions = selectedProvince.getExoRole();
                     Country newExoCountry = Country.newCountry(ownerID,owner,culture,religion,name,adjective,owner,capital,"none",color,"none",government);
                     String irTag = Processing.convertTag("none",convTag);
@@ -3231,6 +3235,7 @@ public class Processing
                         newExoCountry.setMissions(missions);
                     }
                     Output.countrySetupCreation(color,irTag,modDirectory);
+                    Output.localizationCreation(names,irTag,modDirectory);
                     exoCountries.add(newExoCountry);
                 }
             }
@@ -3311,8 +3316,10 @@ public class Processing
     public static void updateAllMissions (String dir, String modDir, ArrayList<String[]> missionTags) throws IOException //updates all missions
     {
         int count = 0;
-        String missionDirectory = dir+"/common/missions";
-        String missionModDir = modDir +"/common/missions";
+        //String missionDirectory = dir+"/common/missions";
+        //String missionModDir = modDir +"/common/missions";
+        String missionDirectory = dir;
+        String missionModDir = modDir;
         
         File missionFolder = new File(missionDirectory);
         String[] missionFiles = missionFolder.list();
@@ -3325,6 +3332,46 @@ public class Processing
             Output.outputBasicFile(updatedMission,fileName,missionModDir);
 
             System.out.println("Updated "+fileName);
+            count = count + 1;
+        }
+    }
+    
+    public static void updateAllMissionEvents (String dir, String modDir, ArrayList<String[]> missionTags) throws IOException //updates all missions
+    {
+        int count = 0;
+        String missionDirectory = dir+"/events/mission_events";
+        String missionModDir = modDir +"/events/mission_events";
+        
+        File missionFolder = new File(missionDirectory);
+        String[] missionFiles = missionFolder.list();
+
+        while (count < missionFiles.length) {
+            
+            String fileName = missionFiles[count];
+            String missionFileLocation = missionDirectory+"/"+fileName;
+            if (fileName.contains(".txt")) {
+                ArrayList<String> eventFile = Importer.importBasicFile(missionFileLocation);
+                ArrayList<String> updatedMission = updateMission(eventFile,missionTags);
+                Output.outputBasicFile(updatedMission,fileName,missionModDir);
+
+                System.out.println("Updated "+fileName);
+            } else {
+                File missionEventFolder = new File(missionFileLocation);
+                String[] missionEventFiles = missionEventFolder.list();
+                int count2 = 0;
+                while (count2 < missionEventFiles.length) {
+                    String eventFileName = missionEventFiles[count2];
+                    String missionEventFileLocation = missionFileLocation+"/"+eventFileName;
+                    ArrayList<String> missionFile = Importer.importBasicFile(missionEventFileLocation);
+                    ArrayList<String> updatedMission = updateMission(missionFile,missionTags);
+                    Output.outputBasicFile(updatedMission,eventFileName,missionModDir+"/"+fileName);
+                    count2 = count2 + 1;
+
+                    System.out.println("Updated "+eventFileName);
+                }
+            
+            }
+            
             count = count + 1;
         }
     }

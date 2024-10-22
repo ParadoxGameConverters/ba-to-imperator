@@ -279,7 +279,12 @@ public class Main
             
             LOGGER.info("Importing localization information...");
             
-            ArrayList<String> locList = Importer.importAllLoc(impGameDir,modDirs);
+            ArrayList<String> vanillaLoc = Importer.importVanillaLoc(impGameDir);
+            ArrayList<String> moddedLoc = Importer.importAllModLoc(impGameDir,modDirs);
+            ArrayList<String> locList = new ArrayList<String>();
+            locList.addAll(vanillaLoc);
+            locList.addAll(moddedLoc);
+            //ArrayList<String> locList = Importer.importAllLoc(impGameDir,modDirs);
             
             ArrayList<String> regionDirList = Importer.importModRegionDirs(modDirs);
             
@@ -752,14 +757,16 @@ public class Main
             
             ArrayList<String[]> exoProvinces = Importer.importExoMappings("exoMappings.txt");
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces);
-            ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory);
+            ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc);
             baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
             //existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
             ArrayList<String[]> missions = Processing.getMissionTags(baTagInfo);
-            Processing.updateAllMissions(Dir2+"/game",modDirectory,missions);
+            Processing.updateAllMissions(Dir2+"/game/common/missions",modDirectory+"/common/missions",missions);
+            Processing.updateAllMissionEvents(Dir2+"/game",modDirectory,missions);
+            Processing.updateAllMissions(Dir2+"/game/common/scripted_effects",modDirectory+"/common/scripted_effects",missions);
             
             existingCountryFile = Processing.appendFamilies(baTagInfo,existingCountryFile);
             

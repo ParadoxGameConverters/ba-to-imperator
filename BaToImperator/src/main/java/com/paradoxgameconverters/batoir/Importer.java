@@ -1719,6 +1719,46 @@ public class Importer
 
         return allLoc;
     }
+    
+    public static ArrayList<String> importVanillaLoc (String name) throws IOException //imports all localization files
+    {
+        ArrayList<String> allLoc = new ArrayList<String>();
+        ArrayList<String> regionLoc = importBasicFile(name+"/game/localization/english/macroregions_l_english.yml");
+        ArrayList<String> formableLoc = importBasicFile(name+"/game/localization/english/nation_formation_l_english.yml");
+        ArrayList<String> countryLoc = importBasicFile(name+"/game/localization/english/countries_l_english.yml");
+        ArrayList<String> provLoc = importBasicFile(name+"/game/localization/english/provincenames_l_english.yml");
+        ArrayList<String> areaLoc = importBasicFile(name+"/game/localization/english/regionnames_l_english.yml");
+
+        allLoc.addAll(regionLoc);
+        allLoc.addAll(formableLoc);
+        allLoc.addAll(countryLoc);
+        allLoc.addAll(provLoc);
+        allLoc.addAll(areaLoc);
+
+        return allLoc;
+    }
+    
+    public static ArrayList<String> importAllModLoc (String name, ArrayList<String> modDirs) throws IOException //imports all localization files
+    {
+        ArrayList<String> moddedLoc = new ArrayList<String>();
+        int aqq = 0;
+        while (modDirs.size() > aqq) {
+            if (!modDirs.get(aqq).equals("none")) {
+                String modDir = modDirs.get(aqq)+"/localization/english";
+                try {
+                    importModLoc(modDir,modDirs,moddedLoc);
+                    //System.out.println("Dir: "+modDirs.get(aqq));
+                    //System.out.println("Loc total: "+test.size());
+                    //moddedLoc.addAll(importModLoc(modDir,modDirs,moddedLoc));
+                } catch (java.lang.OutOfMemoryError exception) { //User has many mods with too many lines of localization to handle in memory
+                    aqq = 1 + modDirs.size(); 
+                }
+            }
+            aqq = aqq + 1;
+        }
+
+        return moddedLoc;
+    }
 
     public static ArrayList<String> importModLoc (String modDir, ArrayList<String> modDirs, ArrayList<String> allModLoc) throws IOException
     //imports all modded localization files

@@ -120,6 +120,30 @@ public class Directories
         
         File f45 = new File(mainModFolder+"/common/missions");
         f45.mkdir();
+        
+        File f46 = new File(mainModFolder+"/events/mission_events");
+        f46.mkdir();
+        
+        File f47 = new File(mainModFolder+"/events/mission_events/1.3 - Livy");
+        f47.mkdir();
+        
+        File f48 = new File(mainModFolder+"/events/mission_events/1.3 - Punic Wars");
+        f48.mkdir();
+        
+        File f49 = new File(mainModFolder+"/events/mission_events/1.4 - Archimedes");
+        f49.mkdir();
+        
+        File f50 = new File(mainModFolder+"/events/mission_events/1.4 - Magna Graecia");
+        f50.mkdir();
+        
+        File f51 = new File(mainModFolder+"/events/mission_events/2.0 - Heirs of Alexander");
+        f51.mkdir();
+        
+        File f52 = new File(mainModFolder+"/events/mission_events/Epirus Pre-Order Pack");
+        f52.mkdir();
+        
+        File f53 = new File(mainModFolder+"/common/scripted_effects");
+        f53.mkdir();
 
         return aqv;
     }
