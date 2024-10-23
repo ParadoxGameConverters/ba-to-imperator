@@ -16,18 +16,50 @@
 	link = { ba = 266 imperator = 85 } # Rhodos -> Gela
 	link = { ba = 431 imperator = 99 imperator = 1472 } # Messene -> Tyndaris, Liparae
 	link = { comment = "_~_Dyn~~~Cult,bosporan~~Rel,roman_pantheon_~_" }
-	link = { ba = 1973 imperator = 4549 imperator = 4550 imperator = 4562 imperator = 4563 imperator = 4565 imperator = 4564 imperator = 4561 imperator = 4566 imperator = 4559 imperator = 4567 imperator = 4544 imperator = 4543 imperator = 4541 imperator = 4540 imperator = 4542 imperator = 4539 imperator = 4560 } # Miletos -> Pantikapaion, Kimmerikon, Hermonassa, Phanagoria, Gorgippia, Labrys, Lebedia, Bata, Pataroue, Torikos, Theodosia, Athenaion, Aloustou Phrourion, Lampas, Neapolis Taurike, Charax, Azara
+	link = { ba = 1973 imperator = 4549 imperator = 4550 imperator = 4562 imperator = 4563 imperator = 4565 imperator = 4564 imperator = 4561 imperator = 4566 imperator = 4559 imperator = 4544 imperator = 4543 imperator = 4541 imperator = 4540 imperator = 4542 imperator = 4539 imperator = 4560 } # Miletos -> Pantikapaion, Kimmerikon, Hermonassa, Phanagoria, Gorgippia, Labrys, Lebedia, Bata, Pataroue, Theodosia, Athenaion, Aloustou Phrourion, Lampas, Neapolis Taurike, Charax, Azara
 	link = { ba = 417 imperator = 4538 imperator = 4537 imperator = 4536 imperator = 4534 } # Megara -> Chersonesos, Parthenion, Kerkinitis, Kalos Limen
+	link = { ba = 1973 imperator = 4529 imperator = 4528 imperator = 4530 imperator = 4531 } # Miletos -> Olbia, Scopuli, Hippolaou Akra, Borysthenia
+	link = { ba = 1973 imperator = 4525 imperator = 4526 imperator = 4527 } # Miletos -> Tyras, Nikonia, Istrianon
+	link = { ba = 1973 imperator = 4513 imperator = 4512 imperator = 4515 } # Miletos -> Histria, Axiopolis, Skenopsis
+	link = { ba = 1973 imperator = 4255 } # Miletos -> Tomis
+	link = { ba = 417 imperator = 4254 imperator = 4250 } # Megara -> Callatis, Tirizis
+	link = { ba = 1973 imperator = 4248 imperator = 4247 } # Miletos -> Odessus, Erite
+	link = { ba = 1973 imperator = 4516 } # Miletos -> Argamum
+	link = { ba = 1973 imperator = 4249 } # Miletos -> Krounoi
+	link = { ba = 417 imperator = 480 } # Megara -> Mesembria
+	link = { ba = 1973 imperator = 482 imperator = 481 } # Miletos -> Apollonia Pontike, Anchialos
 	link = { comment = "_~_Dyn~~~Cult,thracian~~Rel,roman_pantheon_~_" }
 	link = { ba = 417 imperator = 1453 imperator = 345 imperator = 341 } # Megara -> Byzantion, Selymbria, Philia
 	link = { ba = 417 imperator = 240 } # Megara -> Chalcedon
 	link = { ba = 417 imperator = 243 imperator = 246 } # Megara -> Astakos, Strobilos
+	link = { ba = 1973 imperator = 245 imperator = 248 } # Miletos -> Kios, Myrleia
+	link = { ba = 389 imperator = 252 imperator = 7908 } # Larissa -> Kyzikos, Antigoneia Kyzikene
 	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon_~_" }
 	link = { ba = 1973 imperator = 1812 imperator = 1810 } # Miletos -> Sinope, Zaliches
-	link = { ba = 1973 imperator = 1720 imperator = 1740 imperator = 1738 } # Miletos -> Phasis, Tzibile, Gyenos
+	link = { ba = 1973 imperator = 1720 imperator = 1741 imperator = 1738 } # Miletos -> Phasis, Dioscurias, Gyenos
+	link = { ba = 417 imperator = 207 imperator = 238 } # Megara -> Herakleia Pontike, Diospolis
+	link = { ba = 1973 imperator = 209 } # Miletos -> Tieion
+	link = { ba = 417 imperator = 208 } # Megara -> Sesamos
+	link = { ba = 1973 imperator = 1807 } # Miletos -> Amisos
+	link = { ba = 1973 imperator = 1795 } # Miletos -> Kotyora
+	link = { ba = 1973 imperator = 1798 } # Miletos -> Kerasous
+	link = { ba = 1973 imperator = 1734 imperator = 1732 imperator = 1797 } # Miletos -> Trapezous, Hyssos, Koralla
 	link = { comment = "_~_Dyn~~~Cult,italiotian~~Rel,roman_pantheon_~_" }
 	link = { ba = 402 imperator = 73 } # Opous -> Locri
 	link = { ba = 444 imperator = 78 } # Aigion -> Croton
+	link = { ba = 407 imperator = 72 } # Chalcis -> Rhegium
+	link = { ba = 402 imperator = 75 } # Opous -> Hipponium
+	link = { ba = 416 imperator = 52 } # Athens -> Thurii
+	link = { ba = 416 imperator = 54 } # Athens -> Heraclea
+	link = { ba = 444 imperator = 55 } # Aigion -> Metapontum
+	link = { ba = 427 imperator = 56 } # Sparta -> Tarentum
+	link = { ba = 285 imperator = 12 } # Kyme -> Velia
+	link = { ba = 418 imperator = 38 } # Korinthos -> Sipontum
+	link = { ba = 418 imperator = 117 } # Korinthos -> Ancona
+	link = { ba = 418 imperator = 8026 imperator = 4084 imperator = 8027 } # Korinthos -> Issa, Pharos, Korkyra Melaina
+	link = { ba = 418 imperator = 4034 } # Korinthos -> Apsaros
+	link = { ba = 418 imperator = 4085 } # Korinthos -> Epidauros Illyrikos
+	link = { ba = 418 imperator = 422 } # Korinthos -> Apollonia
 	link = { comment = "_~_Dyn~~~Cult,massalian~~Rel,roman_pantheon_~_" }
 	link = { ba = 285 imperator = 2325 imperator = 3517 imperator = 3543 imperator = 2260 } # Kyme -> Massalia, Tauroention, Antipolis, Agatha
 	link = { ba = 285 imperator = 1031 imperator = 1032 } # Kyme -> Hemeroskopeion, Portus Sucronis
