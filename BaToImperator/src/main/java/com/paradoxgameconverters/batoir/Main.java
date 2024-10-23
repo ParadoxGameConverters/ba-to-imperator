@@ -722,7 +722,7 @@ public class Main
                             baTag.setGovernment(newGovernment);
                             String newCapital = Importer.importMappingFromArray(provinceMappings,capital)[1];
                             baTag.setCapital(newCapital);
-                            String[] locName = importer.importLocalisation(locList,baTag.getLoc(),"rulerDynasty");
+                            String[] locName = importer.importLocalisation(moddedLoc,baTag.getLoc(),"rulerDynasty");
                             baTag.setLoc(locName[0]);
                             baTag.setAdj(locName[1]);
                             Output.localizationCreation(locName,newTagID,modDirectory);

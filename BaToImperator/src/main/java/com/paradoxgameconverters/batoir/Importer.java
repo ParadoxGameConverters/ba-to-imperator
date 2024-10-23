@@ -832,7 +832,13 @@ public class Importer
                     } catch (java.lang.StringIndexOutOfBoundsException exception) {
                         
                     }
-
+                    
+                    try {
+                        qaaa = qaaa.split(" #")[0];
+                    }
+                    catch (Exception e) {
+                        
+                    }
                     if (qaaa.split(":")[0].equals(" "+tag)){
                         output[0] = qaaa.split(":")[1];
                         output[0] = output[0].substring(3,output[0].length()-1);
@@ -878,6 +884,10 @@ public class Importer
             output[0] = revoltNames[1] + " Revolt";
             output[1] = revoltNames[1] + " Revolter";
         }
+        
+        output[0] = output[0].split("#")[0];//Remove any comments in loc
+        output[1] = output[1].split("#")[0];
+        
 
         if (output[0].charAt(0) == '[') { //For countries which use a dynasty name for their country, like the Seleukid Empire
             output[1] = dynasty;
@@ -886,9 +896,6 @@ public class Importer
             }
             output[0] = output[1] + " Empire"; //may change out Empire for country rank
         }
-        
-        output[0] = output[0].split("#")[0];//Remove any comments in loc
-        output[1] = output[1].split("#")[0];
 
         return output;
 
