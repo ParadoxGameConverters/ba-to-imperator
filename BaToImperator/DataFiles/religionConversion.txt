@@ -1,8 +1,16 @@
 hellenic_religion,roman_pantheon
 aegean_religion,roman_pantheon
-canaanite_religion,carthaginian_pantheon
 anatolian_religion,anatolian_religion
 egyptian_religion,egyptian_pantheon
 berber_religion,berber_religion
 mesopotamian_religion,mesopotamian_religion
 elamite_religion,mesopotamian_religion
+
+#Canaanite becomes Jewish if under a Hebrew realm or Hebrew under a non-Canaanite realm
+canaanite_religion,judaism,tagCulture=hebrew
+canaanite_religion,carthaginian_pantheon,notTagCulture=hebrew
+canaanite_religion,judaism,culture=hebrew
+canaanite_religion,carthaginian_pantheon
+
+#Temporary
+hurrian_religion,animism

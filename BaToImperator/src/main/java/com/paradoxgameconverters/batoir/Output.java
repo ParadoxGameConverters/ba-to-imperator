@@ -108,6 +108,13 @@ public class Output
                             passedCheck = false;
                         }
                     }
+                    else if (relArgument[0].equals("notTagCulture")) {
+                        //System.out.println(relArgument[1]+" "+tagCulture);
+                        if (tagCulture.equals(relArgument[1])) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
                     else if (relArgument[0].equals("year")) {
                         //System.out.println(relArgument[1]+" "+date);
                         String tmpDate = date.replace(".",",");

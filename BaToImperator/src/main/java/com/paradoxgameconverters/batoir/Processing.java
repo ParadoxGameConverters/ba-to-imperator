@@ -2482,7 +2482,7 @@ public class Processing
         return newArray;
     }
     
-    public static ArrayList<Provinces> convertAllPops(ArrayList<Provinces> provList,ArrayList<String> cultureMappings,
+    public static ArrayList<Provinces> convertAllPops(ArrayList<Provinces> provList,ArrayList<Country> baTagInfo,ArrayList<String> cultureMappings,
     ArrayList<String> religionMappings) throws IOException {
         int count = 0;
         while (count < provList.size()) { 
@@ -2491,14 +2491,21 @@ public class Processing
             String provArea = province.getArea();
             ArrayList<Pop> provPops = province.getPops();
             ArrayList<Pop> newProvPops = new ArrayList<Pop>();
+            String baTagCulture = "none";
+            int provOwner = Integer.parseInt(province.getOwner());
+            if (provOwner != 9999) { //if uncolonized, don't get tagCulture
+                Country baTag = baTagInfo.get(provOwner);
+                baTagCulture = baTag.getCulture();
+            }
+            
             int popCount = 0;
             try {
                 while (popCount < provPops.size()) {
                     Pop selectedPop = provPops.get(popCount);
                     String popCulture = selectedPop.getCulture();
                     String popReligion = selectedPop.getReligion();
-                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,"tagCulture","date",popCulture,provRegion,provArea);
-                    popReligion = Output.cultureOutput(religionMappings,popReligion);
+                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,baTagCulture,"date",popCulture,provRegion,provArea);
+                    popReligion = Output.paramMapOutput(religionMappings,popCulture,baTagCulture,"date",popReligion,provRegion,provArea);
                     selectedPop.setCulture(popCulture);
                     selectedPop.setReligion(popReligion);
                     newProvPops.add(selectedPop);
@@ -2772,6 +2779,7 @@ public class Processing
             Provinces capitalBAProv = baProvInfoList.get(capInt);
             String capitalArea = capitalBAProv.getArea();
             String capitalRegion = capitalBAProv.getRegion();
+            String tagCulture = selectedCountry.getCulture();
             
             String oldCulture = selectedChar.getCulture();
             String oldReligion = selectedChar.getReligion();
@@ -2782,8 +2790,8 @@ public class Processing
                 capitalArea = "debug";
             }
             
-            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea);
-            String newReligion = Output.cultureOutput(religionMappings,oldReligion);
+            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea);
+            String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea);
             
             if (newCulture.equals("99999")) {
                 newCulture = "roman"; //Game will crash when a country has a non-existant primary culture

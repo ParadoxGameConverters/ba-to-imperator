@@ -358,7 +358,36 @@ public class Main
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
-            baProvInfoList = Processing.convertAllPops(baProvInfoList,cultureMappings,religionMappings);
+            
+            ArrayList<Country> baTagInfo = new ArrayList<Country>();
+            //Country processing
+            baTagInfo = importer.importCountry(saveCountries);
+            int allTagCount = 0;
+            while (allTagCount < baTagInfo.size()) {
+                Country baTag = baTagInfo.get(allTagCount);
+                String capital = baTag.getCapital();
+                int capInt = Integer.parseInt(capital);
+                Provinces capitalBAProv = baProvInfoList.get(capInt);
+                
+                String oldCulture = baTag.getCulture();
+                String oldReligion = baTag.getReligion();
+                String capitalArea = capitalBAProv.getArea();
+                String capitalRegion = capitalBAProv.getRegion();
+                            
+                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea);
+                String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea);
+                            
+                            
+                if (newCulture.equals("99999")) {
+                    newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
+                    System.out.println("Warning, culture "+oldCulture+" is unmapped, setting to 'Roman'");
+                }
+                baTag.setCulture(newCulture);
+                baTag.setReligion(newReligion);
+                allTagCount = allTagCount + 1;
+            }
+            
+            baProvInfoList = Processing.convertAllPops(baProvInfoList,baTagInfo,cultureMappings,religionMappings);
             
             //String[] countTest = Processing.countPops(baProvInfoList.get(1974).getPops(),"cultureAndReligion");
             //ArrayList<String> countTest2 = Processing.condenseArrayStr(countTest);
@@ -480,10 +509,6 @@ public class Main
             long territoryTime = System.nanoTime();
             long territoryTot = (((territoryTime - startTime) / 1000000000)/60);
             LOGGER.info("Territory data imported after "+ territoryTot + " minutes");
-            
-            ArrayList<Country> baTagInfo = new ArrayList<Country>();
-            //Country processing
-            baTagInfo = importer.importCountry(saveCountries);
 
             LOGGER.finest("25%");
 
@@ -692,20 +717,10 @@ public class Main
                             String capitalArea = capitalBAProv.getArea();
                             String capitalRegion = capitalBAProv.getRegion();
                             
-                            String oldCulture = baTag.getCulture();
-                            String oldReligion = baTag.getReligion();
                             String oldGovernment = baTag.getGovernment();
-                            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea);
-                            String newReligion = Output.cultureOutput(religionMappings,oldReligion);
                             String newGovernment = Output.cultureOutput(govMap,oldGovernment);
-                            String newCapital = Importer.importMappingFromArray(provinceMappings,capital)[1];
-                            if (newCulture.equals("99999")) {
-                                newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
-                                System.out.println("Warning, culture "+oldCulture+" is unmapped, setting to 'Roman'");
-                            }
-                            baTag.setCulture(newCulture);
-                            baTag.setReligion(newReligion);
                             baTag.setGovernment(newGovernment);
+                            String newCapital = Importer.importMappingFromArray(provinceMappings,capital)[1];
                             baTag.setCapital(newCapital);
                             String[] locName = importer.importLocalisation(locList,baTag.getLoc(),"rulerDynasty");
                             baTag.setLoc(locName[0]);
