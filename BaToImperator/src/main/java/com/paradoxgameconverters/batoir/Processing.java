@@ -2427,7 +2427,9 @@ public class Processing
                         lines.add(tab+tab+tab+"government = "+government);
                         lines.add(tab+tab+tab+"primary_culture = "+culture);
                         lines.add(tab+tab+tab+"religion = "+religion);
-                        lines.add(tab+tab+tab+"capital = "+capital);
+                        if (!capital.equals("99999")) { //in case a country has no capital, don't output
+                            lines.add(tab+tab+tab+"capital = "+capital);
+                        }
                         lines.add(tab+tab+tab+"own_control_core = {");
                         int provCount = 0;
                         if (ownedProvs != null) {

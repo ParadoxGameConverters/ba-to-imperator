@@ -110,7 +110,7 @@ public class Output
                     }
                     else if (relArgument[0].equals("notTagCulture")) {
                         //System.out.println(relArgument[1]+" "+tagCulture);
-                        if (tagCulture.equals(relArgument[1])) {
+                        if (tagCulture.equals(relArgument[1]) || tagCulture.equals("none")) { //catch uncolonized provinces
                             count2 = count2 + numArgs;
                             passedCheck = false;
                         }
