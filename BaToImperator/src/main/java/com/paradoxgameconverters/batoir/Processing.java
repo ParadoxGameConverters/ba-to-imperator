@@ -2134,6 +2134,21 @@ public class Processing
 
         return 0;
     }
+    
+    public static int getCountryByID(ArrayList<Country> countryList,int id) {
+        int count = 0;
+        ArrayList<String> newArray = new ArrayList<String>();
+        while (count < countryList.size()) { 
+            Country country = countryList.get(count);
+            int countryID = country.getID();
+            if (countryID == id) {
+                return count;
+            }
+            count = count + 1;
+        }
+
+        return 0;
+    }
 
     public static int calcAllocatedPops(int baPopTotal, float totalProvPops)
     {
@@ -2966,6 +2981,58 @@ public class Processing
                             System.out.println(selectedFamily);
                             familyCount = familyCount + 1;
                         }
+                    }
+        
+                    count = count + 1;
+        
+                }
+                
+                countrySectionFlag = false;
+            }
+            
+            countOldFile = countOldFile + 1;
+        }
+        return lines;
+    }
+    
+    public static ArrayList<String> appendDiplo(ArrayList<Country> irCountryList,ArrayList<Diplo> diploList,ArrayList<String> OldLines)
+    {
+        int count = 0;
+        ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+        
+        int countOldFile = 0;
+        boolean countrySectionFlag = false;
+        
+        while (countOldFile < OldLines.size()) {
+            String selectedLine = OldLines.get(countOldFile);
+            lines.add(selectedLine);
+            if (selectedLine.equals("diplomacy = {")) {
+                countrySectionFlag = true;
+            }
+            
+            if (countrySectionFlag) {
+                lines.add(tab+tab+"#Converted Diplomacy");
+        
+                while (count < diploList.size()) {
+                    Diplo selectedDiplo = diploList.get(count);
+                    int overlord = selectedDiplo.getOverlord();
+                    int subject = selectedDiplo.getSubject();
+                    Country subjectCountry = irCountryList.get(subject);
+                    Country overlordCountry = irCountryList.get(overlord);
+                    if (overlordCountry.getHasLand() && subjectCountry.getHasLand()) {
+                        String type = selectedDiplo.getRelationType();
+                        String subType = selectedDiplo.getRelationSubType();
+                        String overlordTag = overlordCountry.getUpdatedTag();
+                        String subjectTag = subjectCountry.getUpdatedTag();
+                        
+                        String subjectLine = tab+type+" = { first = "+overlordTag+" second = "+subjectTag;
+                        if (!subType.equals("9999") && subType != null) {
+                            subjectLine = subjectLine+" subject_type = "+subType;
+                        }
+                        subjectLine = subjectLine+" }";
+                        lines.add(subjectLine);
                     }
         
                     count = count + 1;

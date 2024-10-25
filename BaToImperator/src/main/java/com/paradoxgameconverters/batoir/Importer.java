@@ -498,7 +498,7 @@ public class Importer
         return impTagInfo;
     }
 
-    public static ArrayList<String> importSubjects (String name) throws IOException
+    public static ArrayList<Diplo> importSubjects (String name) throws IOException
     {
 
         //Primarily used for subjects/vassals in IR
@@ -512,7 +512,7 @@ public class Importer
 
         int aqq = 0;
 
-        ArrayList<String> currentList = new ArrayList<String>();
+        ArrayList<Diplo> currentList = new ArrayList<Diplo>();
 
         boolean endOrNot = true;
         String vmm = scnr.nextLine();
@@ -523,41 +523,62 @@ public class Importer
         output[0] = "9999"; //default for no overlord, overlord has no subjects
         output[1] = "9999"; //default for no subject
         output[2] = "9999"; //default for no subject relation
+        output[3] = "9999"; //default for initial type
 
         try {
             while (endOrNot = true){
 
                 qaaa = scnr.nextLine();
+                
+                String identifier = qaaa.split("=")[0];
+                
+                if (identifier.equals(tab+"dependency") || identifier.equals(tab+"alliance")) {
+                    output[3] = qaaa.split("=")[0];
+                    output[3] = output[3].replace(tab,"");
+                    //System.out.println(output[3]);
+                }
 
                 //overlord
-                if (qaaa.split("=")[0].equals( tab+tab+"first" ) ) {
+                if (identifier.equals( tab+tab+"first" ) ) {
                     output[0] = qaaa.split("=")[1];
+                    //System.out.println(output[0]);
                 }
 
                 //subject
-                if (qaaa.split("=")[0].equals( tab+tab+"second" ) ) {
+                if (identifier.equals( tab+tab+"second" ) ) {
                     output[1] = qaaa.split("=")[1];
+                    //System.out.println(output[1]);
                 }
                 //subject type
-                if (qaaa.split("=")[0].equals( tab+tab+"subject_type" ) ) {
+                if (identifier.equals( tab+tab+"subject_type" ) ) {
                     output[2] = qaaa.split("=")[1];
-                    output[2] = output[2].substring(1,output[2].length()-1);
-                    flag = 1; //end loop
+                    output[2] = Processing.cutQuotes(output[2]);
+                    //System.out.println(output[2]);
+                }
+                
+                if (qaaa.equals(tab+"}")) {
                     String[] tmpOutput = new String[output.length];
                     int aq2 = 0;
                     while (aq2 < output.length) {
                         tmpOutput[aq2] = output[aq2];
                         aq2 = aq2 + 1;
                     }
-
-                    currentList.add(tmpOutput[0]+","+tmpOutput[1]+","+tmpOutput[2]);
+                    
+                    int overlord = Integer.parseInt(tmpOutput[0]);
+                    int subject = Integer.parseInt(tmpOutput[1]);
+                    String type = tmpOutput[3];
+                    String subType = tmpOutput[2];
+                    
+                    if (overlord != 9999 && subject != 9999 && !type.equals("9999")) {
+                        Diplo dip = Diplo.newDiplo(overlord,subject,type,subType);
+                        currentList.add(dip);
+                    }
 
                     output[0] = "9999";
                     output[1] = "9999";
                     output[2] = "9999";
+                    output[3] = "9999"; //default for initial type
                 }
-
-                flag = 0;
             }
 
         }catch (java.util.NoSuchElementException exception){

@@ -141,7 +141,7 @@ public class Main
 
             convertedCharacters.add("0"); //Debug at id 0 so list will never be empty
 
-            ArrayList<String> impSubjectInfo = new ArrayList<String>(); //Overlord-Subject relations
+            ArrayList<Diplo> impSubjectInfo = new ArrayList<Diplo>(); //Overlord-Subject relations
 
             ArrayList<String[]> impCharInfoList = new ArrayList<String[]>();
 
@@ -150,13 +150,6 @@ public class Main
             ArrayList<String> flaggedGovernorships = new ArrayList<String>(); //governorships which have been given flags (GFX)
             
             flaggedGovernorships.add("Glorious__Bingo_region"); //debug so that list starts with 1 item
-
-            int aqtest = 0;
-            while (aqtest < 5000) { //sets the default for all tags as landless in CKII
-                ck2HasLand[aqtest] = "no";
-                ck2LandTot[aqtest] = 0;
-                aqtest = aqtest + 1;
-            }
 
             int tagNum = 0;
             int cultNum = 0;
@@ -637,7 +630,6 @@ public class Main
             LOGGER.info("Importing subject data...");
 
             impSubjectInfo = Importer.importSubjects(saveDiplo);
-            ck2LandTot = Processing.addSubjectsToSize(impSubjectInfo,ck2LandTot);
 
             long subjectTime = System.nanoTime();
             long subjectTimeTot = (((subjectTime - startTime) / 1000000000)/60);
@@ -784,6 +776,7 @@ public class Main
             Processing.updateAllMissions(Dir2+"/game/common/scripted_effects",modDirectory+"/common/scripted_effects",missions);
             
             existingCountryFile = Processing.appendFamilies(baTagInfo,existingCountryFile);
+            existingCountryFile = Processing.appendDiplo(baTagInfo,impSubjectInfo,existingCountryFile);
             
             ArrayList<String> convertedProvinces = Processing.generateProvinceFile(irProvinceList);
             Output.outputBasicFile(convertedProvinces,"01_converted_provinces.txt",modDirectory+"/setup/provinces");
