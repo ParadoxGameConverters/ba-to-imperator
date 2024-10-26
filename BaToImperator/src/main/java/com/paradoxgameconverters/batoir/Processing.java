@@ -977,10 +977,10 @@ public class Processing
         return name;
     }
 
-    public static String convertTag(String tag, int numericalID) throws IOException
+    public static String convertTag(String tag, int numericalID, ArrayList<String> tagMappings) throws IOException
     {// Converts dynamically generated BA tag to IR counterpart (if one exists)
-        String fileName = "titleConversion.txt";
-        String tmpTag = Importer.importCultList(fileName,tag)[1];//converts title
+        //String fileName = "titleConversion.txt";
+        String tmpTag = Importer.importMappingFromArray(tagMappings,tag)[1];//converts title
 
         if (tmpTag.equals("99999") || tmpTag.equals("peq")) {//if there is no vanilla match
             tag = genNewTag(numericalID);
@@ -3305,7 +3305,7 @@ public class Processing
                     adjective = names[1];
                     String missions = selectedProvince.getExoRole();
                     Country newExoCountry = Country.newCountry(ownerID,owner,culture,religion,name,adjective,owner,capital,"none",color,"none",government);
-                    String irTag = Processing.convertTag("none",convTag);
+                    String irTag = genNewTag(convTag);
                     newExoCountry.setUpdatedTag(irTag);
                     newExoCountry.setHasLand(true);
                     if (!missions.equals("none")) {

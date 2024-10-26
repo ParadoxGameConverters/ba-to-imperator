@@ -348,6 +348,7 @@ public class Main
             ArrayList<String> cultureMappings = Importer.importBasicFile("cultureConversion.txt");
             ArrayList<String> religionMappings = Importer.importBasicFile("religionConversion.txt");
             ArrayList<String> provinceMappings = Importer.importBasicFile("provinceConversion.txt");
+            ArrayList<String> tagMappings = Importer.importBasicFile("titleConversion.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
@@ -698,7 +699,7 @@ public class Main
                             System.out.println("Getting "+aq4);
                             //String newTagID = Processing.genNewTag(convTag);
                             String histTag = baTag.getHistoricalTag();
-                            String newTagID = Processing.convertTag(histTag,convTag);
+                            String newTagID = Processing.convertTag(histTag,convTag,tagMappings);
                             //System.out.println("New Tag is "+newTagID);
                             //3272
                             baTag.setUpdatedTag(newTagID);
