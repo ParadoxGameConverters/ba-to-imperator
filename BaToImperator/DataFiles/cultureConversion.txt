@@ -63,9 +63,7 @@ upper_guti,gutian
 qirbiti,gutian
 nikkuri,gutian
 halmani,gutian
-lullubi,gutian
 nikumi,gutian
-tukri,gutian
 
 #Sumerian
 sumerian,sumerian
@@ -128,8 +126,34 @@ kheman,egyptian
 hut_hery_iban,egyptian
 iunuan,egyptian
 men_neferi,egyptian
+
+mu_kedi,egyptian
+
+#Middle Egyptian
 tepihuan,egyptian
 henen_nesutan,egyptian
+
+per_medjedan,middle_egyptian
+sakan,middle_egyptian
+hebenuan,middle_egyptian
+khmunan,middle_egyptian
+
+#Upper Egyptian
+qisan,upper_egyptian
+zawtyan,upper_egyptian
+per_nemytan,upper_egyptian
+shashotepan,upper_egyptian
+tjebuan,upper_egyptian
+ipuan,upper_egyptian
+abdjuan,upper_egyptian
+sesheshan,upper_egyptian
+iunetan,upper_egyptian
+gebtuan,upper_egyptian
+wasetan,upper_egyptian
+nekhenen,upper_egyptian
+swenettan,upper_egyptian
+
+met_irtan,upper_egyptian
 
 #Assyrian
 assyrian,assyrian
@@ -243,13 +267,13 @@ pataran,lycian
 solymian,lycian
 
 #Luwian
-tarhuntassan,luwian
-uran,luwian
-appasan,luwian
-zarhassan,luwian
-saranduwan,luwian
-asitan,luwian
-tatiwasan,luwian
+tarhuntassan,isaurian
+uran,isaurian
+appasan,isaurian
+zarhassan,isaurian
+saranduwan,isaurian
+asitan,isaurian
+tatiwasan,isaurian
 
 #Lydian
 zastan,lydian
@@ -365,12 +389,7 @@ shubrian,hurrian
 haburi,hurrian
 kizzuni,hurrian
 zalwari,hurrian
-tukri,hurrian
-simurrun,hurrian
-ardamekumi,hurrian
-arraphan,hurrian
-shudamelumi,hurrian
-ahazum,hurrian
+
 halzi_atbari,hurrian
 tille,hurrian
 mardamani,hurrian
@@ -405,6 +424,14 @@ amidui,subarian
 madara,subarian
 kulimmeri,subarian
 ubbumui,subarian
+
+lullubi,lullubi
+tukri,tukri
+simurrun,tukri
+ardamekumi,tukri
+arraphan,tukri
+shudamelumi,tukri
+ahazum,tukri
 
 #Phoenician
 

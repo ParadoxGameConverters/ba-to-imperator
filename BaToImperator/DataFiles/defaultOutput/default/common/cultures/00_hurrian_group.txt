@@ -1,5 +1,5 @@
 ﻿hurrian_group = {	
-	color = hsv { 0.97 0.93 0.55 }
+	color = rgb { 45 134 61 }
 	levy_template = levy_iran
 	
 	primary = chariots
@@ -75,6 +75,8 @@
 		hurrian = {}
 		syro_hurrian = {}
 		subarian = {}
+		tukri = {}
+		lullubi = {}
 	}
 	
 	barbarian_names = { 
