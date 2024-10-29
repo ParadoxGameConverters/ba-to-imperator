@@ -286,14 +286,23 @@ public class Main
             String[] provAreas = Processing.importAreas(regionDir+"map_data/areas.txt",9500);
             String[] baProvRegions = Processing.importRegionList(9500,provAreas,regionDir);
             
+            String[] vanillaProvAreas = Processing.importAreas(impGameDir+"/game/map_data/areas.txt",9500);
+            String[] vanillaProvRegions = Processing.importRegionList(9500,vanillaProvAreas,impGameDir+"/game/");
+            
             //ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
             
             LOGGER.info("Importing province tradegoods and terrain types...");
+            
+            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0.0,0);
             
             //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
             
             ArrayList<Provinces> vanillaProvinces = new ArrayList<Provinces>();
             vanillaProvinces = Importer.importProvSetupAdv(impGameDir+"/game/setup/provinces",vanillaProvinces);
+            vanillaProvinces = Processing.reorderProvincesByID(vanillaProvinces,blankProv);
+            vanillaProvinces = Processing.applyRegionsToProvinces(vanillaProvRegions,vanillaProvinces);
+            vanillaProvinces = Processing.applyAreasToProvinces(vanillaProvAreas,vanillaProvinces);
+            
 
             LOGGER.info("Creating temp files...");
 
@@ -349,6 +358,7 @@ public class Main
             ArrayList<String> religionMappings = Importer.importBasicFile("religionConversion.txt");
             ArrayList<String> provinceMappings = Importer.importBasicFile("provinceConversion.txt");
             ArrayList<String> tagMappings = Importer.importBasicFile("titleConversion.txt");
+            ArrayList<String> exoCultureMappings = Importer.importBasicFile("exoCultureConversion.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
@@ -388,7 +398,6 @@ public class Main
             //ArrayList<String> countTest3 = Processing.convertPopCountToRatios(countTest2);
             //ArrayList<String> countTest4 = Processing.reallocatePops(countTest3,30);
             ArrayList<Provinces> irProvinceList = new ArrayList<Provinces>();//ArrayList
-            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0.0,0);
             irProvinceList.add(blankProv);
             //ArrayList<String[]> irProvMappings = new ArrayList<String[]>();//ArrayList 
             try { ////Get counts of culture, religion, and TAG ownership
@@ -696,7 +705,7 @@ public class Main
                         boolean baHasLandYes = baTag.getHasLand();
                         if (baHasLandYes) {
                             convTag = convTag + 1;
-                            System.out.println("Getting "+aq4);
+                            //System.out.println("Getting "+aq4);
                             //String newTagID = Processing.genNewTag(convTag);
                             String histTag = baTag.getHistoricalTag();
                             String newTagID = Processing.convertTag(histTag,convTag,tagMappings);
@@ -764,7 +773,7 @@ public class Main
             LOGGER.info("Outputting Province info");
             
             ArrayList<String[]> exoProvinces = Importer.importExoMappings("exoMappings.txt");
-            irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces);
+            irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces,exoCultureMappings);
             ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc);
             baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");

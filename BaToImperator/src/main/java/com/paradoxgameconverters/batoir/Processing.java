@@ -614,6 +614,24 @@ public class Processing
         return baProvInfoListNew;
 
     }
+    
+    public static ArrayList<Provinces> reorderProvincesByID (ArrayList<Provinces> baProvInfoListOld, Provinces blankProv) throws IOException
+    {
+
+        ArrayList<Provinces> baProvInfoListNew = new ArrayList<Provinces>();
+        baProvInfoListNew.add(blankProv);
+        int count = 1;
+        while (count < baProvInfoListOld.size()) {
+            int baProvID = getProvByID(baProvInfoListOld,count);
+            Provinces baProv = baProvInfoListOld.get(baProvID);
+            baProvInfoListNew.add(baProv);
+            //baProv
+            
+            count = count + 1;
+        }
+        return baProvInfoListNew;
+
+    }
 
     public static String randomizeColor ()
     {
@@ -3157,7 +3175,7 @@ public class Processing
     }
     
     public static ArrayList<Provinces> addExoProvinces (ArrayList<Provinces> convProvinces, ArrayList<String[]> exoProvinces,
-    ArrayList<Provinces> vanillaProvinces)
+    ArrayList<Provinces> vanillaProvinces, ArrayList<String> exoCultureMappings) throws IOException
     //Add provinces from outside BA's map
     {
         int count = 0;
@@ -3212,12 +3230,20 @@ public class Processing
                 String cityStatus = vanillaProv.getCityStatus();
                 double civValue = vanillaProv.getCivValue();
                 ArrayList<Pop> tmpPops = vanillaProv.getPops();
+                String region = vanillaProv.getRegion();
+                String area = vanillaProv.getArea();
                 
                 Provinces tmpProv = Provinces.newProv(owner,culture,religion,0,0,0,0,0,0,cityStatus,civValue,selectedExoProv);
+                tmpProv.setRegion(region);
+                tmpProv.setArea(area);
                 tmpProv.setTerrain(vanillaProv.getTerrain());
                 tmpProv.setTradeGood(vanillaProv.getTradeGood());
                 if (!changeCulture.equals("none") ) {
                     if (culture.equals(changeCulture)) {
+                        String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area);
+                        if (!tmpCulture.equals("roman")) {
+                            masterProvCulture = tmpCulture; //If no special regional culture, use original culture from the motherland
+                        }
                         tmpProv.setCulture(masterProvCulture);
                     }
                     tmpPops = updatePops("culture",changeCulture,masterProvCulture,tmpPops);
