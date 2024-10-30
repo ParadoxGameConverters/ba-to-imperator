@@ -359,6 +359,7 @@ public class Main
             ArrayList<String> provinceMappings = Importer.importBasicFile("provinceConversion.txt");
             ArrayList<String> tagMappings = Importer.importBasicFile("titleConversion.txt");
             ArrayList<String> exoCultureMappings = Importer.importBasicFile("exoCultureConversion.txt");
+            ArrayList<String> exoNames = Importer.importBasicFile("exoNames.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
@@ -378,8 +379,8 @@ public class Main
                 String capitalArea = capitalBAProv.getArea();
                 String capitalRegion = capitalBAProv.getRegion();
                             
-                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea);
-                String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea);
+                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea,"none");
+                String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea,"none");
                             
                             
                 if (newCulture.equals("99999")) {
@@ -774,7 +775,7 @@ public class Main
             
             ArrayList<String[]> exoProvinces = Importer.importExoMappings("exoMappings.txt");
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces,exoCultureMappings);
-            ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc);
+            ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc,exoNames);
             baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");

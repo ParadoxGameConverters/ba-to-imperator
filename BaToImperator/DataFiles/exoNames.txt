@@ -1,0 +1,54 @@
+#Name variations for exo-tags
+#Each tag must be specified in exoMappings.txt
+~META~Greek,macedonian=italiotian=thracian=cretan=achaean=argolian=arcadian=epirote=boeotian=peloponnesian=athenian=euboean=aetolian=aegean=greco_pontic=aeolian=troan=ionian=cypriot=thessalian=bosporan=syracusan=cyrenaican=massalian=hellenistic
+~META~Egyptian,egyptian=middle_egyptian=upper_egyptian
+~META~Hurrian,hurrian=syro_hurrian=subarian
+~META~Phoenician,phoenician=carthaginian
+
+
+Phoenician,Sourhakoussim,tag=SYR
+Egyptian,Per-Sheklesh,tag=SYR
+libyan,Akalyumzen,tag=SYR
+makan,Syrakyuz,tag=SYR
+babylonian,Agammum,tag=SYR
+sumerian,Agam,tag=SYR
+
+Egyptian,Niwt-Ipt,tag=CAR
+Greek,Neapolis,tag=CAR
+hebrew,Qeret-Hadashah,tag=CAR
+aramaic,Qarta-Hdatta,tag=CAR
+makan,Qarya-Hadita,tag=CAR
+ugaritic,Qaryat-Hadatu,tag=CAR
+babylonian,Alu-Eshum,tag=CAR
+libyan,Tamdint-Tamaynut,tag=CAR
+hatti,Tataet-Tahhu,tag=CAR
+Hurrian,Shuhe-Ominnesh,tag=CAR
+sumerian,Saxar-Gibil,tag=CAR
+elamite,Aal Puhuna,tag=CAR
+
+elamite,Zuul-Lali,tag=MAS
+isaurian,Hapis,tag=MAS
+lycian,Hebeli,tag=MAS
+lycian,Maskkm,tag=MAS
+Phoenician,Malat,tag=MAS
+hebrew,Malat,tag=MAS
+libyan,Agbalu,tag=MAS
+hatti,Uri,tag=MAS
+makan,Almas,tag=MAS
+
+isaurian,Wasus,tag=OLB
+hatti,Malhip,tag=OLB
+libyan,Yefreh,tag=OLB
+Hurrian,Wahri,tag=OLB
+sumerian,Dug,tag=OLB
+elamite,Tannaamme,tag=OLB
+makan,Sayeed,tag=OLB
+babylonian,Hadum,tag=OLB
+Egyptian,Nefer,tag=OLB
+
+Phoenician,Sha'ir Mamlakat,tag=BPK
+hatti,Shuf-Shtip,tag=BPK
+
+hatti,Kashku,tag=BYZ
+libyan,Tagzirtn-Tfunast,tag=BYZ
+makan,Alqustantinia,tag=BYZ

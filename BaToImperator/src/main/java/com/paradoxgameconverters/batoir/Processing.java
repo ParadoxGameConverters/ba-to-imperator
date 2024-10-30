@@ -2539,8 +2539,8 @@ public class Processing
                     Pop selectedPop = provPops.get(popCount);
                     String popCulture = selectedPop.getCulture();
                     String popReligion = selectedPop.getReligion();
-                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,baTagCulture,"date",popCulture,provRegion,provArea);
-                    popReligion = Output.paramMapOutput(religionMappings,popCulture,baTagCulture,"date",popReligion,provRegion,provArea);
+                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,baTagCulture,"date",popCulture,provRegion,provArea,"none");
+                    popReligion = Output.paramMapOutput(religionMappings,popCulture,baTagCulture,"date",popReligion,provRegion,provArea,"none");
                     selectedPop.setCulture(popCulture);
                     selectedPop.setReligion(popReligion);
                     newProvPops.add(selectedPop);
@@ -2825,8 +2825,8 @@ public class Processing
                 capitalArea = "debug";
             }
             
-            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea);
-            String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea);
+            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea,"none");
+            String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea,"none");
             
             if (newCulture.equals("99999")) {
                 newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
@@ -3240,7 +3240,7 @@ public class Processing
                 tmpProv.setTradeGood(vanillaProv.getTradeGood());
                 if (!changeCulture.equals("none") ) {
                     if (culture.equals(changeCulture)) {
-                        String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area);
+                        String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area,"none");
                         if (!tmpCulture.equals("roman")) {
                             masterProvCulture = tmpCulture; //If no special regional culture, use original culture from the motherland
                         }
@@ -3293,7 +3293,7 @@ public class Processing
     }
     
     public static ArrayList<Country> generateExoCountries (ArrayList<Provinces> irProvinceList, int convTag, String modDirectory,
-    ArrayList<String> locList) throws IOException
+    ArrayList<String> locList, ArrayList<String> exoNames) throws IOException
     {
         int provCount = 0;
         ArrayList<Country> exoCountries = new ArrayList<Country>();
@@ -3336,6 +3336,13 @@ public class Processing
                     newExoCountry.setHasLand(true);
                     if (!missions.equals("none")) {
                         newExoCountry.setMissions(missions);
+                        String baseTag = missions;
+                        String specialName = Output.paramMapOutput(exoNames,"none","none","date",culture,"none","none",baseTag);
+                        if (!specialName.equals("roman")) {
+                            name = specialName;
+                            names[0] = name;
+                            newExoCountry.setLoc(name);
+                        }
                     }
                     Output.countrySetupCreation(color,irTag,modDirectory);
                     Output.localizationCreation(names,irTag,modDirectory);

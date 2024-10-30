@@ -64,7 +64,7 @@ public class Output
     }
 
     public static String paramMapOutput(ArrayList<String> mappings,String ck2Culture,String tagCulture,String date,String irRel,String region,
-    String area) throws IOException //mapping with parameters
+    String area,String tag) throws IOException //mapping with parameters
     {
 
         String VM = "\\"; 
@@ -133,6 +133,12 @@ public class Output
                     }
                     else if (relArgument[0].equals("area")) {
                         if (!area.equals(relArgument[1])) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
+                    else if (relArgument[0].equals("tag")) {
+                        if (!tag.equals(relArgument[1])) {
                             count2 = count2 + numArgs;
                             passedCheck = false;
                         }
