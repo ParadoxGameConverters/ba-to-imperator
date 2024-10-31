@@ -3239,6 +3239,7 @@ public class Processing
                 tmpProv.setTerrain(vanillaProv.getTerrain());
                 tmpProv.setTradeGood(vanillaProv.getTradeGood());
                 if (!changeCulture.equals("none") ) {
+                    tmpProv.setExoTagRequirement(changeCulture);
                     if (culture.equals(changeCulture)) {
                         String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area,"none");
                         if (!tmpCulture.equals("roman")) {
@@ -3314,7 +3315,6 @@ public class Processing
                     exoCount = exoCount + 1;
                 }
                 if (!isUsed) {
-                    convTag = convTag + 1;
                     String culture = selectedProvince.getCulture();
                     String religion = selectedProvince.getReligion();
                     int provID = selectedProvince.getID();
@@ -3324,16 +3324,19 @@ public class Processing
                         government = "oligarchic_republic";
                     }
                     String color = randomizeColor();
-                    String name = "PROV"+capital;
+                    String name = "none";
                     String adjective = "Dynamic Placeholder";
-                    String[] names = Importer.importLocalisation(locList,name,"none");
-                    name = names[0];
-                    adjective = names[1];
+                    String[] names;
+                    names = new String[2];
+                    
                     String missions = selectedProvince.getExoRole();
                     Country newExoCountry = Country.newCountry(ownerID,owner,culture,religion,name,adjective,owner,capital,"none",color,"none",government);
-                    String irTag = genNewTag(convTag);
+                    String irTag = "none";
                     newExoCountry.setUpdatedTag(irTag);
                     newExoCountry.setHasLand(true);
+                    
+                    // Go through and determine if the tag uses a special name, tag, or missions
+                    // Not ideally organized, but this way the entire game loc doesn't need to be parsed when it doesn't have to
                     if (!missions.equals("none")) {
                         newExoCountry.setMissions(missions);
                         String baseTag = missions;
@@ -3343,9 +3346,27 @@ public class Processing
                             names[0] = name;
                             newExoCountry.setLoc(name);
                         }
+                        String requiredCulture = selectedProvince.getExoTagRequirement();
+                        if (requiredCulture.equals(culture)) {
+                            irTag = baseTag;
+                        }
                     }
-                    Output.countrySetupCreation(color,irTag,modDirectory);
-                    Output.localizationCreation(names,irTag,modDirectory);
+                    
+                    if (name.equals("none")) {
+                        name = "PROV"+capital;
+                        names = Importer.importLocalisation(locList,name,"none");
+                        name = names[0];
+                        adjective = names[1];
+                    }
+                    
+                    if (irTag.equals("none")) { //only output localization and setup if country used a dynamic tag
+                        convTag = convTag + 1;
+                        irTag = genNewTag(convTag);
+                        Output.localizationCreation(names,irTag,modDirectory);
+                        Output.countrySetupCreation(color,irTag,modDirectory);
+                    }
+                    
+                    newExoCountry.setUpdatedTag(irTag);
                     exoCountries.add(newExoCountry);
                 }
             }

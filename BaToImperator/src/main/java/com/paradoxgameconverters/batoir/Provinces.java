@@ -23,6 +23,7 @@ public class Provinces
     private ArrayList<Double> civValues;
     private String exoRole;
     private String exoGov;
+    private String exoTagRequirement;
     public Provinces() {
         int id;
         String owner;
@@ -44,6 +45,15 @@ public class Provinces
         ArrayList<Double> civValues;
         String exoRole; //should only be used for exoTags to identify role for missions
         String exoGov; //should only be used for exoTags to set government
+        String exoTagRequirement; //requirements for an exoTag to use pre-defined tag
+    }
+    
+    public void setExoTagRequirement(String provETR) {
+        exoTagRequirement = provETR;
+    }
+
+    public String getExoTagRequirement() {
+        return exoTagRequirement;
     }
     
     public void setExoGov(String provExoGov) {
