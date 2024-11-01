@@ -4,8 +4,9 @@
 ~META~Egyptian,egyptian=middle_egyptian=upper_egyptian
 ~META~Hurrian,hurrian=syro_hurrian=subarian
 ~META~Phoenician,phoenician=carthaginian
+~META~Lycian,lycian=carian
 
-
+#Syracuse
 Phoenician,Sourhakoussim,tag=SYR
 Egyptian,Per-Sheklesh,tag=SYR
 libyan,Akalyumzen,tag=SYR
@@ -13,6 +14,7 @@ makan,Syrakyuz,tag=SYR
 babylonian,Agammum,tag=SYR
 sumerian,Agam,tag=SYR
 
+#Carthage
 Egyptian,Niwt-Ipt,tag=CAR
 Greek,Neapolis,tag=CAR
 hebrew,Qeret-Hadashah,tag=CAR
@@ -26,16 +28,17 @@ Hurrian,Shuhe-Ominnesh,tag=CAR
 sumerian,Saxar-Gibil,tag=CAR
 elamite,Aal Puhuna,tag=CAR
 
+#Massalia
 elamite,Zuul-Lali,tag=MAS
 isaurian,Hapis,tag=MAS
-lycian,Hebeli,tag=MAS
-lycian,Maskkm,tag=MAS
+Lycian,Hebeli,tag=MAS
 Phoenician,Malat,tag=MAS
 hebrew,Malat,tag=MAS
 libyan,Agbalu,tag=MAS
 hatti,Uri,tag=MAS
 makan,Almas,tag=MAS
 
+#Glorious Olbia
 isaurian,Wasus,tag=OLB
 hatti,Malhip,tag=OLB
 libyan,Yefreh,tag=OLB
@@ -45,10 +48,21 @@ elamite,Tannaamme,tag=OLB
 makan,Sayeed,tag=OLB
 babylonian,Hadum,tag=OLB
 Egyptian,Nefer,tag=OLB
+Lycian,Maskkm,tag=OLB
 
+#Bosporan Kingdom
 Phoenician,Sha'ir Mamlakat,tag=BPK
 hatti,Shuf-Shtip,tag=BPK
 
+#Byzantion
 hatti,Kashku,tag=BYZ
 libyan,Tagzirtn-Tfunast,tag=BYZ
 makan,Alqustantinia,tag=BYZ
+odrysi,Lygos,tag=BYZ
+lydian,Laqrisha,tag=BYZ
+meroitic,Kisari,tag=BYZ
+
+#Menesthei
+makan,Alcante,tag=MST
+hebrew,The Lost Tribe,tag=MST
+sumerian,Secret Sumer,tag=MST
