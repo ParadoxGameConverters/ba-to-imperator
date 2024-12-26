@@ -5,14 +5,20 @@
 ~META~Hurrian,hurrian=syro_hurrian=subarian
 ~META~Phoenician,phoenician=carthaginian
 ~META~Lycian,lycian=carian
+~META~Illyrian,taulantian=paeonian
+~META~Babylonian,babylonian=assyrian=dilmunite
 
 #Syracuse
 Phoenician,Sourhakoussim,tag=SYR
 Egyptian,Per-Sheklesh,tag=SYR
 libyan,Akalyumzen,tag=SYR
 makan,Syrakyuz,tag=SYR
-babylonian,Agammum,tag=SYR
+Babylonian,Agammum,tag=SYR
 sumerian,Agam,tag=SYR
+Illyrian,Lougeon,tag=SYR
+odrysi,Altadeva,tag=SYR
+hebrew,Sirkyoz,tag=SYR
+lydian,Kofu-Kofuu,tag=SYR
 
 #Carthage
 Egyptian,Niwt-Ipt,tag=CAR
@@ -21,12 +27,17 @@ hebrew,Qeret-Hadashah,tag=CAR
 aramaic,Qarta-Hdatta,tag=CAR
 makan,Qarya-Hadita,tag=CAR
 ugaritic,Qaryat-Hadatu,tag=CAR
-babylonian,Alu-Eshum,tag=CAR
+Babylonian,Alu-Eshum,tag=CAR
 libyan,Tamdint-Tamaynut,tag=CAR
 hatti,Tataet-Tahhu,tag=CAR
 Hurrian,Shuhe-Ominnesh,tag=CAR
-sumerian,Saxar-Gibil,tag=CAR
-elamite,Aal Puhuna,tag=CAR
+sumerian,Uru-Gibil,tag=CAR
+elamite,Aal-Puhuna,tag=CAR
+Illyrian,Brabria,tag=CAR
+Lycian,Mla-Pdde,tag=CAR
+#odrysi,Perdeva,tag=CAR
+odrysi,Neosdeva,tag=CAR
+lydian,Esa-Kllida,tag=CAR
 
 #Massalia
 elamite,Zuul-Lali,tag=MAS
@@ -37,6 +48,8 @@ hebrew,Malat,tag=MAS
 libyan,Agbalu,tag=MAS
 hatti,Uri,tag=MAS
 makan,Almas,tag=MAS
+odrysi,Maskadeva,tag=MAS
+lydian,Atka,tag=MAS
 
 #Glorious Olbia
 isaurian,Wasus,tag=OLB
@@ -46,13 +59,24 @@ Hurrian,Wahri,tag=OLB
 sumerian,Dug,tag=OLB
 elamite,Tannaamme,tag=OLB
 makan,Sayeed,tag=OLB
-babylonian,Hadum,tag=OLB
+Babylonian,Hadum,tag=OLB
 Egyptian,Nefer,tag=OLB
 Lycian,Maskkm,tag=OLB
+odrysi,Gerasdeva,tag=OLB
+hebrew,Shaameach,tag=OLB
+lydian,Wissi,tag=OLB
+Illyrian,Ves,tag=OLB
 
 #Bosporan Kingdom
 Phoenician,Sha'ir Mamlakat,tag=BPK
+hebrew,Mimlachet She'er,tag=BPK
 hatti,Shuf-Shtip,tag=BPK
+odrysi,Sparatakos,tag=BPK
+Lycian,Ddenewe-Pdde,tag=BPK
+makan,Mamlakat Alqirm,tag=BPK
+libyan,Tagelda'n Tewwurt,tag=BPK
+lydian,Qallmlluli,tag=BPK
+Illyrian,Magoseriates,tag=BPK
 
 #Byzantion
 hatti,Kashku,tag=BYZ
@@ -61,8 +85,41 @@ makan,Alqustantinia,tag=BYZ
 odrysi,Lygos,tag=BYZ
 lydian,Laqrisha,tag=BYZ
 meroitic,Kisari,tag=BYZ
+#Illyrian,Metudassa,tag=BYZ
 
 #Menesthei
 makan,Alcante,tag=MST
 hebrew,The Lost Tribe,tag=MST
 sumerian,Secret Sumer,tag=MST
+lydian,Sawtaar,tag=MST
+odrysi,Ostas,tag=MST
+
+#Gadir
+makan,Qadis,tag=GAD
+libyan,Agadir,tag=GAD
+hatti,Tuwahshi,tag=GAD
+hebrew,Kir,tag=GAD
+odrysi,Stendasdeva,tag=GAD
+Greek,Teichos,tag=GAD
+lydian,Fata,tag=GAD
+
+#Chersonesos
+sumerian,Saxar-Sal,tag=CHR
+elamite,Muru-Zikki,tag=CHR
+Hurrian,Nigale-Eshe,tag=CHR
+hebrew,Hatzi'i,tag=CHR
+makan,Shibh Jazira,tag=CHR
+libyan,Tagzirt,tag=CHR
+Illyrian,Dassapamodus,tag=CHR
+lydian,Kofu-Kllida,tag=CHR
+odrysi,Athdeva,tag=CHR
+
+#Emporion
+elamite,Sha'Udda,tag=EMP
+Hurrian,Tamgari-Eshe,tag=EMP
+hebrew,Shuk,tag=EMP
+makan,Alsuwq,tag=EMP
+libyan,Ssuq,tag=EMP
+odrysi,Burisdeva,tag=EMP
+lydian,Brafrsi,tag=EMP
+Illyrian,Tertigio,tag=EMP
