@@ -1351,21 +1351,6 @@ family={
 			prestige=300
 			color = 1
 		}
-		#Egypt
-		6={
-			key="Lagid"
-			owner=EGY
-			culture = macedonian
-			prestige=200
-			color = 0
-		}
-		7={
-			key = "Magid"
-			culture = macedonian
-			owner=EGY
-			prestige=200
-			color = 1
-		}
 		#Thrace
 		8={
 			key = "Alkimachid"
@@ -1543,17 +1528,11 @@ family={
 			owner=SAM
 		}
 		#Seleucids
-		30={
-			key = "Seleukid"
-			prestige=200
-			culture=macedonian
-			owner=SEL
-		}
 		70= {
 			key = "Frataraka"
 			prestige=300
 			culture=pasargadi
-			owner=SEL
+			owner=PER
 		}
 		#Atropatene
 		31={
@@ -1575,13 +1554,6 @@ family={
 			prestige=300
 			culture=colchian
 			owner=COL
-		}
-		#Capadocia
-		34={
-			key = "Amyntid"
-			prestige=200
-			culture=macedonian
-			owner=CAP
 		}
 		#Kios
 		35={
@@ -1875,13 +1847,6 @@ family={
 			prestige=300
 			owner=EPI
 		}
-		#Arachosia
-		100 = {
-			key = "Sibyrtid"
-			prestige=300
-			culture=cretan
-			owner=ARS
-		}
 	}
 }
 diplomacy = {
@@ -1996,11 +1961,6 @@ diplomacy = {
 	#Massylia
 	#alliance = { first = MSY second = MSL }
 	
-	#Egypt
-	dependency = { first = EGY second = ADR subject_type = feudatory }
-	dependency = { first = EGY second = KOS subject_type = feudatory }
-	dependency = { first = EGY second = DOD subject_type = client_state }
-	
 	#Crete
 	alliance = { first = LYT second = IEP }
 	dependency = { first = GRT second = TRA subject_type = feudatory }
@@ -2023,18 +1983,18 @@ diplomacy = {
 	
 	#Seleucids
 	#Nominal Vassals that should stay as Tributaries:
-	dependency = { first = SEL second = TYO subject_type = tributary }
-	dependency = { first = SEL second = ADI subject_type = tributary }
-	dependency = { first = SEL second = BAC subject_type = satrapy }
-	dependency = { first = SEL second = PAR subject_type = satrapy }
-	dependency = { first = SEL second = ARS subject_type = satrapy }
-	dependency = { first = SEL second = GHA subject_type = client_state }
+	dependency = { first = PER second = TYO subject_type = tributary }
+	dependency = { first = PER second = ADI subject_type = tributary }
+	dependency = { first = PER second = BAC subject_type = satrapy }
+	dependency = { first = PER second = PAR subject_type = satrapy }
+	dependency = { first = PER second = ARS subject_type = satrapy }
+	dependency = { first = PER second = GHA subject_type = client_state }
 	
 	#Lysimachos and Cassander - Alliance
 	#alliance = { first = MAC second = TRE }
 	
 	#Lysimachos and the Odrysia/West-Pontic Cities
-	dependency = { first = TRE second = ODR subject_type = vassal_tribe }
+	#dependency = { first = TRE second = ODR subject_type = vassal_tribe }
 	dependency = { first = TRE second = ORG subject_type = feudatory }
 	dependency = { first = TRE second = ISO subject_type = feudatory }
 	dependency = { first = TRE second = TMS subject_type = feudatory }
@@ -2045,12 +2005,6 @@ diplomacy = {
 	dependency = { first = TRE second = APL subject_type = feudatory }
 	
 	#Macedonia - Cassander
-	dependency = { first = MAC second = PAA subject_type = vassal_tribe }
-	dependency = { first = MAC second = MAD subject_type = vassal_tribe }
-	dependency = { first = MAC second = ORE subject_type = feudatory }
-	dependency = { first = MAC second = AMK subject_type = tributary }
-	dependency = { first = MAC second = AKR subject_type = tributary }
-	guarantee = { first = MAC second = ARG }
 	
 	#Antigonid - Epirote Alliance
 	#alliance = { first = EPI second = PRY } #Sealed by Demetrius Marriage
@@ -2059,27 +2013,6 @@ diplomacy = {
 	alliance = { first = EPI second = TLN }
 	
 	#Antigonids
-	guarantee = { first = PRY second = BOE } #Boetia, switch sides to Antigonus in 304.
-	guarantee = { first = PRY second = AET } #Aetolia, switch sides to Antigonus in 304.
-	#Nominal Vassals that should stay as Tributaries:
-	dependency = { first = PRY second = COM subject_type = tributary } #Commagene
-	dependency = { first = PRY second = BMB subject_type = tributary } #Bambyce, theocratic vassal in northern Syria
-	dependency = { first = PRY second = JUD subject_type = tributary } #Judea, could be vassal, but now tributary as while it expected to be protected it did not help offensively.
-	dependency = { first = PRY second = SMA subject_type = tributary } #Samaria, could be vassal, but now tributary as while it expected to be protected it did not help offensively.
-	dependency = { first = PRY second = BYB subject_type = tributary } #Byblos
-	dependency = { first = PRY second = SID subject_type = tributary } #Sidon
-	dependency = { first = PRY second = ARA subject_type = tributary } #Arados
-	dependency = { first = PRY second = KIO subject_type = tributary } #Kios
-	#Vassals:
-	dependency	= { first = PRY second = CAP subject_type = satrapy } #Cappadocia
-	dependency = { first = PRY second = MGA subject_type = feudatory } #Megara
-	dependency = { first = PRY second = ATH subject_type = feudatory } #Athens
-	dependency = { first = PRY second = DEL subject_type = feudatory } #Nesiotic League
-	dependency = { first = PRY second = ION subject_type = feudatory } #Ionian League - It is unclear if Antigonus actually restored the Ionian league or if Lysimachos did just after taking over the region. Much speaks for the fact that he did however.
-	dependency = { first = PRY second = IOA subject_type = feudatory } #Aeolia
-	dependency = { first = PRY second = KNI subject_type = feudatory } #Knidos
-	dependency = { first = PRY second = AST subject_type = feudatory } #Astakos
-	dependency = { first = PRY second = KZK subject_type = feudatory } #Kyzikos
 	
 	#Mauryans
 	dependency = { first = MRY second = ATV subject_type = tributary } #Atavis
@@ -2096,8 +2029,6 @@ diplomacy = {
 	dependency = { first = BOE second = TAN subject_type = feudatory } #Tanagra
 
 	# More Antigonid
-	dependency = { first = PRY second = BIT subject_type = tributary } #Bithynia
-	dependency = { first = PRY second = CDD subject_type = tributary } #Chalcedon
 
 	#Issa and co
 	defensive_league = {
@@ -2125,83 +2056,6 @@ diplomacy = {
 		member = HCP
 		member = SMS
 		member = TIE
-	}
-
-	MAC = {
-		EGY = {
-			trade_access=yes
-		}
-	}
-	EGY = {
-		MAC = {
-			trade_access=yes
-		}
-	}
-	RHO = {
-		MAC = {
-			trade_access=yes
-		}
-	}
-	
-	MAC = {
-		RHO = {
-			trade_access=yes
-		}
-	}
-	KOS = {
-		PRY = {
-			trade_access=yes
-		}
-	}
-	PRY = {
-		KOS = {
-			trade_access=yes
-		}
-	}
-	SYR = {
-		ROM = {
-			trade_access=yes
-		}
-	}
-	ROM = {
-		SYR = {
-			trade_access=yes
-		}
-	}
-	SYR = {
-		PRY = {
-			trade_access=yes
-		}
-	}
-	PRY = {
-		SYR = {
-			trade_access=yes
-		}
-	}
-	SYR = {
-		CAR = {
-			trade_access=yes
-		}
-	}
-	CAR = {
-		SYR = {
-			trade_access=yes
-		}
-	}
-	PON = {
-		CAR = {
-			trade_access=yes
-		}
-	}
-	CAR = {
-		PON = {
-			trade_access=yes
-		}
-	}
-	GRT = {
-		PRY = {
-			trade_access=yes
-		}
 	}
 }
 
@@ -6025,65 +5879,6 @@ country = {
 			
 		}
 		
-		EGY = {
-			family = 6
-			family = 7
-			government = aristocratic_monarchy
-			diplomatic_stance=appeasement_stance
-			primary_culture = macedonian
-			religion = roman_pantheon
-			capital = 516 #Alexandria
-			succession_law=egyption_succession_law
-			succession=old_egyptian_succession
-			monarchy_citizen_law = foreign_law_for_minorities
-			monarchy_military_reforms = work_for_the_best
-			
-			poptype_rights = { 
-				{
-					culture = egyptian 
-					type = citizen
-				}
-			}
-
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-			
-			own_control_core = 	{
-				500 501	502	503	504 507 508 509 510 511 512 513 514 515 516 517 518 519
-				520 521	522	523	524	525 526 527 528 529 530 531 532 533 534 535 536 537 538 539
-				540 541 542 543 544 545 546 547 548 550
-				655 5549
-				453 445 3478 3477 3476 3380 3379 3378 3377 3376 3375 3374 3373 3372 3371 3370 3369 3368 
-				
-				656 657 658 659 694 695 696 697 701 #Philistia
-				576 577 #aswan_region
-				575 578 583 584 585 586 587 588 589 590 #troglodytica_region
-				564 566 579 580 581 582 565 647 649 650 #myos_hormos_region
-				505 506 1600 1604 1675 1682 1684 1693 1709 1710 #sinai_region
-				549 551 552 554 553 555 556 557 558 559 560 561 #hema_nome_region
-				562 563 567 568 569 570 571 572 573 574 #luxor_region
-				5501 5502 5500 5503 5504 5505 5512 5509 5510 5511 5522 #kharga_region
-				5513 5507 5516 5508 5515 5517 5506 #khargana_region
-				5537 5555 5538 5539 5540 5551 5550 5554 5552 5553 5556 5536 #ammon_region
-				5544 5542 5543 5541 5531 5535 5533 5532 5548 5546 5547 5534 #parva_region
-				5526 5525 5524 5523 5528 5545 5527 5529 5530 5514 #farfara_region
-				7668 7688 7689 7690 7691 #new in 1.1
-				8003 # Sikyon
-			}
-
-			pantheon = {
-				{ deity = 1350 }
-				{ deity = 457 }
-				{ deity = 454 }
-				{ deity = 453 }
-			}
-			
-		}
-		
 		CYR = {
 			family = 66
 			government = despotic_monarchy
@@ -9410,51 +9205,7 @@ country = {
 				482 481
 			}
 			
-		}
-				
-		TRE = {
-			family = 8
-			government = aristocratic_monarchy
-			religion = roman_pantheon
-			diplomatic_stance=warmongering_stance
-			primary_culture = macedonian #Ruled by Macedonian King
-			monarchy_military_reforms = work_for_the_best
-			
-			poptype_rights = { 
-				{
-					culture = thracian 
-					type = citizen
-				}
-			}
-
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-
-			#is_antagonist = yes
-			capital = 350 #Lysimachea
-
-			own_control_core = {
-				342 346 347 348 349 350 352 353 354 #Europa
-				357 360 362 1774 490 492 494 #Rhodope
-				343 4314 4154 489 495 #Haemimontus
-				 #Parts of Moesia Orientalis
-				4520 4519 4518 4517 4514 #Scythia
-			}
-
-			pantheon = {
-				{ deity = 110 }
-				{ deity = 102 }
-				{ deity = 651 }
-				{ deity = 117 }
-			}
-
-			treasures = { 120 }
-		}
-		
+		}		
 		
 		ODR = {
 			family = 51
@@ -9483,6 +9234,12 @@ country = {
 			own_control_core = 	{
 				4309 4311 484 4313 478 485 486 487 488 3853 496 
 				479 491 493 4307 4310 4312
+				
+				342 346 347 348 349 350 352 353 354 #Europa
+				357 360 362 1774 490 492 494 #Rhodope
+				343 4314 4154 489 495 #Haemimontus
+				 #Parts of Moesia Orientalis
+				4520 4519 4518 4517 4514 #Scythia
 			}
 			
 		}
@@ -9512,74 +9269,6 @@ country = {
 			own_control_core = 	{
 				498 4153 #macedonia_salutaris_area
 				4306 #chalkidiki_area
-			}
-			
-		}
-		
-		MAC = {
-			family = 22
-			family = 23
-			government = aristocratic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
-			diplomatic_stance=warmongering_stance
-			monarchy_military_reforms = work_for_the_best
-			capital = 379
-			poptype_rights = { 
-				{
-					culture = thessalian 
-					type = citizen
-				}
-			}
-			
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-			
-			#is_antagonist = yes
-			
-			pantheon = { 
-			
-			{ deity = 102 }
-			{ deity = 112 }
-			{ deity = 110 }
-			{ deity = 108 }
-			
-			}
-
-			treasures = { 62 90 91 104 }
-
-			historical_regnal_numbers = {
-				Perdikkas = 3
-				Alexandros = 3
-				Philippos = 1
-				Amyntas = 3
-				Aeropos = 2
-				Krateros = 1
-				Orestes = 1
-				Archelaos = 2
-				Pausanias = 1
-				Antipatros = 1
-			}
-
-			own_control_core = 	{
-				371 373 379 381 382 383 384 385 386 380 428 369 #Macedonia
-				393 400 405 408 411 412 3125 3175 3356 #Upper Macedonia
-				356 363 364 365 366 374 376 377 378 #Chalkidiki
-				388 389 390 391 392 394 395 396 398 404 420 #Thessaly
-				399 #Lamia
-				469 #Thaumakoi
-				401 #Hypate
-				466 #Oichalia
-				475 #Kallipolis
-				7896 # Nikaia Locriai, Thermopylai.
-				418 #Corinth, stronghold in Peleponese.
-				277  #Aegean Islands
-				6399 # Pydna
-				497 4302 414
 			}
 			
 		}
@@ -10889,34 +10578,19 @@ country = {
 			treasures = { 49 51 }
 		}
 		
-		PRY = { #The Antigonid Domain
-			currency_data = {
-				aggressive_expansion=10.000
-			}
-			family = 4
-			family = 5
+		PRG = { #The Antigonid Domain
+			#currency_data = {
+			#	aggressive_expansion=10.000
+			#}
+			#family = 4
+			#family = 5
 			government = aristocratic_monarchy
 			diplomatic_stance=appeasement_stance
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = phrygian
+			religion = anatolian_religion
 			monarchy_military_reforms = work_for_the_best
 			#monarchy_religious_laws = encourage_cults_monarchy
 			#monarchy_legitimacy_laws = reminting_policy
-			
-			poptype_rights = { 
-				{
-					culture = aramaic 
-					type = citizen
-				}
-				{
-					culture = cilician 
-					type = citizen
-				}
-				{
-					culture = phrygian 
-					type = citizen
-				}
-			}
 
 			technology={
 				military_tech={ level=2 progress=0 }
@@ -10925,7 +10599,7 @@ country = {
 				religious_tech= { level=2 progress=0  }
 			}
 
-			capital = 790 #Antigonia
+			capital = 1941
 			
 			treasures = { 193 95 }
 
@@ -10950,18 +10624,6 @@ country = {
 				7902 # Salamis
 				1872 1882 1883 1887 1889 #cilicia_trachea_region
 				795 796 1874 1875 1879 1880 1881 #cilicia_pedias_region
-				792 794 805 808 811 812 852 #syria_cyrrestice_region
-				787 789 790 791 793 797 798 813 814 847 851 #syria_region
-				767 769 771 784 785 786 788 #south_phoenicia
-				740 741 742 743 744 745 746 748 749 #north_phoenicia
-				738 750 751 752 753 757 758 759 760 763 764 765 #syria_coele_region
-				772 761 762 770 774 776 777 778 781 782 799 816 #apamene_region
-				754 755 756 775 800 801 802 803 804 806 815 850 #palmyra_region
-				673 675 718 721 722 723 732 733 734 735 736 737 739 #decapolis_region
-				826 827 828 829 #euphrates_region
-				648 669 672 674 666 668 667 670 677 #galilee_region
-				663 664 665 #samaria_region
-				660 662 661 690 693 #philistia_region
 				817 818 819 820 844 848 849 854 853 879 #osroene_region
 				334 338 333 336 332 335 331 330 6431 6433 #Cyprus
 				249 218 7938 7939 7941 7954 # Prokonnesos + New Anatolia
@@ -10972,29 +10634,15 @@ country = {
 				1938 1940 1888 1951 173 1978 1925 1985
 				1969 7934 1873 1877 1878
 			}
-			
-			pantheon = {
-				{ deity = 110 }
-				{ deity = 353 }
-				{ deity = 102 }
-				{ deity = 104 }
-			}
 		}
 		
 		CAP = {
-			family = 34
+			#family = 34
 			government = despotic_monarchy
-			#primary_culture = cappadocian
-			primary_culture = macedonian
+			primary_culture = cappadocian
+			#primary_culture = macedonian
 			#religion = zoroaster
-			religion = roman_pantheon
-			
-			poptype_rights = { 
-				{
-					culture = cappadocian 
-					type = citizen
-				}
-			}
+			religion = anatolian_religion
 
 			technology={
 				military_tech={ level=1 progress=0 }
@@ -11016,13 +10664,6 @@ country = {
 				1820 1832 1836 1849 1891 1899 1907 1909 1923 1932 #cappadocia_saravene
 				1794 1796 1799 1800 1805 1817 1818 1912 1913 6420 #cappadocia_region
 				1788 7981 1811 1866 1853 1979 1982
-			}
-			
-			pantheon = {
-				{ deity = 375 } # Ma
-				{ deity = 301 } # Sraosha
-				{ deity = 352 } # Men
-				{ deity = 353 } # Cybele
 			}
 		}
 		
@@ -11369,23 +11010,19 @@ country = {
 		#Mesopotamia
 		
 		
-		SEL = {
-			family = 30
+		PER = {
+			#family = 30
 			family = 70
 			government = aristocratic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
-			capital = 911
+			primary_culture = pasargadi
+			religion = zoroaster
+			capital = 1595
 			diplomatic_stance=warmongering_stance
 			monarchy_military_reforms = work_for_the_best
 			
 			poptype_rights = { 
 				{
-					culture = babylonian 
-					type = citizen
-				}
-				{
-					culture = pasargadi 
+					culture = median 
 					type = citizen
 				}
 			}
@@ -11414,7 +11051,6 @@ country = {
 				833 834 841 842 843 845 856 857 869 870 #corduene_region
 				940 941 942 944 964 965 969 971 #meshan_region
 				951 952 966 4779 4780 4785 4784 4786 4782 4787 #pars_region
-				858 859 860 877 878 1855 #sophene_region
 				1594 1596 1597 1598 1599 1601 1602 3393 4965 4968 4966 4967 4971 4970 #kossioi
 				1595 4963 4964 4981 4982 4980 4979 3391 4976 4974 3392 4975 #ecbatana
 				4991 4999 3381 3396 3382 4983 3395 3394 3452 4993 3453 # rhagai
@@ -11436,14 +11072,7 @@ country = {
 				6513 6530 6592 #Gedrosiana
 				6954 6955 6956 6957 6958 6959 6960 6961 6962 6963 6964 #Media Choromithrene
 				3461 3463 7224 7225 7223 7723  #New
-				235 8007 8009 821
-			}
-			
-			pantheon = {
-				{ deity = 758 }
-				{ deity = 755 }
-				{ deity = 103 }
-				{ deity = 114 }
+				821
 			}
 
 			treasures = { 102 }
@@ -11452,8 +11081,8 @@ country = {
 		BAC = { #Seleukid Subject State
 			family = 61
 			government = despotic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = pasargadi
+			religion = zoroaster
 			diplomatic_stance=warmongering_stance
 			monarchy_citizen_law = foreign_law_for_minorities
 			capital = 6678 #Bactra
@@ -11486,20 +11115,13 @@ country = {
 				6719 6689 6654 6690 6686 6691 6697 6688 6687 6694 6696 6695 #bactriana
 			}
 
-			pantheon = {
-				{ deity = 102 }
-				{ deity = 111 }
-				{ deity = 116 }
-				{ deity = 107 }
-			}
-
 			treasures = { 82 }
 		}
 		
 		ARS = {
 			government = despotic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = pasargadi
+			religion = zoroaster
 			diplomatic_stance=warmongering_stance
 			monarchy_citizen_law = foreign_law_for_minorities
 			capital = 6541 #Alexandria Arachosia
@@ -11530,8 +11152,8 @@ country = {
 		
 		PAR = {
 			government = despotic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = pasargadi
+			religion = zoroaster
 			diplomatic_stance=warmongering_stance
 			capital = 3435
 			
@@ -11579,7 +11201,7 @@ country = {
 			}
 
 			own_control_core = 	{
-				865 880 881 884 886 887 957 958 984 985 1578 #adiabene_region
+				865 880 881 884 886 887 957 958 984 985 #adiabene_region
 			}
 			
 		}
@@ -11620,6 +11242,7 @@ country = {
 				997 1502 1503 1504 #North of Lake Urmia
 				978 990 993 994 1562 1563 1564 1566 1567 1736 #tarawn_region
 				483 4037 7844 7845 1733 1858 1775 1856 1857 8008 8010
+				858 859 860 877 878 1855 235 8007 8009 #sophene_region
 			}
 			
 		}
@@ -11648,6 +11271,7 @@ country = {
 				1618 1619 1630 1631 1632 1638 1648 1649 1652 1654 #paytankert_region
 				1505 1506 1507 1508 1509 1511 1518 1519 #parskahayk_region
 				4985 4986 4987 4989 3389 4988 3383 3388 4984 3385 3384 4990 # Amardioi
+				1578
 			}
 			
 			pantheon = {
@@ -14463,817 +14087,5 @@ country = {
 }
 
 trade = { #If any are changed also change trade agreements.
-	route={
-		from=3593#Hatria
-		to=1 #Rome
-		trade_goods="grain"
-	}
-	route={
-		from=3258#Ubon
-		to=1 #Rome
-		trade_goods="grain"
-	}
-	route={
-		from=518 #Buto
-		to=379 #Pella
-		trade_goods="grain"
-	}
-	route={
-		from=4302 #Doberos
-		to=266 #Rhodes
-		trade_goods="wood"
-	}
-	route={
-		from=8011# Korlon
-		to=263 #Naxos
-		trade_goods="wood"
-	}
-	route={
-		from=454 #Thera
-		to=790 #Antigonia/Antioch
-		trade_goods="silk"
-	}
-	route={
-		from=1993#Tlos
-		to=1970 #Kos
-		trade_goods="wood"
-	}
-	route={
-		from=101 #Syracuse
-		to=790 #Antigonia
-		trade_goods="wine"
-	}
-	route={
-		from=332 #Cyprus
-		to=790 #Antigonia
-		trade_goods="base_metals"
-	}
-	route={
-		from=336 #Cyprus
-		to=790 #Antigonia
-		trade_goods="base_metals"
-	}
-	route={
-		from=4617 #Iathrippa
-		to=790 #Antigonia
-		trade_goods="incense"
-	}
-	route={
-		from=588 #Aristonis (internal)
-		to=516 #Alexandria
-		trade_goods="precious_metals"
-	}
-	route={
-		from=3252 #Carpis
-		to=516 #Alexandria
-		trade_goods="dye"
-	}
-	route={
-		from=364#Philippi
-		to=516 #Alexandria
-		trade_goods="iron"
-	}
 	
-	route={
-		from=749#Brochoi
-		to=747 #Sidon
-		trade_goods="wood"
-	}
-	route={
-		from=784#Sigon
-		to=766 #Byblos
-		trade_goods="wood"
-	}
-	route={
-		from=741#Abila
-		to=779 #Arados
-		trade_goods="wood"
-	}
-	route={
-		from=4302#Doberos
-		to=56#Tarentum
-		trade_goods="wood"
-	}
-	route={
-		from=3265#Thimida Bure
-		to=1000#Emporion
-		trade_goods="wood"
-	}
-	route={
-		from=1060#Ioulia Libika
-		to=1031#Dianum
-		trade_goods="wood"
-	}
-	route = {
-		from=1292#Visseria
-		to=1342#Menesthei Portus
-		trade_goods="wood"
-	}
-	route = {
-		from=3083#Lemnis
-		to=1344#Gades
-		trade_goods="wood"
-	}
-	route = {
-		from=3299#Pisida
-		to=3276#Hadramentum
-		trade_goods="wood"
-	}
-	route = {
-		from=3197#Sufetula
-		to=3257#Utica
-		trade_goods="wood"
-	}
-	route = {
-		from=3251#Membressa
-		to=3280#Achola
-		trade_goods="wood"
-	}
-	route = {
-		from=3300#Locri
-		to=3278#Thapsus
-		trade_goods="wood"
-	}
-	
-	#Thrace
-	route={
-		from = 401 # 
-		to = 350 #Lysimachea
-		trade_goods="iron"
-	}
-	route={
-		from = 4072 # 
-		to = 350 #Lysimachea
-		trade_goods="woad"
-	}
-	
-	route={
-		from = 379 # 
-		to = 350 #Lysimachea
-		trade_goods="wine"
-	}
-	route={
-		from = 391 # 
-		to = 350 #Lysimachea
-		trade_goods="fish"
-	}
-	
-	#Syracuse
-	route={
-		from=1#Rome
-		to=84 #Syracuse
-		trade_goods="cloth"
-	}
-	route = {
-		from=3346 #Barka
-		to=84 #Syracuse
-		trade_goods="olive"
-	}
-	route = {
-		from=3360 #Cyrenaica
-		to=84 #Syracuse
-		trade_goods="fish"
-	}
-	
-	#Carthage:
-	route={
-		from=373#Emathia
-		to=3256 #Carthage
-		trade_goods="glass"
-	}
-	route={
-		from=1382#Oretania
-		to=3256 #Carthage
-		trade_goods="precious_metals"
-	}
-	route={
-		from=1287#Oretania
-		to=3256 #Carthage
-		trade_goods="precious_metals"
-	}
-	route={
-		from=1839#Pontus
-		to=3256 #Carthage
-		trade_goods="iron"
-	}
-	route = {
-		from = 3122
-		to = 3256 #Carthage
-		trade_goods = "olive"
-	}
-	route = {
-		from = 3182
-		to = 3256 #Carthage
-		trade_goods = "wood"
-	}
-	route = {
-		from = 3503
-		to = 3256 #Carthage
-		trade_goods = "wine"
-	}
-	
-	route = {
-		from = 3301
-		to = 3245 #Zeugetania
-		trade_goods = "olive"
-	}
-	route = {
-		from = 3296
-		to = 3245 #Zeugetania
-		trade_goods = "fish"
-	}
-	
-	route = {
-		from = 543
-		to = 90 #Sicania
-		trade_goods = "wine"
-	}
-	route = {
-		from = 3141
-		to = 3489 #Sardinia Borealis
-		trade_goods = "olive"
-	}
-	#Macedon
-	route = {
-		from = 350
-		to = 379 #Pella
-		trade_goods = "salt"
-	}
-	route = {
-		from = 480
-		to = 379 #Pella
-		trade_goods = "wine"
-	}
-	route = {
-		from = 538
-		to = 379 #Pella
-		trade_goods = "dates"
-	}
-	
-	route = {
-		from = 408
-		to = 388 #Thessaly
-		trade_goods = "cattle"
-	}
-	
-	route = {
-		from = 3371
-		to = 356 #Chalkidiki
-		trade_goods = "olive"
-	}
-	
-	#Epirus
-	route = {
-		from = 430 #Gytheion
-		to = 476 #Epirus
-		trade_goods = "grain"
-	}
-	
-	#Crete
-	route = {
-		from = 515 #Naukratis
-		to = 361 #Gortyna
-		trade_goods = "grain"
-	}
-	route = {
-		from = 521 #Sebonnytos
-		to = 368 #Polyrrenia
-		trade_goods = "grain"
-	}
-	route = {
-		from = 511 #Phakoussai
-		to = 358 #Knossos
-		trade_goods = "grain"
-	}
-	route = {
-		from = 514 #Nikiou
-		to = 355 #Hierapytna
-		trade_goods = "grain"
-	}
-	
-	#Bactria
-	route = {
-		from = 6686 #Tarmita
-		to = 6678 #Bactra
-		trade_goods = "grain"
-	}
-	
-	#India
-	
-	route = {
-		from = 7404 #Anupshar
-		to = 4440 #Pataliputra
-		trade_goods = "grain"
-	}
-	route = {
-		from = 4433 #Kitagiri
-		to = 4440 #Pataliputra
-		trade_goods = "grain"
-	}
-	route = {
-		from = 4425 #Kanjakubya
-		to = 4440 #Pataliputra
-		trade_goods = "grain"
-	}
-	route = {
-		from = 4425 #Kanjakubya
-		to = 4440 #Pataliputra
-		trade_goods = "grain"
-	}
-	
-	route = {
-		from = 6931 #Nikama
-		to = 6916 #Vanci
-		trade_goods = "fish"
-	}
-	route = {
-		from = 6968 #Modoutou
-		to = 6911 #Aykudi
-		trade_goods = "fish"
-	}
-	route = {
-		from = 7497 #Puthia
-		to = 4446 #Anga
-		trade_goods = "grain"
-	}
-	
-	#Africa
-	route = {
-		from = 4650 #Aden
-		to = 7524 #Mosylon
-		trade_goods = "fish"
-	}
-	route = {
-		from = 4642 #Adedo Kome
-		to = 7524 #Mosylon
-		trade_goods = "fish"
-	}
-	
-	##### Marius #####
-	### Antigonids imports ###
-	route = {
-		from = 709 #Toloha
-		to = 737 #Raphon
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 1860 #Perrhe
-		to = 818 #Edessa
-		trade_goods = "cattle"
-	}
-	route = {
-		from = 1913 #Sakoena
-		to = 1881 #Mallos
-		trade_goods = "cattle"
-	}
-	route = {
-		from = 686 #Emmaous
-		to = 1993 #Mallos
-		trade_goods = "wood"
-	}
-	route = {
-		from = 836 #Samosata
-		to = 334 #Paphos
-		trade_goods = "grain"
-	}
-	route = {
-		from = 222 #Bloukion
-		to = 292 #Sardeis
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 1888 #Podandos
-		to = 1936 #Kelainai
-		trade_goods = "stone"
-	}
-	route = {
-		from = 1913 #Sakoena
-		to = 1936 #Kelainai
-		trade_goods = "vegetables"
-	}
-	### Antigonids exports ###
-	#Ionia
-	route = {
-		from = 1952 #Aphrodisias
-		to = 290 #Ephesos
-		trade_goods = "wine"
-	}
-	route = {
-		from = 1952 #Alexandreia Latmos
-		to = 290 #Ephesos
-		trade_goods = "iron"
-	}
-	#Miletos
-	route = {
-		from = 7938 #Bargasa
-		to = 1973 #Miletos
-		trade_goods = "cattle"
-	}
-	#Halikarnassos
-	route = {
-		from = 1889 #Magarsa
-		to = 1981 #Halikarnassos
-		trade_goods = "fish"
-	}
-	route = {
-		from = 1980 #Chrysaoris
-		to = 1981 #Halikarnassos
-		trade_goods = "olive"
-	}
-	#Aeolia
-	route = {
-		from = 249 #Apollonia Rhyndakos
-		to = 257 #Ilion
-		trade_goods = "grain"
-	}
-	route = {
-		from = 273 #Inde
-		to = 257 #Ilion
-		trade_goods = "cattle"
-	}
-	#Kyzikos
-	route = {
-		from = 325 # Kabia
-		to = 252 #Kyzikos
-		trade_goods = "grain"
-	}
-	route = {
-		from = 7939 #Hyllarima
-		to = 252 #Kyzikos
-		trade_goods = "wood"
-	}
-	#Kios
-	route = {
-		from = 7991 #Keryneai
-		to = 245 #Kios
-		trade_goods = "olive"
-	}
-	route = {
-		from = 312 #Appia
-		to = 245 #Kios
-		trade_goods = "wood"
-	}
-	#Astakos
-	route = {
-		from = 329 #Dableis
-		to = 243 #Astakos
-		trade_goods = "cattle"
-	}
-	route = {
-		from = 324 #Otroia
-		to = 243 #Astakos
-		trade_goods = "wood"
-	}
-	#Chalkedon
-	route = {
-		from = 7765 #Tattaios
-		to = 240 #Chalkedon
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 316 #Midaion
-		to = 240 #Chalkedon
-		trade_goods = "wood"
-	}
-	#Bithynia
-	route = {
-		from = 1777 #Azareis
-		to = 236 #Tarsos
-		trade_goods = "grain"
-	}
-	route = {
-		from = 176 #Ekdaoumaoua
-		to = 236 #Tarsos
-		trade_goods = "horses"
-	}
-	#Heraclea Pontica
-	route = {
-		from = 303 #Synaos
-		to = 207 #Herakleia Pontike
-		trade_goods = "wine"
-	}
-	#Cappadocia
-	route = {
-		from = 1906 #Lairtes
-		to = 1799 #Mazaka
-		trade_goods = "hemp"
-	}
-	#Bambyce
-	route = {
-		from = 808 #Beselatha
-		to = 807 #Mabbog
-		trade_goods = "grain"
-	}
-	route = {
-		from = 794 #Kyrrhos
-		to = 807 #Mabbog
-		trade_goods = "olive"
-	}
-	#Commagene
-	route = {
-		from = 879 #Barbare
-		to = 836 #Samosata
-		trade_goods = "grain"
-	}
-	route = {
-		from = 827 #Kerkesion
-		to = 836 #Samosata
-		trade_goods = "stone"
-	}
-	#Arados
-	route = {
-		from = 816 #Theleda
-		to = 779 #Arados
-		trade_goods = "grain"
-	}
-	#Byblos
-	route = {
-		from = 751 #Abila Syrias
-		to = 766 #Byblos
-		trade_goods = "grain"
-	}
-	#Sidon
-	route = {
-		from = 758 #Vallis Alba
-		to = 747 #Sidun
-		trade_goods = "grain"
-	}
-	#Athens
-	route = {
-		from = 166 #Perge
-		to = 416 #Athenai
-		trade_goods = "wood"
-	}
-	route = {
-		from = 1874 #Oiniandos
-		to = 416 #Athenai
-		trade_goods = "grain"
-	}
-	#Megara
-	route = {
-		from = 335 #Kyrenia
-		to = 417 #Megara
-		trade_goods = "olive"
-	}
-	route = {
-		from = 7765 #Tattaios
-		to = 417 #Megara
-		trade_goods = "grain"
-	}
-	#Eretria
-	route = {
-		from = 1943 #Sanaos
-		to = 7901 #Eretria
-		trade_goods = "wood"
-	}
-	route = {
-		from = 849 #Ballatha
-		to = 7901 #Eretria
-		trade_goods = "vegetables"
-	}
-	#Judea
-	route = {
-		from = 7985 #Telmenissos
-		to = 687 #Jerusalem
-		trade_goods = "vegetables"
-	}
-	#Samaria
-	route = {
-		from = 765 #Berothe
-		to = 680 #Shekhem
-		trade_goods = "wood"
-	}
-	route = {
-		from = 674 #Philoteria
-		to = 680 #Shekhem
-		trade_goods = "dates"
-	}
-	#Knidos
-	route = {
-		from = 1944 #Lounda
-		to = 1987 #Knidos
-		trade_goods = "vegetables"
-	}
-	#Nesiotic League
-	route = {
-		from = 6431 #Marion
-		to = 263 # Naxos
-		trade_goods = "wood"
-	}
-	route = {
-		from = 318 #Meiros
-		to = 263 # Naxos
-		trade_goods = "vegetables"
-	}
-	### Egypt imports ###
-	route = {
-		from = 598 #Qort
-		to = 509 #Pilousion
-		trade_goods = "grain"
-	}
-	route = {
-		from = 705 #Sabkah
-		to = 539 #Ptolemais Euergetis
-		trade_goods = "stone"
-	}
-	route = {
-		from = 542 #Ankyronpolis
-		to = 500 # Memphis
-		trade_goods = "grain"
-	}
-	route = {
-		from = 7597 #Erascum
-		to = 500 # Memphis
-		trade_goods = "dates"
-	}
-	route = {
-		from = 628 #Alana
-		to = 500 # Memphis
-		trade_goods = "cloth"
-	}
-	route = {
-		from = 7560 #Afarun
-		to = 500 # Memphis
-		trade_goods = "dates"
-	}
-	route = {
-		from = 544 #Herakleopolis
-		to = 504 # Leontopolis
-		trade_goods = "grain"
-	}
-	route = {
-		from = 3479 #Abha
-		to = 504 # Leontopolis
-		trade_goods = "wine"
-	}
-	route = {
-		from = 514 #Nikiou
-		to = 516 # Alexandreia
-		trade_goods = "grain"
-	}
-	route = {
-		from = 545 #Oxyrynchos
-		to = 516 # Alexandreia
-		trade_goods = "grain"
-	}
-	route = {
-		from = 540 #Dionysias
-		to = 516 # Alexandreia
-		trade_goods = "grain"
-	}
-	route = {
-		from = 4620 #Alaura
-		to = 516 # Alexandreia
-		trade_goods = "salt"
-	}
-	route = {
-		from = 504 #Leontopolis
-		to = 516 # Alexandreia
-		trade_goods = "papyrus"
-	}
-	route = {
-		from = 7690 #Tamiathis
-		to = 516 # Alexandreia
-		trade_goods = "papyrus"
-	}
-	# Lycia
-	route = {
-		from = 737 #Raphon
-		to = 1993 #Tlos
-		trade_goods = "cloth"
-	}
-	route = {
-		from = 850 #Okkaraba
-		to = 1993 #Tlos
-		trade_goods = "cattle"
-	}
-	# Olbe
-	route = {
-		from = 1889 #Magarsa
-		to = 1894 #Olbe
-		trade_goods = "cloth"
-	}
-	route = {
-		from = 183 #Abbasion
-		to = 1894 #Olbe
-		trade_goods = "vegetables"
-	}
-	### Egypt exports ###
-	#Kos
-	route = {
-		from = 657 #Bitylion
-		to = 1970 #Kos
-		trade_goods = "fish"
-	}
-	#Andros
-	route = {
-		from = 523 #Pakhnemounis
-		to = 1903 #Andros
-		trade_goods = "fish"
-	}
-	route = {
-		from = 7688 #Thenisos
-		to = 1903 #Andros
-		trade_goods = "cloth"
-	}
-	#Dodekaschoinos
-	route = {
-		from = 5528 #Elassa
-		to = 591 #Swenett
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 500 #Memphis
-		to = 591 #Swenett
-		trade_goods = "papyrus"
-	}
-	#Cyrenaica
-	route = {
-		from = 3368 #Batrachos
-		to = 3360 #Kyrene
-		trade_goods = "fish"
-	}
-	route = {
-		from = 3376 #Selenis
-		to = 3360 #Kyrene
-		trade_goods = "leather"
-	}
-	route = {
-		from = 525 #Sile
-		to = 3360 #Kyrene
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 501 #Helioupolis
-		to = 3360 #Kyrene
-		trade_goods = "cloth"
-	}
-	#Nabatea
-	route = {
-		from = 535 #Ostrakine
-		to = 729 #Petra
-		trade_goods = "cattle"
-	}
-	route = {
-		from = 1710 #Sina Boreios
-		to = 729 #Petra
-		trade_goods = "marble"
-	}
-	route = {
-		from = 531 #Psenemphaia
-		to = 729 #Petra
-		trade_goods = "dates"
-	}
-	###Macedon imports
-	route = {
-		from = 4305 #Bylazora
-		to = 379 #Pella
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 4108 #Vizinia
-		to = 379 #Pella
-		trade_goods = "stone"
-	}
-	### Macedon exports
-	route = {
-		from = 374 #Kalindoia
-		to = 465 #Ambrakia
-		trade_goods = "olive"
-	}
-	route = {
-		from = 3125 #Keletron
-		to = 465 #Ambrakia
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 3175 #Eratyra
-		to = 462 #Stratos
-		trade_goods = "cattle"
-	}
-	route = {
-		from = 393 #Pelagonia
-		to = 462 #Stratos
-		trade_goods = "vegetables"
-	}
-	route = {
-		from = 398 #Halos
-		to = 402 #Opous
-		trade_goods = "fish"
-	}
-	route = {
-		from = 356 #Thasos
-		to = 402 #Opous
-		trade_goods = "precious_metals"
-	}
-	route = {
-		from = 386 #Asseros
-		to = 403 #Oreos
-		trade_goods = "grain"
-	}
-	route = {
-		from = 371 #Euporia
-		to = 403 #Oreos
-		trade_goods = "glass"
-	}
 }

@@ -186,6 +186,8 @@ public class Main
             String saveDiplo = "tempDiplo.txt";
 
             String saveMonuments = "tempMonuments.txt";
+            
+            String saveDeities = "tempDeities.txt";
 
             int compressedOrNot = Importer.compressTest(impDirSave); //0 for compressed, 1 for decompressed
             
@@ -330,6 +332,10 @@ public class Main
             TempFiles.tempCreate(impDirSave, "great_work_manager={", "country_culture_manager={", saveMonuments);
 
             LOGGER.info("temp Monuments created");
+            
+            TempFiles.tempCreate(impDirSave, "deity_manager={", "great_work_manager={", saveDeities);
+
+            LOGGER.info("temp Monuments created");
 
             long tempTime = System.nanoTime();
             long tempTot = (((tempTime - startTime) / 1000000000)/60) ;
@@ -367,6 +373,8 @@ public class Main
             ArrayList<Country> baTagInfo = new ArrayList<Country>();
             //Country processing
             baTagInfo = importer.importCountry(saveCountries);
+            ArrayList<Deity> baDeityInfo = new ArrayList<Deity>();
+            baDeityInfo = importer.importDeities(saveDeities);
             int allTagCount = 0;
             while (allTagCount < baTagInfo.size()) {
                 Country baTag = baTagInfo.get(allTagCount);
@@ -693,7 +701,8 @@ public class Main
             int convTag = 0;
             
             //Output.genericBlankFile(modDirectory + "/setup/countries/converted_countries.txt","Converted Countries from Bronze Age");
-            Output.output(Dir2+"/game/setup/countries/countries.txt",modDirectory + "/setup/countries/countries.txt");
+            //Output.output(Dir2+"/game/setup/countries/countries.txt",modDirectory + "/setup/countries/countries.txt");
+            //Output.output("/defaultOutput/default/setup/countries/countries.txt",modDirectory + "/setup/countries/countries.txt");
 
             try {
                 try {
@@ -780,7 +789,7 @@ public class Main
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
-            //existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
+            existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
             ArrayList<String[]> missions = Processing.getMissionTags(baTagInfo);
             Processing.updateAllMissions(Dir2+"/game/common/missions",modDirectory+"/common/missions",missions);
             Processing.updateAllMissionEvents(Dir2+"/game",modDirectory,missions);

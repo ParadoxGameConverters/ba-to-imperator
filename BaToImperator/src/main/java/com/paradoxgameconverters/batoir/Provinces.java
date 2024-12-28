@@ -21,6 +21,7 @@ public class Provinces
     private String cityStatus;
     private double civValue;
     private ArrayList<Double> civValues;
+    private int holySite;
     private String exoRole;
     private String exoGov;
     private String exoTagRequirement;
@@ -43,6 +44,7 @@ public class Provinces
         String cityStatus; //is expected to be either settlement, city, or metropolis
         double civValue;
         ArrayList<Double> civValues;
+        int holySite;
         String exoRole; //should only be used for exoTags to identify role for missions
         String exoGov; //should only be used for exoTags to set government
         String exoTagRequirement; //requirements for an exoTag to use pre-defined tag
@@ -51,7 +53,6 @@ public class Provinces
     public void setExoTagRequirement(String provETR) {
         exoTagRequirement = provETR;
     }
-
     public String getExoTagRequirement() {
         return exoTagRequirement;
     }
@@ -59,7 +60,6 @@ public class Provinces
     public void setExoGov(String provExoGov) {
         exoGov = provExoGov;
     }
-
     public String getExoGov() {
         return exoGov;
     }
@@ -67,9 +67,15 @@ public class Provinces
     public void setExoRole(String provExoRole) {
         exoRole = provExoRole;
     }
-
     public String getExoRole() {
         return exoRole;
+    }
+    
+    public void setHolySite(int holySiteID) {
+        holySite = holySiteID;
+    }
+    public int getHolySite() {
+        return holySite;
     }
     
     public void addCivValue(double provCivValue) {

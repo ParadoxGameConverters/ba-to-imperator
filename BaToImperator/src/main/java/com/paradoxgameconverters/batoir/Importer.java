@@ -44,7 +44,7 @@ public class Importer
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[8];
+        output = new String[9];
 
         output[0] = "9999"; //default for no owner, uncolonized province
         output[1] = "noCulture"; //default for no culture, uncolonized province with 0 pops
@@ -54,6 +54,7 @@ public class Importer
         output[5] = "9999"; //default for no monument
         output[6] = "settlement"; //default for no city status
         output[7] = "0.0"; //default for no civilization value
+        output[8] = "-1"; //default for no holy site
 
         impProvList.add(output); //default at ID 0
         
@@ -578,6 +579,97 @@ public class Importer
                     output[1] = "9999";
                     output[2] = "9999";
                     output[3] = "9999"; //default for initial type
+                }
+            }
+
+        }catch (java.util.NoSuchElementException exception){
+            endOrNot = false;
+
+        }
+
+        if (output[1].equals("9999") || output[2].equals("9999")) { //Fallback in case something goes wrong, subject relation won't be converted
+            output[0] = "9999"; //default for no overlord, overlord has no subjects
+            output[1] = "9999"; //default for no subject
+            output[2] = "9999"; //default for no subject relation    
+        }
+
+        return currentList;
+
+    }
+    
+    public static ArrayList<Deity> importDeities (String name) throws IOException
+    {
+
+        //Primarily used for subjects/vassals in IR
+
+        FileInputStream fileIn= new FileInputStream(name);
+        Scanner scnr= new Scanner(fileIn);
+
+        int flag = 0;
+
+        String tab = "	";
+
+        int aqq = 0;
+
+        ArrayList<Deity> currentList = new ArrayList<Deity>();
+
+        boolean endOrNot = true;
+        String vmm = scnr.nextLine();
+        String line = vmm;
+        String[] output;
+        output = new String[3];
+
+        output[0] = "none"; //default for no id
+        output[1] = "none"; //default for rulerId
+        output[2] = "none"; //default for no subject relation
+
+        try {
+            line = scnr.nextLine();
+            while (endOrNot = true){
+
+                line = scnr.nextLine();
+                
+                int deityCount = 0;
+                while (line.contains("=")) { //deity detected
+                    line = line.replace(tab,"");
+                    String[] splitLine = line.split("=");
+                    String identifier = splitLine[0];
+                    String data = splitLine[1];
+                    if (deityCount == 0) {
+                        output[0] = identifier;
+                    } else if (identifier.equals("deify_ruler")) {
+                        output[1] = data;
+                    } else if (identifier.equals("deity")) {
+                        output[2] = data;
+                    }
+                    deityCount = deityCount + 1;
+                    
+                    line = scnr.nextLine();
+                }
+                line = line.replace(tab,"");
+                //System.out.println(line);
+                
+                if (line.equals("}") && !output[0].equals("none")) {
+                    String[] tmpOutput = new String[output.length];
+                    int aq2 = 0;
+                    while (aq2 < output.length) {
+                        tmpOutput[aq2] = output[aq2];
+                        aq2 = aq2 + 1;
+                    }
+                    int id = Integer.parseInt(tmpOutput[0]);
+                    int rulerID = -1;
+                    if (tmpOutput[1].length() < 10) {
+                        rulerID = Integer.parseInt(tmpOutput[1]);
+                    }
+                    String deityName = tmpOutput[2];
+                    deityName = Processing.cutQuotes(deityName);
+                    Deity addedDeity = Deity.newDeity(id,rulerID,deityName);
+                    
+                    currentList.add(addedDeity);
+
+                    output[0] = "none";
+                    output[1] = "none";
+                    output[2] = "none";
                 }
             }
 

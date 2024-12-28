@@ -1,4 +1,5 @@
 package com.paradoxgameconverters.batoir;
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -2125,7 +2126,6 @@ public class Processing
 
     public static int getProvByID(ArrayList<Provinces> provList,int id) {
         int count = 0;
-        ArrayList<String> newArray = new ArrayList<String>();
         while (count < provList.size()) { 
             Provinces province = provList.get(count);
             int provID = province.getID();
@@ -2140,7 +2140,6 @@ public class Processing
     
     public static int getArrayByID(ArrayList<String[]> provList,int id) {
         int count = 0;
-        ArrayList<String> newArray = new ArrayList<String>();
         while (count < provList.size()) { 
             String[] province = provList.get(count);
             int provID = Integer.parseInt(province[0]);
@@ -2155,11 +2154,24 @@ public class Processing
     
     public static int getCountryByID(ArrayList<Country> countryList,int id) {
         int count = 0;
-        ArrayList<String> newArray = new ArrayList<String>();
         while (count < countryList.size()) { 
             Country country = countryList.get(count);
             int countryID = country.getID();
             if (countryID == id) {
+                return count;
+            }
+            count = count + 1;
+        }
+
+        return 0;
+    }
+    
+    public static int getDeityByID(ArrayList<Deity> deityList,int id) {
+        int count = 0;
+        while (count < deityList.size()) { 
+            Deity selectedDeity = deityList.get(count);
+            int deityID = selectedDeity.getID();
+            if (deityID == id) {
                 return count;
             }
             count = count + 1;
