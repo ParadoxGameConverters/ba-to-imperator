@@ -1337,28 +1337,7 @@ family={
 			# prestige=300
 		# }
 		#Phrygia:
-		4={
-			key="Antigonid"
-			owner=PRY
-			culture = macedonian
-			prestige=300			
-			color = 0
-		}
-		5={
-			key="Aleuadid"
-			culture = thessalian
-			owner = PRY
-			prestige=300
-			color = 1
-		}
-		#Thrace
-		8={
-			key = "Alkimachid"
-			culture=thessalian
-			prestige=300
-			owner=TRE
-			color = 0
-		}
+		
 		#Sparta
 		9={
 			key = "Agiad"
@@ -1772,12 +1751,6 @@ family={
 			owner=ZGY
 		}
 		#Cyrenaica
-		66={
-			key = "Charinid"
-			prestige=300
-			culture=cyrenaican
-			owner=CYR
-		}
 		#Armenia
 		71 = {
 			key = "Orontids"
@@ -2020,7 +1993,6 @@ diplomacy = {
 	dependency = { first = MRY second = PLD subject_type = tributary } #Paladas
 	dependency = { first = MRY second = YDD subject_type = feudatory } #Yadheuya
 	dependency = { first = MRY second = PRA subject_type = tributary } #Pauravas
-	dependency = { first = PRY second = EUB subject_type = feudatory } #Freed by Demetrios in 304
 	 
 	#Opuntians
 	dependency = { first = MAC second = OPU subject_type = feudatory } #Opus
@@ -2046,10 +2018,6 @@ diplomacy = {
 	guarantee = { first = TLN second = APO } #
 
 	# Marius Anatolians
-	dependency = { first = PRY second = LYC subject_type = tributary } # Lycia
-	dependency = { first = PRY second = OBE subject_type = tributary } # Olbe
-	dependency = { first = PRY second = MLO subject_type = tributary } # Miletos
-	dependency = { first = PRY second = HKS subject_type = tributary } # Halikarnassos
 
 	#Herakleia Pontike and co
 	defensive_league = {
@@ -5877,28 +5845,6 @@ country = {
 				591 592 593 594 595 596 597 598 599 5518 5519 5520 5521 
 			}
 			
-		}
-		
-		CYR = {
-			family = 66
-			government = despotic_monarchy
-			primary_culture = cyrenaican
-			religion = roman_pantheon
-			capital = 3360
-			
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-
-			own_control_core = 	{
-				3360 3341 3343 3342 3344 3345 3346 3347 3348 3349 3350 3351 3352 3353 3357 3354 3358 3359 3362 3361 3363 3364 3365 3366 3367 3340
-				
-			}
-			
-			treasures = { 48 }
 		}
 		
 		#Massalia

@@ -2454,6 +2454,7 @@ public class Processing
                         String religion = irCountry.getReligion();
                         String capital = irCountry.getCapital();
                         ArrayList<Integer> families = irCountry.getMajorFamilies();
+                        boolean antagonist = irCountry.getAntagonist();
                         //String culture = "roman"; //testing
                         //String religion = "indo_iranian_religion"; //testing
 
@@ -2474,6 +2475,9 @@ public class Processing
                         lines.add(tab+tab+tab+"religion = "+religion);
                         if (!capital.equals("99999")) { //in case a country has no capital, don't output
                             lines.add(tab+tab+tab+"capital = "+capital);
+                        }
+                        if (antagonist) {
+                            lines.add(tab+tab+tab+"is_antagonist = yes");
                         }
                         lines.add(tab+tab+tab+"own_control_core = {");
                         int provCount = 0;

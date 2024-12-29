@@ -250,7 +250,7 @@ public class Importer
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[24];
+        output = new String[25];
 
         output[0] = "9999"; //default for no tag
         output[1] = "6969"; //default for no flag seed
@@ -274,6 +274,7 @@ public class Importer
         output[21] = "9999"; //default for no historical tag used in nation formation
         output[22] = "k"; //depreciated
         output[23] = "noFlag"; //default for no flag
+        output[24] = "no"; //default for no antagonist
 
         Country defaultCountry = Country.newCountry(0,output[0],output[6],output[7],"Debug_Loc","Debug_Adj",output[21],output[5],output[23],output[3],
         output[16],output[17]);
@@ -359,6 +360,9 @@ public class Importer
                                 }
                                 else if (qaaa.split("=")[0].equals( tab+tab+tab+tab+"gold" ) ) {
                                     output[4] = qaaa.split("=")[1];
+                                }
+                                else if (qaaa.split("=")[0].equals( tab+tab+tab+"is_antagonist" ) ) {
+                                    output[24] = qaaa.split("=")[1];
                                 }
                                 else if (qaaa.split("=")[0].equals( tab+tab+tab+"capital" ) ) {
                                     output[5] = qaaa.split("=")[1];
@@ -455,6 +459,9 @@ public class Importer
                                     
                                     Country countryToAdd = Country.newCountry(aqq,output[0],output[6],output[7],output[19],"Debug_Adj",output[21],
                                     output[5],output[23],output[3],output[16],output[17]);
+                                    if (output[24].equals("yes")) {
+                                        countryToAdd.setAntagonist(true);
+                                    }
 
                                     impTagInfo.add(countryToAdd);
 
@@ -482,6 +489,7 @@ public class Importer
                                     output[21] = "9999"; //default for no historical tag used in nation formation
                                     output[22] = "k"; //default for no rank, ranks are not stored in the save file, will be calculated during output
                                     output[23] = "noFlag"; //default for no flag
+                                    output[24] = "no"; //default for antagonist
 
                                 }
                             }

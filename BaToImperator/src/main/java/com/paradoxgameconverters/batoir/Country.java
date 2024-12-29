@@ -25,6 +25,7 @@ public class Country
     private ArrayList<Integer> majorFamilies;
     private ArrayList<String> majorFamiliesStr;
     private String missions; //use missions from x tag
+    private boolean antagonist;
     public Country() {
         int id;
         String culture;
@@ -41,6 +42,7 @@ public class Country
         String updatedTag;
         ArrayList<Integer> majorFamilies;
         ArrayList<String> majorFamiliesStr;
+        boolean antagonist;
     }
     public void setGovernment(String name) {
         government = name;
@@ -154,6 +156,13 @@ public class Country
         return missions;
     }
     
+    public void setAntagonist(boolean yn) {
+        antagonist = yn;
+    }
+    public boolean getAntagonist() {
+        return antagonist;
+    }
+    
     public static Country newCountry(int countryID, String countryTag, String countryCulture, String countryReligion, String countryLoc, String countryAdj, 
     String countryHistoricalTag, String countryCapital, String countryFlag, String countryColor, String countryRuler, String gov) {
         Country newCountry = new Country();
@@ -170,6 +179,7 @@ public class Country
         newCountry.setColor(countryColor);
         newCountry.setRuler(countryRuler);
         newCountry.setGovernment(gov);
+        newCountry.setAntagonist(false); //Set all nations as not Antagonist by default
         
         return newCountry;
     }

@@ -258,6 +258,8 @@ public class Main
                 republicOption = ("repMer");
             }
             
+            boolean convertAntagonists = false;
+            
             ArrayList<String> govMap = Importer.importBasicFile("governmentConversion.txt"); //government mappings
             LOGGER.info("Importing mod directories...");
   
@@ -389,7 +391,9 @@ public class Main
                             
                 String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea,"none");
                 String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea,"none");
-                            
+                if (!convertAntagonists) { //if user selected option not to convert antagonists, all tags loose their antagonist modifier
+                    baTag.setAntagonist(false);
+                }
                             
                 if (newCulture.equals("99999")) {
                     newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
