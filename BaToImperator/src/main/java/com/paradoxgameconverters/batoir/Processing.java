@@ -2634,7 +2634,8 @@ public class Processing
         
         while (countOldFile < OldLines.size()) {
             String selectedLine = OldLines.get(countOldFile);
-            String selectedLineNoComment = selectedLine.split("#")[0];
+            String selectedLineNoComment = selectedLine.split(" #")[0];
+            selectedLineNoComment = selectedLineNoComment.split("#")[0];
             if (selectedLine.equals("country = {")) {
                 countrySectionFlag = true;
             }
@@ -2648,16 +2649,13 @@ public class Processing
                     oneLineFlag = false;
                 } else if (selectedLine.contains("}")) {
                     oneLineFlag = true;
-                    System.out.println("OneLine at"+selectedLine);
+                    //System.out.println("OneLine at"+selectedLine);
                 }
             }
             
             if (countrySectionFlag && coreFlag) {
-                //while (!selectedLine.contains("}")) {
-                    //lines.add(selectedLine);
-                    //countOldFile = countOldFile + 1;
-                    //selectedLine = OldLines.get(countOldFile);
-                    selectedLineNoComment = selectedLine.split("#")[0];
+                    selectedLineNoComment = selectedLine.split(" #")[0];
+                    selectedLineNoComment = selectedLineNoComment.split("#")[0];
                     selectedLineNoComment = selectedLineNoComment.replace(tab," ");
                     String[] countryProvinces = selectedLineNoComment.split(" ");
                     int count2 = 0;
@@ -2685,28 +2683,21 @@ public class Processing
                             System.out.println("OneLine");
                             newProvs = newProvs.replace(tab+tab+tab+tab,tab+tab+tab+"own_control_core = {");
                             newProvs = newProvs + " }";
-                            //coreFlag = false;
-                            //oneLineFlag = false;
                         }
                     }
-                    System.out.println(newProvs);
+                    //System.out.println(newProvs+"_newProvs");
                     
                     lines.add(newProvs);
-                    //if (!oneLineFlag) {
-                        //lines.add("}");
-                    //}
-                        //lines.add(tab+tab+tab+"}");
-                        coreFlag = false;
-                        oneLineFlag = false;
-                        //System.out.println("OneLine False");
-                    //}
-                //}
             } else {
                 lines.add(selectedLine);
             }
             
-            if (coreFlag && selectedLineNoComment.contains("}")) {
+            if (coreFlag && selectedLineNoComment.contains("}")) { //encapsulate modified provs
                 coreFlag = false;
+                if (!oneLineFlag) {
+                    lines.add(tab+tab+"}");
+                }
+                oneLineFlag = false;
             }
             countOldFile = countOldFile + 1;
         }
