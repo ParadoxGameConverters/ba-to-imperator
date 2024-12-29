@@ -2455,6 +2455,7 @@ public class Processing
                         String capital = irCountry.getCapital();
                         ArrayList<Integer> families = irCountry.getMajorFamilies();
                         boolean antagonist = irCountry.getAntagonist();
+                        ArrayList<String[]> laws = irCountry.getLaws();
                         //String culture = "roman"; //testing
                         //String religion = "indo_iranian_religion"; //testing
 
@@ -2473,6 +2474,15 @@ public class Processing
                         lines.add(tab+tab+tab+"government = "+government);
                         lines.add(tab+tab+tab+"primary_culture = "+culture);
                         lines.add(tab+tab+tab+"religion = "+religion);
+                        if (laws != null) {
+                            int lawCount = 0;
+                            while (lawCount < laws.size()) {
+                                String[] law = laws.get(lawCount);
+                                String lawTail = cutQuotes(law[1]);
+                                lines.add(tab+tab+tab+law[0]+" = "+lawTail);
+                                lawCount = lawCount + 1;
+                            }
+                        }
                         if (!capital.equals("99999")) { //in case a country has no capital, don't output
                             lines.add(tab+tab+tab+"capital = "+capital);
                         }

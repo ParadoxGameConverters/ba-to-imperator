@@ -26,6 +26,7 @@ public class Country
     private ArrayList<String> majorFamiliesStr;
     private String missions; //use missions from x tag
     private boolean antagonist;
+    private ArrayList<String[]> laws;
     public Country() {
         int id;
         String culture;
@@ -43,6 +44,7 @@ public class Country
         ArrayList<Integer> majorFamilies;
         ArrayList<String> majorFamiliesStr;
         boolean antagonist;
+        ArrayList<String[]> laws;
     }
     public void setGovernment(String name) {
         government = name;
@@ -161,6 +163,13 @@ public class Country
     }
     public boolean getAntagonist() {
         return antagonist;
+    }
+    
+    public void setLaws(ArrayList<String[]> lawArray) {
+        laws = lawArray;
+    }
+    public ArrayList<String[]> getLaws() {
+        return laws;
     }
     
     public static Country newCountry(int countryID, String countryTag, String countryCulture, String countryReligion, String countryLoc, String countryAdj, 

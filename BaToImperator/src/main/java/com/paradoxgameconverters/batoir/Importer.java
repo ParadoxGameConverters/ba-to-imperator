@@ -275,6 +275,8 @@ public class Importer
         output[22] = "k"; //depreciated
         output[23] = "noFlag"; //default for no flag
         output[24] = "no"; //default for no antagonist
+        
+        ArrayList<String[]> lawArray = new ArrayList<String[]>();
 
         Country defaultCountry = Country.newCountry(0,output[0],output[6],output[7],"Debug_Loc","Debug_Adj",output[21],output[5],output[23],output[3],
         output[16],output[17]);
@@ -420,8 +422,18 @@ public class Importer
                                     output[17] = qaaa.split("=")[1];
                                     output[17] = output[17].substring(1,output[17].length()-1);
                                 }
+                                //laws
                                 else if (qaaa.split("=")[0].equals( tab+tab+tab+"succession_law" ) ) {
-                                    output[18] = qaaa.split("=")[1];
+                                    String[] qaaaSplit = qaaa.split("=");
+                                    //output[18] = qaaaSplit[1];
+                                    //lawArray.add(qaaaSplit);
+                                    while (!qaaaSplit[0].contains("max_manpower") && !qaaaSplit[0].contains("modifier")) {
+                                        lawArray.add(qaaaSplit);
+                                        qaaa = scnr.nextLine();
+                                        qaaa = qaaa.replace(tab,"");
+                                        qaaaSplit = qaaa.split("=");
+                                        //System.out.println(qaaa);
+                                    }
 
                                 }
 
@@ -462,6 +474,9 @@ public class Importer
                                     if (output[24].equals("yes")) {
                                         countryToAdd.setAntagonist(true);
                                     }
+                                    if (lawArray.size() > 0) {
+                                        countryToAdd.setLaws(lawArray);
+                                    }
 
                                     impTagInfo.add(countryToAdd);
 
@@ -490,6 +505,8 @@ public class Importer
                                     output[22] = "k"; //default for no rank, ranks are not stored in the save file, will be calculated during output
                                     output[23] = "noFlag"; //default for no flag
                                     output[24] = "no"; //default for antagonist
+                                    
+                                    lawArray = new ArrayList<String[]>();
 
                                 }
                             }
