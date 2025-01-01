@@ -1,5 +1,7 @@
 #Culture conversion for provinces outside of BAs map
+#The keyword ~ SOURCE ~ will revert back to what a culture was before Meta mapping
 ~META~Greek,macedonian=italiotian=thracian=cretan=achaean=argolian=arcadian=epirote=boeotian=peloponnesian=athenian=euboean=aetolian=aegean=greco_pontic=aeolian=troan=ionian=cypriot=thessalian=bosporan=syracusan=cyrenaican=massalian=hellenistic
+~META~Egyptian,egyptian=middle_egyptian=upper_egyptian
 
 #Punic
 
@@ -40,3 +42,23 @@ Greek,cyrenaican,region=mauretainia_region
 
 #Fallback
 Greek,macedonian
+
+#Egyptian
+Egyptian,per_sheklesh,region=magna_graecia_region
+Egyptian,per_sheklesh,region=central_italy_region
+Egyptian,per_sheklesh,region=cisalpine_gaul_region
+Egyptian,per_sheklesh,region=illyria_region
+Egyptian,per_sheklesh,region=transalpine_gaul_region
+Egyptian,niwt_ipt,region=africa_region
+Egyptian,niwt_ipt,region=numidia_region
+Egyptian,niwt_ipt,region=mauretainia_region
+Egyptian,niwt_ipt,area=sardinia_septentrionalis
+Egyptian,niwt_ipt,area=sardinia_meridionalis
+Egyptian,niwt_ipt,region=tarraconensis_region
+Egyptian,niwt_ipt,region=contestania_region
+Egyptian,niwt_ipt,region=baetica_region
+Egyptian,niwt_ipt,region=lusitania_region
+Egyptian,niwt_ipt,region=gallaecia_region
+Egyptian,niwt_ipt,area=tripolitania_centralis_area
+#Fallback
+Egyptian,~SOURCE~

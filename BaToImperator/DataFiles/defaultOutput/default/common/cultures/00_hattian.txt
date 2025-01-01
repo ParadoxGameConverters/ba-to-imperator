@@ -1,4 +1,4 @@
-﻿hattian = {	
+﻿hattian_group = {	
 	color = hsv { 0.7 0.3 0.7 }
 	primary = chariots
 	second = camels

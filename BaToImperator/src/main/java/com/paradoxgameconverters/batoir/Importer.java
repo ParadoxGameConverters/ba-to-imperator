@@ -2246,6 +2246,8 @@ public class Importer
         match[0] = "peq"; //default for no ir input
         match[1] = "99999"; //default for no ck2 output
         
+        String initialSource = provIDnum; //pre-metamapped culture, in-case the fallback is original culture
+        
         int count = 0;
 
         try {
@@ -2268,13 +2270,16 @@ public class Importer
                 }
 
                 else if (line.split(",")[0].equals(provIDnum) && !line.contains("#")){
-                    //count = 1 + source.size();
-                    if (line.split(",").length >= 3) {
+                    String[] splitLine = line.split(",");
+                    if (splitLine[1].equals("~SOURCE~")) { //pre-metamapped culture, in-case the fallback is original culture
+                        splitLine[1] = initialSource;
+                    }
+                    if (splitLine.length >= 3) {
                         //return qaaa.split(","); //if mapping file has arguments, return those as well
-                        allMatches.add(line.split(","));
+                        allMatches.add(splitLine);
                     } else {
-                        match[0] = line.split(",")[0];
-                        match[1] = line.split(",")[1];
+                        match[0] = splitLine[0];
+                        match[1] = splitLine[1];
                         allMatches.add(match);
                     }
 

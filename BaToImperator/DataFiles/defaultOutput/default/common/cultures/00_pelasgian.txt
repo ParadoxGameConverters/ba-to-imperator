@@ -1,4 +1,4 @@
-﻿pelasgian = {
+﻿pelasgian_group = {
 	
 	color = hsv { 0.1  0.7  0.8 }
 	primary = light_infantry

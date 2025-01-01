@@ -38,8 +38,9 @@
 	link = { ba = 417 imperator = 243 imperator = 246 } # Megara -> Astakos, Strobilos
 	link = { ba = 1973 imperator = 245 imperator = 248 } # Miletos -> Kios, Myrleia
 	link = { ba = 389 imperator = 252 imperator = 7908 } # Larissa -> Kyzikos, Antigoneia Kyzikene
-	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon_~_" }
+	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon~~Missions,SNP_~_" }
 	link = { ba = 1973 imperator = 1812 imperator = 1810 } # Miletos -> Sinope, Zaliches
+	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon_~_" }
 	link = { ba = 1973 imperator = 1720 imperator = 1741 imperator = 1738 } # Miletos -> Phasis, Dioscurias, Gyenos
 	link = { ba = 417 imperator = 207 imperator = 238 } # Megara -> Herakleia Pontike, Diospolis
 	link = { ba = 1973 imperator = 209 } # Miletos -> Tieion

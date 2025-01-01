@@ -1,4 +1,4 @@
-﻿minoan = {	
+﻿minoan_group = {	
 	color = hsv { 0.15 0.15 0.05 }
 	levy_template = levy_cretan
 	

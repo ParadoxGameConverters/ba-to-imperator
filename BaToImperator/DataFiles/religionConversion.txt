@@ -22,6 +22,4 @@ anatolian_religion,anatolian_religion
 egyptian_religion,egyptian_pantheon
 berber_religion,berber_religion
 elamite_religion,mesopotamian_religion
-
-#Temporary
-hurrian_religion,animism
+hurrian_religion,hurrian_religion
