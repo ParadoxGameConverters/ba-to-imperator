@@ -1,4 +1,5 @@
 package com.paradoxgameconverters.batoir;   
+   
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -297,7 +298,7 @@ public class Main
             
             LOGGER.info("Importing province tradegoods and terrain types...");
             
-            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0.0,0);
+            Provinces blankProv = Provinces.newProv("9999","noCulture","noReligion",-1,0,0,0,0,0,"settlement",0.0,0);
             
             //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
             
@@ -377,6 +378,9 @@ public class Main
             baTagInfo = importer.importCountry(saveCountries);
             ArrayList<Deity> baDeityInfo = new ArrayList<Deity>();
             baDeityInfo = importer.importDeities(saveDeities);
+            
+            ArrayList<Monument> baMonumentInfo = new ArrayList<Monument>();
+            baMonumentInfo = importer.importMonuments(saveMonuments);
             int allTagCount = 0;
             while (allTagCount < baTagInfo.size()) {
                 Country baTag = baTagInfo.get(allTagCount);
@@ -448,7 +452,7 @@ public class Main
                     int irProvListID = Processing.getProvByID(irProvinceList,ckProvNum);
                     Provinces irProv = irProvinceList.get(irProvListID);
                     if (irProvListID == 0) {
-                        irProv = Provinces.newProv("9999","noCulture","noReligion",0,0,0,0,0,0,"settlement",0.0,0);
+                        irProv = Provinces.newProv("9999","noCulture","noReligion",-1,0,0,0,0,0,"settlement",0.0,0);
                         irProv.setID(ckProvNum);
                         irProvinceList.add(blankProv);
                         irProvListID = irProvinceList.size()-1;
@@ -560,6 +564,12 @@ public class Main
                     ArrayList<String> ownerCount2 = Processing.condenseArrayStr(ownerCount);
                     String irProvOwner = Processing.getMajority(ownerCount2);
                     irProvInfo.setOwner(irProvOwner);
+                    
+                    String[] monumentCount = Processing.countPops(irProvInfo.getPops(),"monument");
+                    ArrayList<String> monumentCount2 = Processing.condenseArrayStr(monumentCount);
+                    int irProvMonument = Integer.parseInt(Processing.getMajorityExcludingNoneKey(monumentCount2,"-1"));
+                    irProvInfo.setMonument(irProvMonument);
+                    
                     
                     String irProvCS = "settlement";
                     if (provinceTotal > 5) {
@@ -806,6 +816,8 @@ public class Main
             Output.outputBasicFile(convertedProvinces,"01_converted_provinces.txt",modDirectory+"/setup/provinces");
             ArrayList<String> convertedTags = Processing.generateCountryFile(baTagInfo,irProvinceList,existingCountryFile);
             Output.outputBasicFile(convertedTags,"00_default.txt",modDirectory+"/setup/main");
+            ArrayList<String> convertedMonuments = Processing.generateMonumentFile(irProvinceList,baMonumentInfo);
+            Output.outputBasicFile(convertedMonuments,"01_great_works_converted.txt",modDirectory+"/setup/main");
             
             
             Provinces test01 = irProvinceList.get(Processing.getProvByID(irProvinceList,4957));

@@ -398,6 +398,22 @@ public class Provinces
 
     }
     
+    public void setPopMonument() { //sets monument for all pops
+        int count = 0;
+        try {
+            while(count < provPops.size()) {
+                Pop selectedPop = provPops.get(count);
+                selectedPop.setMonument(Integer.toString(monument));
+                //System.out.println(selectedPop.getType());
+                
+                count = count + 1;
+            }
+        } catch (Exception e) {
+
+        }
+
+    }
+    
 
     public static Provinces newProv(String provOwner, String provCul, String provRel, int provMon, double provNR, double provCR, double provFR,
     double provTR, double provSR, String provCS, double provCivValue, int provID) {

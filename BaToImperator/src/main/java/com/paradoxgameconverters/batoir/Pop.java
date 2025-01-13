@@ -1,4 +1,5 @@
 package com.paradoxgameconverters.batoir;
+
 /**
  * Write a description of class Pops here.
  *
@@ -13,6 +14,7 @@ public class Pop
     private String religion;
     private String tag;
     private String cityStatus;
+    private String monument;
     public Pop() {
         int id;
         String type; //pop class, noble/citizen/freemen/tribesmen/slave, tag which rules over pop
@@ -20,6 +22,7 @@ public class Pop
         String religion;
         String tag;
         String cityStatus;
+        String monument;
     }
     
     public void setID(int popID) {
@@ -62,6 +65,13 @@ public class Pop
     }
     public String getCityStatus() {
         return cityStatus;
+    }
+    
+    public void setMonument(String name) {
+        monument = name;
+    }
+    public String getMonument() {
+        return monument;
     }
     
     public static Pop newPop(int popID, String popType, String popCul, String popRel) {

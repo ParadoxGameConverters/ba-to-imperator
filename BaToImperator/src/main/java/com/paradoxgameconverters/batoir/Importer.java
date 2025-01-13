@@ -51,14 +51,14 @@ public class Importer
         output[2] = "noReligion"; //default for no religion, uncolonized province with 0 pops
         output[3] = "0"; //default for no pops, uncolonized or uninhabitible province
         output[4] = "{ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }"; //default for no buildinga
-        output[5] = "9999"; //default for no monument
+        output[5] = "-1"; //default for no monument
         output[6] = "settlement"; //default for no city status
         output[7] = "0.0"; //default for no civilization value
         output[8] = "-1"; //default for no holy site
 
         impProvList.add(output); //default at ID 0
         
-        Provinces tmpProv = Provinces.newProv(output[0],output[1],output[2],0,0,0,0,0,0,output[6],0.0,aqq);
+        Provinces tmpProv = Provinces.newProv(output[0],output[1],output[2],-1,0,0,0,0,0,output[6],0.0,aqq);
         baProvList.add(tmpProv);
 
         try {
@@ -182,6 +182,7 @@ public class Importer
                             if (provincePopList.size() > 0) {
                                 baProv.addPopArray(provincePopList);
                                 baProv.setPopCS();
+                                baProv.setPopMonument();
                             }
                             
                             
@@ -192,7 +193,7 @@ public class Importer
                             output[2] = "noReligion"; //default for no religion, uncolonized province with 0 pops
                             output[3] = "0"; //default for no pops, uncolonized or uninhabitible province
                             output[4] = "{ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }"; //default for no buildinga
-                            output[5] = "9999"; //default for no monument
+                            output[5] = "-1"; //default for no monument
                             output[6] = "settlement"; //default for no city status
                             output[7] = "0.0"; //default for no civilization value
                             
@@ -708,6 +709,124 @@ public class Importer
             output[1] = "9999"; //default for no subject
             output[2] = "9999"; //default for no subject relation    
         }
+
+        return currentList;
+
+    }
+    
+    public static ArrayList<Monument> importMonuments (String name) throws IOException
+    {
+
+        FileInputStream fileIn= new FileInputStream(name);
+        Scanner scnr= new Scanner(fileIn);
+
+        int flag = 0;
+
+        String tab = "	";
+
+        int aqq = 0;
+
+        ArrayList<Monument> currentList = new ArrayList<Monument>();
+
+        boolean endOrNot = true;
+        String vmm = scnr.nextLine();
+        String line = vmm;
+        String[] output;
+        output = new String[4];
+
+        output[0] = "none"; //default for no old id
+        output[1] = "none"; //default for key
+        output[2] = "none"; //default for no category
+        output[3] = "none"; //default for no name
+        
+        ArrayList<String[]> componentsArray = new ArrayList<String[]>();
+        String componentString = "none";
+        
+        ArrayList<String[]> effectsArray = new ArrayList<String[]>();
+        String effectsString = "none";
+        
+        //Done this way because an array list only holds reference in memory instead of a copy in memory
+        //If the value of X (100) is changed to 72, X in Array List will also become 72
+        //Unless the value of X is transferred to unrelated temporary Y, and Y is added into the Array List instead of X
+
+        try {
+            line = scnr.nextLine();
+            while (endOrNot = true){
+
+                line = scnr.nextLine();
+                
+                int monumentCount = 0;
+                if (line.contains("=")) { //monument detected
+                    String lineNoTab = line.replace(tab,"");
+                    String[] splitLine = lineNoTab.split("=");
+                    String identifier = splitLine[0];
+                    String data = splitLine[1];
+                    if (output[0].equals("none")) {
+                        output[0] = identifier;
+                    } else if (identifier.equals("key")) {
+                        output[1] = data;
+                    } else if (identifier.equals("great_work_module")) {
+                        componentString = data;
+                    } else if (identifier.equals("great_work_material")) {
+                        componentString = componentString+","+data;
+                        componentsArray.add(componentString.split(","));
+                        componentString = "none";
+                    } else if (identifier.equals("great_work_effect")) {
+                        effectsString = data;
+                    } else if (identifier.equals("great_work_effect_tier")) {
+                        effectsString = effectsString+","+data;
+                        effectsArray.add(effectsString.split(","));
+                        effectsString = "none";
+                    } else if (identifier.equals("great_work_category")) {
+                        output[2] = data;
+                    } else if (identifier.equals("custom_name")) {
+                        output[3] = data;
+                    }
+                    monumentCount = monumentCount + 1;
+                    
+                    //line = scnr.nextLine();
+                }
+                
+                if (line.equals(tab+tab+"}") && !output[0].equals("none")) {
+                    String[] tmpOutput = new String[output.length];
+                    int aq2 = 0;
+                    while (aq2 < output.length) {
+                        tmpOutput[aq2] = output[aq2];
+                        aq2 = aq2 + 1;
+                    }
+                    String key = tmpOutput[1];
+                    String monumentName = tmpOutput[3];
+                    //monumentName = Processing.cutQuotes(monumentName);
+                    String oldIDTmp = tmpOutput[0];
+                    int oldID = -1;
+                    if (!oldIDTmp.equals("none")) {
+                        oldID = Integer.parseInt(oldIDTmp);
+                    }
+                    String category = tmpOutput[2];
+                    Monument addedMonument = Monument.newMonument(key,componentsArray,effectsArray,category,monumentName,oldID);
+                    //addedMonument.setID(monumentID);
+                    
+                    if (componentsArray.size() > 1 && oldID > -1) { //ignore pre-built wonders for now
+                        currentList.add(addedMonument);
+                    }
+                    
+                    //System.out.println(oldID);
+
+                    output[0] = "none";
+                    output[1] = "none";
+                    output[2] = "none";
+                    output[3] = "none";
+                    componentsArray = new ArrayList<String[]>();
+                    effectsArray = new ArrayList<String[]>();
+                    
+                }
+            }
+
+        }catch (java.util.NoSuchElementException exception){
+            endOrNot = false;
+
+        }
+
 
         return currentList;
 
@@ -2470,7 +2589,7 @@ public class Importer
                         //provInfo[1] = provTerrain;
                         //provInfo[2] = provTradeGood;
                         
-                        Provinces tmpProv = Provinces.newProv("9999",provCulture,provReligion,0,0,0,0,0,0,provRank,provCiv,Integer.parseInt(provID));
+                        Provinces tmpProv = Provinces.newProv("9999",provCulture,provReligion,-1,0,0,0,0,0,provRank,provCiv,Integer.parseInt(provID));
                         tmpProv.setTerrain(provTerrain);
                         tmpProv.setTradeGood(provTradeGood);
                         if (provPops.size() > 0) {

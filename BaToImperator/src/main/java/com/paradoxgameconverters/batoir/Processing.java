@@ -1992,6 +1992,9 @@ public class Processing
                     popType = "city"; //combine cities and metropoli for the purposes of city-generation
                 }
             }
+            else if (type.equals("monument")) {
+                popType = pops.get(count).getMonument();
+            }
 
             if (count == 0) {
                 longText = popType+","+1;
@@ -2207,6 +2210,29 @@ public class Processing
                 highestNumber = popNumber;
                 highestPop = popInfo[0];
             }
+            count = count + 1;
+        }
+
+        return highestPop;
+    }
+    
+    public static String getMajorityExcludingNoneKey(ArrayList<String> popList,String noneKey) //Will exclude specified noneKey from the calculations
+    {
+
+        int count = 0;
+        int highestNumber =  0;
+        String highestPop = noneKey; //by default return with noneKey
+        while (count < popList.size()) {
+            String[] popInfo = popList.get(count).split(",");
+            String popType = popInfo[0];
+            if (!popType.equals(noneKey)) {
+                int popNumber = Integer.parseInt(popInfo[1]);
+                if (popNumber > highestNumber) {
+                    highestNumber = popNumber;
+                    highestPop = popInfo[0];
+                }
+            }
+            
             count = count + 1;
         }
 
@@ -2523,6 +2549,93 @@ public class Processing
         
         
         //lines.add("}");
+
+        return lines;
+    }
+    
+    public static ArrayList<String> generateMonumentFile(ArrayList<Provinces> irProvinceList, ArrayList<Monument> allMonuments)
+    {
+        int count = 1;
+        ArrayList<String> lines = new ArrayList<String>();
+        lines.add("#Converted Monuments");
+        String tab = "	";
+        String quote = '"'+"";
+        int offset = 10000; //offset all monument ID's by 10000 to avoid conflict with vanilla
+        lines.add("provinces={");
+        
+        while (count < irProvinceList.size()) {
+            Provinces irProv = irProvinceList.get(count);
+            
+            int provID = irProv.getID();
+            if (provID == 0) {
+                System.out.println("Province ID 0 at count "+count+", skipping");
+                
+            } else {
+                int provMonument = irProv.getMonument();
+                if (provMonument > -1) {
+                    int newProvMonument = provMonument + offset;
+                    lines.add(tab+provID+"={");
+                    lines.add(tab+tab+"great_work="+newProvMonument);
+                    lines.add(tab+"}");
+                }
+            
+            }
+            count = count + 1;
+        }
+        
+        lines.add("}");
+        lines.add(" ");
+        lines.add("great_work_manager={");
+        lines.add(tab+"great_works_database={");
+        
+        count = 0;
+        while (count < allMonuments.size()) {
+            Monument selectedMonument = allMonuments.get(count);
+            String key = selectedMonument.getKey();
+            ArrayList<String[]> components = selectedMonument.getComponents();
+            ArrayList<String[]> effects = selectedMonument.getEffects();
+            String category = selectedMonument.getCategory();
+            String name = selectedMonument.getName();
+            if (name.equals("none")) {
+                name = key;
+            }
+            int oldID = selectedMonument.getOldID();
+            int newID = oldID + offset;
+            String baseline = tab+tab+tab;
+            
+            lines.add(tab+tab+newID+"={");
+            
+            lines.add(baseline+"dlc = "+quote+"Hellenistic World Flavor Pack"+quote);
+            lines.add(baseline+"key="+key);
+            lines.add(baseline+"great_work_state=great_work_state_completed");
+            lines.add(baseline+"finished_date=450.10.1");
+            lines.add(baseline+"great_work_category="+category);
+            lines.add(baseline+"great_work_name={");
+            lines.add(baseline+tab+"name="+name);
+            lines.add(baseline+"}");
+            lines.add(baseline+"great_work_components={");
+            int count2 = 0;
+            while (count2 < components.size()) {
+                String[] component = components.get(count2);
+                lines.add(baseline+tab+"{ great_work_module="+component[0]+" great_work_material="+component[1]+" }");
+                count2 = count2 + 1;
+            }
+            lines.add(baseline+"}");
+            lines.add(baseline+"great_work_effect_selections={");
+            count2 = 0;
+            while (count2 < effects.size()) {
+                String[] effect = effects.get(count2);
+                lines.add(baseline+tab+"{ great_work_effect="+effect[0]+" great_work_effect_tier="+effect[1]+" }");
+                count2 = count2 + 1;
+            }
+            lines.add(baseline+"}");
+            lines.add(tab+tab+"}");
+            
+            count = count + 1;
+        }
+        
+        lines.add(tab+"}");
+        lines.add("}");
 
         return lines;
     }
@@ -3250,7 +3363,7 @@ public class Processing
                 String region = vanillaProv.getRegion();
                 String area = vanillaProv.getArea();
                 
-                Provinces tmpProv = Provinces.newProv(owner,culture,religion,0,0,0,0,0,0,cityStatus,civValue,selectedExoProv);
+                Provinces tmpProv = Provinces.newProv(owner,culture,religion,-1,0,0,0,0,0,cityStatus,civValue,selectedExoProv);
                 tmpProv.setRegion(region);
                 tmpProv.setArea(area);
                 tmpProv.setTerrain(vanillaProv.getTerrain());
