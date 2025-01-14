@@ -800,6 +800,8 @@ public class Main
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces,exoCultureMappings);
             ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc,exoNames);
             baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
+            
+            baMonumentInfo = Processing.applyMonumentLoc(baMonumentInfo,locList);
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized

@@ -732,12 +732,15 @@ public class Importer
         String vmm = scnr.nextLine();
         String line = vmm;
         String[] output;
-        output = new String[4];
+        output = new String[7];
 
         output[0] = "none"; //default for no old id
         output[1] = "none"; //default for key
         output[2] = "none"; //default for no category
         output[3] = "none"; //default for no name
+        output[4] = "none"; //default for no genericName
+        output[5] = "none"; //default for no familyName
+        output[6] = "none"; //default for no provName
         
         ArrayList<String[]> componentsArray = new ArrayList<String[]>();
         String componentString = "none";
@@ -781,6 +784,12 @@ public class Importer
                         output[2] = data;
                     } else if (identifier.equals("custom_name")) {
                         output[3] = data;
+                    } else if (identifier.equals("name") && output[4].equals("none")) { //prevents it from being overwritten
+                        output[4] = data;
+                    } else if (identifier.equals("family")) {
+                        output[5] = data;
+                    } else if (identifier.equals("province")) {
+                        output[6] = data;
                     }
                     monumentCount = monumentCount + 1;
                     
@@ -804,6 +813,15 @@ public class Importer
                     }
                     String category = tmpOutput[2];
                     Monument addedMonument = Monument.newMonument(key,componentsArray,effectsArray,category,monumentName,oldID);
+                    String genericName = Processing.cutQuotes(output[4]);
+                    String familyName = Processing.cutQuotes(output[5]);
+                    String provName = Processing.cutQuotes(output[6]);
+
+                    if (monumentName.equals("none")) { //No custom name, instead uses generic name
+                        addedMonument.setGenericName(genericName);
+                        addedMonument.setFamilyName(familyName);
+                        addedMonument.setProvName(provName);
+                    }
                     //addedMonument.setID(monumentID);
                     
                     if (componentsArray.size() > 1 && oldID > -1) { //ignore pre-built wonders for now
@@ -816,6 +834,9 @@ public class Importer
                     output[1] = "none";
                     output[2] = "none";
                     output[3] = "none";
+                    output[4] = "none";
+                    output[5] = "none";
+                    output[6] = "none";
                     componentsArray = new ArrayList<String[]>();
                     effectsArray = new ArrayList<String[]>();
                     
@@ -1987,17 +2008,10 @@ public class Importer
     public static ArrayList<String> importVanillaLoc (String name) throws IOException //imports all localization files
     {
         ArrayList<String> allLoc = new ArrayList<String>();
-        ArrayList<String> regionLoc = importBasicFile(name+"/game/localization/english/macroregions_l_english.yml");
-        ArrayList<String> formableLoc = importBasicFile(name+"/game/localization/english/nation_formation_l_english.yml");
-        ArrayList<String> countryLoc = importBasicFile(name+"/game/localization/english/countries_l_english.yml");
-        ArrayList<String> provLoc = importBasicFile(name+"/game/localization/english/provincenames_l_english.yml");
-        ArrayList<String> areaLoc = importBasicFile(name+"/game/localization/english/regionnames_l_english.yml");
-
-        allLoc.addAll(regionLoc);
-        allLoc.addAll(formableLoc);
-        allLoc.addAll(countryLoc);
-        allLoc.addAll(provLoc);
-        allLoc.addAll(areaLoc);
+        String locDirName = name+"/game/localization/english";
+        ArrayList<String> locDir = new ArrayList<String>();
+        locDir.add(locDirName);
+        allLoc = importModLoc(locDirName,locDir,allLoc);
 
         return allLoc;
     }

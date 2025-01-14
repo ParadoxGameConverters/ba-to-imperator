@@ -3637,5 +3637,32 @@ public class Processing
         }
     }
     
+    public static ArrayList<Monument> applyMonumentLoc (ArrayList<Monument> allMonuments, ArrayList<String> locList) throws IOException
+    {
+        String quote = '"'+""; // " character, Java doesn't like isoated " characters
+        ArrayList<Monument> updatedMonuments = new ArrayList<Monument>();
+        int count = 0;
+        while (count < allMonuments.size()) {
+            Monument selectedMonument = allMonuments.get(count);
+            String name = selectedMonument.getName();
+            if (name.equals("none")) { //If generic name, build the name
+                String genericName = selectedMonument.getGenericName();
+                String familyName = selectedMonument.getFamilyName();
+                String provName = selectedMonument.getProvName();
+                String[] locNames = Importer.importLocalisation(locList,genericName,"none");
+                String[] provLoc = Importer.importLocalisation(locList,provName,"none");
+                String newName = locNames[0];
+                String provNameLoc = provLoc[0];
+                newName = newName.replace("$ADJ$","The ");
+                newName = newName.replace("$PROVINCE$",provNameLoc);
+                newName = newName.replace("$FAMILY$",familyName);
+                selectedMonument.setName(quote+newName+quote);
+            }
+            updatedMonuments.add(selectedMonument);
+            count = count + 1;
+        }
+        
+        return updatedMonuments;
+    }
     
 }

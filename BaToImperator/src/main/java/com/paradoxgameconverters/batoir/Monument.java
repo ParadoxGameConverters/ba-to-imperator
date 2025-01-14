@@ -9,6 +9,9 @@ public class Monument
     private String name; //custom name
     private int id; //unique ID
     private int oldID; //original ID referenced to in save-file
+    private String genericName; //auto-generated namr
+    private String familyName;
+    private String provName;
     public Monument()
     {
         String key;
@@ -18,6 +21,9 @@ public class Monument
         String name; //custom name
         int id;
         int oldID;
+        String genericName; //auto-generated namr
+        String familyName;
+        String provName;
     }
     
     public void setKey(String sourceKey) {
@@ -69,6 +75,27 @@ public class Monument
         return oldID;
     }
     
+    public void setGenericName(String sourceGN) {
+        genericName = sourceGN;
+    }
+    public String getGenericName() {
+        return genericName;
+    }
+    
+    public void setFamilyName(String sourceFN) {
+        familyName = sourceFN;
+    }
+    public String getFamilyName() {
+        return familyName;
+    }
+    
+    public void setProvName(String sourcePN) {
+        provName = sourcePN;
+    }
+    public String getProvName() {
+        return provName;
+    }
+    
     public static Monument newMonument(String sourceKey, ArrayList<String[]> sourceComponents,ArrayList<String[]> sourceEffects,String sourceCategory,
     String sourceName, int sourceOldID) {
         Monument newMon = new Monument();
@@ -79,6 +106,10 @@ public class Monument
         newMon.setCategory(sourceCategory);
         newMon.setName(sourceName);
         newMon.setOldID(sourceOldID);
+        
+        newMon.setGenericName("none");
+        newMon.setFamilyName("none");
+        newMon.setProvName("none");
         
         return newMon;
     }
