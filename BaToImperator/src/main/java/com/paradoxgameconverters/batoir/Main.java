@@ -392,6 +392,11 @@ public class Main
                 String oldReligion = baTag.getReligion();
                 String capitalArea = capitalBAProv.getArea();
                 String capitalRegion = capitalBAProv.getRegion();
+                
+                if (capitalArea == null && capInt > 0) {
+                    System.out.println(capitalRegion + " Missed");
+                    System.out.println(capInt);
+                }
                             
                 String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea,"none");
                 String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea,"none");

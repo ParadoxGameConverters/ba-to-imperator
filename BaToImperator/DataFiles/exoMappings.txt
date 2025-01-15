@@ -6,8 +6,33 @@
 	link = { ba = 5504 imperator = 5503 imperator = 5502 imperator = 5501 imperator = 5500 imperator = 5522 imperator = 5505 } # Hibis -> Gibra, Gebara, Pohe, Erebe, Debiri, Amura
 	link = { ba = 5514 imperator = 5525 imperator = 5526 imperator = 5510 imperator = 5511 imperator = 5509 imperator = 5512 } # Siwa -> Tawar, Minqar, Mothis, Trimithis, Kellis, Thenete
 	link = { ba = 5523 imperator = 5528 imperator = 5527 imperator = 5524 } # Farafra -> Elassa, Tablamum, Bishaya
-	link = { ba = 5531 imperator = 5535 imperator = 5534 imperator = 5529 imperator = 5530 imperator = 5541 imperator = 5543 imperator = 5545 } # Parva -> Colira, Varam, Poka, Mandish, Shunne, Magrab, Thumat
+	link = { ba = 734 imperator = 736 imperator = 735 } # Bostra -> Mothana, Canatha
+	link = { ba = 775 imperator = 755 } # Heliaramia -> Veriaraca
+	link = { ba = 770 imperator = 757 } # Cara -> Oneuatha
+	link = { ba = 776 imperator = 756 } # Otthara -> Cunna
+	link = { ba = 759 imperator = 758 } # Thelseai -> Vallis Alba
+	link = { ba = 850 imperator = 815 } # Amsareddi -> Seriane
+	link = { ba = 801 imperator = 800 } # Helela -> Gennaes
+	link = { ba = 166 imperator = 7956 } # Perge -> Ariassos
+	link = { ba = 5531 imperator = 5535 imperator = 5534 imperator = 5529 imperator = 5530 imperator = 5541 imperator = 5543 imperator = 5545 imperator = 5548 } # Parva -> Colira, Varam, Poka, Mandish, Shunne, Magrab, Thumat, Kerkethoris
 	link = { ba = 5537 imperator = 5551 imperator = 5555 imperator = 5538 imperator = 5539 imperator = 5554 imperator = 5550 imperator = 5540 imperator = 5552 imperator = 5536 imperator = 5544 imperator = 5542 imperator = 5556 imperator = 5553 } # Ammon -> Varias, Carnasa, Gargara, Zethin, Sanus, Alexandrou Parembole, Areg, Klimax, Sitra, Gerum, Murta, Abid, Graias
+	link = { ba = 535 imperator = 701 } # Ostrakine -> Maghara
+	link = { ba = 649 imperator = 565 } # Lykabettus-Porphyrites -> Ghuzza
+	link = { ba = 647 imperator = 581 } # Quei -> Semna
+	link = { ba = 582 imperator = 578 imperator = 588 imperator = 589 } # Siqdit -> Dunqash, Aristonis, Falacro
+	link = { ba = 587 imperator = 586 } # Nechesia -> Sukkari
+	link = { ba = 585 imperator = 590 } # Lahami -> Novum Hydreuma
+	link = { ba = 583 imperator = 584 } # Berenike -> Vetus Hydreuma
+	link = { ba = 547 imperator = 5533 } # Chysis -> Berku
+	link = { ba = 545 imperator = 5532 } # Oxyrhynchus -> Kom Namrud
+	link = { ba = 544 imperator = 5546 } # Herakleopolis -> Pseneros
+	link = { ba = 3379 imperator = 3378 } # Kallias -> Paraetonium
+	link = { ba = 3370 imperator = 3369 } # Antipyrgos -> Gonia
+	link = { comment = "_~_NoChange~~~Cult,macedonian~~Rel,roman_pantheon_~_" }
+	link = { ba = 539 imperator = 5547 } # Krokodilopolis -> Philoteris
+	link = { ba = 541 imperator = 540 } # Karanis -> Dionysias
+	link = { comment = "_~_VanillaTag~~~Cult,syracusan~~Rel,roman_pantheon_~_" }
+	link = { ba = 417 imperator = 90 imperator = 7843 imperator = 92 imperator = 95 imperator = 97 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,SYR~~Gov,aristocratic_monarchy_~_" }
 	link = { ba = 418 imperator = 84 imperator = 101 imperator = 87 imperator = 83 imperator = 7837 imperator = 82 imperator = 7838 imperator = 7840 imperator = 88 imperator = 81 imperator = 80 } # Korinthos -> Syracusae, Camarina, Acrae, Leontini, Megara, Catana, Centuripae, Menae, Murgantia, Tauromenium, Messana
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon_~_" }
@@ -15,6 +40,8 @@
 	link = { ba = 8015 imperator = 86 } # Kameiros -> Acragas
 	link = { ba = 266 imperator = 85 } # Rhodos -> Gela
 	link = { ba = 431 imperator = 99 imperator = 1472 } # Messene -> Tyndaris, Liparae
+	link = { ba = 417 imperator = 93 } # Megara -> Tyndaris, Liparae
+	link = { ba = 417 imperator = 91 } # Megara -> Tyndaris, Liparae
 	link = { comment = "_~_Dyn~~~Cult,bosporan~~Rel,roman_pantheon~~Missions,BPK_~_" }
 	link = { ba = 1973 imperator = 4549 imperator = 4550 imperator = 4562 imperator = 4563 imperator = 4565 imperator = 4564 imperator = 4561 imperator = 4566 imperator = 4559 imperator = 4544 imperator = 4543 imperator = 4541 imperator = 4540 imperator = 4542 imperator = 4539 imperator = 4560 } # Miletos -> Pantikapaion, Kimmerikon, Hermonassa, Phanagoria, Gorgippia, Labrys, Lebedia, Bata, Pataroue, Theodosia, Athenaion, Aloustou Phrourion, Lampas, Neapolis Taurike, Charax, Azara
 	link = { comment = "_~_Dyn~~~Cult,bosporan~~Rel,roman_pantheon~~Missions,OLB_~_" }
@@ -86,4 +113,19 @@
 	link = { ba = 743 imperator = 3257 imperator = 3258 } # Tyrus -> Utica, Hippo Diarrhytus
 	link = { ba = 743 imperator = 1464 } # Tyrus -> Ebusus
 	link = { ba = 743 imperator = 1344 imperator = 1345 } # Tyrus -> Gadir, Mergablum
+	link = { comment = "_~_VanillaTag~~~Cult,greco_pontic~~Rel,roman_pantheon_~_" }
+	link = { ba = 1973 imperator = 1806 imperator = 1793 } # Miletos -> Themiskyra, Side Pontike
+	link = { comment = "_~_VanillaTag~~~Cult,thracian~~Rel,roman_pantheon_~_" }
+	link = { ba = 1974 imperator = 347 imperator = 346 imperator = 348 } # Samos -> Themiskyra, Side Pontike
+	link = { ba = 1973 imperator = 247 imperator = 244 imperator = 250 imperator = 249 } # Miletos -> Themiskyra, Side Pontike
+	link = { ba = 389 imperator = 251 imperator = 253 } # Larissa -> Kyzikos, Antigoneia Kyzikene
+	link = { comment = "_~_VanillaTag~~~Cult,italiotian~~Rel,roman_pantheon_~_" }
+	link = { ba = 407 imperator = 7 } # Miletos -> Themiskyra, Side Pontike
+	link = { comment = "_~_VanillaTag~~~Cult,massalian~~Rel,roman_pantheon_~_" }
+	link = { ba = 285 imperator = 3515 } # Miletos -> Themiskyra, Side Pontike
+	link = { comment = "_~_VanillaTag~~~Rel,roman_pantheon_~_" }
+	link = { ba = 1973 imperator = 4547 imperator = 4548 } # Miletos -> Themiskyra, Side Pontike
+	link = { ba = 417 imperator = 4519 imperator = 4517 imperator = 4518 imperator = 4515 } # Megara -> Callatis, Tirizis
+	link = { comment = "_~_VanillaTag~~~Cult,carthaginian~~Rel,carthaginian_pantheon_~_" }
+	link = { ba = 743 imperator = 1341 imperator = 1340 imperator = 1339 imperator = 1335 imperator = 1415 imperator = 1359 imperator = 1358 } # Tyrus -> Themiskyra, Side Pontike
 }

@@ -80,9 +80,9 @@ public class Output
         
         while (count < validMappings.size()) {
             ck2ReligionInfo = validMappings.get(count);
-            
+            //System.out.println(ck2ReligionInfo[0]+"-A"+ck2ReligionInfo.length);
             if (ck2ReligionInfo.length == 2) {
-                //System.out.println(ck2ReligionInfo[0]+" "+ck2ReligionInfo[1]);
+                //System.out.println(ck2ReligionInfo[0]+" "+ck2ReligionInfo[1]+"-B");
                 ck2Religion = ck2ReligionInfo[1];
                 return ck2Religion;
             }

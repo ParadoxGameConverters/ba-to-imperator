@@ -523,16 +523,17 @@ public class Processing
                     String provinceName = qaaa.split(" = ")[0];
                     while (!qaaa.equals(endBracket) && !qaaa.equals(endBracket2)) {
                         qaaa = scnr.nextLine();
-                        qaaa = qaaa.replace("0}","0 }");
-                        qaaa = qaaa.replace("1}","1 }");
-                        qaaa = qaaa.replace("2}","2 }");
-                        qaaa = qaaa.replace("3}","3 }");
-                        qaaa = qaaa.replace("4}","4 }");
-                        qaaa = qaaa.replace("5}","5 }");
-                        qaaa = qaaa.replace("6}","6 }");
-                        qaaa = qaaa.replace("7}","7 }");
-                        qaaa = qaaa.replace("8}","8 }");
-                        qaaa = qaaa.replace("9}","9 }");
+                        int badFormattingCount = 0;
+                        while (badFormattingCount < 10) { //Some BA provs have terrible formatting which are difficult to read
+                            String badFormatBeginning = "{"+badFormattingCount;
+                            String badFormatEnd = badFormattingCount+"}";
+                            String goodFormatBeginning = "{ "+badFormattingCount;
+                            String goodFormatEnd = badFormattingCount+" }";
+                            
+                            qaaa = qaaa.replace(badFormatBeginning,goodFormatBeginning);
+                            qaaa = qaaa.replace(badFormatEnd,goodFormatEnd);
+                            badFormattingCount = badFormattingCount + 1;
+                        }
                         
                         qaaa = qaaa.replace("  }"," }");
                         qaaa = qaaa.replace(tab,"");
@@ -2045,8 +2046,8 @@ public class Processing
             count = count + 1;
         }
 
-        System.out.println("PopTotal is "+popTotal);
-        System.out.println("totalPops is "+totalPops);
+        //System.out.println("PopTotal is "+popTotal);
+        //System.out.println("totalPops is "+totalPops);
 
         if (popTotal > totalPops) { //If extra pops were added due to rounding, trim array
             String majorityType = getMajority(newArray);
@@ -2065,21 +2066,21 @@ public class Processing
                 count2 = 0;
                 while (count2 < popTotal-1) {
                     //while (count2 < newArray.size()) {
-                    System.out.println(count2+" "+(popTotal-1));
-                    System.out.println(newArray.get(count2));
+                    //System.out.println(count2+" "+(popTotal-1));
+                    //System.out.println(newArray.get(count2));
                     String[] info = newArray.get(count2).split(",");
                     if (!info[0].equals(majorityType)) {
-                        System.out.println("Removing 1 "+info[0]);
+                        //System.out.println("Removing 1 "+info[0]);
                         int popNumber = Integer.parseInt(info[1]) - 1;
                         if (popNumber < 1) {
                             newArray.remove(newArray.get(count2));
                         }
                         //newArray.remove(newArray.get(count2));
                         popTotal = popTotal - 1;
-                        System.out.println("PopTotal is "+popTotal);
-                        System.out.println("totalPops is "+totalPops);
+                        //System.out.println("PopTotal is "+popTotal);
+                        //System.out.println("totalPops is "+totalPops);
                         if (popTotal == totalPops) {
-                            System.out.println("Returning");
+                            //System.out.println("Returning");
                             return newArray;
                         }
                     }
@@ -2393,7 +2394,7 @@ public class Processing
             
             int provID = irProv.getID();
             if (provID == 0) {
-                System.out.println("Province ID 0 at count "+count+", skipping");
+                //System.out.println("Province ID 0 at count "+count+", skipping");
                 
             } else {
                 String provCulture = irProv.getCulture();
@@ -2427,7 +2428,7 @@ public class Processing
                         //String popReligion = "indo_iranian_religion"; //selectedPop.getReligion()
                         String popType = selectedPop.getType();
                         if (popType.equals("debug")) {
-                            System.out.println("Pop in province "+provID+" has no type, setting type to slaves");
+                            //System.out.println("Pop in province "+provID+" has no type, setting type to slaves");
                             popType = "slaves";
                         }
                         lines.add(tab+popType+"={");
@@ -2521,7 +2522,7 @@ public class Processing
                             String ownedProvSTR = "#q";
                             while (provCount < ownedProvs.size()) {
                                 String prov = Integer.toString(ownedProvs.get(provCount));
-                                System.out.println(prov);
+                                //System.out.println(prov);
                                 if (ownedProvSTR.equals("#q")) {
                                     ownedProvSTR = prov;
                                 } else {
@@ -2568,7 +2569,7 @@ public class Processing
             
             int provID = irProv.getID();
             if (provID == 0) {
-                System.out.println("Province ID 0 at count "+count+", skipping");
+                //System.out.println("Province ID 0 at count "+count+", skipping");
                 
             } else {
                 int provMonument = irProv.getMonument();
@@ -2790,7 +2791,15 @@ public class Processing
                             //if (!selectedProv.equals(" ") && selectedProv != null && !selectedProv.equals("}") && !selectedProv.equals("")) {
                                 int selectedProvInt = Integer.parseInt(selectedProv);
                                 boolean inConvScope = checkIntInList(convProvinces,selectedProvInt);
-                                if (!inConvScope) {
+                                
+                                String provOwner = "0";
+                                int provArrayID = getProvByID(irProvinceList,selectedProvInt);
+                                if (provArrayID > 0) {
+                                    Provinces selectedProvDetail = irProvinceList.get(provArrayID);
+                                    provOwner = selectedProvDetail.getOwner();
+                                }
+                                
+                                if (!inConvScope || provOwner.equals("9998")) { //Either is in-scope or is a minority mapping
                                     newProvs = newProvs + " " + selectedProv;
                                 }
                             
@@ -2803,7 +2812,7 @@ public class Processing
                     if (newProvs.contains(tab+tab+tab+tab+" ")) {
                         newProvs.replace(tab+tab+tab+tab+" ",tab+tab+tab+tab);
                         if (oneLineFlag) {
-                            System.out.println("OneLine");
+                            //System.out.println("OneLine");
                             newProvs = newProvs.replace(tab+tab+tab+tab,tab+tab+tab+"own_control_core = {");
                             newProvs = newProvs + " }";
                         }
@@ -3126,7 +3135,7 @@ public class Processing
                             lines.add(tab+tab+tab+"culture="+countryCulture);
                             lines.add(tab+tab+tab+"owner="+countryTag);
                             lines.add(tab+tab+"}");
-                            System.out.println(selectedFamily);
+                            //System.out.println(selectedFamily);
                             familyCount = familyCount + 1;
                         }
                     }
@@ -3322,12 +3331,14 @@ public class Processing
             String changes = exoProvinceArray[exoProvinceArray.length-1];
             String exoRole = "none"; //which tag the country'll be treated as for missions
             String exoGov = "none";
-            if (!changes.contains("NoChange")) {
+            if (!changes.equals("NoChange~~~")) {
                 //System.out.println(changes);
                 String[] changesTopData = changes.split("~~~");
                 String changesHeader = changesTopData[0];
                 if (changesHeader.equals("Dyn")) {
                     owner = Integer.toString(10000+count);
+                } else if (changesHeader.equals("VanillaTag")) {
+                    owner = "9998";
                 }
                 
                 changes = changesTopData[1];
@@ -3592,7 +3603,7 @@ public class Processing
             ArrayList<String> updatedMission = updateMission(missionFile,missionTags);
             Output.outputBasicFile(updatedMission,fileName,missionModDir);
 
-            System.out.println("Updated "+fileName);
+            //System.out.println("Updated "+fileName);
             count = count + 1;
         }
     }
@@ -3615,7 +3626,7 @@ public class Processing
                 ArrayList<String> updatedMission = updateMission(eventFile,missionTags);
                 Output.outputBasicFile(updatedMission,fileName,missionModDir);
 
-                System.out.println("Updated "+fileName);
+                //System.out.println("Updated "+fileName);
             } else {
                 File missionEventFolder = new File(missionFileLocation);
                 String[] missionEventFiles = missionEventFolder.list();
@@ -3628,7 +3639,7 @@ public class Processing
                     Output.outputBasicFile(updatedMission,eventFileName,missionModDir+"/"+fileName);
                     count2 = count2 + 1;
 
-                    System.out.println("Updated "+eventFileName);
+                    //System.out.println("Updated "+eventFileName);
                 }
             
             }
