@@ -1164,7 +1164,7 @@ public class Output
 
     }
 
-    public static void copyDefaultOutput (String defDir, String outputDir) throws IOException
+    public static void copyDefaultOutput (String defDir, String outputDir, String option) throws IOException
     {
         ArrayList<String[]> allColors = new ArrayList<String[]>();
         ArrayList<String[]> vanillaColors = new ArrayList<String[]>();
@@ -1174,18 +1174,24 @@ public class Output
         if (fileList != null) {
             int aqq = 0;
             while (aqq < fileList.length) {
-                copyDefaultOutput(defDir+"/"+fileList[aqq],outputDir);
+                copyDefaultOutput(defDir+"/"+fileList[aqq],outputDir,option);
                 aqq = aqq + 1;
             }
 
         } else {
             String fileName = fileInfo.getPath();
-            String newFileName = fileName.substring(21,fileName.length());
+            int pathLength = 21;
+            if (option.equals("invictus")) {
+                pathLength = pathLength + 9;
+            }
+            String newFileName = fileName.substring(pathLength,fileName.length());
             newFileName = outputDir + newFileName;
             String folder = fileInfo.getParent();
-            System.out.println(outputDir+folder);
+            //System.out.println(outputDir+folder);
             //try {
-            folder = outputDir + folder.substring(21,folder.length());
+            //folder = outputDir + folder.substring(21,folder.length());
+            folder = outputDir + folder.substring(pathLength,folder.length());
+            System.out.println(folder+" A");
             //} catch (Exception e) {
                 
             //}

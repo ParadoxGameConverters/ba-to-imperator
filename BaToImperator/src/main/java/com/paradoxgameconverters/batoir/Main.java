@@ -83,7 +83,7 @@ public class Main
 
             String impGameDir = configDirectories[1];
 
-            String ck2Dir = configDirectories[0];
+            //String baDir = configDirectories[0];
 
             String impDirSave = configDirectories[4];
             
@@ -198,6 +198,22 @@ public class Main
             
             int splitSize = empireRank+800;
             
+            boolean invictus = false;
+            if (configDirectories[7].equals("yes")) { //if Invictus hybridization is enabled
+                invictus = true;
+            }
+            
+            String invictusDir = "";
+            if (configDirectories[8].equals("default")){ //default directory for Invictus
+                invictusDir = "C:/Program Files (x86)/Steam/steamapps/workshop/content/859580/2532715348";
+            } 
+            
+            String mappingDir = "";
+            if (invictus) {
+                mappingDir = "configurables/invictus/";
+            }
+            
+            //String provinceMappingSource = mappingDir+"provinceConversionCore.txt";
             String provinceMappingSource = "provinceConversionCore.txt";
             
             if (compressedOrNot == 0) { //compressed save! Initiating Rakaly decompressor
@@ -228,31 +244,7 @@ public class Main
                 saveInfo[1] = ("450.1.1");
             }
             
-            if (configDirectories[7].equals("saveYearAUC")) { //if AUC date is selected
-                date = saveInfo[1];
-                //System.out.println(date);
-            } else if (configDirectories[7].equals("saveYear")){ //if AD date is selected
-                //System.out.println(saveInfo[1]);
-                String tmpSaveDate = saveInfo[1].replace(".",",");
-                int tmpYear = Integer.parseInt(tmpSaveDate.split(",")[0]);
-                tmpYear = tmpYear - 754;
-                date = date.replace(".",","); //'.' character breaks .split function
-                if (tmpYear >= 100) { //use AD version of date
-                    date = Integer.toString(tmpYear)+"."+tmpSaveDate.split(",")[1]+"."+tmpSaveDate.split(",")[2];
-                } else { //if year is less then 100 AD, game will use 100 AD as year while preserving the day and month
-                    date = "100."+tmpSaveDate.split(",")[1]+"."+tmpSaveDate.split(",")[2];
-                }
-                date = date.replace(",",".");
-            } else if (configDirectories[7].equals("customYear")){
-                String tmpDate = configDirectories[8].replace(".",","); //'.' character breaks .split function
-                int tmpYear = Integer.parseInt(tmpDate.split(",")[0]);
-                if (tmpYear >= 100) { //if less then 100 AD, game will use 100 AD
-                    date = configDirectories[8];
-                }
-                if (tmpYear <= 400) { //Timeline extended save
-                    splitSize = splitSize + 400;
-                }
-            }
+            date = saveInfo[1];
             
             if (republicOption.equals("bad")) { //If something goes wrong with reading the republic option, default to repMer
                 LOGGER.warning("Error with Republic Conversion Option! Defaulting to Merchant Republic");
@@ -303,7 +295,11 @@ public class Main
             //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
             
             ArrayList<Provinces> vanillaProvinces = new ArrayList<Provinces>();
-            vanillaProvinces = Importer.importProvSetupAdv(impGameDir+"/game/setup/provinces",vanillaProvinces);
+            String provDir = impGameDir+"/game/setup/provinces";
+            if (invictus) {
+                provDir = invictusDir+"/setup/provinces";
+            }
+            vanillaProvinces = Importer.importProvSetupAdv(provDir,vanillaProvinces);
             vanillaProvinces = Processing.reorderProvincesByID(vanillaProvinces,blankProv);
             vanillaProvinces = Processing.applyRegionsToProvinces(vanillaProvRegions,vanillaProvinces);
             vanillaProvinces = Processing.applyAreasToProvinces(vanillaProvAreas,vanillaProvinces);
@@ -363,12 +359,12 @@ public class Main
             int baPopTotal = 0;//total number of pops in BA save
             totalPop = 0;
             
-            ArrayList<String> cultureMappings = Importer.importBasicFile("cultureConversion.txt");
-            ArrayList<String> religionMappings = Importer.importBasicFile("religionConversion.txt");
+            ArrayList<String> cultureMappings = Importer.importBasicFile(mappingDir+"cultureConversion.txt");
+            ArrayList<String> religionMappings = Importer.importBasicFile(mappingDir+"religionConversion.txt");
             ArrayList<String> provinceMappings = Importer.importBasicFile("provinceConversion.txt");
-            ArrayList<String> tagMappings = Importer.importBasicFile("titleConversion.txt");
-            ArrayList<String> exoCultureMappings = Importer.importBasicFile("exoCultureConversion.txt");
-            ArrayList<String> exoNames = Importer.importBasicFile("exoNames.txt");
+            ArrayList<String> tagMappings = Importer.importBasicFile(mappingDir+"titleConversion.txt");
+            ArrayList<String> exoCultureMappings = Importer.importBasicFile(mappingDir+"exoCultureConversion.txt");
+            ArrayList<String> exoNames = Importer.importBasicFile(mappingDir+"exoNames.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
@@ -628,7 +624,12 @@ public class Main
             
             LOGGER.info("Converting characters...");
             
-            int firstAvailableCharID = Characters.getAvailableID(Dir2+"/game");
+            String characterDir = Dir2+"/game";
+            if (invictus) {
+                characterDir = invictusDir;
+            }
+            
+            int firstAvailableCharID = Characters.getAvailableID(characterDir);
             
             ArrayList<Characters> baCharacters = new ArrayList<Characters>();
             baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
@@ -680,7 +681,13 @@ public class Main
             //Default output, will be included in every conversion regardless of what occured in the save file
             //Output.copyRaw("defaultOutput"+VM+"cultures"+VM+"00_cultures.txt",modDirectory+VM+"common"+VM+"cultures"+VM+"00_cultures.txt");
             //Processing.customDate(date,"defaultOutput/default/bookmarks/50_customBookmark.txt",modDirectory+VM+"common/bookmarks/50_customBookmark.txt");
-            Output.copyDefaultOutput("defaultOutput/default",modDirectory);
+            String defaultOutputDir = "defaultOutput/";
+            String outputOption = "none";
+            if (invictus) {
+                defaultOutputDir = defaultOutputDir+"invictus/";
+                outputOption = "invictus";
+            }
+            Output.copyDefaultOutput(defaultOutputDir+"default",modDirectory,outputOption);
             //Processing.customDate(date,modDirectory+"/common/bookmarks/50_customBookmark.txt",modDirectory+"/common/bookmarks/50_customBookmark.txt");
             //Processing.setTechYear(date,modDirectory);
             
@@ -808,7 +815,7 @@ public class Main
             
             baMonumentInfo = Processing.applyMonumentLoc(baMonumentInfo,locList);
             //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
-            ArrayList<String> existingCountryFile = Importer.importBasicFile("defaultOutput/templates/00_default.txt");
+            ArrayList<String> existingCountryFile = Importer.importBasicFile(defaultOutputDir+"templates/00_default.txt");
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
             existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
             ArrayList<String[]> missions = Processing.getMissionTags(baTagInfo);

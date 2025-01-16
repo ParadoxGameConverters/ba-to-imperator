@@ -1,5 +1,6 @@
 package com.paradoxgameconverters.batoir;
 
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -874,8 +875,8 @@ public class Importer
         output[4] = "bad"; //default for no save game directory
         output[5] = "bad"; //default for no selected IR mods
         output[6] = "bad"; //default for no custom CK II mod name
-        output[7] = "bad"; //default for no year choice
-        output[8] = "bad"; //default for no custom year date
+        output[7] = "bad"; //default for no Invictus choice
+        output[8] = "bad"; //default for no Invictus dir
         output[9] = "bad"; //default for no dejure conversion
         output[10] = "bad"; //default for no dejure conversion
 
@@ -917,12 +918,12 @@ public class Importer
                     output[6] = output[6].substring(1,output[6].length()-1);
 
                 }
-                else if (qaaa.split(" = ")[0].equals("year")){
+                else if (qaaa.split(" = ")[0].equals("usesInvictus")){
                     output[7] = qaaa.split(" = ")[1];
                     output[7] = output[7].substring(1,output[7].length()-1);
 
                 }
-                else if (qaaa.split(" = ")[0].equals("customYearDate")){
+                else if (qaaa.split(" = ")[0].equals("invictusDir")){
                     output[8] = qaaa.split(" = ")[1];
                     output[8] = output[8].substring(1,output[8].length()-1);
 
@@ -2481,6 +2482,7 @@ public class Importer
         int aqq = 0;
         File locInfo = new File (modDir);
         String[] locList = locInfo.list();
+        String quote = '"'+"";
 
         try {
             if (locList != null) { //get all files in directory
@@ -2580,6 +2582,9 @@ public class Importer
                                    
                                }
                                int popTot = 0;
+                               if (popCount.contains(quote)) {
+                                   popCount = Processing.cutQuotes(popCount);
+                               }
                                try {
                                   popTot = Integer.parseInt(popCount);
                                } catch (java.lang.NumberFormatException exception) {
@@ -2602,6 +2607,9 @@ public class Importer
                         //provInfo[0] = provID;
                         //provInfo[1] = provTerrain;
                         //provInfo[2] = provTradeGood;
+                        
+                        provID = provID.replace("﻿",""); //Newline character
+                        //System.out.println(provID+"_"+provID);
                         
                         Provinces tmpProv = Provinces.newProv("9999",provCulture,provReligion,-1,0,0,0,0,0,provRank,provCiv,Integer.parseInt(provID));
                         tmpProv.setTerrain(provTerrain);
