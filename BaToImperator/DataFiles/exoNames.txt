@@ -5,6 +5,7 @@
 ~META~Hurrian,hurrian=syro_hurrian=subarian
 ~META~Phoenician,phoenician=carthaginian
 ~META~Lycian,lycian=carian
+~META~Lydian,lydian=trojan
 ~META~Illyrian,taulantian=paeonian
 ~META~Babylonian,babylonian=assyrian=dilmunite
 ~META~Arabic,makan=nabatean
@@ -19,7 +20,8 @@ sumerian,Agam,tag=SYR
 Illyrian,Lougeon,tag=SYR
 odrysi,Altadeva,tag=SYR
 hebrew,Sirkyoz,tag=SYR
-lydian,Kofu-Kofuu,tag=SYR
+Lydian,Kofu-Kofuu,tag=SYR
+Lycian,Xabe,tag=SYR
 
 #Carthage
 Egyptian,Niwt-Ipt,tag=CAR
@@ -38,7 +40,7 @@ Illyrian,Brabria,tag=CAR
 Lycian,Mla-Pdde,tag=CAR
 #odrysi,Perdeva,tag=CAR
 odrysi,Neosdeva,tag=CAR
-lydian,Esa-Kllida,tag=CAR
+Lydian,Esa-Kllida,tag=CAR
 
 #Massalia
 elamite,Zuul-Lali,tag=MAS
@@ -50,7 +52,8 @@ libyan,Agbalu,tag=MAS
 hatti,Uri,tag=MAS
 Arabic,Almas,tag=MAS
 odrysi,Maskadeva,tag=MAS
-lydian,Atka,tag=MAS
+Lydian,Atka,tag=MAS
+Egyptian,Masariyu,tag=MAS
 
 #Glorious Olbia
 isaurian,Wasus,tag=OLB
@@ -65,7 +68,7 @@ Egyptian,Nefer,tag=OLB
 Lycian,Maskkm,tag=OLB
 odrysi,Gerasdeva,tag=OLB
 hebrew,Shaameach,tag=OLB
-lydian,Wissi,tag=OLB
+Lydian,Wissi,tag=OLB
 Illyrian,Ves,tag=OLB
 
 #Bosporan Kingdom
@@ -76,24 +79,28 @@ odrysi,Sparatakos,tag=BPK
 Lycian,Ddenewe-Pdde,tag=BPK
 Arabic,Mamlakat Alqirm,tag=BPK
 libyan,Tagelda'n Tewwurt,tag=BPK
-lydian,Qallmlluli,tag=BPK
+Lydian,Qallmlluli,tag=BPK
 Illyrian,Magoseriates,tag=BPK
+Egyptian,Muhotep,tag=BPK
 
 #Byzantion
 hatti,Kashku,tag=BYZ
 libyan,Tagzirtn-Tfunast,tag=BYZ
 Arabic,Alqustantinia,tag=BYZ
 odrysi,Lygos,tag=BYZ
-lydian,Laqrisha,tag=BYZ
+Lydian,Laqrisha,tag=BYZ
 meroitic,Kisari,tag=BYZ
 #Illyrian,Metudassa,tag=BYZ
+Egyptian,Per-Bidjes,tag=BYZ
 
 #Menesthei
 Arabic,Alcante,tag=MST
 hebrew,The Lost Tribe,tag=MST
 sumerian,Secret Sumer,tag=MST
-lydian,Sawtaar,tag=MST
+Lydian,Sawtaar,tag=MST
 odrysi,Ostas,tag=MST
+Lycian,Wawa,tag=MST
+Egyptian,Menmenet-Sopdet,tag=MST
 
 #Gadir
 Arabic,Qadis,tag=GAD
@@ -102,7 +109,8 @@ hatti,Tuwahshi,tag=GAD
 hebrew,Kir,tag=GAD
 odrysi,Stendasdeva,tag=GAD
 Greek,Teichos,tag=GAD
-lydian,Fata,tag=GAD
+Lydian,Fata,tag=GAD
+Hurrian,Shuhni,tag=GAD
 
 #Chersonesos
 sumerian,Saxar-Sal,tag=CHR
@@ -112,8 +120,10 @@ hebrew,Hatzi'i,tag=CHR
 Arabic,Shibh Jazira,tag=CHR
 libyan,Tagzirt,tag=CHR
 Illyrian,Dassapamodus,tag=CHR
-lydian,Kofu-Kllida,tag=CHR
+Lydian,Kofu-Kllida,tag=CHR
 odrysi,Athdeva,tag=CHR
+Lycian,Pruwa-Prnna,tag=CHR
+Egyptian,Chersunesus,tag=CHR
 
 #Emporion
 elamite,Sha'Udda,tag=EMP
@@ -122,10 +132,13 @@ hebrew,Shuk,tag=EMP
 Arabic,Alsuwq,tag=EMP
 libyan,Ssuq,tag=EMP
 odrysi,Burisdeva,tag=EMP
-lydian,Brafrsi,tag=EMP
+Lydian,Brafrsi,tag=EMP
 Illyrian,Tertigio,tag=EMP
+Lycian,Epeqzze,tag=EMP
+Egyptian,Imiperunut,tag=EMP
 
 #Sinope
 Lycian,Shinuwa,tag=SNP
 isaurian,Shinuwa,tag=SNP
-lydian,Shinuwa,tag=SNP
+Lydian,Shinuwa,tag=SNP
+Egyptian,Hut-Sat-Asopis,tag=SNP
