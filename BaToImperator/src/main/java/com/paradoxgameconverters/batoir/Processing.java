@@ -518,6 +518,7 @@ public class Processing
         try {
             while (endOrNot = true){
                 qaaa = scnr.nextLine();
+                qaaa = qaaa.replace("﻿",""); //Newline character
 
                 if (qaaa.contains(" = {") && !qaaa.contains("provinces")) {
                     String provinceName = qaaa.split(" = ")[0];

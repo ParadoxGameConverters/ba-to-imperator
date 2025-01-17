@@ -1,7 +1,7 @@
 #Name variations for exo-tags
 #Each tag must be specified in exoMappings.txt
 ~META~Greek,macedonian=italiotian=thracian=cretan=achaean=argolian=arcadian=epirote=boeotian=peloponnesian=athenian=euboean=aetolian=aegean=greco_pontic=aeolian=troan=ionian=cypriot=thessalian=bosporan=syracusan=cyrenaican=massalian=hellenistic
-~META~Egyptian,egyptian=middle_egyptian=upper_egyptian=per_sheklesh=niwt_ipt
+~META~Egyptian,egyptian=middle_egyptian=upper_egyptian=per_sheklesh=niwt_ipt=oasis_egyptian
 ~META~Hurrian,hurrian=syro_hurrian=subarian
 ~META~Phoenician,phoenician=carthaginian
 ~META~Lycian,lycian=carian

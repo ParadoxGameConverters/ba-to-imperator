@@ -1918,6 +1918,7 @@ public class Importer
         try {
             while (flag == 0){
                 qaaa = scnr.nextLine();
+                qaaa = qaaa.replace("﻿",""); //Newline character
                 qaaa = qaaa.replace ("_region {","_region = {"); //special edge case for vanilla madhyadesa_region
                 if (qaaa.contains( "_region = {" ) || qaaa.contains("_area = {") ) { //_area is special edge case for vanilla bohemia_area region
                     output = qaaa.split(" =")[0];

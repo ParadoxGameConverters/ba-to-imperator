@@ -110,7 +110,8 @@ public class Main
             //[0] is owner, [1] is culture, [2] is religion, [3] is calculated from pop
             int totalPop = 0;//pop total
             //int totalCKProv = 2550;
-            int totalCKProv = 8550;
+            //int totalCKProv = 8550;
+            int totalCKProv = 9950;
 
             String[] ck2PopTotals;   // Owner Culture Religeon PopTotal Buildings
             ck2PopTotals = new String[totalCKProv];
@@ -213,8 +214,8 @@ public class Main
                 mappingDir = "configurables/invictus/";
             }
             
-            //String provinceMappingSource = mappingDir+"provinceConversionCore.txt";
-            String provinceMappingSource = "provinceConversionCore.txt";
+            String provinceMappingSource = mappingDir+"provinceConversionCore.txt";
+            //String provinceMappingSource = "provinceConversionCore.txt";
             
             if (compressedOrNot == 0) { //compressed save! Initiating Rakaly decompressor
                 LOGGER.info("Compressed save detected! Implementing Rakaly Decompressor...");
@@ -283,8 +284,15 @@ public class Main
             String[] provAreas = Processing.importAreas(regionDir+"map_data/areas.txt",9500);
             String[] baProvRegions = Processing.importRegionList(9500,provAreas,regionDir);
             
-            String[] vanillaProvAreas = Processing.importAreas(impGameDir+"/game/map_data/areas.txt",9500);
-            String[] vanillaProvRegions = Processing.importRegionList(9500,vanillaProvAreas,impGameDir+"/game/");
+            String provDir = impGameDir+"/game/setup/provinces";
+            String regionAreaDir = impGameDir+"/game/";
+            if (invictus) {
+                provDir = invictusDir+"/setup/provinces";
+                regionAreaDir = invictusDir+"/";
+            }
+            
+            String[] vanillaProvAreas = Processing.importAreas(regionAreaDir+"map_data/areas.txt",9900);
+            String[] vanillaProvRegions = Processing.importRegionList(9900,vanillaProvAreas,regionAreaDir);
             
             //ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
             
@@ -295,10 +303,7 @@ public class Main
             //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
             
             ArrayList<Provinces> vanillaProvinces = new ArrayList<Provinces>();
-            String provDir = impGameDir+"/game/setup/provinces";
-            if (invictus) {
-                provDir = invictusDir+"/setup/provinces";
-            }
+            
             vanillaProvinces = Importer.importProvSetupAdv(provDir,vanillaProvinces);
             vanillaProvinces = Processing.reorderProvincesByID(vanillaProvinces,blankProv);
             vanillaProvinces = Processing.applyRegionsToProvinces(vanillaProvRegions,vanillaProvinces);
@@ -508,6 +513,7 @@ public class Main
                     ////System.out.println(ck2ProvInfo[3][ckProvNum]+"Q2");
 
                     ////ck2PopTotals[ckProvNum] = Integer.toString(totalPop);
+                    //System.out.println("Done "+aqq);
 
                 }
 
@@ -808,7 +814,7 @@ public class Main
             LOGGER.finest("85%");
             LOGGER.info("Outputting Province info");
             
-            ArrayList<String[]> exoProvinces = Importer.importExoMappings("exoMappings.txt");
+            ArrayList<String[]> exoProvinces = Importer.importExoMappings(mappingDir+"exoMappings.txt");
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces,exoCultureMappings);
             ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc,exoNames);
             baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
