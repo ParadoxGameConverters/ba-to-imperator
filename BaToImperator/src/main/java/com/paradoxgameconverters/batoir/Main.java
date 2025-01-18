@@ -285,14 +285,14 @@ public class Main
             String[] baProvRegions = Processing.importRegionList(9500,provAreas,regionDir);
             
             String provDir = impGameDir+"/game/setup/provinces";
-            String regionAreaDir = impGameDir+"/game/";
+            String gameFileDir = impGameDir+"/game";
             if (invictus) {
                 provDir = invictusDir+"/setup/provinces";
-                regionAreaDir = invictusDir+"/";
+                gameFileDir = invictusDir;
             }
             
-            String[] vanillaProvAreas = Processing.importAreas(regionAreaDir+"map_data/areas.txt",9900);
-            String[] vanillaProvRegions = Processing.importRegionList(9900,vanillaProvAreas,regionAreaDir);
+            String[] vanillaProvAreas = Processing.importAreas(gameFileDir+"/map_data/areas.txt",9900);
+            String[] vanillaProvRegions = Processing.importRegionList(9900,vanillaProvAreas,gameFileDir+"/");
             
             //ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
             
@@ -630,12 +630,7 @@ public class Main
             
             LOGGER.info("Converting characters...");
             
-            String characterDir = Dir2+"/game";
-            if (invictus) {
-                characterDir = invictusDir;
-            }
-            
-            int firstAvailableCharID = Characters.getAvailableID(characterDir);
+            int firstAvailableCharID = Characters.getAvailableID(gameFileDir);
             
             ArrayList<Characters> baCharacters = new ArrayList<Characters>();
             baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
@@ -825,9 +820,9 @@ public class Main
             //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
             existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
             ArrayList<String[]> missions = Processing.getMissionTags(baTagInfo);
-            Processing.updateAllMissions(Dir2+"/game/common/missions",modDirectory+"/common/missions",missions);
-            Processing.updateAllMissionEvents(Dir2+"/game",modDirectory,missions);
-            Processing.updateAllMissions(Dir2+"/game/common/scripted_effects",modDirectory+"/common/scripted_effects",missions);
+            Processing.updateAllMissions(gameFileDir+"/common/missions",modDirectory+"/common/missions",missions);
+            Processing.updateAllMissionEvents(gameFileDir,modDirectory,missions);
+            Processing.updateAllMissions(gameFileDir+"/common/scripted_effects",modDirectory+"/common/scripted_effects",missions);
             
             existingCountryFile = Processing.appendFamilies(baTagInfo,existingCountryFile);
             existingCountryFile = Processing.appendDiplo(baTagInfo,impSubjectInfo,existingCountryFile);

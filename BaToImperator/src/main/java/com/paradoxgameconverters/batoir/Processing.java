@@ -943,6 +943,36 @@ public class Processing
 
         return output;
     }
+    
+    public static boolean compareStringLists(ArrayList<String> strList, ArrayList<String> strList2) throws IOException
+    {
+        int count = 0;
+
+        boolean tf = true;
+        
+        int size1 = strList.size();
+        int size2 = strList2.size();
+        
+        if (size1 != size2) {
+            tf = false;
+            return tf;
+        }
+
+        while (count < strList.size()) {
+
+            String line1 = strList.get(count);
+            String line2 = strList2.get(count);
+            
+            if (!line1.equals(line2)) {
+                tf = false;
+                return tf;
+            }
+            
+            count = count + 1; 
+        }
+
+        return tf;
+    }
 
     public static int checkMonumentList(String name) throws IOException //Checks if save is from 2.0+ or before
     {
@@ -3486,7 +3516,10 @@ public class Processing
                         if (!specialName.equals("roman")) {
                             name = specialName;
                             names[0] = name;
+                            adjective = genAdjective(name);
+                            names[1] = adjective;
                             newExoCountry.setLoc(name);
+                            newExoCountry.setAdj(adjective);
                         }
                         String requiredCulture = selectedProvince.getExoTagRequirement();
                         if (requiredCulture.equals(culture)) {
@@ -3602,7 +3635,10 @@ public class Processing
             String missionFileLocation = missionDirectory+"/"+fileName;
             ArrayList<String> missionFile = Importer.importBasicFile(missionFileLocation);
             ArrayList<String> updatedMission = updateMission(missionFile,missionTags);
-            Output.outputBasicFile(updatedMission,fileName,missionModDir);
+            boolean check = compareStringLists(missionFile,updatedMission);
+            if (!check) {
+                Output.outputBasicFile(updatedMission,fileName,missionModDir);
+            }
 
             //System.out.println("Updated "+fileName);
             count = count + 1;
@@ -3625,7 +3661,10 @@ public class Processing
             if (fileName.contains(".txt")) {
                 ArrayList<String> eventFile = Importer.importBasicFile(missionFileLocation);
                 ArrayList<String> updatedMission = updateMission(eventFile,missionTags);
-                Output.outputBasicFile(updatedMission,fileName,missionModDir);
+                boolean check = compareStringLists(eventFile,updatedMission);
+                if (!check) {
+                    Output.outputBasicFile(updatedMission,fileName,missionModDir);
+                }
 
                 //System.out.println("Updated "+fileName);
             } else {
@@ -3637,7 +3676,11 @@ public class Processing
                     String missionEventFileLocation = missionFileLocation+"/"+eventFileName;
                     ArrayList<String> missionFile = Importer.importBasicFile(missionEventFileLocation);
                     ArrayList<String> updatedMission = updateMission(missionFile,missionTags);
-                    Output.outputBasicFile(updatedMission,eventFileName,missionModDir+"/"+fileName);
+                    boolean check = compareStringLists(missionFile,updatedMission);
+                    if (!check) {
+                        Output.outputBasicFile(updatedMission,eventFileName,missionModDir+"/"+fileName);
+                    }
+                    
                     count2 = count2 + 1;
 
                     //System.out.println("Updated "+eventFileName);
@@ -3675,6 +3718,26 @@ public class Processing
         }
         
         return updatedMonuments;
+    }
+    
+    public static String genAdjective (String name) { //Generates an adjective for a given name
+        String adjective = name;
+        char endChar = name.charAt(name.length()-1);
+        char preEndChar = name.charAt(name.length()-2);
+        String last2 = preEndChar+""+endChar;
+        if (endChar == 'a') {
+            adjective = adjective + "n";
+        } else if (last2.equals("io")) {
+            adjective = adjective.substring(0,adjective.length()-2);
+            adjective = adjective + "ian";
+        } else if (endChar == 'i' || endChar == 'u' || endChar == 'o' || endChar == 'm' || endChar == 'n' || last2.equals("sh")) {
+            
+        } else {
+            adjective = adjective + "ian";
+        }
+        
+        return adjective;
+        
     }
     
 }

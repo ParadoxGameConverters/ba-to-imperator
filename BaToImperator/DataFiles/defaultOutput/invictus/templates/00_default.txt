@@ -16573,8 +16573,7 @@ country = {
 			}
 
 			own_control_core = {
-				
-		}
+			}
 		}
 
 		DAR = {
@@ -19040,7 +19039,7 @@ country = {
 		}
 		}
 
-		#Longonensia
+				#Longonensia
 		LON = {
 			government = tribal_kingdom
 			primary_culture = corsian
@@ -19057,9 +19056,8 @@ country = {
 			capital = 3505
 
 			own_control_core = {
-				
-				
-		}
+				3505 3506
+			}
 		}
 		#Coracensia
 		CRC = {
@@ -19078,9 +19076,8 @@ country = {
 			capital = 3496
 
 			own_control_core = {
-				 3496
-				
-		}
+				3496 3499 3500
+			}
 		}
 		#Luguidonensia
 		LUG = {
@@ -19099,9 +19096,8 @@ country = {
 			capital = 3501
 
 			own_control_core = {
-				 3501 3502
-				
-		}
+				3501 3502 3503
+			}
 		}
 		#Kelsitania
 		KEL = {
@@ -19120,9 +19116,8 @@ country = {
 			capital = 3495
 
 			own_control_core = {
-				 3495 3498 3491
-				
-		}
+				3495 3498 3491
+			}
 		}
 		#Rubrensia
 		RUB = {
@@ -19141,9 +19136,8 @@ country = {
 			capital =  3488
 
 			own_control_core = {
-				
-				
-		}
+				 3488 3489 3487
+			}
 		}
 
 		#Iazygia
@@ -19963,7 +19957,7 @@ country = {
 				6559 6558 6565 6557 6564 6646 6647 6596 6568 6567 6563 # Aria
 				6518 # Aria
 				6954 6955 6956 6957 6958 6959 6960 6961 6962 6963 6964 #Media Choromithrene
-				3461 3463 7224 7225 7223 7723 5399 #New
+				3461 3463 7224 7225 7223 7723 #New
 				870 821
 				4955 #Oarakta
 				4799 4953 4950 4948 4949 4798 4951 3405 3406 6511 4978 #persepolis
