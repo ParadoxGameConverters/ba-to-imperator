@@ -12,6 +12,7 @@ public class Monument
     private String genericName; //auto-generated namr
     private String familyName;
     private String provName;
+    private boolean isHistorical;
     public Monument()
     {
         String key;
@@ -24,6 +25,7 @@ public class Monument
         String genericName; //auto-generated namr
         String familyName;
         String provName;
+        boolean isHistorical;
     }
     
     public void setKey(String sourceKey) {
@@ -96,6 +98,13 @@ public class Monument
         return provName;
     }
     
+    public void setIsHistorical(boolean tf) {
+        isHistorical = tf;
+    }
+    public boolean getIsHistorical() {
+        return isHistorical;
+    }
+    
     public static Monument newMonument(String sourceKey, ArrayList<String[]> sourceComponents,ArrayList<String[]> sourceEffects,String sourceCategory,
     String sourceName, int sourceOldID) {
         Monument newMon = new Monument();
@@ -107,9 +116,13 @@ public class Monument
         newMon.setName(sourceName);
         newMon.setOldID(sourceOldID);
         
+        newMon.setID(sourceOldID);
+        
         newMon.setGenericName("none");
         newMon.setFamilyName("none");
         newMon.setProvName("none");
+        
+        newMon.setIsHistorical(false); //Default is false, unless later specified to be true
         
         return newMon;
     }

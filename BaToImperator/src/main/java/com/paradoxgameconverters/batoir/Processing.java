@@ -2214,6 +2214,34 @@ public class Processing
 
         return 0;
     }
+    
+    public static int getMonumentByID(ArrayList<Monument> monList,int id) {
+        int count = 0;
+        while (count < monList.size()) { 
+            Monument mon = monList.get(count);
+            int monID = mon.getID();
+            if (monID == id) {
+                return count;
+            }
+            count = count + 1;
+        }
+
+        return 0;
+    }
+    
+    public static int getMonumentByOldID(ArrayList<Monument> monList,int id) {
+        int count = 0;
+        while (count < monList.size()) { 
+            Monument mon = monList.get(count);
+            int monID = mon.getOldID();
+            if (monID == id) {
+                return count;
+            }
+            count = count + 1;
+        }
+
+        return 0;
+    }
 
     public static int calcAllocatedPops(int baPopTotal, float totalProvPops)
     {
@@ -2605,7 +2633,15 @@ public class Processing
             } else {
                 int provMonument = irProv.getMonument();
                 if (provMonument > -1) {
-                    int newProvMonument = provMonument + offset;
+                    int newProvMonument = provMonument;
+                    int monIDInArray = getMonumentByOldID(allMonuments,provMonument);
+                    Monument selectedMon = allMonuments.get(monIDInArray);
+                    boolean isHistorical = selectedMon.getIsHistorical();
+                    if (isHistorical) {
+                        newProvMonument = selectedMon.getID();
+                    } else {
+                        newProvMonument = provMonument + offset;
+                    }
                     lines.add(tab+provID+"={");
                     lines.add(tab+tab+"great_work="+newProvMonument);
                     lines.add(tab+"}");
@@ -2623,45 +2659,48 @@ public class Processing
         count = 0;
         while (count < allMonuments.size()) {
             Monument selectedMonument = allMonuments.get(count);
-            String key = selectedMonument.getKey();
-            ArrayList<String[]> components = selectedMonument.getComponents();
-            ArrayList<String[]> effects = selectedMonument.getEffects();
-            String category = selectedMonument.getCategory();
-            String name = selectedMonument.getName();
-            if (name.equals("none")) {
-                name = key;
+            boolean isHistorical = selectedMonument.getIsHistorical();
+            if (!isHistorical) { //Monuments with vanilla counterparts don't get re-defined
+                String key = selectedMonument.getKey();
+                ArrayList<String[]> components = selectedMonument.getComponents();
+                ArrayList<String[]> effects = selectedMonument.getEffects();
+                String category = selectedMonument.getCategory();
+                String name = selectedMonument.getName();
+                if (name.equals("none")) {
+                    name = key;
+                }
+                int oldID = selectedMonument.getOldID();
+                int newID = oldID + offset;
+                String baseline = tab+tab+tab;
+                
+                lines.add(tab+tab+newID+"={");
+                
+                lines.add(baseline+"dlc = "+quote+"Hellenistic World Flavor Pack"+quote);
+                lines.add(baseline+"key="+key);
+                lines.add(baseline+"great_work_state=great_work_state_completed");
+                lines.add(baseline+"finished_date=450.10.1");
+                lines.add(baseline+"great_work_category="+category);
+                lines.add(baseline+"great_work_name={");
+                lines.add(baseline+tab+"name="+name);
+                lines.add(baseline+"}");
+                lines.add(baseline+"great_work_components={");
+                int count2 = 0;
+                while (count2 < components.size()) {
+                    String[] component = components.get(count2);
+                    lines.add(baseline+tab+"{ great_work_module="+component[0]+" great_work_material="+component[1]+" }");
+                    count2 = count2 + 1;
+                }
+                lines.add(baseline+"}");
+                lines.add(baseline+"great_work_effect_selections={");
+                count2 = 0;
+                while (count2 < effects.size()) {
+                    String[] effect = effects.get(count2);
+                    lines.add(baseline+tab+"{ great_work_effect="+effect[0]+" great_work_effect_tier="+effect[1]+" }");
+                    count2 = count2 + 1;
+                    }
+                lines.add(baseline+"}");
+                lines.add(tab+tab+"}");
             }
-            int oldID = selectedMonument.getOldID();
-            int newID = oldID + offset;
-            String baseline = tab+tab+tab;
-            
-            lines.add(tab+tab+newID+"={");
-            
-            lines.add(baseline+"dlc = "+quote+"Hellenistic World Flavor Pack"+quote);
-            lines.add(baseline+"key="+key);
-            lines.add(baseline+"great_work_state=great_work_state_completed");
-            lines.add(baseline+"finished_date=450.10.1");
-            lines.add(baseline+"great_work_category="+category);
-            lines.add(baseline+"great_work_name={");
-            lines.add(baseline+tab+"name="+name);
-            lines.add(baseline+"}");
-            lines.add(baseline+"great_work_components={");
-            int count2 = 0;
-            while (count2 < components.size()) {
-                String[] component = components.get(count2);
-                lines.add(baseline+tab+"{ great_work_module="+component[0]+" great_work_material="+component[1]+" }");
-                count2 = count2 + 1;
-            }
-            lines.add(baseline+"}");
-            lines.add(baseline+"great_work_effect_selections={");
-            count2 = 0;
-            while (count2 < effects.size()) {
-                String[] effect = effects.get(count2);
-                lines.add(baseline+tab+"{ great_work_effect="+effect[0]+" great_work_effect_tier="+effect[1]+" }");
-                count2 = count2 + 1;
-            }
-            lines.add(baseline+"}");
-            lines.add(tab+tab+"}");
             
             count = count + 1;
         }
@@ -3720,6 +3759,55 @@ public class Processing
         return updatedMonuments;
     }
     
+    public static ArrayList<String> purgeVanillaMonuments(ArrayList<Provinces> irProvinceList, ArrayList<String> OldLines) { 
+        //Purges the vanilla monument setup of all provinces within conv scope
+        int count = 0;
+        //ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+        
+        int countOldFile = 0;
+        boolean monSectionFlag = false;
+        boolean coreFlag = false;
+        boolean oneLineFlag = false; //flag for when own_control_core is all on one line
+        ArrayList<Integer> convProvinces = getAllProvincesInScope(irProvinceList);
+        
+        while (countOldFile < OldLines.size()) {
+            String selectedLine = OldLines.get(countOldFile);
+            String selectedLineNoComment = selectedLine.split(" #")[0];
+            selectedLineNoComment = selectedLineNoComment.split("#")[0];
+            selectedLineNoComment = selectedLineNoComment.replace(" = ","=");
+            if (selectedLineNoComment.contains("great_work_manager")) {
+                return OldLines;
+            }else if (selectedLineNoComment.equals("provinces={")) {
+                monSectionFlag = true;
+            } else if (monSectionFlag && selectedLineNoComment.contains("{")) {
+                
+                String provID = selectedLineNoComment.split("=")[0];
+                provID = provID.replace(tab,"");
+                provID = provID.replace(" ","");
+                int provIDInt = Integer.parseInt(provID);
+                boolean inConvScope = checkIntInList(convProvinces,provIDInt);
+                //System.out.println("ID "+provIDInt+" is "+inConvScope);
+                if (inConvScope) {
+                    while (!selectedLine.contains("}")) {
+                        selectedLine = "#"+selectedLine;
+                        OldLines.set(countOldFile,selectedLine);
+                        countOldFile = countOldFile + 1;
+                        selectedLine = OldLines.get(countOldFile);
+                    }
+                    selectedLine = "#"+selectedLine;
+                    OldLines.set(countOldFile,selectedLine);
+                }
+            }
+            
+            
+            countOldFile = countOldFile + 1;
+        }
+
+        return OldLines;
+    }
+    
     public static String genAdjective (String name) { //Generates an adjective for a given name
         String adjective = name;
         char endChar = name.charAt(name.length()-1);
@@ -3738,6 +3826,25 @@ public class Processing
         
         return adjective;
         
+    }
+    
+    public static ArrayList<Monument> convertMonuments(ArrayList<Monument> monuments, ArrayList<String> monumentMappings) throws IOException {
+        int count = 0;
+        ArrayList<Monument> updatedMonuments = new ArrayList<Monument>();
+        while (count < monuments.size()) { 
+            Monument selectedMonument = monuments.get(count);
+            String key = cutQuotes(selectedMonument.getKey());
+            String mapping = Output.cultureOutput(monumentMappings,key);
+            if (!mapping.equals("99999")) {
+                selectedMonument.setIsHistorical(true);
+                int mappingID = Integer.parseInt(mapping);
+                selectedMonument.setID(mappingID);
+            }
+            updatedMonuments.add(selectedMonument);
+            count = count + 1;
+        }
+
+        return updatedMonuments;
     }
     
 }

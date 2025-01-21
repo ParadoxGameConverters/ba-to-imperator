@@ -825,7 +825,7 @@ public class Importer
                     }
                     //addedMonument.setID(monumentID);
                     
-                    if (componentsArray.size() > 1 && oldID > -1) { //ignore pre-built wonders for now
+                    if (oldID > -1) { //ignore pre-built wonders for now
                         currentList.add(addedMonument);
                     }
                     
@@ -877,8 +877,8 @@ public class Importer
         output[6] = "bad"; //default for no custom CK II mod name
         output[7] = "bad"; //default for no Invictus choice
         output[8] = "bad"; //default for no Invictus dir
-        output[9] = "bad"; //default for no dejure conversion
-        output[10] = "bad"; //default for no dejure conversion
+        output[9] = "bad"; //default for no monument conversion
+        output[10] = "bad"; //default for no antagonist conversion
 
         try {
             while (endOrNot = true){
@@ -928,12 +928,12 @@ public class Importer
                     output[8] = output[8].substring(1,output[8].length()-1);
 
                 }
-                else if (qaaa.split(" = ")[0].equals("dejure")){
+                else if (qaaa.split(" = ")[0].equals("monument")){
                     output[9] = qaaa.split(" = ")[1];
                     output[9] = output[9].substring(1,output[9].length()-1);
 
                 }
-                else if (qaaa.split(" = ")[0].equals("republic")){
+                else if (qaaa.split(" = ")[0].equals("antagonist")){
                     output[10] = qaaa.split(" = ")[1];
                     output[10] = output[10].substring(1,output[10].length()-1);
 

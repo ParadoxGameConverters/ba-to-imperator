@@ -87,7 +87,7 @@ public class Main
 
             String impDirSave = configDirectories[4];
             
-            String republicOption = configDirectories[10];
+            String antagonistOption = configDirectories[10];
 
             directories.modFolders (Dir,modName); //Creating the folders to write the mod files
             //along with nessicery sub-folders
@@ -247,12 +247,26 @@ public class Main
             
             date = saveInfo[1];
             
-            if (republicOption.equals("bad")) { //If something goes wrong with reading the republic option, default to repMer
-                LOGGER.warning("Error with Republic Conversion Option! Defaulting to Merchant Republic");
-                republicOption = ("repMer");
+            boolean convertAntagonists = false;
+            
+            if (antagonistOption.equals("bad")) { //If something goes wrong with reading the antagonist option, default to no
+                LOGGER.warning("Error with Antagonist Conversion Option! Defaulting to none!");
+            } else if (antagonistOption.equals("yes")) { //Convert antagonist modifier from BA
+                convertAntagonists = true;
             }
             
-            boolean convertAntagonists = false;
+            //default is baOnly configuration
+            boolean vanillaMonuments = false;
+            boolean moddedMonuments = true;
+            
+            if (configDirectories[9].equals("vanillaOnly")){
+                vanillaMonuments = true;
+                moddedMonuments = false;
+            } else if (configDirectories[9].equals("both")){
+                vanillaMonuments = true;
+            } else if (antagonistOption.equals("bad")) { //baOnly
+                LOGGER.warning("Error with Great Work Conversion Option! Defaulting to BA Only!");
+            }
             
             ArrayList<String> govMap = Importer.importBasicFile("governmentConversion.txt"); //government mappings
             LOGGER.info("Importing mod directories...");
@@ -370,6 +384,7 @@ public class Main
             ArrayList<String> tagMappings = Importer.importBasicFile(mappingDir+"titleConversion.txt");
             ArrayList<String> exoCultureMappings = Importer.importBasicFile(mappingDir+"exoCultureConversion.txt");
             ArrayList<String> exoNames = Importer.importBasicFile(mappingDir+"exoNames.txt");
+            ArrayList<String> monumentMappings = Importer.importBasicFile(mappingDir+"monumentMappings.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
@@ -382,6 +397,7 @@ public class Main
             
             ArrayList<Monument> baMonumentInfo = new ArrayList<Monument>();
             baMonumentInfo = importer.importMonuments(saveMonuments);
+            baMonumentInfo = Processing.convertMonuments(baMonumentInfo,monumentMappings);
             int allTagCount = 0;
             while (allTagCount < baTagInfo.size()) {
                 Country baTag = baTagInfo.get(allTagCount);
@@ -809,6 +825,17 @@ public class Main
             LOGGER.finest("85%");
             LOGGER.info("Outputting Province info");
             
+            if (!vanillaMonuments) {
+                ArrayList<String> vanillaMonumentFile = Importer.importBasicFile(gameFileDir+"/setup/main/00_great_works.txt");
+                vanillaMonumentFile = Processing.purgeVanillaMonuments(irProvinceList,vanillaMonumentFile);
+                Output.outputBasicFile(vanillaMonumentFile,"00_great_works.txt",modDirectory+"/setup/main");
+                if (invictus) {
+                    ArrayList<String> invMonumentFile = Importer.importBasicFile(gameFileDir+"/setup/main/01_great_works_dde.txt");
+                    invMonumentFile = Processing.purgeVanillaMonuments(irProvinceList,invMonumentFile);
+                    Output.outputBasicFile(invMonumentFile,"01_great_works_dde.txt",modDirectory+"/setup/main");
+                }
+            }
+            
             ArrayList<String[]> exoProvinces = Importer.importExoMappings(mappingDir+"exoMappings.txt");
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces,exoCultureMappings);
             ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc,exoNames);
@@ -832,7 +859,12 @@ public class Main
             ArrayList<String> convertedTags = Processing.generateCountryFile(baTagInfo,irProvinceList,existingCountryFile);
             Output.outputBasicFile(convertedTags,"00_default.txt",modDirectory+"/setup/main");
             ArrayList<String> convertedMonuments = Processing.generateMonumentFile(irProvinceList,baMonumentInfo);
-            Output.outputBasicFile(convertedMonuments,"01_great_works_converted.txt",modDirectory+"/setup/main");
+            if (moddedMonuments) {
+                Output.outputBasicFile(convertedMonuments,"01_great_works_converted.txt",modDirectory+"/setup/main");
+            }
+            
+            
+            
             
             
             Provinces test01 = irProvinceList.get(Processing.getProvByID(irProvinceList,4957));

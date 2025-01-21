@@ -1,0 +1,5 @@
+#Monument keys defined here will translate to an Invictus monument ID
+
+giza_pyramids,11
+ur_ziggurat_event,50
+knossos_palace_event,21
