@@ -6,9 +6,9 @@ canaanite_religion,judaism,culture=hebrew
 canaanite_religion,carthaginian_pantheon
 
 #Hellenic becomes Zalmoxian if under an Odrysian realm or Odrysian under a non-Canaanite realm
-aegean_religion,shamanism,tagCulture=odrysi
-aegean_religion,roman_pantheon,notTagCulture=odrysi
-aegean_religion,shamanism,culture=odrysi
+#aegean_religion,shamanism,tagCulture=odrysi
+#aegean_religion,roman_pantheon,notTagCulture=odrysi
+#aegean_religion,shamanism,culture=odrysi
 aegean_religion,roman_pantheon
 
 #Mesopotamian becomes Arabic if under an Arab realm or Arabic under a non-Mesopotamian realm
@@ -16,6 +16,11 @@ mesopotamian_religion,arabian_pantheon,tagCulture=makan
 mesopotamian_religion,mesopotamian_religion,notTagCulture=makan
 mesopotamian_religion,arabian_pantheon,culture=makan
 mesopotamian_religion,mesopotamian_religion
+
+#Luwian becomes Hatti if under a Hatti realm or Hatti under a non-Luwian realm
+anatolian_religion,hatti_religion,tagCulture=hatti
+anatolian_religion,anatolian_religion,notTagCulture=hatti
+anatolian_religion,hatti_religion,culture=hatti
 
 hellenic_religion,roman_pantheon
 anatolian_religion,anatolian_religion

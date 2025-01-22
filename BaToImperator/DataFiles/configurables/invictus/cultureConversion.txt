@@ -378,11 +378,11 @@ sithonians,sithonian
 aktians,sithonian
 
 #Nubian
-nertian,meroitic
-haterti,meroitic
-medjayan,meroitic
-ikenen,meroitic
-kerman,meroitic
+nertian,lower_nubian
+haterti,lower_nubian
+medjayan,lower_nubian
+ikenen,lower_nubian
+kerman,lower_nubian
 
 #Hurrian
 hurrian,hurrian
