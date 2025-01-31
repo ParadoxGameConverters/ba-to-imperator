@@ -1,0 +1,86 @@
+#All flags are dynamically assigned via configuration/exoFlags.txt
+#These can be named anything, but the longer the better to reduce the likelihood of conflict
+#And for that same reason, all names should end with _FLAG
+
+DYN_ARAMAIC_SYR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "sicsyria_color"
+	color2 = "bone_white"
+
+	colored_emblem = {
+		texture = "ce_syracuse.dds"
+		color1 = "roman_gold"
+		color2 = "roman_gold"
+		instance = { 
+			scale={ 0.95 0.95  }
+		}
+	}
+
+	colored_emblem = {
+		texture = "ce_chariot_01.dds"
+		color1 = "bone_white"
+		instance = { 
+			scale={ 0.70 0.65  }
+		}
+	}
+
+	colored_emblem = {
+		texture = "ce_border_meander_01.tga"
+		color1 = "roman_gold"
+		color2 = "bone_white"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+
+	}
+
+}
+
+DYN_HEBREW_CAR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "offwhite"
+	color2 = "navy_blue"
+	
+	
+	
+	colored_emblem = {
+		texture = "ce_border_simple_02.tga"
+		color1 = "navy_blue"
+		color2 = "offwhite"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
+
+	colored_emblem = {
+		texture = "ce_judea_symbol.dds"
+		color1 = "navy_blue"
+		instance = { 
+			position = { 0.50 0.55 }
+		}
+	}
+}
+
+DYN_PUNIC_JEWISH_CAR_FLAG = { #For the very rare case where Carthage is both Jewish and Punic
+	pattern = "pattern_solid.tga"
+	color1 = "offwhite"
+	color2 = "dark_green"
+	
+	
+	
+	colored_emblem = {
+		texture = "ce_border_simple_02.tga"
+		color1 = "dark_green"
+		color2 = "offwhite"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
+
+	colored_emblem = {
+		texture = "ce_judea_symbol.dds"
+		color1 = "dark_green"
+		instance = { 
+			position = { 0.50 0.55 }
+		}
+	}
+}
+
+

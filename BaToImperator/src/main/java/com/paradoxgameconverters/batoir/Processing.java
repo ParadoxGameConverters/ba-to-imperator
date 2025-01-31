@@ -2749,8 +2749,8 @@ public class Processing
                     Pop selectedPop = provPops.get(popCount);
                     String popCulture = selectedPop.getCulture();
                     String popReligion = selectedPop.getReligion();
-                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,baTagCulture,"date",popCulture,provRegion,provArea,"none");
-                    popReligion = Output.paramMapOutput(religionMappings,popCulture,baTagCulture,"date",popReligion,provRegion,provArea,"none");
+                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,baTagCulture,"date",popCulture,provRegion,provArea,"none","none");
+                    popReligion = Output.paramMapOutput(religionMappings,popCulture,baTagCulture,"date",popReligion,provRegion,provArea,"none","none");
                     selectedPop.setCulture(popCulture);
                     selectedPop.setReligion(popReligion);
                     newProvPops.add(selectedPop);
@@ -3034,8 +3034,8 @@ public class Processing
                 capitalArea = "debug";
             }
             
-            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea,"none");
-            String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea,"none");
+            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none");
+            String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none");
             
             if (newCulture.equals("99999")) {
                 newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
@@ -3452,7 +3452,7 @@ public class Processing
                 if (!changeCulture.equals("none") ) {
                     tmpProv.setExoTagRequirement(changeCulture);
                     if (culture.equals(changeCulture)) {
-                        String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area,"none");
+                        String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area,"none","none");
                         if (!tmpCulture.equals("roman")) {
                             masterProvCulture = tmpCulture; //If no special regional culture, use original culture from the motherland
                         }
@@ -3551,7 +3551,7 @@ public class Processing
                     if (!missions.equals("none")) {
                         newExoCountry.setMissions(missions);
                         String baseTag = missions;
-                        String specialName = Output.paramMapOutput(exoNames,"none","none","date",culture,"none","none",baseTag);
+                        String specialName = Output.paramMapOutput(exoNames,"none","none","date",culture,"none","none","none",baseTag);
                         if (!specialName.equals("roman")) {
                             name = specialName;
                             names[0] = name;
@@ -3598,6 +3598,34 @@ public class Processing
             exoCount = exoCount + 1;
         }
         return convCountries;
+    }
+    
+    public static ArrayList<String> assignExoFlags (ArrayList<Country> exoCountries,ArrayList<String> flagMappings,ArrayList<String> flagTemplate)
+    throws IOException
+    {
+        int exoCount = 0;
+        while (exoCount < exoCountries.size()) {
+            Country selectedExoCountry = exoCountries.get(exoCount);
+            String exoRole = selectedExoCountry.getMissions();
+            if (exoRole != null) {
+                String culture = selectedExoCountry.getCulture();
+                String religion = selectedExoCountry.getReligion();
+                String exoFlag = Output.paramMapOutput(flagMappings,"none","noTagCulture","date",culture,"noRegion","noArea",religion,exoRole);
+                System.out.println("Flag:"+exoFlag+" | culture:"+culture+" | religion:"+religion+" | tag:"+exoRole);
+                if (!exoFlag.equals("roman")) { //exoFlag detected, update template
+                    String exoTag = selectedExoCountry.getUpdatedTag();
+                    int templateCount = 0;
+                    while (templateCount < flagTemplate.size()) {
+                        String line = flagTemplate.get(templateCount);
+                        line = line.replace(exoFlag,exoTag);
+                        flagTemplate.set(templateCount,line);
+                        templateCount = templateCount + 1;
+                    }
+                }
+            }
+            exoCount = exoCount + 1;
+        }
+        return flagTemplate;
     }
     
     public static double average (ArrayList<Double> numbers)

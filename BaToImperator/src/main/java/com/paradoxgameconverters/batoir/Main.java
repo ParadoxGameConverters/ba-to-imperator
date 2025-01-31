@@ -384,6 +384,7 @@ public class Main
             ArrayList<String> tagMappings = Importer.importBasicFile(mappingDir+"titleConversion.txt");
             ArrayList<String> exoCultureMappings = Importer.importBasicFile(mappingDir+"exoCultureConversion.txt");
             ArrayList<String> exoNames = Importer.importBasicFile(mappingDir+"exoNames.txt");
+            ArrayList<String> exoFlags = Importer.importBasicFile(mappingDir+"exoFlags.txt");
             ArrayList<String> monumentMappings = Importer.importBasicFile(mappingDir+"monumentMappings.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
@@ -415,8 +416,8 @@ public class Main
                     System.out.println(capInt);
                 }
                             
-                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea,"none");
-                String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea,"none");
+                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none");
+                String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none");
                 if (!convertAntagonists) { //if user selected option not to convert antagonists, all tags loose their antagonist modifier
                     baTag.setAntagonist(false);
                 }
@@ -864,7 +865,9 @@ public class Main
             }
             
             
-            
+            ArrayList<String> exoFlagFile = Importer.importBasicFile(defaultOutputDir+"templates/exoFlagFiles.txt");
+            exoFlagFile = Processing.assignExoFlags(exoCountries,exoFlags,exoFlagFile);
+            Output.outputBasicFile(exoFlagFile,"01_exo_tags.txt",modDirectory+"/common/coat_of_arms/coat_of_arms");
             
             
             Provinces test01 = irProvinceList.get(Processing.getProvByID(irProvinceList,4957));

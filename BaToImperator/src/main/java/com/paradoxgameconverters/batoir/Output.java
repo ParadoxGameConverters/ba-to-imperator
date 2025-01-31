@@ -63,8 +63,8 @@ public class Output
         return ck2CultureInfo;
     }
 
-    public static String paramMapOutput(ArrayList<String> mappings,String ck2Culture,String tagCulture,String date,String irRel,String region,
-    String area,String tag) throws IOException //mapping with parameters
+    public static String paramMapOutput(ArrayList<String> mappings,String ck2Culture,String tagCulture,String date,String source,String region,
+    String area,String religion,String tag) throws IOException //mapping with parameters
     {
 
         String VM = "\\"; 
@@ -76,7 +76,7 @@ public class Output
 
         Importer importer = new Importer();
 
-        ArrayList<String[]> validMappings = Importer.importMappingFromArrayArgs(mappings,irRel);
+        ArrayList<String[]> validMappings = Importer.importMappingFromArrayArgs(mappings,source);
         
         while (count < validMappings.size()) {
             ck2ReligionInfo = validMappings.get(count);
@@ -133,6 +133,12 @@ public class Output
                     }
                     else if (relArgument[0].equals("area")) {
                         if (!area.equals(relArgument[1])) {
+                            count2 = count2 + numArgs;
+                            passedCheck = false;
+                        }
+                    }
+                    else if (relArgument[0].equals("religion")) {
+                        if (!religion.equals(relArgument[1])) {
                             count2 = count2 + numArgs;
                             passedCheck = false;
                         }
