@@ -14,6 +14,6 @@
 aramaic,DYN_ARAMAIC_SYR_FLAG,tag=SYR
 
 #Carthage
-#Egyptian,DYN_EGYPTIAN_CAR_FLAG,tag=CAR
+Egyptian,DYN_EGYPTIAN_CAR_FLAG,tag=CAR
 hebrew,DYN_HEBREW_CAR_FLAG,tag=CAR
 Phoenician,DYN_PUNIC_JEWISH_CAR_FLAG,religion=judaism,tag=CAR
