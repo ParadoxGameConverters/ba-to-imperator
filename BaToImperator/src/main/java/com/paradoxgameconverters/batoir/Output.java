@@ -1190,13 +1190,17 @@ public class Output
             if (option.equals("invictus")) {
                 pathLength = pathLength + 9;
             }
-            String newFileName = fileName.substring(pathLength,fileName.length());
+            String[] fileNameSplit = fileName.split("default");
+            String newFileName = fileNameSplit[fileNameSplit.length-1];
+            //String newFileName = fileName.substring(pathLength,fileName.length());
             newFileName = outputDir + newFileName;
             String folder = fileInfo.getParent();
             //System.out.println(outputDir+folder);
             //try {
             //folder = outputDir + folder.substring(21,folder.length());
-            folder = outputDir + folder.substring(pathLength,folder.length());
+            ///folder = outputDir + folder.substring(pathLength,folder.length());
+            String[] folderSplit = folder.split("default");
+            folder = outputDir+folderSplit[folderSplit.length-1];
             System.out.println(folder+" A");
             //} catch (Exception e) {
                 

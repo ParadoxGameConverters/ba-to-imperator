@@ -35,3 +35,5 @@ settled_tribal_chiefdom,tribal_kingdom
 #Imperial
 imperium,imperium
 imperial_cult,imperial_cult
+#dictatorship,imperium,e
+

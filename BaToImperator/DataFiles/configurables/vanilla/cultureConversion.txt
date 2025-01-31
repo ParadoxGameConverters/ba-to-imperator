@@ -32,6 +32,7 @@ amantes,taulantian
 atintanes,taulantian
 atintanes,taulantian
 phaeacians,taulantian
+enchelei,taulantian
 bryges,paeonian
 derrones,paeonian
 almopians,paeonian

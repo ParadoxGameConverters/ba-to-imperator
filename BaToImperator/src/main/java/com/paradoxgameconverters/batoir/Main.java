@@ -209,7 +209,7 @@ public class Main
                 invictusDir = "C:/Program Files (x86)/Steam/steamapps/workshop/content/859580/2532715348";
             } 
             
-            String mappingDir = "";
+            String mappingDir = "configurables/vanilla/";
             if (invictus) {
                 mappingDir = "configurables/invictus/";
             }
@@ -268,7 +268,7 @@ public class Main
                 LOGGER.warning("Error with Great Work Conversion Option! Defaulting to BA Only!");
             }
             
-            ArrayList<String> govMap = Importer.importBasicFile("governmentConversion.txt"); //government mappings
+            ArrayList<String> govMap = Importer.importBasicFile(mappingDir+"governmentConversion.txt"); //government mappings
             LOGGER.info("Importing mod directories...");
   
             ArrayList<String> modDirs = Importer.importModDirs(impDirSave,irModDir);
@@ -704,7 +704,10 @@ public class Main
             if (invictus) {
                 defaultOutputDir = defaultOutputDir+"invictus/";
                 outputOption = "invictus";
+            } else {
+                defaultOutputDir = defaultOutputDir+"vanilla/";
             }
+            //Output.copyDefaultOutput(defaultOutputDir+"default",modDirectory,outputOption);
             Output.copyDefaultOutput(defaultOutputDir+"default",modDirectory,outputOption);
             //Processing.customDate(date,modDirectory+"/common/bookmarks/50_customBookmark.txt",modDirectory+"/common/bookmarks/50_customBookmark.txt");
             //Processing.setTechYear(date,modDirectory);
