@@ -3505,7 +3505,7 @@ public class Processing
     }
     
     public static ArrayList<Country> generateExoCountries (ArrayList<Provinces> irProvinceList, int convTag, String modDirectory,
-    ArrayList<String> locList, ArrayList<String> exoNames) throws IOException
+    ArrayList<String> locList, ArrayList<String> exoNames, ArrayList<String> exoColors) throws IOException
     {
         int provCount = 0;
         ArrayList<Country> exoCountries = new ArrayList<Country>();
@@ -3560,6 +3560,12 @@ public class Processing
                             newExoCountry.setLoc(name);
                             newExoCountry.setAdj(adjective);
                         }
+                        String specialColor = Output.paramMapOutput(exoColors,"none","none","date",culture,"none","none","none",baseTag);
+                        if (!specialColor.equals("roman")) {
+                            color = specialColor;
+                            newExoCountry.setColor(color);
+                        }
+                        
                         String requiredCulture = selectedProvince.getExoTagRequirement();
                         if (requiredCulture.equals(culture)) {
                             irTag = baseTag;

@@ -395,6 +395,7 @@ public class Main
             ArrayList<String> tagMappings = Importer.importBasicFile(mappingDir+"titleConversion.txt");
             ArrayList<String> exoCultureMappings = Importer.importBasicFile(mappingDir+"exoCultureConversion.txt");
             ArrayList<String> exoNames = Importer.importBasicFile(mappingDir+"exoNames.txt");
+            ArrayList<String> exoColors = Importer.importBasicFile(mappingDir+"exoColors.txt");
             ArrayList<String> exoFlags = Importer.importBasicFile(mappingDir+"exoFlags.txt");
             ArrayList<String> monumentMappings = Importer.importBasicFile(mappingDir+"monumentMappings.txt");
             
@@ -853,7 +854,7 @@ public class Main
             
             ArrayList<String[]> exoProvinces = Importer.importExoMappings(mappingDir+"exoMappings.txt");
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces,exoCultureMappings);
-            ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc,exoNames);
+            ArrayList<Country> exoCountries = Processing.generateExoCountries(irProvinceList,convTag,modDirectory,vanillaLoc,exoNames,exoColors);
             baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
             
             baMonumentInfo = Processing.applyMonumentLoc(baMonumentInfo,locList);
