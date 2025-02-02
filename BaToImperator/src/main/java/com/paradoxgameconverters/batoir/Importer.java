@@ -2691,6 +2691,46 @@ public class Importer
         popTotals.add(popTotalCache);
         return popTotals;
     }
+    
+    public static ArrayList<String> importBuildingNames (String name) throws IOException //imports the names of buildings
+    {
+
+        FileInputStream fileIn= new FileInputStream(name);
+        Scanner scnr= new Scanner(fileIn);
+
+        int flag = 0;
+        String tab = "	";
+        ArrayList<String> buildingNames = new ArrayList<String>();
+
+        try {
+            //try
+            while (flag == 0){
+                String line = scnr.nextLine();
+                line = line.replace(" ","");
+                line = line.replace(tab,"");
+                try {
+                    line = line.split("#")[0];
+                } catch (Exception e) {
+                    
+                }
+                
+                //System.out.println(line);
+                if (line.contains( "={" ) ) {
+                    String output = line.split("=")[0];
+                    buildingNames.add(output);
+                    while (!line.equals("}")) {
+                        line = scnr.nextLine();
+                    }
+                }
+
+            }
+        }catch (java.util.NoSuchElementException exception){ //if anything goes wrong, return to avoid stopping converter
+            return buildingNames;
+        }   
+
+        return buildingNames;
+
+    }
 
     //developed originally by Shinymewtwo99
 }

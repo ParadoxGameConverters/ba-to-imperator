@@ -944,7 +944,7 @@ public class Processing
         return output;
     }
     
-    public static boolean compareStringLists(ArrayList<String> strList, ArrayList<String> strList2) throws IOException
+    public static boolean compareStringLists(ArrayList<String> strList, ArrayList<String> strList2) throws IOException //checks if both lists are equal
     {
         int count = 0;
 
@@ -3825,6 +3825,79 @@ public class Processing
                         selectedLine = OldLines.get(countOldFile);
                     }
                     selectedLine = "#"+selectedLine;
+                    OldLines.set(countOldFile,selectedLine);
+                }
+            }
+            
+            
+            countOldFile = countOldFile + 1;
+        }
+
+        return OldLines;
+    }
+    
+    public static ArrayList<String> purgeVanillaBuildings(ArrayList<Provinces> irProvinceList, ArrayList<String> buildingNames, ArrayList<String> OldLines) { 
+        //Purges the vanilla building setup of all provinces within conv scope
+        int count = 0;
+        //ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+        
+        int countOldFile = 0;
+        boolean monSectionFlag = false;
+        boolean coreFlag = false;
+        boolean oneLineFlag = false; //flag for when own_control_core is all on one line
+        ArrayList<Integer> convProvinces = getAllProvincesInScope(irProvinceList);
+        monSectionFlag = true;
+        
+        
+        while (countOldFile < OldLines.size()) {
+            String selectedLine = OldLines.get(countOldFile);
+            String selectedLineNoComment = selectedLine.split(" #")[0];
+            selectedLineNoComment = selectedLineNoComment.split("#")[0];
+            selectedLineNoComment = selectedLineNoComment.replace(" = ","=");
+            if (selectedLineNoComment.contains("road_network")) {
+                return OldLines;
+            } else if (selectedLineNoComment.contains("{")) {
+                
+                String provID = selectedLineNoComment.split("=")[0];
+                provID = provID.replace(tab,"");
+                provID = provID.replace(" ","");
+                boolean inConvScope = false;
+                int provIDInt = -1;
+                try {
+                    provIDInt = Integer.parseInt(provID);
+                } catch (Exception E) {
+                    
+                }
+                
+                inConvScope = checkIntInList(convProvinces,provIDInt);
+                if (inConvScope) {
+                    //System.out.println("ID "+provIDInt+" is "+inConvScope);
+                    while (!selectedLine.contains("}")) {
+                        selectedLine = selectedLine.split("#")[0];
+                        int buildingCount = 0;
+                        int buildingSize = buildingNames.size();
+                        while (buildingCount < buildingSize) {
+                            String selectedBuilding = buildingNames.get(buildingCount);
+                            String prunedSelectedLine = selectedLine.replace(" ","");
+                            prunedSelectedLine = prunedSelectedLine.replace(tab,"");
+                            prunedSelectedLine = prunedSelectedLine.split("=")[0];
+                            //System.out.println("|"+prunedSelectedLine+"| selectedBuilding: "+selectedBuilding);
+                            if (prunedSelectedLine.equals(selectedBuilding)) {
+                                selectedLine = "#"+selectedLine;
+                                OldLines.set(countOldFile,selectedLine);
+                                buildingCount = 1 + buildingSize;
+                            }
+                            buildingCount = buildingCount + 1;
+                        }
+                        
+                        //selectedLine = "#"+selectedLine;
+                        //OldLines.set(countOldFile,selectedLine);
+                        countOldFile = countOldFile + 1;
+                        selectedLine = OldLines.get(countOldFile);
+                    }
+                    //selectedLine = "#"+selectedLine;
                     OldLines.set(countOldFile,selectedLine);
                 }
             }

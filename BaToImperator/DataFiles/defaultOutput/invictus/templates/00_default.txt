@@ -13333,10 +13333,10 @@ country = {
 		}
 
 		BAC = { #Seleukid Subject State
-			family = 61
+			#family = 61
 			government = despotic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = pasargadi
+			religion = zoroaster
 			diplomatic_stance=warmongering_stance
 			monarchy_citizen_law = foreign_law_for_minorities
 			capital = 6678 #Bactra
@@ -13383,8 +13383,8 @@ country = {
 
 		ARS = {
 			government = despotic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = pasargadi
+			religion = zoroaster
 			diplomatic_stance=warmongering_stance
 			monarchy_citizen_law = foreign_law_for_minorities
 			capital = 6541 #Alexandria Arachosia
@@ -13421,8 +13421,8 @@ country = {
 
 		CAM = {
 			government = despotic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = pasargadi
+			religion = zoroaster
 			diplomatic_stance=warmongering_stance
 			monarchy_citizen_law = foreign_law_for_minorities
 			capital = 4959 #Alexandria Karmania
@@ -13454,8 +13454,8 @@ country = {
 
 		PAR = {
 			government = despotic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
+			primary_culture = pasargadi
+			religion = zoroaster
 			diplomatic_stance=warmongering_stance
 			capital = 3435
 
@@ -13479,32 +13479,6 @@ country = {
 				 3468 3467 3462 3444 3465 3466 3451 3464
 				 3436 3437 3438 3440 3449 3455 3469
 				 6556 6545 6542 6543 6544 6663 6664
-				
-		}
-
-		}
-
-		ADI = { #Seleukid Subject State
-			#family = 14
-			#family = 15
-			#family = 16
-			#family = 17
-
-			government = despotic_monarchy
-			primary_culture = assyrian
-			religion = mesopotamian_religion
-
-			capital = 880
-
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-
-			own_control_core = 	{
-				 1578
 				
 		}
 
@@ -13602,6 +13576,7 @@ country = {
 				 1618 1619 1630 1631 1632 1638 1648 1649 1652 1654
 				 1505 1506 1507 1508 1509 1511 1518 1519
 				 4985 4986 4987 4989 3389 4988 3383 3388 4984 3385 3384 4990
+				1578
 				
 		}
 

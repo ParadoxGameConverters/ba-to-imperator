@@ -325,33 +325,44 @@ public class Main
             
 
             LOGGER.info("Creating temp files...");
+            
+            //ArrayList<String> wholeSaveFile = Importer.importBasicFile(saveCountries);
+            //I was going to replace the tempFile system, however, there is a size limit to Array Lists, so it's not worth the trouble for now
+            
+            //ArrayList<String> tempCountries = TempFiles.tempCreateInMemory(wholeSaveFile, tab+"country_database={", tab+"state_database={");
 
             TempFiles.tempCreate(impDirSave, tab+"country_database={", tab+"state_database={", saveCountries);
 
             LOGGER.info("temp Countries created");
 
-            //TempFiles.tempCreate(impDirSave, "provinces={", "}", saveProvinces);
             TempFiles.tempCreate(impDirSave, "population={", "}", saveProvinces);
+            //ArrayList<String> tempProvinces = TempFiles.tempCreateInMemory(wholeSaveFile, "population={", "}");
+            //Output.outputBasicFile(tempCountries,"tempTest2.txt","defaultOutput");
 
             LOGGER.info("temp Provinces created");   
 
             TempFiles.tempCreate(impDirSave, "character={", "objectives={", saveCharacters);
+            //ArrayList<String> tempCharacters = TempFiles.tempCreateInMemory(wholeSaveFile, "character={", "objectives={");
 
             LOGGER.info("temp Characters created");
 
             TempFiles.tempCreate(impDirSave, tab+"families={", "character={", saveDynasty);
+            //ArrayList<String> tempDynasty = TempFiles.tempCreateInMemory(wholeSaveFile, tab+"families={", "character={");
 
             LOGGER.info("temp Dynasties created");
 
             TempFiles.tempCreate(impDirSave, "diplomacy={", "jobs={", saveDiplo);
+            //ArrayList<String> tempDiplo = TempFiles.tempCreateInMemory(wholeSaveFile, "diplomacy={", "jobs={");
 
             LOGGER.info("temp Diplo created");
 
             TempFiles.tempCreate(impDirSave, "great_work_manager={", "country_culture_manager={", saveMonuments);
+            //ArrayList<String> tempMonuments = TempFiles.tempCreateInMemory(wholeSaveFile, "great_work_manager={", "country_culture_manager={");
 
             LOGGER.info("temp Monuments created");
             
             TempFiles.tempCreate(impDirSave, "deity_manager={", "great_work_manager={", saveDeities);
+            //ArrayList<String> tempDeities = TempFiles.tempCreateInMemory(wholeSaveFile, "deity_manager={", "great_work_manager={");
 
             LOGGER.info("temp Monuments created");
 
@@ -846,10 +857,11 @@ public class Main
             baTagInfo = Processing.appendExoCountries(baTagInfo,exoCountries);
             
             baMonumentInfo = Processing.applyMonumentLoc(baMonumentInfo,locList);
-            //ArrayList<String> existingCountryFile = Importer.importBasicFile(impGameDir+"/game/setup/main/00_default.txt");
             ArrayList<String> existingCountryFile = Importer.importBasicFile(defaultOutputDir+"templates/00_default.txt");
-            //temporarily disabled due to a bug where certain provinces will cause crashes if uncolonized
+            ArrayList<String> buildingNames = Importer.importBuildingNames(gameFileDir+"/common/buildings/00_default.txt");
+            
             existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
+            existingCountryFile = Processing.purgeVanillaBuildings(irProvinceList,buildingNames,existingCountryFile);
             ArrayList<String[]> missions = Processing.getMissionTags(baTagInfo);
             Processing.updateAllMissions(gameFileDir+"/common/missions",modDirectory+"/common/missions",missions);
             Processing.updateAllMissionEvents(gameFileDir,modDirectory,missions);
