@@ -2867,7 +2867,7 @@ diplomacy = {
 	#Armenia
 	dependency = { first = ARM second = AR2 subject_type = satrapy }
 	dependency = { first = ARM second = SPH subject_type = satrapy }
-	dependency = { first = ARM second = CRD subject_type = vassal_tribe }
+	#dependency = { first = ARM second = CRD subject_type = vassal_tribe }
 
 	#Lysimachos and Cassander - Alliance
 	#alliance = { first = MAC second = TRE }
@@ -13278,32 +13278,6 @@ country = {
 		
 		#Mesopotamia
 
-		
-
-		CRD = {
-			government = tribal_kingdom
-			primary_culture = cardukoi
-			religion = mesopotamian_religion
-			capital = 833 #Pinaka
-
-			technology={
-				military_tech={ level=3 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-
-			own_control_core = 	{
-				 992
-				
-				
-		}
-
-			#pantheon = {
-			#	{ deity = 789 }
-			#}
-		}
-
 		SPH = {
 			government = despotic_monarchy
 			primary_culture = armenian
@@ -13517,6 +13491,7 @@ country = {
 				 997 1502 1503 1504
 				 978 990 993 994 1562 1563 1564 1566 1567 1736
 				 483 4037 1747 1751 1581
+				992
 				
 		}
 

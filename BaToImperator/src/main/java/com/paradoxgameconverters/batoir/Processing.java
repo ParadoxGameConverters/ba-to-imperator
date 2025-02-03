@@ -2542,6 +2542,10 @@ public class Processing
                         ArrayList<Integer> families = irCountry.getMajorFamilies();
                         boolean antagonist = irCountry.getAntagonist();
                         ArrayList<String[]> laws = irCountry.getLaws();
+                        int militaryTech = irCountry.getMilitaryTech();
+                        int civicTech = irCountry.getCivicTech();
+                        int oratoryTech = irCountry.getOratoryTech();
+                        int religiousTech = irCountry.getReligiousTech();
                         //String culture = "roman"; //testing
                         //String religion = "indo_iranian_religion"; //testing
 
@@ -2574,6 +2578,15 @@ public class Processing
                         }
                         if (antagonist) {
                             lines.add(tab+tab+tab+"is_antagonist = yes");
+                        }
+                        int techTotal = militaryTech+civicTech+oratoryTech+religiousTech;
+                        if (techTotal > 0) { //Only add a technology field if there's some technology to add
+                            lines.add(tab+tab+tab+"technology={");
+                            lines.add(tab+tab+tab+tab+"military_tech={ level="+militaryTech+" progress=0 }");
+                            lines.add(tab+tab+tab+tab+"civic_tech={ level="+civicTech+" progress=0 }");
+                            lines.add(tab+tab+tab+tab+"oratory_tech={ level="+oratoryTech+" progress=0 }");
+                            lines.add(tab+tab+tab+tab+"religious_tech={ level="+religiousTech+" progress=0 }");
+                            lines.add(tab+tab+tab+"}");
                         }
                         lines.add(tab+tab+tab+"own_control_core = {");
                         int provCount = 0;

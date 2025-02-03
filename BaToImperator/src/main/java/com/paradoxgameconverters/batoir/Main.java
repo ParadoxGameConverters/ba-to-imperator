@@ -791,6 +791,9 @@ public class Main
                             String oldGovernment = baTag.getGovernment();
                             String newGovernment = Output.cultureOutput(govMap,oldGovernment);
                             baTag.setGovernment(newGovernment);
+                            if (baTag.isTribal()) { //set all tribes to have 0 technology
+                                baTag.setAllTech(0);
+                            }
                             String newCapital = Importer.importMappingFromArray(provinceMappings,capital)[1];
                             baTag.setCapital(newCapital);
                             String[] locName = importer.importLocalisation(moddedLoc,baTag.getLoc(),"rulerDynasty");

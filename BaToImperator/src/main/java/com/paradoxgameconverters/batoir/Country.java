@@ -1,11 +1,6 @@
 package com.paradoxgameconverters.batoir;
 import java.util.ArrayList;
-/**
- * Write a description of class Pops here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
+
 public class Country
 {
     private int id; //numerical ID in save file separate from 3-letter tag
@@ -27,6 +22,10 @@ public class Country
     private String missions; //use missions from x tag
     private boolean antagonist;
     private ArrayList<String[]> laws;
+    private int militaryTech;
+    private int civicTech;
+    private int oratoryTech;
+    private int religiousTech;
     public Country() {
         int id;
         String culture;
@@ -45,6 +44,10 @@ public class Country
         ArrayList<String> majorFamiliesStr;
         boolean antagonist;
         ArrayList<String[]> laws;
+        int militaryTech;
+        int civicTech;
+        int oratoryTech;
+        int religiousTech;
     }
     public void setGovernment(String name) {
         government = name;
@@ -172,6 +175,50 @@ public class Country
         return laws;
     }
     
+    public void setMilitaryTech(int technology) {
+        militaryTech = technology;
+    }
+    public int getMilitaryTech() {
+        return militaryTech;
+    }
+    
+    public void setCivicTech(int technology) {
+        civicTech = technology;
+    }
+    public int getCivicTech() {
+        return civicTech;
+    }
+    
+    public void setOratoryTech(int technology) {
+        oratoryTech = technology;
+    }
+    public int getOratoryTech() {
+        return oratoryTech;
+    }
+    
+    public void setReligiousTech(int technology) {
+        religiousTech = technology;
+    }
+    public int getReligiousTech() {
+        return religiousTech;
+    }
+    
+    public void setAllTech(int technology) { //sets all technology to the same level
+        setMilitaryTech(technology);
+        setCivicTech(technology);
+        setOratoryTech(technology);
+        setReligiousTech(technology);
+    }
+    
+    public boolean isTribal() { //Returns true if the country has a tribal government form
+        String gov = getGovernment();
+        boolean tf = false;
+        if (gov.contains("tribal")) {
+            tf = true;
+        }
+        return tf;
+    }
+    
     public static Country newCountry(int countryID, String countryTag, String countryCulture, String countryReligion, String countryLoc, String countryAdj, 
     String countryHistoricalTag, String countryCapital, String countryFlag, String countryColor, String countryRuler, String gov) {
         Country newCountry = new Country();
@@ -189,6 +236,9 @@ public class Country
         newCountry.setRuler(countryRuler);
         newCountry.setGovernment(gov);
         newCountry.setAntagonist(false); //Set all nations as not Antagonist by default
+        
+        //By default, set all technology to level 2
+        newCountry.setAllTech(2);
         
         return newCountry;
     }
