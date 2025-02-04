@@ -26,6 +26,7 @@ public class Country
     private int civicTech;
     private int oratoryTech;
     private int religiousTech;
+    private String diplomacy; //Only used by ExoTags
     public Country() {
         int id;
         String culture;
@@ -48,6 +49,7 @@ public class Country
         int civicTech;
         int oratoryTech;
         int religiousTech;
+        String diplomacy;
     }
     public void setGovernment(String name) {
         government = name;
@@ -208,6 +210,13 @@ public class Country
         setCivicTech(technology);
         setOratoryTech(technology);
         setReligiousTech(technology);
+    }
+    
+    public void setDiplomacy(String diplo) {
+        diplomacy = diplo;
+    }
+    public String getDiplomacy() {
+        return diplomacy;
     }
     
     public boolean isTribal() { //Returns true if the country has a tribal government form

@@ -25,6 +25,9 @@ public class Provinces
     private String exoRole;
     private String exoGov;
     private String exoTagRequirement;
+    private String exoOverlord;
+    private String exoSubjectType;
+    private String exoVassal;
     public Provinces() {
         int id;
         String owner;
@@ -48,6 +51,30 @@ public class Provinces
         String exoRole; //should only be used for exoTags to identify role for missions
         String exoGov; //should only be used for exoTags to set government
         String exoTagRequirement; //requirements for an exoTag to use pre-defined tag
+        String exoOverlord; //should only be used for exoTags to identify overlords
+        String exoSubjectType; //should only be used for exoTags to identify subjectType
+        String exoVassal; //should only be used for exoTags to identify vassals
+    }
+    
+    public void setExoVassal(String provExoVassal) {
+        exoVassal = provExoVassal;
+    }
+    public String getExoVassal() {
+        return exoVassal;
+    }
+    
+    public void setExoSubjectType(String provExoSubjectType) {
+        exoSubjectType = provExoSubjectType;
+    }
+    public String getExoSubjectType() {
+        return exoSubjectType;
+    }
+    
+    public void setExoOverlord(String provExoOverlord) {
+        exoOverlord = provExoOverlord;
+    }
+    public String getExoOverlord() {
+        return exoOverlord;
     }
     
     public void setExoTagRequirement(String provETR) {

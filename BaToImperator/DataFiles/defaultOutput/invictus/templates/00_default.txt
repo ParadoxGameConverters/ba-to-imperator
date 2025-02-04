@@ -2807,23 +2807,7 @@ diplomacy = {
 	#dependency = { first = CAR second = BLD subject_type = feudatory }
 	#dependency = { first = CAR second = CTI subject_type = feudatory }
 	#dependency = { first = CAR second = MLK subject_type = feudatory }
-	dependency = { first = CAR second = MSL subject_type = vassal_tribe }
-	dependency = { first = CAR second = MSY subject_type = vassal_tribe }
-	dependency = { first = CAR second = TPS subject_type = feudatory }
-	dependency = { first = CAR second = UTC subject_type = feudatory }
-	dependency = { first = CAR second = HDR subject_type = feudatory }
-	dependency = { first = CAR second = ACO subject_type = feudatory }
-	dependency = { first = CAR second = LPT subject_type = feudatory }
-	dependency = { first = CAR second = TRP subject_type = feudatory }
-	dependency = { first = CAR second = EMP subject_type = feudatory }
-	dependency = { first = CAR second = IOL subject_type = feudatory }
-	dependency = { first = CAR second = KUA subject_type = feudatory }
-	dependency = { first = CAR second = HEM subject_type = client_state } # Intentional subject of Carthage (as they cannot be feudatories, as they are Greek)
-	dependency = { first = CAR second = SIN subject_type = client_state } # Also intentional, same as above
-	dependency = { first = CAR second = IBA subject_type = feudatory }
-	dependency = { first = CAR second = GIN subject_type = vassal_tribe } # New
-	dependency = { first = CAR second = THA subject_type = feudatory } # New Vassal on Mauretanian Coast
-	dependency = { first = CAR second = AGG subject_type = feudatory } # New Vassal on Mauretanian Coast
+
 
 	#Massylia
 	#alliance = { first = MSY second = MSL }

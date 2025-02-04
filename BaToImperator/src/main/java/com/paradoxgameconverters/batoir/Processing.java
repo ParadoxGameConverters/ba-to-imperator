@@ -3261,11 +3261,18 @@ public class Processing
                     int subject = selectedDiplo.getSubject();
                     Country subjectCountry = irCountryList.get(subject);
                     Country overlordCountry = irCountryList.get(overlord);
-                    if (overlordCountry.getHasLand() && subjectCountry.getHasLand()) {
+                    String rawOverlord = selectedDiplo.getRawOverlord();
+                    if ((overlordCountry.getHasLand() && subjectCountry.getHasLand()) || !rawOverlord.equals("none")) {
+                        String rawSubject = selectedDiplo.getRawSubject();
+                        
                         String type = selectedDiplo.getRelationType();
                         String subType = selectedDiplo.getRelationSubType();
-                        String overlordTag = overlordCountry.getUpdatedTag();
-                        String subjectTag = subjectCountry.getUpdatedTag();
+                        String overlordTag = rawOverlord;
+                        String subjectTag = rawSubject;
+                        if (rawOverlord.equals("none")) {
+                            overlordTag = overlordCountry.getUpdatedTag();
+                            subjectTag = subjectCountry.getUpdatedTag();
+                        }
                         
                         String subjectLine = tab+type+" = { first = "+overlordTag+" second = "+subjectTag;
                         if (!subType.equals("9999") && subType != null) {
@@ -3414,6 +3421,9 @@ public class Processing
             String changes = exoProvinceArray[exoProvinceArray.length-1];
             String exoRole = "none"; //which tag the country'll be treated as for missions
             String exoGov = "none";
+            String exoOverlord = "none";
+            String exoSubjectType = "none";
+            String exoVassal = "none";
             if (!changes.equals("NoChange~~~")) {
                 //System.out.println(changes);
                 String[] changesTopData = changes.split("~~~");
@@ -3439,6 +3449,18 @@ public class Processing
                         exoRole = changeData;
                     } else if (changeType.equals("Gov")) {
                         exoGov = changeData;
+                    } else if (changeType.equals("Overlord")) {
+                        exoOverlord = changeData;
+                    } else if (changeType.equals("DiploType")) {
+                        exoSubjectType = changeData;
+                    } else if (changeType.equals("Vassals")) {
+                        int vassalCount = 2;
+                        int vassalTot = selectedChange.length;
+                        exoVassal = selectedChange[1];
+                        while (vassalCount < vassalTot) {
+                            exoVassal = exoVassal +"~"+ selectedChange[vassalCount];
+                            vassalCount = vassalCount + 1;
+                        }
                     }
                     changesCount = changesCount + 1;
                 }
@@ -3481,6 +3503,9 @@ public class Processing
                 }
                 tmpProv.setExoRole(exoRole);
                 tmpProv.setExoGov(exoGov);
+                tmpProv.setExoOverlord(exoOverlord);
+                tmpProv.setExoSubjectType(exoSubjectType);
+                tmpProv.setExoVassal(exoVassal);
                 
                 tmpProv.addPopArray(tmpPops);
                 convProvinces.add(tmpProv);
@@ -3553,11 +3578,26 @@ public class Processing
                     String[] names;
                     names = new String[2];
                     
+                    String exoOverlord = selectedProvince.getExoOverlord();
+                    String exoSubjectType = selectedProvince.getExoSubjectType();
+                    String exoVassal = selectedProvince.getExoVassal();
+                    String exoDiplo = "none";
+                    if (exoSubjectType.equals("none")) {
+                        exoSubjectType = "client_state"; //Default for unspecified
+                    }
+                    if (!exoOverlord.equals("none")) {
+                        exoDiplo = "first,"+exoOverlord+","+exoSubjectType;
+                    }
+                    else if (!exoVassal.equals("none")) {
+                        exoDiplo = "second,"+exoVassal+","+exoSubjectType;
+                    }
+                    
                     String missions = selectedProvince.getExoRole();
                     Country newExoCountry = Country.newCountry(ownerID,owner,culture,religion,name,adjective,owner,capital,"none",color,"none",government);
                     String irTag = "none";
                     newExoCountry.setUpdatedTag(irTag);
                     newExoCountry.setHasLand(true);
+                    newExoCountry.setDiplomacy(exoDiplo);
                     
                     // Go through and determine if the tag uses a special name, tag, or missions
                     // Not ideally organized, but this way the entire game loc doesn't need to be parsed when it doesn't have to
@@ -3965,6 +4005,75 @@ public class Processing
         }
 
         return updatedMonuments;
+    }
+    
+    public static ArrayList<Diplo> genExoDiplo (ArrayList<Country> exoCountries, ArrayList<String[]> missionTags)
+    {
+        ArrayList<Diplo> exoDiploList = new ArrayList<Diplo>();
+        int count = 0;
+        int exoTagSize = exoCountries.size();
+        while (count < exoTagSize) {
+            Country selectedExoTag = exoCountries.get(count);
+            String exoTagDiplo = selectedExoTag.getDiplomacy();
+            if (!exoTagDiplo.equals("none")) {
+                String[] diploComponents = exoTagDiplo.split(",");
+                String firstSecond = diploComponents[0];
+                String diploTag = diploComponents[1];
+                String diploSubType = diploComponents[2];
+                
+                String sourceTag = selectedExoTag.getUpdatedTag();
+                
+                int tagCount = 0;
+                int tagSize = missionTags.size();
+                String[] diploTags = diploTag.split("~");
+                int numOfDiploTag = diploTags.length;
+                int diploTagCount = 0;
+                while (diploTagCount < numOfDiploTag) {
+                    String selectedDiploTag = diploTags[diploTagCount];
+                    while (tagCount < tagSize) {
+                        String[] missionCombo = missionTags.get(tagCount);
+                        String originalTag = missionCombo[0];
+                        String newTag = missionCombo[1];
+                        if (originalTag.equals(selectedDiploTag)) { //If a DYN exoCountry such as CAR, use DYN tag
+                            selectedDiploTag = newTag;
+                            tagCount = 1 + tagSize;
+                        }
+                        tagCount = tagCount + 1;
+                    }
+                    String dipType = "dependency";
+                    Diplo exoDiplo = Diplo.newDiplo(0,0,dipType,diploSubType);
+                    String overlord = selectedDiploTag;
+                    String subject = sourceTag;
+                    if (firstSecond.equals("second")) {
+                        overlord = sourceTag;
+                        subject = selectedDiploTag;
+                    }
+                    exoDiplo.setRawOverlord(overlord);
+                    exoDiplo.setRawSubject(subject);
+                    
+                    exoDiploList.add(exoDiplo);
+                    diploTagCount = diploTagCount + 1;
+                }
+                
+            }
+            count = count + 1;
+        }
+        
+        
+        return exoDiploList;
+    }
+    
+    public static ArrayList<Diplo> addNewDiplo (ArrayList<Diplo> newDiplo, ArrayList<Diplo> allDiplo) throws IOException
+    {
+        int count = 0;
+        while (count < newDiplo.size()) {
+            Diplo selectedDiplo = newDiplo.get(count);
+            
+            allDiplo.add(selectedDiplo);
+            count = count + 1;
+        }
+        
+        return allDiplo;
     }
     
 }
