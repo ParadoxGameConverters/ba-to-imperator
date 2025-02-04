@@ -2018,6 +2018,17 @@ public class Importer
         return allLoc;
     }
     
+    public static ArrayList<String> importSingleModLoc (String name) throws IOException //imports all localization files from a single mod
+    {
+        ArrayList<String> allLoc = new ArrayList<String>();
+        String locDirName = name+"/localization/english";
+        ArrayList<String> locDir = new ArrayList<String>();
+        locDir.add(locDirName);
+        allLoc = importModLoc(locDirName,locDir,allLoc);
+
+        return allLoc;
+    }
+    
     public static ArrayList<String> importAllModLoc (String name, ArrayList<String> modDirs) throws IOException //imports all localization files
     {
         ArrayList<String> moddedLoc = new ArrayList<String>();

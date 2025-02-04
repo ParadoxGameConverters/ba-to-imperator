@@ -7,7 +7,7 @@
 ~META~Lycian,lycian=carian
 ~META~Lydian,lydian=trojan
 ~META~Illyrian,taulantian=paeonian
-~META~Babylonian,babylonian=assyrian=dilmunite
+~META~Babylonian,babylonian=assyrian=dilmunite=eblaite
 ~META~Arabic,makan=nabatean
 
 #Syracuse

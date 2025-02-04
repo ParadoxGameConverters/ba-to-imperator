@@ -285,6 +285,10 @@ public class Main
             LOGGER.info("Importing localization information...");
             
             ArrayList<String> vanillaLoc = Importer.importVanillaLoc(impGameDir);
+            if (invictus) { //Ensure that new Invictus provinces get localization
+                ArrayList<String> vanillaPlusLoc = Importer.importSingleModLoc(invictusDir);
+                vanillaLoc.addAll(vanillaPlusLoc);
+            }
             ArrayList<String> moddedLoc = Importer.importAllModLoc(impGameDir,modDirs);
             ArrayList<String> locList = new ArrayList<String>();
             locList.addAll(vanillaLoc);

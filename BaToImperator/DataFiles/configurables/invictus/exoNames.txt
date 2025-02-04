@@ -7,7 +7,7 @@
 ~META~Lycian,lycian=carian
 ~META~Lydian,lydian=trojan
 ~META~Illyrian,taulantian=paeonian
-~META~Babylonian,babylonian=assyrian=dilmunite
+~META~Babylonian,babylonian=assyrian=dilmunite=eblaite
 ~META~Arabic,makan=nabatean
 
 #Syracuse
@@ -22,6 +22,7 @@ odrysi,Altadeva,tag=SYR
 hebrew,Sirkyoz,tag=SYR
 Lydian,Kofu-Kofuu,tag=SYR
 Lycian,Xabe,tag=SYR
+aramaic,Sicsyria,tag=SYR
 
 #Carthage
 Egyptian,Niwt-Ipt,tag=CAR
