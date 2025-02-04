@@ -2281,7 +2281,7 @@ public class Importer
     }
     
     public static ArrayList<String[]> importProvSetup (String modDir, ArrayList<String[]> allProvInfo) throws IOException
-    //imports all basegame prov files
+    //imports all basegame prov files, depreciated
     {
         int aqq = 0;
         File locInfo = new File (modDir);
@@ -2488,19 +2488,21 @@ public class Importer
 
     }
     
-    public static ArrayList<Provinces> importProvSetupAdv (String modDir, ArrayList<Provinces> allProvInfo) throws IOException
+    public static ArrayList<Provinces> importProvSetupAdv (String modDir, ArrayList<String> buildingNames, ArrayList<Provinces> allProvInfo)
+    throws IOException
     //imports all basegame prov files as Provinces
     {
         int aqq = 0;
         File locInfo = new File (modDir);
         String[] locList = locInfo.list();
         String quote = '"'+"";
+        String tab = "	";
 
         try {
             if (locList != null) { //get all files in directory
                 while (aqq < locList.length) {
                     //System.out.println("Importing "+modDir+"/"+locList[aqq]);
-                    importProvSetupAdv(modDir+"/"+locList[aqq],allProvInfo);
+                    importProvSetupAdv(modDir+"/"+locList[aqq],buildingNames,allProvInfo);
                     aqq = aqq + 1;
                 }
 
@@ -2525,48 +2527,50 @@ public class Importer
                         String provRank = "settlement";
                         double provCiv = 0.0;
                         ArrayList<Pop> provPops = new ArrayList<Pop>();
+                        ArrayList<Building> provBuildings = new ArrayList<Building>();
+                        setupLine = setupLine.split("#")[0];
                         //int popTot = 0;
                         while (!setupLine.equals("}")) {
                            setupLine = provSetupFile.get(count);
                            if (setupLine.contains("civilization_value")) {
                                setupLine = setupLine.replace(" ","");
-                               setupLine = setupLine.split("#")[0];
+                               //setupLine = setupLine.split("#")[0];
                                String tmpCiv = setupLine.split("=")[1];
                                provCiv = Double.parseDouble(tmpCiv);
                            }
                            else if (setupLine.contains("culture")) {
                                setupLine = setupLine.replace(" ","");
-                               setupLine = setupLine.split("#")[0];
+                               //setupLine = setupLine.split("#")[0];
                                provCulture = setupLine.split("=")[1];
                                provCulture = Processing.cutQuotes(provCulture);
                            }
                            else if (setupLine.contains("religion")) {
                                setupLine = setupLine.replace(" ","");
-                               setupLine = setupLine.split("#")[0];
+                               //setupLine = setupLine.split("#")[0];
                                provReligion = setupLine.split("=")[1];
                                provReligion = Processing.cutQuotes(provReligion);
                            }
                            else if (setupLine.contains("terrain")) {
                                setupLine = setupLine.replace(" ","");
-                               setupLine = setupLine.split("#")[0];
+                               //setupLine = setupLine.split("#")[0];
                                provTerrain = setupLine.split("=")[1];
                                provTerrain = Processing.cutQuotes(provTerrain);
                            }
                            else if (setupLine.contains("trade_goods")) {
                                setupLine = setupLine.replace(" ","");
-                               setupLine = setupLine.split("#")[0];
+                               //setupLine = setupLine.split("#")[0];
                                provTradeGood = setupLine.split("=")[1];
                                provTradeGood = Processing.cutQuotes(provTradeGood);
                            }
                            else if (setupLine.contains("province_rank")) {
                                setupLine = setupLine.replace(" ","");
-                               setupLine = setupLine.split("#")[0];
+                               //setupLine = setupLine.split("#")[0];
                                provRank = setupLine.split("=")[1];
                                provRank = Processing.cutQuotes(provRank);
                            }
                            else if (setupLine.contains("citizen") || setupLine.contains("freemen") || setupLine.contains("slaves")
                            || setupLine.contains("tribesmen") || setupLine.contains("nobles")) {
-                               setupLine = setupLine.split("#")[0];
+                               //setupLine = setupLine.split("#")[0];
                                String popClass = setupLine.split("=")[0].replace("\t","");
                                String popCulture = provCulture;
                                String popReligion = provReligion;
@@ -2612,6 +2616,17 @@ public class Importer
                                //System.out.println(popTotalCache);
                                
                            }
+                           else if (Processing.superContains(buildingNames,setupLine)) {
+                               setupLine = setupLine.replace(" ","");
+                               setupLine = setupLine.replace(tab,"");
+                               String[] buildingArray = setupLine.split("=");
+                               int buildingTot = Integer.parseInt(buildingArray[1]);
+                               String buildingName = buildingArray[0];
+                               if (buildingNames.contains(buildingName)) { //Final check
+                                   Building vanillaBuilding = Building.newBuilding(buildingName,buildingTot);
+                                   provBuildings.add(vanillaBuilding);
+                               }
+                           }
                            count = count + 1;
                         }
                         
@@ -2628,6 +2643,9 @@ public class Importer
                         tmpProv.setTradeGood(provTradeGood);
                         if (provPops.size() > 0) {
                             tmpProv.addPopArray(provPops);
+                        }
+                        if (provBuildings.size() > 0) {
+                            tmpProv.setBuildings(provBuildings);
                         }
                         
                         allProvInfo.add(tmpProv);

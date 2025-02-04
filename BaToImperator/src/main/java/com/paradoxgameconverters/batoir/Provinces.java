@@ -22,6 +22,7 @@ public class Provinces
     private double civValue;
     private ArrayList<Double> civValues;
     private int holySite;
+    private ArrayList<Building> buildings;
     private String exoRole;
     private String exoGov;
     private String exoTagRequirement;
@@ -48,6 +49,7 @@ public class Provinces
         double civValue;
         ArrayList<Double> civValues;
         int holySite;
+        ArrayList<Building> buildings;
         String exoRole; //should only be used for exoTags to identify role for missions
         String exoGov; //should only be used for exoTags to set government
         String exoTagRequirement; //requirements for an exoTag to use pre-defined tag
@@ -98,6 +100,19 @@ public class Provinces
         return exoRole;
     }
     
+    public void addBuilding(Building buildingToAdd) {
+        if (buildings == null) {
+            buildings = new ArrayList<Building>();
+        }
+        buildings.add(buildingToAdd);
+    }
+    public void setBuildings(ArrayList<Building> provBuildings) {
+        buildings = provBuildings;
+    }
+    public ArrayList<Building> getBuildings() {
+        return buildings;
+    }
+    
     public void setHolySite(int holySiteID) {
         holySite = holySiteID;
     }
@@ -114,7 +129,6 @@ public class Provinces
     public void setCivValues(ArrayList<Double> provCivValues) {
         civValues = provCivValues;
     }
-
     public ArrayList<Double> getCivValues() {
         return civValues;
     }

@@ -320,9 +320,11 @@ public class Main
             
             //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
             
+            ArrayList<String> buildingNames = Importer.importBuildingNames(gameFileDir+"/common/buildings/00_default.txt");
+            
             ArrayList<Provinces> vanillaProvinces = new ArrayList<Provinces>();
             
-            vanillaProvinces = Importer.importProvSetupAdv(provDir,vanillaProvinces);
+            vanillaProvinces = Importer.importProvSetupAdv(provDir,buildingNames,vanillaProvinces);
             vanillaProvinces = Processing.reorderProvincesByID(vanillaProvinces,blankProv);
             vanillaProvinces = Processing.applyRegionsToProvinces(vanillaProvRegions,vanillaProvinces);
             vanillaProvinces = Processing.applyAreasToProvinces(vanillaProvAreas,vanillaProvinces);
@@ -866,10 +868,9 @@ public class Main
             
             baMonumentInfo = Processing.applyMonumentLoc(baMonumentInfo,locList);
             ArrayList<String> existingCountryFile = Importer.importBasicFile(defaultOutputDir+"templates/00_default.txt");
-            ArrayList<String> buildingNames = Importer.importBuildingNames(gameFileDir+"/common/buildings/00_default.txt");
             
             existingCountryFile = Processing.purgeVanillaSetup(irProvinceList,existingCountryFile);
-            existingCountryFile = Processing.purgeVanillaBuildings(irProvinceList,buildingNames,existingCountryFile);
+            existingCountryFile = Processing.purgeVanillaBuildings(irProvinceList,buildingNames,existingCountryFile); //only for buildings in 00_default
             ArrayList<String[]> missions = Processing.getMissionTags(baTagInfo);
             Processing.updateAllMissions(gameFileDir+"/common/missions",modDirectory+"/common/missions",missions);
             Processing.updateAllMissionEvents(gameFileDir,modDirectory,missions);

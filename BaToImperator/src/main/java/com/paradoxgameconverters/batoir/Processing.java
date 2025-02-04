@@ -2479,7 +2479,8 @@ public class Processing
                 int popCount = 0;
                 if (pops != null) {
                 
-                    while (popCount < pops.size()) {
+                    int popSize = pops.size();
+                    while (popCount < popSize) {
                         Pop selectedPop = pops.get(popCount);
                         String popCulture = selectedPop.getCulture();
                         String popReligion = selectedPop.getReligion();
@@ -2496,6 +2497,18 @@ public class Processing
                         lines.add(tab+tab+"religion="+popReligion);
                         lines.add(tab+"}");
                         popCount = popCount + 1;
+                    }
+                }
+                ArrayList<Building> buildings = irProv.getBuildings();
+                int buildingCount = 0;
+                if (buildings != null) {
+                    int buildingSize = buildings.size();
+                    while (buildingCount < buildingSize) {
+                        Building selectedBuilding = buildings.get(buildingCount);
+                        String buildingName = selectedBuilding.getName();
+                        int buildingTot = selectedBuilding.getTot();
+                        lines.add(tab+buildingName+"="+buildingTot);
+                        buildingCount = buildingCount + 1;
                     }
                 }
             
@@ -3478,12 +3491,14 @@ public class Processing
                 ArrayList<Pop> tmpPops = vanillaProv.getPops();
                 String region = vanillaProv.getRegion();
                 String area = vanillaProv.getArea();
+                ArrayList<Building> buildings = vanillaProv.getBuildings();
                 
                 Provinces tmpProv = Provinces.newProv(owner,culture,religion,-1,0,0,0,0,0,cityStatus,civValue,selectedExoProv);
                 tmpProv.setRegion(region);
                 tmpProv.setArea(area);
                 tmpProv.setTerrain(vanillaProv.getTerrain());
                 tmpProv.setTradeGood(vanillaProv.getTradeGood());
+                tmpProv.setBuildings(buildings);
                 if (!changeCulture.equals("none") ) {
                     tmpProv.setExoTagRequirement(changeCulture);
                     if (culture.equals(changeCulture)) {
@@ -4063,7 +4078,7 @@ public class Processing
         return exoDiploList;
     }
     
-    public static ArrayList<Diplo> addNewDiplo (ArrayList<Diplo> newDiplo, ArrayList<Diplo> allDiplo) throws IOException
+    public static ArrayList<Diplo> addNewDiplo (ArrayList<Diplo> newDiplo, ArrayList<Diplo> allDiplo)
     {
         int count = 0;
         while (count < newDiplo.size()) {
@@ -4074,6 +4089,23 @@ public class Processing
         }
         
         return allDiplo;
+    }
+    
+    public static boolean superContains (ArrayList<String> arrayBeingChecked,String name) //like the .contains method, but stronger
+    {
+        int count = 0;
+        boolean tf = false;
+        while (count < arrayBeingChecked.size()) {
+            String selectedName = arrayBeingChecked.get(count);
+            if (name.contains(selectedName)) {
+                tf = true;
+                return tf;
+            }
+            
+            count = count + 1;
+        }
+        
+        return tf;
     }
     
 }
