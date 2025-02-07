@@ -69,8 +69,10 @@ public class Importer
                 
                 String popLine = qaaa.split("=")[0];
                 
-                if (popLine.contains(tab+tab) && !qaaa.contains("none")) {
-                    popLine = popLine.split(tab+tab)[1];
+                if (!qaaa.contains("none")) {
+                    if (popLine.contains(tab+tab)) {
+                        popLine = popLine.split(tab+tab)[1];
+                    }
                     try {
                         int popID = Integer.parseInt(popLine);
                         String popType = scnr.nextLine();
@@ -116,16 +118,16 @@ public class Importer
                             output[2] = output[2].substring(1,output[2].length()-1);
                         }
                         
-                        if (qaaa.split("=")[0].equals( tab+tab+"population_ratio" ) ) {
-                            qaaa = scnr.nextLine();
-                            qaaa = qaaa.split(tab+tab+tab)[1];
-                            String[] popRatios = qaaa.split(" ");
-                            citizenRatio = Double.parseDouble(popRatios[0]);
-                            freemenRatio = Double.parseDouble(popRatios[1]);
-                            nobleRatio = Double.parseDouble(popRatios[2]);
-                            slaveRatio = Double.parseDouble(popRatios[3]);
-                            tribesmenRatio = Double.parseDouble(popRatios[4]);
-                        }
+                        //if (qaaa.split("=")[0].equals( tab+tab+"population_ratio" ) ) { //Depreciated
+                        //    qaaa = scnr.nextLine();
+                        //    qaaa = qaaa.split(tab+tab+tab)[1];
+                        //    String[] popRatios = qaaa.split(" ");
+                        //    citizenRatio = Double.parseDouble(popRatios[0]);
+                        //    freemenRatio = Double.parseDouble(popRatios[1]);
+                        //    nobleRatio = Double.parseDouble(popRatios[2]);
+                        //    slaveRatio = Double.parseDouble(popRatios[3]);
+                        //    tribesmenRatio = Double.parseDouble(popRatios[4]);
+                        //}
 
                         //popList
                         if (qaaa.split("=")[0].equals( tab+tab+"pop" ) ) {
@@ -1625,7 +1627,7 @@ public class Importer
         try {
             while (aqq != 10){ //loop for the first 10 lines (potential futureproofing), if the key is there, decompressed. Else, compressed
 
-                if (qaaa.split("=")[0].equals("save_game_version")) {
+                if (qaaa.split("=")[0].equals("date")) {
 
                     compressedOrNot = 1;
                 }

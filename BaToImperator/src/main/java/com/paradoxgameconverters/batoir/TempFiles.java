@@ -47,12 +47,7 @@ public class TempFiles
             while (flag == 1) {
                 out.println (vmm);
                 if (vmm.equals(endword)) {
-                    if (type.equals("tempProvinces.txt") && provFlag == 0) { //for tempProvinces.txt, wait for 2nd endword
-                        provFlag = 1;
-                        vmm = scnr.nextLine(); 
-                    } else {
-                        flag = 2;
-                    }   
+                    flag = 2; 
 
                 }
                 else {

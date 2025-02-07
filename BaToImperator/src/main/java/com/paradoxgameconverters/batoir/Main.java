@@ -341,7 +341,7 @@ public class Main
 
             LOGGER.info("temp Countries created");
 
-            TempFiles.tempCreate(impDirSave, "population={", "}", saveProvinces);
+            TempFiles.tempCreate(impDirSave, "population={", "road_network={", saveProvinces);
             //ArrayList<String> tempProvinces = TempFiles.tempCreateInMemory(wholeSaveFile, "population={", "}");
             //Output.outputBasicFile(tempCountries,"tempTest2.txt","defaultOutput");
 
