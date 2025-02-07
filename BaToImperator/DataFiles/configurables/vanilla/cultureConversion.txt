@@ -55,6 +55,7 @@ anshan,elamite
 awanite,elamite
 marabishtui,elamite
 akkuddui,elamite
+liyan,elamite
 
 #Gutian
 gutian,gutian
@@ -219,12 +220,14 @@ midianite,nabatean
 mestpekhi,nabatean
 magarahi,nabatean
 khademi,nabatean
+sinaian,nabatean
 
 #Eblaite
 emarite,eblaite
 mahrusah,eblaite
 arnite,eblaite
 halabi,eblaite
+hermeshi,eblaite
 mahrusah,eblaite
 eblaite,eblaite
 ikinkalis,eblaite
@@ -239,6 +242,7 @@ qatanite,eblaite
 tunipite,eblaite
 amatuite,eblaite
 qatnite,eblaite
+mahrusahite,eblaite
 
 #Babylonian
 dilmunite,babylonian
@@ -328,6 +332,8 @@ yaminite,aramaic
 shararatite,aramaic
 yarbrudui,aramaic
 
+amoritic,aramaic
+
 #Pelasgian
 kepahllenians,kuretes
 teleboans,kuretes
@@ -390,6 +396,8 @@ shubrian,hurrian
 haburi,hurrian
 kizzuni,hurrian
 zalwari,hurrian
+
+kur,hurrian
 
 halzi_atbari,hurrian
 tille,hurrian
@@ -486,7 +494,8 @@ tidhari,hebrew
 gazan,hebrew
 saban,hebrew
 hatserimi,hebrew
-
+silohi,hebrew
+canaanite,hebrew
 
 #Greek
 Greek,athenian,area=athens_area
