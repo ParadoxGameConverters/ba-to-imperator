@@ -38,8 +38,9 @@
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon_~_" }
 	link = { ba = 418 imperator = 100 imperator = 98 } # Korinthos -> Calacte, Cephaloedium
 	link = { ba = 8015 imperator = 86 } # Kameiros -> Acragas
-	link = { ba = 266 imperator = 85 } # Rhodos -> Gela
 	link = { ba = 431 imperator = 99 imperator = 1472 } # Messene -> Tyndaris, Liparae
+	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Overlord,SYR~~DiploType,feudatory_~_" }
+	link = { ba = 266 imperator = 85 } # Rhodos -> Gela
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Overlord,CAR~~DiploType,client_state_~_" }
 	link = { ba = 417 imperator = 93 } # Megara -> Tyndaris, Liparae
 	link = { ba = 417 imperator = 91 } # Megara -> Tyndaris, Liparae
@@ -78,10 +79,11 @@
 	link = { ba = 1973 imperator = 1795 } # Miletos -> Kotyora
 	link = { ba = 1973 imperator = 1798 } # Miletos -> Kerasous
 	link = { ba = 1973 imperator = 1734 imperator = 1732 imperator = 1797 } # Miletos -> Trapezous, Hyssos, Koralla
-	link = { comment = "_~_Dyn~~~Cult,italiotian~~Rel,roman_pantheon_~_" }
-	link = { ba = 402 imperator = 73 } # Opous -> Locri
-	link = { ba = 444 imperator = 78 } # Aigion -> Croton
+	link = { comment = "_~_Dyn~~~Cult,italiotian~~Rel,roman_pantheon~~Overlord,SYR~~DiploType,feudatory_~_" }
 	link = { ba = 407 imperator = 72 } # Chalcis -> Rhegium
+	link = { ba = 402 imperator = 73 } # Opous -> Locri
+	link = { comment = "_~_Dyn~~~Cult,italiotian~~Rel,roman_pantheon_~_" }
+	link = { ba = 444 imperator = 78 } # Aigion -> Croton
 	link = { ba = 402 imperator = 75 } # Opous -> Hipponium
 	link = { ba = 416 imperator = 52 } # Athens -> Thurii
 	link = { ba = 416 imperator = 54 } # Athens -> Heraclea

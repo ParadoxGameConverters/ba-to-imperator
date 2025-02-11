@@ -163,7 +163,7 @@ siksabbumi,assyrian
 qabran,assyrian
 shurudhumi,assyrian
 lubdan,assyrian
-gasuri,assyrian	
+gasuri,assyrian
 turshani,assyrian
 kar_ishtari,assyrian
 urbilumi,assyrian
@@ -251,7 +251,7 @@ nippuri,babylonian
 kishites,babylonian
 babylonian,babylonian
 sippari,babylonian
-akkadian,babylonian	
+akkadian,babylonian
 shashrumi,babylonian
 pulukkui,babylonian
 shitullumi,babylonian
