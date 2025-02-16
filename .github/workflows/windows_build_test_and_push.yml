@@ -37,6 +37,8 @@ jobs:
 
       - name: "Copy jar to Release directory"
         run: |
+          mkdir Release
+          mkdir Release/BaToImperator
           cp BaToImperator/target/BronzeAgeToImperator.jar Release/BaToImperator
 
       - name: "Build converter executable"
