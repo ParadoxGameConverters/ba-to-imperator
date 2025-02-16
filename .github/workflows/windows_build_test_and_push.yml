@@ -1,0 +1,150 @@
+name: Build, test and publish
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_local:
+    name: Build and publish local
+    if: github.repository_owner == 'ParadoxGameConverters'
+    runs-on: [ self-hosted, windows ]
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: "Get previous tag"
+        if: ${{ github.event_name == 'push' }}
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+      - name: "Build converter sln"
+        run: |
+          cd "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\"
+          .\MSBuild.exe -m -p:Configuration=Release $Env:GITHUB_WORKSPACE\BaToImperator.sln -target:BaToImperator
+
+      - name: "Build converter jar"
+        run: |
+          cd $Env:GITHUB_WORKSPACE\BaToImperator
+          mvn package
+
+      - name: "Copy jar to Release directory"
+        run: |
+          cp BaToImperator/target/BaToImperator.jar Release/BaToImperator
+
+      - name: "Build converter executable"
+        run: |
+          cd $Env:GITHUB_WORKSPACE\BaToImperator
+          mvn -e -X clean verify
+
+      - name: "Copy backend to Release directory"
+        run: |
+          xcopy /y /r /s BaToImperator\target\jpackage\BaToImperator  Release\BaToImperator\
+
+      - name: "Replace frontend background image"
+        run: |
+          rm Fronter.NET/Fronter.NET/Assets/Images/background.png
+          cp Resources/images/SteamMainImage.png Fronter.NET/Fronter.NET/Assets/Images/background.png
+
+      - name: "Build frontend"
+        uses: ./Fronter.NET/.github/actions/build_frontend
+        with:
+          fronter_dir: 'Fronter.NET'
+          release_dir: 'Release'
+
+      - name: "Prepare release zip"
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          cd "C:\Program Files\7-Zip\"
+          .\7z.exe a $Env:GITHUB_WORKSPACE\BaToImperator-win-x64.zip $Env:GITHUB_WORKSPACE\Release\*
+          cp $Env:GITHUB_WORKSPACE\BaToImperator-win-x64.zip $Env:GITHUB_WORKSPACE\BaToImperator-latest.zip
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ github.event_name != 'push' }}
+        with:
+          path: Release/
+
+      - name: "Upload binary to current release"
+        if: ${{ github.event_name == 'push' }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.previoustag.outputs.tag }}
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: BaToImperator-win-x64.zip
+          token: ${{ secrets.API_TOKEN_GITHUB }}
+
+      - name: "Upload binary to latest release"
+        if: ${{ github.event_name == 'push' }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: latest
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: BaToImperator-latest.zip
+          token: ${{ secrets.API_TOKEN_GITHUB }}
+
+      - name: "Cleanup"
+        if: always()
+        run: |
+          Get-ChildItem -Path $Env:GITHUB_WORKSPACE -Recurse -Force | Remove-Item -force -recurse
+
+  build_foreign:
+    name: Build foreign
+    if: github.repository_owner != 'ParadoxGameConverters'
+    runs-on: windows-2022
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: "Build converter sln"
+        run: |
+          cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\"
+          .\MSBuild.exe -m -p:Configuration=Release $Env:GITHUB_WORKSPACE\BaToImperator.sln -target:BaToImperator
+
+      - name: "Build converter jar"
+        run: |
+          cd $Env:GITHUB_WORKSPACE\BaToImperator
+          mvn package
+
+      - name: "Copy jar to Release directory"
+        run: |
+          cp BaToImperator/target/BaToImperator.jar Release/BaToImperator
+
+      - name: "Build converter executable"
+        run: |
+          cd $Env:GITHUB_WORKSPACE\BaToImperator
+          mvn -e -X clean verify
+
+      - name: "Copy backend to Release directory"
+        run: |
+          xcopy /y /r /s BaToImperator\target\jpackage\BaToImperator  Release\BaToImperator\
+
+      - name: "Replace frontend background image"
+        run: |
+          rm Fronter.NET/Fronter.NET/Assets/Images/background.png
+          cp Resources/images/SteamMainImage.png Fronter.NET/Fronter.NET/Assets/Images/background.png
+
+      - name: "Build frontend"
+        uses: ./Fronter.NET/.github/actions/build_frontend
+        with:
+          fronter_dir: 'Fronter.NET'
+          release_dir: 'Release'
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ github.event_name != 'push' }}
+        with:
+          path: Release/
+    
