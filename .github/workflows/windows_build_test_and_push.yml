@@ -50,10 +50,10 @@ jobs:
         run: |
           xcopy /y /r /s BaToImperator\target\jpackage\BaToImperator  Release\BaToImperator\
 
-      - name: "Replace frontend background image"
-        run: |
-          rm Fronter.NET/Fronter.NET/Assets/Images/background.png
-          cp Resources/images/SteamMainImage.png Fronter.NET/Fronter.NET/Assets/Images/background.png
+#      - name: "Replace frontend background image"
+#        run: |
+#          rm Fronter.NET/Fronter.NET/Assets/Images/background.png
+#          cp Resources/images/SteamMainImage.png Fronter.NET/Fronter.NET/Assets/Images/background.png
 
       - name: "Build frontend"
         uses: ./Fronter.NET/.github/actions/build_frontend
