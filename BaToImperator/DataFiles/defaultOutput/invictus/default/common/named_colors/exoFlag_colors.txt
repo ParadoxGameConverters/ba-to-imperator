@@ -1,0 +1,13 @@
+﻿# Colors used for exoFlags
+
+colors = {
+	
+	sicsyria_color = rgb { 158 50 3 }
+
+	varangia_color = rgb { 34 17 81 }
+	varangia_flag_color = rgb { 37 29 58 }
+
+	per_sheklesh_color = rgb { 152 163 0 }
+
+	per_khati_color = rgb { 100 44 178 }
+}

@@ -1,0 +1,115 @@
+﻿pelasgian_group = {
+	
+	color = hsv { 0.1  0.7  0.8 }
+	primary = light_infantry
+	second = heavy_infantry
+	flank = archers
+	
+	primary_navy = tetrere
+	secondary_navy = octere
+	flank_navy = liburnian
+	
+	levy_template = levy_greek
+
+	male_names = {
+		Aetas	Agelawos	Agetas	Agroquolos	Aigyptios	Ainumenos	Aithaios	Aiwolos	Akhilawos	Alatas	Alektruon	Alxanor	Amphiagoros	Amphialawos	Amphialos	Amphiarewos	Amphidoros	Amphiwastos	Antinor	Antiphamos	Armenos	Arnumenos	Atukhos	Aupnos	Awistodotos	Dektos	Dexelawos	Dexiwos	Dolikhanor	Dwoios	Edilawos	Ekedamos	Ekhanor	Eriweros	Etewastus	Etewoklewes	Eudamos	Eugoros	Eukalos	Eukhomenos	Eumetas	Eunawos	Eupharos	Euplowos	Euporos	Eurydamos	Euryptoleus	Eutroquos	Hiketas	Hoplomenos	Iskhuodotos	Iwasos	Kasos	Kassamenos	Keramewos	Kerlainos	Klumenos	Komatas	Komawens	Korudawos	Kosouphos	Kullanos	Kuprios	Kutaios	Kutheros	Lakadanor	Lamiakos	Lawodokos	Lawoguhomos	Lawopoquos	Leprios	Leukasos	Leukophrus	Lukios	Lukoworos	Lurnassos	Makhatas	Malanios	Metanor	Mnasiwerogs	Mologuros	Naputios	Nestianor	Newokitos	Oikhalios	Okunawos	Okus	Ophelanor	Opheltas	Opilimnios	Orestas	Ortinawos	Pamisios	Perithowos	Pharaios	Philiotos	Philowergos	Phulakos	Podargos	Polukastos	Pontios	Psellos	Simos	Skhoinewatas	Souphos	Tomarkos	Tridalos	Tylisios	Tyrios	Wadukhaserwos	Wadus	Wastuokhos	Widwoios	Wiphinoos	Woinoqus
+	}
+	female_names = {
+		Charis Demetria Diantha Dionysia Agathokleia Agiatis Antiochis Apame Apame
+		Apollonia Ariadne Arsinoe Artemisia Athenais Belistiche Berenike Damarate
+		Daphne Demo Elpis Eirene Euphemia Euthalia Hypatia Kandake Kassandra Megaira
+		Melaina Narkissa Nysa Olympia Phila Phile Eurydike Histieia Isidora Kalliope
+		Kallista Kellanthis Kleio Kleopatra Kratesikleia Lanassa Laodike Laodike
+		Libys Lysandra Lysis Mestris Monime Nephoris Oinanthe Pamphile Phila Philotera
+		Phthia Ptolema Sofia Sostrate Thais Theophila Thetima Timo Xanthe Xene Xenia
+		Ptolemais Selene Sophe Stratonike Stratonike Theoxene Thoeris Tryphaina Zosime
+		 
+		Ada Aegyptia Anthis Antigona Aphrodisia Archestrate Archilla Archippe Aristagora 
+		Ariste Aristion Aristo Aristoboule Aristodike Aristokleia Aristokrateia Aristomache 
+		Aristonike Aristylla Artemis Aspasia Biote Boidion Chairestrate Chairippe Choirine 
+		Chrysilla Chrysis Demokrateia Demostrate Diokleia Doris Dorkas Eukleia Eukoline Euphrosyne 
+		Euporia Eutychis Glykera Hedeia Hediste Hedyle Hedyline Herais Hiero Hierokleia Hippostrate 
+		Homolois Kallimache Kallippe Kallis Kallistion Kallisto Kallistomache Kallistrate Kleagora 
+		Kleariste Kleino Kleito Kleo Kleopatra Kleostrate Krateia Laodike Leaina Leontis Lysimache 
+		Lysistrate Malthake Mania Melissa Melitta Menestrate Meniske Metrodora Mika Mnesarete Mnesistrate 
+		Murrhine Nausistrate Nikagora Nikaia Nikareta Nikarete Nikeso Niko Nikomache Nikostrate Olympias
+		Pamphile Parthenis Patrokleia Phanagora Phano Phanostrate Philainis Phileia Philias Philinna Philippa 
+		Philista Phillo Philokleia Philostrate Philotera Philotis Philoumene Philoxena Plangon Plathane Pythias 
+		Rhode Satyra Sima Simale Simon Sostrate Syra Theano Theodora Theodote Thraitta Timagora Timarete Timokleia 
+		Timostrate Xeno Xenokrateia Zopyra Zopyris
+	}
+
+	nickname = {
+		NICKNAME_EPIPHANES
+		NICKNAME_EUERGETES
+		NICKNAME_EUPATOR
+		NICKNAME_EUSEBES
+		NICKNAME_KALLINIKOS
+		NICKNAME_NEOS_DIONYSOS
+		NICKNAME_NIKATOR
+		NICKNAME_PHILADELPHOS
+		NICKNAME_PHILOMETOR
+		NICKNAME_PHILOPATOR
+		NICKNAME_SOTER
+		NICKNAME_THEOS
+		NICKNAME_POLIORCETES
+		NICKNAME_DOSON
+		NICKNAME_GONATAS
+		NICKNAME_KALOS
+	}
+	
+	family = {
+		Ahmid.Ahmid.Ahmid.Ahmid
+		Galestus.Galestid.Galestid.Galestid
+		Kenamus.Kenamid.Kenamid.Kenamid
+		Naravid.Naravid.Naravid.Naravid
+		Penamus.Penamid.Penamid.Penamid
+		Senuid.Senuid.Senuid.Senuid
+		Setnid.Setnid.Setnid.Setnid
+		Arganid.Arganid.Arganid.Arganid
+		Psammid.Psammid.Psammid.Psammid
+		Philothid.Philothid.Philothid.Philothid
+		Timolid.Timolid.Timolid.Timolid
+		Zosid.Zosid.Zosid.Zosid
+		Phileid.Phileid.Phileid.Phileid
+		Nicodemid.Nicodemid.Nicodemid.Nicodemid
+		Nefarid.Nefarid.Nefarid.Nefarid
+		Bastid.Bastid.Bastid.Bastid
+		Xeneid.Xeneid.Xeneid.Xeneid
+		Naravid.Naravid.Naravid.Naravid
+		Ezanid.Ezanid.Ezanid.Ezanid
+		Ahmid.Ahmid.Ahmid.Ahmid
+		Alarus.Alara.Alarid.Alarid
+		Harsiotes.Harsiotes.Harsiotid.Harsiotid
+		Henus.Hena.Henid.Henid
+		Ibus.Iba.Ibid.Ibid
+		Khabbash.Khabbash.Khabbashid.Khabbashid	
+		Amasus.Amasa.Amasid.Amasid
+		Nectanebo.Nectanebo.Nectanebid.Nectanebid
+		Petubast.Petubast.Petubastes.Petubastid
+		Djedhid.Djedhid.Djedhid.Djedhid
+		Tachys.Tachya.Tachyes.Tachyid
+		Mago.Mago.Mago.Magid	
+	}
+	culture = {		
+		kadmeian = {} #Boetia
+		sithonian = {} #Chaldike
+		kranaoi = {} #Athens
+		kuretes = {} #Aetolia
+		phthiotai = {} #Thessaly
+		mukanai = {}
+		
+
+	}
+	
+	barbarian_names = { 
+		hellenic_barb
+	}
+	
+	
+	
+	graphical_culture = greek_gfx
+	ethnicities = {
+		10 = greek
+	}
+}

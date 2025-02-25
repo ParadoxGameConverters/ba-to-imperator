@@ -1,0 +1,101 @@
+deity_manager = {
+	deities_database = { ### KEYS 6900-7000 ###
+		# Hurrian Deities
+		6900 = {
+			key = omen_teshub
+			deity = deity_teshub
+		}
+		6901 = {
+			key = omen_kumarbi
+			deity = deity_kumarbi
+		}
+		6902 = {
+			key = omen_shaushka
+			deity = deity_shaushka
+		}
+		6903 = {
+			key = omen_hebat
+			deity = deity_hebat
+		}
+		6904 = {
+			key = omen_sharruma
+			deity = deity_sharruma
+		}
+		6905 = {
+			key = omen_shimegi
+			deity = deity_shimegi
+		}
+		6906 = {
+			key = omen_kushuh
+			deity = deity_kushuh
+		}
+		6907 = {
+			key = omen_nabarbi
+			deity = deity_nabarbi
+		}
+		6908 = {
+			key = omen_hutena_hutelluri
+			deity = deity_hutena_hutelluri
+		}
+		6909 = {
+			key = omen_sumuqan
+			deity = deity_sumuqan
+		}
+		6910 = {
+			key = omen_ashtabil
+			deity = deity_ashtabil
+		}
+		6911 = {
+			key = omen_hayya
+			deity = deity_hayya
+		}
+		6912 = {
+			key = omen_hurrian_ningal
+			deity = deity_hurrian_ningal
+		}
+		6913 = {
+			key = omen_sherri_hurri
+			deity = deity_sherri_hurri
+		}
+		6914 = {
+			key = omen_shuwaliyatti
+			deity = deity_shuwaliyatti
+		}
+		6915 = {
+			key = omen_tasmisu
+			deity = deity_tasmisu
+		}
+		6916 = {
+			key = omen_kubaba
+			deity = deity_kubaba
+		}
+		6917 = {
+			key = omen_allani
+			deity = deity_allani
+		}
+		6918 = {
+			key = omen_ebrimusha
+			deity = deity_ebrimusha
+		}
+		6919 = {
+			key = omen_nubadig
+			deity = deity_nubadig
+		}
+		6920 = {
+			key = omen_pirinki
+			deity = deity_pirinki
+		}
+		6921 = {
+			key = omen_rashap
+			deity = deity_rashap
+		}
+		6922 = {
+			key = omen_tadmish
+			deity = deity_tadmish
+		}
+		6923 = {
+			key = omen_irshappa
+			deity = deity_irshappa
+		}
+	}
+} 
