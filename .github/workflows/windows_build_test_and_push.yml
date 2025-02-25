@@ -49,6 +49,7 @@ jobs:
       - name: "Copy DataFiles to Release directory"
         run: |
           mkdir Release/BaToImperator/DataFiles
+          xcopy /y /r /s BaToImperator\target\BaToImperator\DataFiles  Release\BaToImperator\DataFiles\
           
       - name: "Copy backend to Release directory"
         run: |
