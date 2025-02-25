@@ -49,7 +49,7 @@ jobs:
       - name: "Copy DataFiles to Release directory"
         run: |
 #          mkdir Release/BaToImperator/DataFiles
-          xcopy /y /r /s BaToImperator\target\BaToImperator\DataFiles\  Release\BaToImperator\DataFiles\
+          xcopy /y /r /s BaToImperator\target\BaToImperator\DataFiles  Release\BaToImperator\DataFiles\
 #          xcopy /y /r /s BaToImperator\target\BaToImperator\BaToImperator\DataFiles  Release\BaToImperator\DataFiles\
 #           cp Release\BaToImperator\test.txt ba-to-imperator/BaToImperator/DataFiles/Readme.txt
           
