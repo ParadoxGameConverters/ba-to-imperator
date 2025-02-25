@@ -1,0 +1,131 @@
+option = {
+	name = year
+	displayName = YEAROPTION
+	tooltip = YEAROPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = saveYear
+			displayName = SAVEYEAR
+			tooltip = SAVEYEARTIP
+			default = true
+		}
+		radioOption = {
+			name = saveYearAUC
+			displayName = SAVEYEARAUC
+			tooltip = SAVEYEARAUCTIP
+			default = false
+		}
+		radioOption = {
+			name = minYear
+			displayName = MINYEAR
+			tooltip = MINYEARTIP
+			default = false
+		}
+		radioOption = {
+			name = customYear
+			displayName = CUSTOMYEAR
+			tooltip = CUSTOMYEARTIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = customYearDate
+	displayName = CUSTOMYEARDATE
+	tooltip = CUSTOMYEARDATETIP
+	textSelector = {	
+		value = "100.1.1"
+		editable = true
+		tooltip = CUSTOMYEARDATETIP2
+	}
+}
+
+option = {
+	name = republic
+	displayName = REPUBLICOPTION
+	tooltip = REPUBLICOPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = repMer
+			displayName = REPMER
+			tooltip = REPMERTIP
+			default = true
+		}
+		radioOption = {
+			name = repFeu
+			displayName = REPFEU
+			tooltip = REPFEUTIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = nomad
+	displayName = NOMAD
+	tooltip = NOMADTIP
+	radioSelector = {
+		radioOption = {
+			name = nomadAll
+			displayName = NOMADALL
+			tooltip = NOMADALLTIP
+			default = false
+		}
+		radioOption = {
+			name = nomadCulture
+			displayName = NOMADCULTURE
+			tooltip = NOMADCULTURETIP
+			default = true
+		}
+		radioOption = {
+			name = nomadNone
+			displayName = NOMADNONE
+			tooltip = NOMADNONETIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = bigMods
+	displayName = BIGMODS
+	tooltip = BIGMODSTIP
+	radioSelector = {
+		radioOption = {
+			name = bigModsAuto
+			displayName = BIGMODSAUTO
+			tooltip = BIGMODSAUTOTIP
+			default = true
+		}
+		radioOption = {
+			name = bigModsInvictus
+			displayName = BIGMODSINVICTUS
+			tooltip = BIGMODSINVICTUSTIP
+			default = false
+		}
+		radioOption = {
+			name = bigModsInvictus1_7
+			displayName = BIGMODSINVICTUS1_7
+			tooltip = BIGMODSINVICTUS1_7TIP
+			default = false
+		}
+		radioOption = {
+			name = bigModsVanilla
+			displayName = BIGMODSVANILLA
+			tooltip = BIGMODSVANILLATIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = output_name
+	displayName = MODNAME
+	tooltip = MODNAMETIP
+	textSelector = {	
+		value = ""
+		editable = true
+		tooltip = MODNAMETIP2
+	}
+}
