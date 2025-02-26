@@ -52,7 +52,7 @@ jobs:
           
       - name: "Copy DataFiles to Release directory2"
         run: |
-          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\ Release/BaToImperator/
+          xcopy C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\ Release/BaToImperator/DataFiles/
           
       - name: "Copy backend to Release directory"
         run: |
