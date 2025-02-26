@@ -48,7 +48,7 @@ jobs:
 
       - name: "Copy DataFiles to Release directory1"
         run: |
-          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt $Env:GITHUB_WORKSPACE\Release\TestFile1.txt
+          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt Release/BaToImperator/TestFile1.txt
           
       - name: "Copy DataFiles to Release directory2"
         run: |
