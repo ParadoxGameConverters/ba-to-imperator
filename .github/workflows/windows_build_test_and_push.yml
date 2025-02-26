@@ -55,6 +55,7 @@ jobs:
           mkdir Release/BaToImperator/configurables
           mkdir Release/BaToImperator/defaultOutput
           mkdir Release/BaToImperator/output
+          mkdir Release/Configuration
           xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\configurables  Release\BaToImperator\configurables
           xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\defaultOutput  Release\BaToImperator\defaultOutput
           xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Fronter  Release\Configuration
