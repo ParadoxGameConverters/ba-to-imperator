@@ -737,7 +737,7 @@ public class Main
             LOGGER.info("defaultOutput copied after "+outputTimeTot+" minutes");
             LOGGER.finest("69%");
             
-            ////Output.copyBAFlags(modFlagGFX,modDirectory); //Copies flag gfx, really slow, comment out during testing
+            Output.copyBAFlags(modFlagGFX,modDirectory); //Copies flag gfx, really slow, comment out during testing
             Output.namedColorCreation(colorList,modDirectory);
 
             flag = 0;

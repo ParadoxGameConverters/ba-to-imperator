@@ -171,7 +171,7 @@ public class Directories
         out.println("}");
         out.println("name="+quote+"Converted - "+modName+quote);
         out.println("path="+quote+mainModFolder+"/"+quote);
-        out.println("supported_version="+quote+"2.*"+quote);
+        out.println("supported_version="+quote+"2.0.4"+quote);
 
         out.flush();
 
