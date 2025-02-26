@@ -50,10 +50,14 @@ jobs:
         run: |
           cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt Release/BaToImperator/TestFile1.txt
           
-      - name: "Copy DataFiles to Release directory2"
+      - name: "Copy DataFiles to Release directory"
         run: |
-          mkdir Release/BaToImperator/DataFiles
-          xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles  Release\BaToImperator\DataFiles
+          mkdir Release/BaToImperator/configurables
+          mkdir Release/BaToImperator/defaultOutput
+          mkdir Release/BaToImperator/output
+          xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\configurables  Release\BaToImperator\configurables
+          xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\defaultOutput  Release\BaToImperator\defaultOutput
+          xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Fronter  Release\Configuration
           
       - name: "Copy backend to Release directory"
         run: |
