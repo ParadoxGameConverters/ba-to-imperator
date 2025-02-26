@@ -48,7 +48,7 @@ jobs:
 
       - name: "Copy DataFiles to Release directory"
         run: |
-          cp $Env:GITHUB_WORKSPACE\BaToImperator-win-x64.zip $Env:GITHUB_WORKSPACE\BaToImperator-latestTest.zip
+          xcopy /y /r /s $BaToImperator\target\jpackage\BaToImperator\ $Env:GITHUB_WORKSPACE\
           
       - name: "Copy backend to Release directory"
         run: |
