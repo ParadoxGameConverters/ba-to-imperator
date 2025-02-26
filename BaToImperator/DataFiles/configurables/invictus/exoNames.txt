@@ -114,17 +114,17 @@ Lydian,Fata,tag=GAD
 Hurrian,Shuhni,tag=GAD
 
 #Chersonesos
-sumerian,Saxar-Sal,tag=CHR
-elamite,Muru-Zikki,tag=CHR
-Hurrian,Nigale-Eshe,tag=CHR
-hebrew,Hatzi'i,tag=CHR
-Arabic,Shibh Jazira,tag=CHR
-libyan,Tagzirt,tag=CHR
-Illyrian,Dassapamodus,tag=CHR
-Lydian,Kofu-Kllida,tag=CHR
-odrysi,Athdeva,tag=CHR
-Lycian,Pruwa-Prnna,tag=CHR
-Egyptian,Chersunesus,tag=CHR
+sumerian,Saxar-Sal,tag=CHS
+elamite,Muru-Zikki,tag=CHS
+Hurrian,Nigale-Eshe,tag=CHS
+hebrew,Hatzi'i,tag=CHS
+Arabic,Shibh Jazira,tag=CHS
+libyan,Tagzirt,tag=CHS
+Illyrian,Dassapamodus,tag=CHS
+Lydian,Kofu-Kllida,tag=CHS
+odrysi,Athdeva,tag=CHS
+Lycian,Pruwa-Prnna,tag=CHS
+Egyptian,Chersunesus,tag=CHS
 
 #Emporion
 elamite,Sha'Udda,tag=EMP

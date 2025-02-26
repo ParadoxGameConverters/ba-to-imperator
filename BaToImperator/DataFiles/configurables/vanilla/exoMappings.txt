@@ -48,7 +48,7 @@
 	link = { ba = 1973 imperator = 4549 imperator = 4550 imperator = 4562 imperator = 4563 imperator = 4565 imperator = 4564 imperator = 4561 imperator = 4566 imperator = 4559 imperator = 4544 imperator = 4543 imperator = 4541 imperator = 4540 imperator = 4542 imperator = 4539 imperator = 4560 } # Miletos -> Pantikapaion, Kimmerikon, Hermonassa, Phanagoria, Gorgippia, Labrys, Lebedia, Bata, Pataroue, Theodosia, Athenaion, Aloustou Phrourion, Lampas, Neapolis Taurike, Charax, Azara
 	link = { comment = "_~_Dyn~~~Cult,bosporan~~Rel,roman_pantheon~~Missions,OLB_~_" }
 	link = { ba = 1973 imperator = 4529 imperator = 4528 imperator = 4530 imperator = 4531 } # Miletos -> Olbia, Scopuli, Hippolaou Akra, Borysthenia
-	link = { comment = "_~_Dyn~~~Cult,bosporan~~Rel,roman_pantheon~~Missions,CHR_~_" }
+	link = { comment = "_~_Dyn~~~Cult,bosporan~~Rel,roman_pantheon~~Missions,CHS_~_" }
 	link = { ba = 417 imperator = 4538 imperator = 4537 imperator = 4536 imperator = 4534 } # Megara -> Chersonesos, Parthenion, Kerkinitis, Kalos Limen
 	link = { comment = "_~_Dyn~~~Cult,bosporan~~Rel,roman_pantheon_~_" }
 	link = { ba = 1973 imperator = 4525 imperator = 4526 imperator = 4527 } # Miletos -> Tyras, Nikonia, Istrianon

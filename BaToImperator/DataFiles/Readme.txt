@@ -41,7 +41,7 @@ CREDITS
 
 An list of those who contributed effort to this mammoth undertaking
 
-Idhrendur                             - Sanity Checks, Review, and Fronter integration
+Idhrendur                             - Sanity Checks, Review, Workflows, and Fronter integration
 Shinymewtwo99 (aka Dr. Dudelsack)     - Lead Developer, Programmer, Events, and Data Files
 olivenkranz                           - Balancing
 linkluver                             - Egyptian ExoNames
