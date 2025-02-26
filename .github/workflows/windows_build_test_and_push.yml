@@ -46,10 +46,6 @@ jobs:
           cd $Env:GITHUB_WORKSPACE\BaToImperator
           mvn -e -X clean verify
 
-      - name: "Copy DataFiles to Release directory1"
-        run: |
-          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt Release/BaToImperator/TestFile1.txt
-          
       - name: "Copy DataFiles to Release directory"
         run: |
           mkdir Release/BaToImperator/configurables
@@ -59,6 +55,9 @@ jobs:
           xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\configurables  Release\BaToImperator\configurables
           xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\defaultOutput  Release\BaToImperator\defaultOutput
           xcopy /y /r /s C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Fronter  Release\Configuration
+          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt Release/BaToImperator/Readme.txt
+          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\license.txt Release/BaToImperator/license.txt
+          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\rakaly_win.exe Release/BaToImperator/rakaly_win.exe
           
       - name: "Copy backend to Release directory"
         run: |
