@@ -46,9 +46,13 @@ jobs:
           cd $Env:GITHUB_WORKSPACE\BaToImperator
           mvn -e -X clean verify
 
-      - name: "Copy DataFiles to Release directory"
+      - name: "Copy DataFiles to Release directory1"
         run: |
-          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt $Env:GITHUB_WORKSPACE\TestFile.txt
+          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt $Env:GITHUB_WORKSPACE\Release\TestFile1.txt
+          
+      - name: "Copy DataFiles to Release directory2"
+        run: |
+          cp C:\actions-runner\_work\ba-to-imperator\ba-to-imperator\BaToImperator\DataFiles\Readme.txt $Env:GITHUB_WORKSPACE\BaToImperator\TestFile2.txt
           
       - name: "Copy backend to Release directory"
         run: |
