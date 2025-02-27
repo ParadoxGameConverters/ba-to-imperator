@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.util.Random;
 import java.util.ArrayList;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 /**
  * Information which is output
  *
@@ -697,40 +699,14 @@ public class Output
 
     }
     
-    public static void copyRawFast(String dir1, String dir2) throws IOException
+    public static void copySuperFast(String dir1, String dir2) throws IOException
     {
 
-        String VM = "\\";
-        VM = VM.substring(0);
-
-        FileInputStream fileIn= new FileInputStream(dir1);
-        FileOutputStream fileOut= new FileOutputStream(dir2);
-        
-        ArrayList<Integer> output = new ArrayList<Integer>();
-
-        boolean endOrNot = true;
-        int aqq = 0;
-
-        try {
-            while (endOrNot = true && aqq != -1){
-                if (aqq != -1) {
-                    aqq = fileIn.read();
-                    output.add(aqq);
-                    //fileOut.write(aqq);
-                }
-
-            }
-        }catch (java.util.NoSuchElementException exception){
-            endOrNot = false;
-            fileIn.close();
-            int count = 0;
-            int outputLen = output.size();
-            while (count < output.size()) {
-                fileOut.write(output.get(count));
-            }
-            fileOut.close();
-
-        }   
+        File inputFile = new File(dir1);
+        File outputFile = new File(dir2);
+        Path inputPath = inputFile.toPath();
+        Path outputPath = outputFile.toPath();
+        Files.copy(inputPath,outputPath);
 
     }
 
@@ -759,18 +735,16 @@ public class Output
             String emblemDir = baFlags.get(count);
             //String updatedEmblem = emblem.replace(".tga","_ba_converted.tga");
             //updatedEmblem = updatedEmblem.replace(".tga","_ba_converted.tga");
-            //try {
+            try {
                 int length = emblemDir.length();
                 String emblem = emblemDir.split("colored_emblems/")[1];
                 String updatedEmblem = emblem.replace(".tga","_ba_converted.tga");
                 updatedEmblem = updatedEmblem.replace(".dds","_ba_converted.dds");
-                //String extension = emblem.substring(length-3,length);
-                System.out.println("Copying "+emblem);
-                //Output.copyRaw(emblemDir,outputDir+"/gfx/coat_of_arms/colored_emblems/"+updatedEmblem);
-                Output.copyRaw(emblemDir,outputDir+"/gfx/coat_of_arms/colored_emblems/"+emblem);
-            //}catch (java.io.FileNotFoundException exception) { //if flag cannot be found, will use default one
-                //System.out.println("Error with "+emblem);
-            //}
+                String outputFile = outputDir+"/gfx/coat_of_arms/colored_emblems/"+emblem;
+                copySuperFast(emblemDir,outputFile);
+            }catch (Exception e) { //if flag cannot be found, will ignore
+                System.out.println("Error with copying "+emblemDir+", skipping image");
+            }
             count = count + 1;
         }
 
