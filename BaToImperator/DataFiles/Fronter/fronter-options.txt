@@ -10,9 +10,9 @@ option = {
 			default = true
 		}
 		radioOption = {
-			name = yes
-			displayName = HYBRIDYES
-			tooltip = HYBRIDYESTIP
+			name = invictus
+			displayName = HYBRIDINV
+			tooltip = HYBRIDINVTIP
 			default = false
 		}
 	}
@@ -20,13 +20,19 @@ option = {
 
 option = {
 	name = invictusDir
-	displayName = INVICTUSDIROPTION
+	displayName = INVICTUSDIR
 	tooltip = INVICTUSDIRTIP
 	radioSelector = {
 		radioOption = {
 			name = default
 			displayName = INVICTUSDIRDEFAULT
 			tooltip = INVICTUSDIRDEFAULTTIP
+			default = true
+		}
+		radioOption = {
+			name = custom
+			displayName = INVICTUSDIRCUSTOM
+			tooltip = INVICTUSDIRCUSTOMTIP
 			default = true
 		}
 	}

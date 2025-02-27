@@ -199,15 +199,49 @@ public class Main
             
             int splitSize = empireRank+800;
             
+            ArrayList<String> customModInstalls = Importer.importBasicFile("configurables/modDirectories.txt");
+            
             boolean invictus = false;
-            if (configDirectories[7].equals("yes")) { //if Invictus hybridization is enabled
+            if (configDirectories[7].equals("invictus")) { //if Invictus hybridization is enabled
                 invictus = true;
             }
             
             String invictusDir = "";
-            if (configDirectories[8].equals("default")){ //default directory for Invictus
-                invictusDir = "C:/Program Files (x86)/Steam/steamapps/workshop/content/859580/2532715348";
-            } 
+            if (configDirectories[8].equals("default") && invictus){ //default directory for Invictus
+                String steamInvDir = ":/Program Files (x86)/Steam/steamapps/workshop/content/859580/2532715348";
+                int dirCount = 0;
+                int dirCountMax = 4;
+                while (dirCount < dirCountMax) {
+                    String invictusDirLetter = "C";
+                    if (dirCount == 1) {
+                        invictusDirLetter = "D";
+                    } else if (dirCount == 2) {
+                        invictusDirLetter = "E";
+                    } else if (dirCount == 3) {
+                        invictusDirLetter = "F";
+                    }
+                    invictusDir = invictusDirLetter+steamInvDir;
+                    LOGGER.info("Checking for Invictus on the "+invictusDirLetter+": drive...");
+                    File invictusTest = new File(invictusDir);
+                    if (invictusTest.isDirectory()) {
+                        LOGGER.info("Invictus found on the "+invictusDirLetter+": drive!");
+                        dirCount = dirCountMax + 1;
+                    }
+                    dirCount = dirCount + 1;
+                    if (dirCount == dirCountMax) {
+                        LOGGER.severe("Unable to detect Invictus! If you have a custom or non-Steam installation, select the 'Custom Installation' Invictus Directory option before converting.");
+                    }
+                }
+                
+            } else if (configDirectories[8].equals("custom")){ //default directory for Invictus
+                invictusDir = Output.cultureOutput(customModInstalls,"invictus");
+                File invictusTest = new File(invictusDir);
+                if (invictusTest.isDirectory()) {
+                    LOGGER.info("Invictus found!");
+                } else {
+                    LOGGER.severe("Unable to detect Invictus at "+invictusDir+"");
+                }
+            }
             
             String mappingDir = "configurables/vanilla/";
             if (invictus) {

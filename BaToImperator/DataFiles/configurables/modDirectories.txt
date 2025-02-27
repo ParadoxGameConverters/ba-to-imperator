@@ -1,0 +1,5 @@
+#Specify where your custom Imperator:Invictus installation is located to the right of "invictus,"
+#Otherwise, it will be impossible to hybridize with Invictus!
+#By default, mods are stored in C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod
+
+invictus,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\Invictus\
