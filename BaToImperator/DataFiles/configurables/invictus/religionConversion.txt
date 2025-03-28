@@ -1,7 +1,7 @@
 
 #Canaanite becomes Jewish if under a Hebrew realm or Hebrew under a non-Canaanite realm
 canaanite_religion,judaism,tagCulture=hebrew
-canaanite_religion,carthaginian_pantheon,notTagCulture=hebrew
+#canaanite_religion,carthaginian_pantheon,notTagCulture=hebrew
 canaanite_religion,judaism,culture=hebrew
 canaanite_religion,carthaginian_pantheon
 
