@@ -190,6 +190,8 @@ public class Main
             String saveMonuments = "tempMonuments.txt";
             
             String saveDeities = "tempDeities.txt";
+            
+            String saveCultures = "tempCultures.txt";
 
             int compressedOrNot = Importer.compressTest(impDirSave); //0 for compressed, 1 for decompressed
             
@@ -275,8 +277,8 @@ public class Main
             }
             
             if (saveInfo[1].equals("bad")) {
-                LOGGER.warning("Unable to detect save file date! Defaulting to 450.1.1");
-                saveInfo[1] = ("450.1.1");
+                LOGGER.warning("Unable to detect save file date! Defaulting to 785.1.1");
+                saveInfo[1] = ("785.1.1");
             }
             
             date = saveInfo[1];
@@ -404,7 +406,11 @@ public class Main
             TempFiles.tempCreate(impDirSave, "deity_manager={", "great_work_manager={", saveDeities);
             //ArrayList<String> tempDeities = TempFiles.tempCreateInMemory(wholeSaveFile, "deity_manager={", "great_work_manager={");
 
-            LOGGER.info("temp Monuments created");
+            LOGGER.info("temp Deities created");
+            
+            TempFiles.tempCreate(impDirSave, "country_culture_manager={", "legion_manager={", saveCultures);
+            
+            LOGGER.info("tempCultures created");
 
             long tempTime = System.nanoTime();
             long tempTot = (((tempTime - startTime) / 1000000000)/60) ;
@@ -447,6 +453,9 @@ public class Main
             baTagInfo = importer.importCountry(saveCountries);
             ArrayList<Deity> baDeityInfo = new ArrayList<Deity>();
             baDeityInfo = importer.importDeities(saveDeities);
+            
+            ArrayList<CultureRights> allCRs = new ArrayList<CultureRights>();
+            allCRs = Importer.importCultureRights(saveCultures);
             
             ArrayList<Monument> baMonumentInfo = new ArrayList<Monument>();
             baMonumentInfo = importer.importMonuments(saveMonuments);
@@ -872,6 +881,7 @@ public class Main
             ArrayList<String> characterReadme = new ArrayList<String>();
             characterReadme.add("#If you want to add your own custom character, all character ID's must be ordered 1 after another,");
             characterReadme.add("#so if Bob is ID 69, for example, Billybobjoe has to be ID 70, and so on.");
+            characterReadme.add("#Additionally, parents must be defined before their children.");
             characterReadme.add("");
             characterReadme.add("#The next available ID is "+availableCharID);
             Output.outputBasicFile(characterReadme,"000_README.txt",modDirectory+"/setup/characters");
@@ -894,6 +904,8 @@ public class Main
                     Output.outputBasicFile(invMonumentFile,"01_great_works_dde.txt",modDirectory+"/setup/main");
                 }
             }
+            
+            baTagInfo = Processing.applyCRsToCountries(baTagInfo,cultureMappings,allCRs);
             
             ArrayList<String[]> exoProvinces = Importer.importExoMappings(mappingDir+"exoMappings.txt");
             irProvinceList = Processing.addExoProvinces(irProvinceList,exoProvinces,vanillaProvinces,exoCultureMappings);

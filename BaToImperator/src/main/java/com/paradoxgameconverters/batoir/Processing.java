@@ -2559,6 +2559,7 @@ public class Processing
                         int civicTech = irCountry.getCivicTech();
                         int oratoryTech = irCountry.getOratoryTech();
                         int religiousTech = irCountry.getReligiousTech();
+                        ArrayList<CultureRights> CountryCRs = irCountry.getCultureRights();
                         //String culture = "roman"; //testing
                         //String religion = "indo_iranian_religion"; //testing
 
@@ -2589,6 +2590,26 @@ public class Processing
                         if (!capital.equals("99999")) { //in case a country has no capital, don't output
                             lines.add(tab+tab+tab+"capital = "+capital);
                         }
+                        int CRSize = 0;
+                        int CRCount = 0;
+                        if (CountryCRs != null) {
+                            CRSize = CountryCRs.size();
+                            lines.add(tab+tab+tab+"poptype_rights = {");
+                        }
+                        while (CRCount < CRSize) {
+                            CultureRights selectedCR = CountryCRs.get(CRCount);
+                            String CRCulture = selectedCR.getCulture();
+                            String CRType = selectedCR.getType();
+                            lines.add(tab+tab+tab+tab+"{");
+                            lines.add(tab+tab+tab+tab+tab+"culture = "+CRCulture);
+                            lines.add(tab+tab+tab+tab+tab+"type = "+CRType);
+                            lines.add(tab+tab+tab+tab+"}");
+                            CRCount = CRCount + 1;
+                            if (CRCount == CRSize) {
+                                lines.add(tab+tab+tab+"}");
+                            }
+                        }
+                        
                         if (antagonist) {
                             lines.add(tab+tab+tab+"is_antagonist = yes");
                         }
@@ -3010,13 +3031,13 @@ public class Processing
         if (birthMonth > irDateMonth && newBirthYear >= irDateYear) { //rare edge-case if birth/death occured on same year of save on or after October
             birthMonth = irDateMonth;
             newBirthYear = irDateYear;
-            //System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
+            System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
         }
         
         if (birthMonth == irDateMonth && newBirthYear >= irDateYear && birthDayOfMonth > irDateDayOfMonth) {
             birthDayOfMonth = irDateDayOfMonth;
             newBirthYear = irDateYear;
-            //System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
+            System.out.println("Adjusted date from "+birthday+" to "+newBirthYear+"."+birthMonth+"."+birthDayOfMonth);
         }
             
         String newBirthday = newBirthYear+"."+birthMonth+"."+birthDayOfMonth;
@@ -3846,6 +3867,8 @@ public class Processing
                 String familyName = selectedMonument.getFamilyName();
                 String provName = selectedMonument.getProvName();
                 String[] locNames = Importer.importLocalisation(locList,genericName,"none");
+                //System.out.println(provName);
+                
                 String[] provLoc = Importer.importLocalisation(locList,provName,"none");
                 String newName = locNames[0];
                 String provNameLoc = provLoc[0];
@@ -4105,6 +4128,57 @@ public class Processing
             count = count + 1;
         }
         
+        return tf;
+    }
+    
+    public static ArrayList<Country> applyCRsToCountries(ArrayList<Country> countries, ArrayList<String> cultureMappings,
+    ArrayList<CultureRights> CRs) throws IOException {
+        int count = 0;
+        //ArrayList<Country> updatedCountries = new ArrayList<Monument>();
+        while (count < CRs.size()) { 
+            CultureRights CR = CRs.get(count);
+            int countryID = CR.getCountry();
+            int selectedCountryID = getCountryByID(countries,countryID);
+            if (selectedCountryID > 0) {
+                Country selectedCountry = countries.get(selectedCountryID);
+                String countryCulture = selectedCountry.getCulture();
+                String popCulture = CR.getCulture();
+                String popType = CR.getType();
+                popCulture = Output.cultureOutput(cultureMappings,popCulture);
+                ArrayList<CultureRights> CountryCRs = selectedCountry.getCultureRights();
+                boolean duplicateCheck = checkForDuplicateCRs(popCulture,CountryCRs);
+                if (!popCulture.contains("META") && !popCulture.equals("99999") && !popCulture.equals(countryCulture) && !duplicateCheck) {
+                    if (popType.equals("nobles") || popType.equals("citizen")) {
+                        CR.setCulture(popCulture);
+                        selectedCountry.addCultureRights(CR);
+                        countries.set(selectedCountryID,selectedCountry);
+                    }
+                    
+                }
+            }
+            
+            count = count + 1;
+        }
+
+        return countries;
+    }
+    
+    public static boolean checkForDuplicateCRs(String culture,ArrayList<CultureRights> CRs) {
+        int count = 0;
+        boolean tf = false;
+        if (CRs == null) {
+            return tf;
+        }
+        while (count < CRs.size()) { 
+            CultureRights CR = CRs.get(count);
+            String existingCulture = CR.getCulture();
+            if (existingCulture.equals(culture)) {
+                tf = true;
+                return tf;
+            }
+            count = count + 1;
+        }
+
         return tf;
     }
     

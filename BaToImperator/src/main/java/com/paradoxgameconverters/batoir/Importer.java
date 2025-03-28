@@ -855,6 +855,99 @@ public class Importer
         return currentList;
 
     }
+    
+    public static ArrayList<CultureRights> importCultureRights (String name) throws IOException
+    {
+
+        //Primarily used for subjects/vassals in IR
+
+        FileInputStream fileIn= new FileInputStream(name);
+        Scanner scnr= new Scanner(fileIn);
+
+        int flag = 0;
+
+        String tab = "	";
+
+        int aqq = 0;
+
+        ArrayList<CultureRights> currentList = new ArrayList<CultureRights>();
+
+        boolean endOrNot = true;
+        String vmm = scnr.nextLine();
+        String qaaa = vmm;
+        String[] output;
+        output = new String[3];
+
+        output[0] = "9999"; //default for no overlord, overlord has no subjects
+        output[1] = "9999"; //default for no subject
+        output[2] = "9999"; //default for no subject relation
+        //output[3] = "9999"; //default for initial type
+
+        try {
+            while (endOrNot = true){
+
+                qaaa = scnr.nextLine();
+                
+                String identifier = qaaa.split("=")[0];
+                
+                if (identifier.contains(tab+"culture")) {
+                    output[0] = qaaa.split("=")[1];
+                    //output[0] = output[0].replace(tab,"");
+                    output[0] = Processing.cutQuotes(output[0]);
+                    //System.out.println(output[0]);
+                }
+
+                if (identifier.contains(tab+"pop_type" ) ) {
+                    output[1] = qaaa.split("=")[1];
+                    output[1] = Processing.cutQuotes(output[1]);
+                    //System.out.println(output[1]);
+                }
+
+                if (identifier.contains(tab+"country" ) ) {
+                    output[2] = qaaa.split("=")[1];
+                    //output[2] = Processing.cutQuotes(output[2]);
+                    //System.out.println(output[2]);
+                }
+                
+                if (qaaa.equals(tab+tab+"}")) {
+                    String[] tmpOutput = new String[output.length];
+                    int aq2 = 0;
+                    while (aq2 < output.length) {
+                        tmpOutput[aq2] = output[aq2];
+                        aq2 = aq2 + 1;
+                    }
+                    
+                    String culture = tmpOutput[0];
+                    String type = tmpOutput[1];
+                    int country = Integer.parseInt(tmpOutput[2]);
+                    
+                    if (!culture.equals("9999")) {
+                        CultureRights CR = CultureRights.newCultureRights(culture,type,country);
+                        currentList.add(CR);
+                    }
+                    
+                    
+
+                    output[0] = "9999";
+                    output[1] = "9999";
+                    output[2] = "9999";
+                }
+            }
+
+        }catch (java.util.NoSuchElementException exception){
+            endOrNot = false;
+
+        }
+
+        if (output[1].equals("9999") || output[2].equals("9999")) { //Fallback in case something goes wrong, subject relation won't be converted
+            output[0] = "9999"; //default for no overlord, overlord has no subjects
+            output[1] = "9999"; //default for no subject
+            output[2] = "9999"; //default for no subject relation    
+        }
+
+        return currentList;
+
+    }
 
     public static String[] importDir (String name) throws IOException //Imports directories from configuration.txt
     {
@@ -1168,14 +1261,20 @@ public class Importer
         
         output[0] = output[0].split("#")[0];//Remove any comments in loc
         output[1] = output[1].split("#")[0];
-        
+        //System.out.println("__"+output[0]+"__");
 
+        try {
         if (output[0].charAt(0) == '[') { //For countries which use a dynasty name for their country, like the Seleukid Empire
             output[1] = dynasty;
             if (output[1].charAt(output[1].length()-1) == 'a') {
                 output[1] = output[1] + "n";    
             }
             output[0] = output[1] + " Empire"; //may change out Empire for country rank
+        }
+        } catch (Exception e) {
+            System.out.println("Error with "+tag+", returning "+tag);
+            output[0] = tag;
+            output[1] = tag;
         }
 
         return output;
@@ -1663,11 +1762,15 @@ public class Importer
         output[0] = "bad"; //default for no version
         output[1] = "bad"; //default for no date
         String idNum;
+        
+        int count = 0;
 
         try {
-            while (endOrNot = true){
+            while (endOrNot){
+            //while (endOrNot = true){
 
                 qaaa = scnr.nextLine();
+                //System.out.println(qaaa.split("=")[0]+count);
 
                 if (qaaa.split("=")[0].equals("version")){
                     output[0] = qaaa.split("=")[1];
@@ -1678,9 +1781,11 @@ public class Importer
                     endOrNot = false;
                 }
 
-                if (qaaa.split("=")[0].equals("variables")){ //end of save has been found without finding save date
+                if (count > 50){ //end of save has been found without finding save date
                     endOrNot = false;
                 }
+                
+                count = count + 1;
 
             }
 

@@ -27,6 +27,7 @@ public class Country
     private int oratoryTech;
     private int religiousTech;
     private String diplomacy; //Only used by ExoTags
+    private ArrayList<CultureRights> countryCultureRights;
     public Country() {
         int id;
         String culture;
@@ -50,6 +51,7 @@ public class Country
         int oratoryTech;
         int religiousTech;
         String diplomacy;
+        ArrayList<CultureRights> countryCultureRights;
     }
     public void setGovernment(String name) {
         government = name;
@@ -217,6 +219,19 @@ public class Country
     }
     public String getDiplomacy() {
         return diplomacy;
+    }
+    
+    public void setCultureRights(ArrayList<CultureRights> rightsArray) {
+        countryCultureRights = rightsArray;
+    }
+    public void addCultureRights(CultureRights rights) {
+        if (countryCultureRights == null) {
+            countryCultureRights = new ArrayList<CultureRights>();
+        }
+        countryCultureRights.add(rights);
+    }
+    public ArrayList<CultureRights> getCultureRights() {
+        return countryCultureRights;
     }
     
     public boolean isTribal() { //Returns true if the country has a tribal government form
