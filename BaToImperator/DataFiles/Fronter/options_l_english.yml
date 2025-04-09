@@ -32,3 +32,10 @@ l_english:
  MONUMENTVANILLAONLYTIP: "No Great Wonders from BA will be converted at all."
  MONUMENTBOTH: "Both Bronze Age And Vanilla"
  MONUMENTBOTHTIP: "Great Wonders built in BA will remain and exist side-by-side with wonders from vanilla. Recommended for save games from years 950 and below."
+ 
+ CHARACTERPRUNINGOPTION: "Character Pruning"
+ CHARACTERPRUNINGOPTIONTIP: "How many BA characters should be excluded from the conversion?"
+ CHARACTERPRUNINGMIN: "Minimum"
+ CHARACTERPRUNINGMINTIP: "Only characters residing in dead countries will get pruned (Recommended)."
+ CHARACTERPRUNINGEXTREME: "Extreme"
+ CHARACTERPRUNINGEXTREMEYESTIP: "All characters except for the ruler, ruler's progeny, spouse, and parents will get pruned. Warning: This may result in broken family trees if continued into Crusader Kings!"

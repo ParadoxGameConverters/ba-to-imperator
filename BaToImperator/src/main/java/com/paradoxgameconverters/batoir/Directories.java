@@ -57,91 +57,91 @@ public class Directories
 
         File f23 = new File(mainModFolder+VM+"common"+VM+"bloodlines");
         f23.mkdir();  
-        
+
         File f24 = new File(mainModFolder+VM+"common"+VM+"disease");
         f24.mkdir();
-        
+
         File f25 = new File(mainModFolder+VM+"common"+VM+"government_flavor");
         f25.mkdir();
-        
+
         File f26 = new File(mainModFolder+VM+"common"+VM+"laws");
         f26.mkdir();
-        
+
         File f27 = new File(mainModFolder+VM+"gfx"+VM+"flags");
         f27.mkdir();
-        
+
         File f28 = new File(mainModFolder+VM+"decisions");
         f28.mkdir();
-        
+
         //File f29 = new File(mainModFolder+VM+"setup");
         //f29.mkdir();
-        
+
         File f30 = new File(mainModFolder+"/common/event_modifiers");
         f30.mkdir();
-        
+
         File f31 = new File(mainModFolder+"/interface");
         f31.mkdir();
-        
+
         File f33 = new File(mainModFolder+"/gfx/interface/bloodlines");
         f33.mkdir();  
-        
+
         File f34 = new File(mainModFolder+"/common/cb_types");
         f34.mkdir(); 
-        
+
         File f35 = new File(mainModFolder+VM+"setup");
         f35.mkdir();
-        
+
         File f36 = new File(mainModFolder+"/localization/english");
         f36.mkdir();
-        
+
         File f37 = new File(mainModFolder+"/common/named_colors");
         f37.mkdir();
-        
+
         File f38 = new File(mainModFolder+"/common/coat_of_arms");
         f38.mkdir();
-        
+
         File f39 = new File(mainModFolder+"/common/coat_of_arms/coat_of_arms");
         f39.mkdir();
-        
+
         File f40 = new File(mainModFolder+"/setup/countries");
         f40.mkdir();
-        
+
         File f41 = new File(mainModFolder+"/setup/countries/converted");
         f41.mkdir();
-        
+
         File f42 = new File(mainModFolder+"/setup/provinces");
         f42.mkdir();
-        
+
         File f43 = new File(mainModFolder+"/setup/main");
         f43.mkdir();
-        
+
         File f44 = new File(mainModFolder+"/setup/characters");
         f44.mkdir();
-        
+
         File f45 = new File(mainModFolder+"/common/missions");
         f45.mkdir();
-        
+
         File f46 = new File(mainModFolder+"/events/mission_events");
         f46.mkdir();
-        
+
         File f47 = new File(mainModFolder+"/events/mission_events/1.3 - Livy");
         f47.mkdir();
-        
+
         File f48 = new File(mainModFolder+"/events/mission_events/1.3 - Punic Wars");
         f48.mkdir();
-        
+
         File f49 = new File(mainModFolder+"/events/mission_events/1.4 - Archimedes");
         f49.mkdir();
-        
+
         File f50 = new File(mainModFolder+"/events/mission_events/1.4 - Magna Graecia");
         f50.mkdir();
-        
+
         File f51 = new File(mainModFolder+"/events/mission_events/2.0 - Heirs of Alexander");
         f51.mkdir();
-        
+
         File f52 = new File(mainModFolder+"/events/mission_events/Epirus Pre-Order Pack");
         f52.mkdir();
-        
+
         File f53 = new File(mainModFolder+"/common/scripted_effects");
         f53.mkdir();
 
@@ -163,7 +163,7 @@ public class Directories
         FileOutputStream fileOut= new FileOutputStream(outputDir+"/"+modName+".mod");
         PrintWriter out = new PrintWriter(fileOut);
         String tab = "	";
-        
+
         out.println("version="+quote+"1.0"+quote);
         out.println("tags={");
         out.println(tab+quote+"Overhaul"+quote);
@@ -176,6 +176,35 @@ public class Directories
         out.flush();
 
         fileOut.close();
+    }
+
+    public static String detectPathDrive(String pathDir) throws IOException //Detects which drive a path is located
+    {
+        int dirCount = 0;
+        int dirCountMax = 4;
+        while (dirCount < dirCountMax) {
+            String pathDirLetter = "C";
+            if (dirCount == 1) {
+                pathDirLetter = "D";
+            } else if (dirCount == 2) {
+                pathDirLetter = "E";
+            } else if (dirCount == 3) {
+                pathDirLetter = "F";
+            }
+            String fullPath = pathDirLetter+pathDir;
+            System.out.println("Checking for Steam mod on the "+pathDirLetter+": drive...");
+            File pathTest = new File(fullPath);
+            if (pathTest.isDirectory()) {
+                System.out.println("Steam mod found on the "+pathDirLetter+": drive!");
+                dirCount = dirCountMax + 1;
+                return fullPath;
+            }
+            dirCount = dirCount + 1;
+            if (dirCount == dirCountMax) {
+                System.out.println("Unable to detect the Steam Mod! If you have a custom or non-Steam installation, select the 'Custom Installation' Invictus Directory option before converting.");
+            }
+        }
+        return null;
     }
 
 }

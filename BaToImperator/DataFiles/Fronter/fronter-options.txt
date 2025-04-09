@@ -85,6 +85,26 @@ option = {
 }
 
 option = {
+	name = characterPruning
+	displayName = CHARACTERPRUNINGOPTION
+	tooltip = CHARACTERPRUNINGOPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = min
+			displayName = CHARACTERPRUNINGMIN
+			tooltip = CHARACTERPRUNINGMINTIP
+			default = true
+		}
+		radioOption = {
+			name = extremePrune
+			displayName = CHARACTERPRUNINGEXTREME
+			tooltip = CHARACTERPRUNINGEXTREMEYESTIP
+			default = false
+		}
+	}
+}
+
+option = {
 	name = output_name
 	displayName = MODNAME
 	tooltip = MODNAMETIP

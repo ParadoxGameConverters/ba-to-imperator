@@ -23,16 +23,6 @@ requiredFile = {
 }
 
 requiredFolder = {
-	name = BADirectory
-	displayName = BAFOLDER
-	tooltip = BAFOLDERTIP
-	mandatory = true
-	mandatory = true
-	searchPathType = windowsUsersFolder
-	searchPath = "workshop\content\859580\2448788091"
-}
-
-requiredFolder = {
 	name = ImperatorDirectory
 	displayName = IMPERATORFOLDER
 	tooltip = IMPERATORFOLDERTIP
@@ -43,7 +33,7 @@ requiredFolder = {
 }
 
 requiredFolder = {
-	name = ImperatorModPath
+	name = targetGameModPath
 	displayName = IMPERATORMOD
 	tooltip = IMPERATORMODTIP
 	mandatory = true

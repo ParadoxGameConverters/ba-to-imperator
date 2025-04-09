@@ -45,7 +45,7 @@ public class Main
         try {
             Scanner input = new Scanner(System.in);
             String Dir; //Desired user directory, usually located in documents
-            String Dir2; //.mod files use reverse slashes (/ instead of \) 
+            //String Dir2; //.mod files use reverse slashes (/ instead of \) 
             String modName; //important for creating directories
             String saveName; //The save file (.rome) to read from
             String impDir; //The directory of the save file (.rome) to read from
@@ -61,7 +61,7 @@ public class Main
             VM = VM.substring(0);
             String VN = "//";
             VN = VN.substring(0);
-            Dir2 = configDirectories[1]; //I:R game dir in steamapps/
+            //Dir2 = configDirectories[1]; //I:R game dir in steamapps/
             String irModDir = configDirectories[2];
             //Dir = configDirectories[3];
             Dir = "output";
@@ -211,28 +211,9 @@ public class Main
             String invictusDir = "";
             if (configDirectories[8].equals("default") && invictus){ //default directory for Invictus
                 String steamInvDir = ":/Program Files (x86)/Steam/steamapps/workshop/content/859580/2532715348";
-                int dirCount = 0;
-                int dirCountMax = 4;
-                while (dirCount < dirCountMax) {
-                    String invictusDirLetter = "C";
-                    if (dirCount == 1) {
-                        invictusDirLetter = "D";
-                    } else if (dirCount == 2) {
-                        invictusDirLetter = "E";
-                    } else if (dirCount == 3) {
-                        invictusDirLetter = "F";
-                    }
-                    invictusDir = invictusDirLetter+steamInvDir;
-                    LOGGER.info("Checking for Invictus on the "+invictusDirLetter+": drive...");
-                    File invictusTest = new File(invictusDir);
-                    if (invictusTest.isDirectory()) {
-                        LOGGER.info("Invictus found on the "+invictusDirLetter+": drive!");
-                        dirCount = dirCountMax + 1;
-                    }
-                    dirCount = dirCount + 1;
-                    if (dirCount == dirCountMax) {
-                        LOGGER.severe("Unable to detect Invictus! If you have a custom or non-Steam installation, select the 'Custom Installation' Invictus Directory option before converting.");
-                    }
+                invictusDir = Directories.detectPathDrive(steamInvDir);
+                if (invictusDir == null) {
+                    LOGGER.severe("Unable to detect Invictus! If you have a custom, non-standard, or non-Steam installation, select the 'Custom Installation' Invictus Directory option before converting.");
                 }
                 
             } else if (configDirectories[8].equals("custom")){ //default directory for Invictus
@@ -302,6 +283,15 @@ public class Main
                 vanillaMonuments = true;
             } else if (antagonistOption.equals("bad")) { //baOnly
                 LOGGER.warning("Error with Great Work Conversion Option! Defaulting to BA Only!");
+            }
+            
+            boolean pruneMinorCharactersSetting = false;
+            boolean extremePrune = false;
+            
+            if (configDirectories[11].equals("pruneMinorCharacters")){
+                pruneMinorCharactersSetting = true;
+            } else if (configDirectories[11].equals("extremePrune")){
+                extremePrune = true;
             }
             
             ArrayList<String> govMap = Importer.importBasicFile(mappingDir+"governmentConversion.txt"); //government mappings
@@ -713,9 +703,15 @@ public class Main
             ArrayList<Characters> baCharacters = new ArrayList<Characters>();
             baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
             
-            baCharacters = Processing.pruneCharacters(baCharacters,baTagInfo);
+            if (extremePrune) {
+                baCharacters = Processing.pruneCharactersExtreme(baCharacters,baTagInfo);
+            } else {
+                baCharacters = Processing.pruneCharacters(baCharacters,baTagInfo,pruneMinorCharactersSetting);
+            }
             
             baCharacters = Processing.applyNewIdsToChars(baCharacters,firstAvailableCharID);
+            
+            Processing.checkForIDHoles(baCharacters,firstAvailableCharID,baTagInfo);
 
             int dateYear = Processing.getYearFromDate(date);
             String vanillaDate = "450.10.1";
