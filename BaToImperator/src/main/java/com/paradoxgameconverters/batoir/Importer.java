@@ -961,7 +961,7 @@ public class Importer
 
         String qaaa;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[11];
+        output = new String[12];
 
         output[0] = "bad"; //default for no Bronze Age directory
         output[1] = "bad"; //default for no IR game directory
@@ -974,6 +974,7 @@ public class Importer
         output[8] = "bad"; //default for no Invictus dir
         output[9] = "bad"; //default for no monument conversion
         output[10] = "bad"; //default for no antagonist conversion
+        output[11] = "bad"; //default for no character pruning
 
         try {
             while (endOrNot = true){
@@ -990,7 +991,7 @@ public class Importer
                     output[1] = output[1].substring(1,output[1].length()-1);
 
                 }
-                else if (qaaa.split(" = ")[0].equals("ImperatorModPath")){
+                else if (qaaa.split(" = ")[0].equals("targetGameModPath")){
                     output[2] = qaaa.split(" = ")[1];
                     output[2] = output[2].substring(1,output[2].length()-1);
                 }
@@ -1031,6 +1032,11 @@ public class Importer
                 else if (qaaa.split(" = ")[0].equals("antagonist")){
                     output[10] = qaaa.split(" = ")[1];
                     output[10] = output[10].substring(1,output[10].length()-1);
+
+                }
+                else if (qaaa.split(" = ")[0].equals("characterPruning")){
+                    output[11] = qaaa.split(" = ")[1];
+                    output[11] = output[11].substring(1,output[11].length()-1);
 
                 }
 
