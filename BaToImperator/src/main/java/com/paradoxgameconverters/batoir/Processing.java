@@ -4003,6 +4003,9 @@ public class Processing
             String missionFileLocation = missionDirectory+"/"+fileName;
             ArrayList<String> missionFile = Importer.importBasicFile(missionFileLocation);
             ArrayList<String> updatedMission = updateMission(missionFile,missionTags);
+            if (fileName.equals("00_event_effects.txt")) { //purge starting legions
+                updatedMission = purgeStartingLegions(updatedMission);
+            }
             boolean check = compareStringLists(missionFile,updatedMission);
             if (!check) {
                 Output.outputBasicFile(updatedMission,fileName,missionModDir);
@@ -4058,6 +4061,25 @@ public class Processing
             
             count = count + 1;
         }
+    }
+    
+    public static ArrayList<String> purgeStartingLegions (ArrayList<String> oldFile) throws IOException //removes starting legions from vanilla
+    {
+        String endBracket = "}";
+        String legionKey1 = "antigonid_legion_setup_effect = {";
+        String legionKey2 = "seleukid_legion_setup_effect = {";
+        String legionKey3 = "egypt_legion_setup_effect = {";
+        String legionKey4 = "macedon_legion_setup_effect = {";
+        String legionKey5 = "thrace_legion_setup_effect = {";
+        String legionKey6 = "epirus_legion_setup_effect = {";
+        oldFile = purgeFromXToY(legionKey1,endBracket,oldFile);
+        oldFile = purgeFromXToY(legionKey2,endBracket,oldFile);
+        oldFile = purgeFromXToY(legionKey3,endBracket,oldFile);
+        oldFile = purgeFromXToY(legionKey4,endBracket,oldFile);
+        oldFile = purgeFromXToY(legionKey5,endBracket,oldFile);
+        oldFile = purgeFromXToY(legionKey6,endBracket,oldFile);
+        
+        return oldFile;
     }
     
     public static ArrayList<Monument> applyMonumentLoc (ArrayList<Monument> allMonuments, ArrayList<String> locList) throws IOException
@@ -4210,6 +4232,36 @@ public class Processing
         }
 
         return OldLines;
+    }
+    
+    public static ArrayList<String> purgeFromXToY(String x, String y, ArrayList<String> oldLines) { //includes x and y
+        //Purges the vanilla monument setup of all provinces within conv scope
+        int count = 0;
+        //ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+        
+        int countOldFile = 0;
+        boolean start = false;
+        ArrayList<String> newLines = new ArrayList<String>();
+        
+        while (countOldFile < oldLines.size()) {
+            String selectedLine = oldLines.get(countOldFile);
+            if (selectedLine.equals(y)) {
+                start = false;
+            }
+            if (!start) {
+                newLines.add(selectedLine);
+            }
+            if (selectedLine.equals(x)) {
+                start = true;
+            }
+            
+            
+            countOldFile = countOldFile + 1;
+        }
+
+        return newLines;
     }
     
     public static String genAdjective (String name) { //Generates an adjective for a given name
