@@ -226,6 +226,18 @@ public class Main
                 }
             }
             
+            boolean hasCustomBADir = false;
+            String customBADir = Output.cultureOutput(customModInstalls,"bronzeAge");
+            if (!customBADir.equals("none")) {
+                File baDirTest = new File(customBADir);
+                if (baDirTest.isDirectory()) {
+                    LOGGER.info("Custom Bronze Age directory found at "+customBADir);
+                    hasCustomBADir = true;
+                } else {
+                    LOGGER.warning("Unable to detect Custom Bronze Age directory at "+customBADir+"! If you are not using a custom BA directory, set bronzeAge in configurables/modDirectories.txt to 'none'");
+                }
+            }
+            
             String mappingDir = "configurables/vanilla/";
             if (invictus) {
                 mappingDir = "configurables/invictus/";
@@ -298,6 +310,9 @@ public class Main
             LOGGER.info("Importing mod directories...");
   
             ArrayList<String> modDirs = Importer.importModDirs(impDirSave,irModDir);
+            if (hasCustomBADir) {
+                modDirs.add(customBADir);
+            }
             ArrayList<String> modFlagGFX = Importer.importModFlagDirs(modDirs); //flag gfx files
             ArrayList<String> modRegion = Importer.importModRegionDirs(modDirs); //flag gfx files
 
