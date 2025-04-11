@@ -3127,11 +3127,9 @@ public class Processing
                 String[] dynInfo = dynList.get(count2).split(",");
                 int dynID = Integer.parseInt(dynInfo[1]);
                 String dynName = dynInfo[0];
-                if (tempDyn == null && charDynID == dynID && !dynName.contains("minor ") && !dynName.equals("")) {
+                if (charDynID == dynID && !dynName.contains("minor ") && !dynName.equals("")) {
                     dynName = dynName.replace(" ","_");
                     selectedChar.setDynastyName(dynName);
-                    count2 = dynList.size() + 1;
-                } else if (tempDyn != null) { //end loop if from a minor family
                     count2 = dynList.size() + 1;
                 }
                 
