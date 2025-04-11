@@ -920,11 +920,10 @@ public class Main
                 ArrayList<String> vanillaMonumentFile = Importer.importBasicFile(gameFileDir+"/setup/main/00_great_works.txt");
                 vanillaMonumentFile = Processing.purgeVanillaMonuments(irProvinceList,vanillaMonumentFile);
                 Output.outputBasicFile(vanillaMonumentFile,"00_great_works.txt",modDirectory+"/setup/main");
-                if (invictus) {
-                    ArrayList<String> invMonumentFile = Importer.importBasicFile(gameFileDir+"/setup/main/01_great_works_dde.txt");
-                    invMonumentFile = Processing.purgeVanillaMonuments(irProvinceList,invMonumentFile);
-                    Output.outputBasicFile(invMonumentFile,"01_great_works_dde.txt",modDirectory+"/setup/main");
-                }
+
+                ArrayList<String> invMonumentFile = Importer.importBasicFile(gameFileDir+"/setup/main/01_great_works_dde.txt");
+                invMonumentFile = Processing.purgeVanillaMonuments(irProvinceList,invMonumentFile);
+                Output.outputBasicFile(invMonumentFile,"01_great_works_dde.txt",modDirectory+"/setup/main");
             }
             
             baTagInfo = Processing.applyCRsToCountries(baTagInfo,cultureMappings,allCRs);
