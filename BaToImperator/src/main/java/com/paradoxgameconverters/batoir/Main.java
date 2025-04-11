@@ -637,6 +637,7 @@ public class Main
                 //aq2 = Processing.getProvByID(irProvinceList,357);
                 //aq2 = Processing.getProvByID(irProvinceList,549);
                 //aq2 = Processing.getProvByID(irProvinceList,413);
+                //aq2 = Processing.getProvByID(irProvinceList,870);
                 Provinces irProvInfo = irProvinceList.get(aq2);
                 try {
                     float totalProvPops = irProvInfo.getPops().size();
@@ -666,7 +667,12 @@ public class Main
                     if (provinceTotal > 5) {
                         String[] cityStatusCount = Processing.countPops(irProvInfo.getPops(),"cityStatus");
                         ArrayList<String> cityStatusCount2 = Processing.condenseArrayStr(cityStatusCount);
-                        irProvCS = Processing.getMajority(cityStatusCount2);
+                        boolean hasMetropolis = Processing.superContainsR(cityStatusCount2,"metropolis");
+                        if (hasMetropolis) { //Automatically bump up a prov with a metropolis to city-status
+                            irProvCS = "city";
+                        } else {
+                            irProvCS = Processing.getMajority(cityStatusCount2);
+                        }
                     }
                     
                     if (irProvCS.equals("city") && provinceTotal >= 75) {

@@ -2020,9 +2020,9 @@ public class Processing
             }
             else if (type.equals("cityStatus")) {
                 popType = pops.get(count).getCityStatus();
-                if (popType.equals("metropolis")) {
-                    popType = "city"; //combine cities and metropoli for the purposes of city-generation
-                }
+                //if (popType.equals("metropolis")) {
+                //    popType = "city"; //combine cities and metropoli for the purposes of city-generation
+                //}
             }
             else if (type.equals("monument")) {
                 popType = pops.get(count).getMonument();
@@ -4376,6 +4376,40 @@ public class Processing
         boolean tf = false;
         while (count < arrayBeingChecked.size()) {
             String selectedName = arrayBeingChecked.get(count);
+            if (name.contains(selectedName)) {
+                tf = true;
+                return tf;
+            }
+            
+            count = count + 1;
+        }
+        
+        return tf;
+    }
+    
+    public static boolean superContainsR (ArrayList<String> arrayBeingChecked,String name) //Reverse, where STR is in array
+    {
+        int count = 0;
+        boolean tf = false;
+        while (count < arrayBeingChecked.size()) {
+            String selectedName = arrayBeingChecked.get(count);
+            if (selectedName.contains(name)) {
+                tf = true;
+                return tf;
+            }
+            
+            count = count + 1;
+        }
+        
+        return tf;
+    }
+    
+    public static boolean superContainsArray (String[] arrayBeingChecked,String name) //Array instead of ArrayList
+    {
+        int count = 0;
+        boolean tf = false;
+        while (count < arrayBeingChecked.length) {
+            String selectedName = arrayBeingChecked[count];
             if (name.contains(selectedName)) {
                 tf = true;
                 return tf;
