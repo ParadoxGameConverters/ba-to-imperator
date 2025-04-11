@@ -449,6 +449,7 @@ public class Main
             ArrayList<String> exoColors = Importer.importBasicFile(mappingDir+"exoColors.txt");
             ArrayList<String> exoFlags = Importer.importBasicFile(mappingDir+"exoFlags.txt");
             ArrayList<String> monumentMappings = Importer.importBasicFile(mappingDir+"monumentMappings.txt");
+            ArrayList<String> lawMappings = Importer.importBasicFile(mappingDir+"lawMappings.txt");
             
             baProvInfoList = Processing.applyRegionsToProvinces(baProvRegions,baProvInfoList);
             baProvInfoList = Processing.applyAreasToProvinces(provAreas,baProvInfoList);
@@ -847,6 +848,10 @@ public class Main
                             Provinces capitalBAProv = baProvInfoList.get(capInt);
                             String capitalArea = capitalBAProv.getArea();
                             String capitalRegion = capitalBAProv.getRegion();
+                            
+                            ArrayList<String[]> laws = baTag.getLaws();
+                            ArrayList<String[]> newLaws = Processing.updateLaws(laws,lawMappings);
+                            baTag.setLaws(newLaws);
                             
                             String oldGovernment = baTag.getGovernment();
                             String newGovernment = Output.cultureOutput(govMap,oldGovernment);

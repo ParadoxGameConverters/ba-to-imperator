@@ -4440,4 +4440,21 @@ public class Processing
         return tf;
     }
     
+    public static ArrayList<String[]> updateLaws(ArrayList<String[]> laws, ArrayList<String> lawMap) throws IOException {
+        String quote = '"'+""; // " character, Java doesn't like isoated " characters
+        int count = 0;
+        while (count < laws.size()) {
+            String[] selectedLawCombo = laws.get(count);
+            String selectedLaw = cutQuotes(selectedLawCombo[1]);
+            String newLaw = Output.cultureOutput(lawMap,selectedLaw);
+            if (!newLaw.equals("99999")) {
+                selectedLawCombo[1] = quote+newLaw+quote;
+                laws.set(count,selectedLawCombo);
+            }
+            count = count + 1;
+        }
+        
+        return laws;
+    }
+    
 }
