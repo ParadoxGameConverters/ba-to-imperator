@@ -6,4 +6,5 @@
 # By default, custom mods are stored in C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod
 
 invictus,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\Invictus
+ti,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\Terra-Indomita
 bronzeAge,none

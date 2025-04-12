@@ -1161,7 +1161,8 @@ public class Output
         } else {
             String fileName = fileInfo.getPath();
             int pathLength = 21;
-            if (option.equals("invictus")) {
+            if (!option.equals("none")) {
+                int optionLength = option.length() + 2;
                 pathLength = pathLength + 9;
             }
             String[] fileNameSplit = fileName.split("default");

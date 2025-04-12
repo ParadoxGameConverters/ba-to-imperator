@@ -203,26 +203,31 @@ public class Main
             
             ArrayList<String> customModInstalls = Importer.importBasicFile("configurables/modDirectories.txt");
             
-            boolean invictus = false;
-            if (configDirectories[7].equals("invictus")) { //if Invictus hybridization is enabled
+            boolean invictus = false; //initially just for Invictus, but now for any mod
+            String hybridName = configDirectories[7];
+            if (!hybridName.equals("no")) { //if mod hybridization is enabled
                 invictus = true;
             }
             
             String invictusDir = "";
-            if (configDirectories[8].equals("default") && invictus){ //default directory for Invictus
-                String steamInvDir = ":/Program Files (x86)/Steam/steamapps/workshop/content/859580/2532715348";
+            if (configDirectories[8].equals("default") && invictus){ //default directory for Steam mods
+                String steamID = "2532715348";
+                if (hybridName.equals("ti")) {
+                    steamID = "2856497654";
+                }
+                String steamInvDir = ":/Program Files (x86)/Steam/steamapps/workshop/content/859580/"+steamID;
                 invictusDir = Directories.detectPathDrive(steamInvDir);
                 if (invictusDir == null) {
-                    LOGGER.severe("Unable to detect Invictus! If you have a custom, non-standard, or non-Steam installation, select the 'Custom Installation' Invictus Directory option before converting.");
+                    LOGGER.severe("Unable to detect "+hybridName+"! If you have a custom, non-standard, or non-Steam installation, select the 'Custom Installation' Invictus Directory option before converting.");
                 }
                 
             } else if (configDirectories[8].equals("custom")){ //default directory for Invictus
                 invictusDir = Output.cultureOutput(customModInstalls,"invictus");
                 File invictusTest = new File(invictusDir);
                 if (invictusTest.isDirectory()) {
-                    LOGGER.info("Invictus found!");
+                    LOGGER.info(hybridName+" found!");
                 } else {
-                    LOGGER.severe("Unable to detect Invictus at "+invictusDir+"");
+                    LOGGER.severe("Unable to detect "+hybridName+" at "+invictusDir+"");
                 }
             }
             
@@ -240,7 +245,7 @@ public class Main
             
             String mappingDir = "configurables/vanilla/";
             if (invictus) {
-                mappingDir = "configurables/invictus/";
+                mappingDir = "configurables/"+hybridName+"/";
             }
             
             String provinceMappingSource = mappingDir+"provinceConversionCore.txt";
@@ -350,8 +355,8 @@ public class Main
                 gameFileDir = invictusDir;
             }
             
-            String[] vanillaProvAreas = Processing.importAreas(gameFileDir+"/map_data/areas.txt",9900);
-            String[] vanillaProvRegions = Processing.importRegionList(9900,vanillaProvAreas,gameFileDir+"/");
+            String[] vanillaProvAreas = Processing.importAreas(gameFileDir+"/map_data/areas.txt",15000);
+            String[] vanillaProvRegions = Processing.importRegionList(15000,vanillaProvAreas,gameFileDir+"/");
             
             //ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
             
@@ -781,8 +786,8 @@ public class Main
             String defaultOutputDir = "defaultOutput/";
             String outputOption = "none";
             if (invictus) {
-                defaultOutputDir = defaultOutputDir+"invictus/";
-                outputOption = "invictus";
+                defaultOutputDir = defaultOutputDir+hybridName+"/";
+                outputOption = hybridName;
             } else {
                 defaultOutputDir = defaultOutputDir+"vanilla/";
             }
