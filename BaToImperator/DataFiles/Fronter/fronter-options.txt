@@ -15,6 +15,12 @@ option = {
 			tooltip = HYBRIDINVTIP
 			default = false
 		}
+		radioOption = {
+			name = ti
+			displayName = HYBRIDTI
+			tooltip = HYBRIDTITIP
+			default = false
+		}
 	}
 }
 
