@@ -1941,13 +1941,13 @@ diplomacy = {
 	#alliance = { first = EGY second = TRE }
 	
 	#Seleucids
-	#Nominal Vassals that should stay as Tributaries:
+	#Nominal Vassals that should stay as Tributaries: #Disabled because they made PER too powerful
 	#dependency = { first = PER second = TYO subject_type = tributary }
 	#dependency = { first = PER second = ADI subject_type = tributary }
-	dependency = { first = PER second = BAC subject_type = satrapy }
-	dependency = { first = PER second = PAR subject_type = satrapy }
-	dependency = { first = PER second = ARS subject_type = satrapy }
-	dependency = { first = PER second = GHA subject_type = client_state }
+	##dependency = { first = PER second = BAC subject_type = satrapy }
+	##dependency = { first = PER second = PAR subject_type = satrapy }
+	##dependency = { first = PER second = ARS subject_type = satrapy }
+	##dependency = { first = PER second = GHA subject_type = client_state }
 	
 	#Lysimachos and Cassander - Alliance
 	#alliance = { first = MAC second = TRE }

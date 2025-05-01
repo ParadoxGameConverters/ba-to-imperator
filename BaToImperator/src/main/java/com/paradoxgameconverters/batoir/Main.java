@@ -79,7 +79,7 @@ public class Main
             
             String date = "100.1.1"; //default date in case something goes wrong
             
-            int irProvTot = 9500;
+            int irProvTot = 15000;
 
             String impGameDir = configDirectories[1];
 
@@ -114,21 +114,9 @@ public class Main
             int totalCKProv = 9950;
 
             String[] ck2PopTotals;   // Owner Culture Religeon PopTotal Buildings
-            ck2PopTotals = new String[totalCKProv];
+            ck2PopTotals = new String[irProvTot];
             /////////////////////////////////////////
-            String[] ck2TagTotals;   // Owner Culture Religeon PopTotal Buildings
-            ck2TagTotals = new String[totalCKProv];
 
-            //TAG1,0~TAG2,0,~TAG3,0
-
-            String[] ck2CultureTotals;   // Owner Culture Religeon PopTotal Buildings
-            ck2CultureTotals = new String[totalCKProv];
-
-            String[] ck2RelTotals;   // Owner Culture Religeon PopTotal Buildings
-            ck2RelTotals = new String[totalCKProv];
-
-            String[] ck2MonumentTotals;   // Province monuments
-            ck2MonumentTotals = new String[totalCKProv];
 
             //output.localizationBlankFile(modDirectory); //creates the country localization file
             output.coaBlankFile(modDirectory); //creates the country localization file
@@ -345,8 +333,8 @@ public class Main
             
             String regionDir = Importer.getRegionDir(impGameDir,regionDirList,modDirs);
             
-            String[] provAreas = Processing.importAreas(regionDir+"map_data/areas.txt",9500);
-            String[] baProvRegions = Processing.importRegionList(9500,provAreas,regionDir);
+            String[] provAreas = Processing.importAreas(regionDir+"map_data/areas.txt",irProvTot);
+            String[] baProvRegions = Processing.importRegionList(irProvTot,provAreas,regionDir);
             
             String provDir = impGameDir+"/game/setup/provinces";
             String gameFileDir = impGameDir+"/game";
@@ -355,8 +343,8 @@ public class Main
                 gameFileDir = invictusDir;
             }
             
-            String[] vanillaProvAreas = Processing.importAreas(gameFileDir+"/map_data/areas.txt",15000);
-            String[] vanillaProvRegions = Processing.importRegionList(15000,vanillaProvAreas,gameFileDir+"/");
+            String[] vanillaProvAreas = Processing.importAreas(gameFileDir+"/map_data/areas.txt",irProvTot);
+            String[] vanillaProvRegions = Processing.importRegionList(irProvTot,vanillaProvAreas,gameFileDir+"/");
             
             //ArrayList<String[]> extraProvInfo = new ArrayList<String[]>();
             
@@ -606,7 +594,7 @@ public class Main
 
                 }
 
-                if (aqq == 9843) {
+                if (aqq == irProvTot) {
                     flag = 1;   
                 }
                 
@@ -636,7 +624,7 @@ public class Main
             int aq5 = 0;
             int aq6 = 0;
             String[] irOwners;
-            int globalPopTotal = 4000;//Number of pops to be redistributed
+            //int globalPopTotal = 4000;//Number of pops to be redistributed
 
             while( aq2 < irProvinceList.size()) { // Calculate province totals
                 //aq2 = Processing.getProvByID(irProvinceList,357);
@@ -764,7 +752,6 @@ public class Main
 
             LOGGER.config("and the culture is" + ck2ProvInfo[1][1574]);
             int aq4 = 0;
-            LOGGER.config(ck2TagTotals[343]);
 
             int totCountries = baTagInfo.size(); //ammount of IR countries in save file
 

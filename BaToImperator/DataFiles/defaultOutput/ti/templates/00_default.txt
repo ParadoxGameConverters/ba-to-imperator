@@ -3158,13 +3158,13 @@ diplomacy = {
 	#alliance = { first = EGY second = TRE }
 	
 	#Seleucids
-	#Nominal Vassals that should stay as Tributaries:
-	dependency = { first = PER second = BAC subject_type = satrapy }
-	dependency = { first = PER second = PAR subject_type = satrapy }
-	dependency = { first = PER second = ARS subject_type = satrapy }
-	dependency = { first = PER second = DRA subject_type = satrapy }
-	dependency = { first = PER second = GED subject_type = satrapy }
-	dependency = { first = PER second = GHA subject_type = client_state }
+	#Nominal Vassals that should stay as Tributaries: #Disabled because they made PER too powerful
+	##dependency = { first = PER second = BAC subject_type = satrapy }
+	##dependency = { first = PER second = PAR subject_type = satrapy }
+	##dependency = { first = PER second = ARS subject_type = satrapy }
+	##dependency = { first = PER second = DRA subject_type = satrapy }
+	##dependency = { first = PER second = GED subject_type = satrapy }
+	##dependency = { first = PER second = GHA subject_type = client_state }
 	guarantee = { first = PER second = MAP }
 	
 	#Armenia

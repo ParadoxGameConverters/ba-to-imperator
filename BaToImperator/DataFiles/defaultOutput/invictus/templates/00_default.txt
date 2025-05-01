@@ -2840,13 +2840,13 @@ diplomacy = {
 	#alliance = { first = EGY second = TRE }
 
 	#Seleucids
-	#Nominal Vassals that should stay as Tributaries:
-	dependency = { first = PER second = BAC subject_type = satrapy }
-	dependency = { first = PER second = PAR subject_type = satrapy }
-	dependency = { first = PER second = ARS subject_type = satrapy }
-	dependency = { first = PER second = GHA subject_type = client_state }
+	#Nominal Vassals that should stay as Tributaries: #Disabled because they made PER too powerful
+	##dependency = { first = PER second = BAC subject_type = satrapy }
+	##dependency = { first = PER second = PAR subject_type = satrapy }
+	##dependency = { first = PER second = ARS subject_type = satrapy }
+	##dependency = { first = PER second = GHA subject_type = client_state }
 	#dependency = { first = PER second = GED subject_type = satrapy }
-	dependency = { first = PER second = CAM subject_type = satrapy }
+	##dependency = { first = PER second = CAM subject_type = satrapy }
 
 	#Armenia
 	dependency = { first = ARM second = AR2 subject_type = satrapy }
@@ -17477,7 +17477,7 @@ country = {
 			capital = 1342
 
 			own_control_core = 	{
-				 1343 1351 1353 1354 1360
+				1342 1343 1351 1353 1354 1360
 				
 		}
 		}

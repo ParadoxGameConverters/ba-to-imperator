@@ -3747,6 +3747,10 @@ public class Processing
                 tmpProv.setExoSubjectType(exoSubjectType);
                 tmpProv.setExoVassal(exoVassal);
                 
+                if (tmpProv.getCulture().equals("noCulture")) {
+                    System.out.println("Warning! "+exoProvCount+" has noCulture!");
+                }
+                
                 tmpProv.addPopArray(tmpPops);
                 convProvinces.add(tmpProv);
                 exoProvCount = exoProvCount + 1;

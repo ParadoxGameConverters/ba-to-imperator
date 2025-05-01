@@ -726,7 +726,7 @@
 	link = { ba = 1453 ba = 1826 ba = 473 ba = 5666 imperator = 7202 } # Nîru, Shakâru, Dashpu, Dilmun -> Tylos
 	link = { ba = 2191 ba = 145 ba = 6881 ba = 6882 ba = 6887 ba = 6883 ba = 6884 ba = 6886 ba = 6885 imperator = 7200 } # Shaptu, Hutnû, Isqillatu, Saiâdu, Gerru, Yalu, Uridimmu, Ya'alu, Urmahu -> Theppra
 	link = { ba = 2159 ba = 2111 ba = 511 ba = 6888 imperator = 7201 } # Labiânu, Qablu, Riqqû, Arnabtu -> Atta
-	link = { ba = 6837 ba = 6836 ba = 6835 ba = 6834 imperator = 8872 imperator = 11254 } # MANY-TO-MANY: Gissish, Kalkaltu, Kurillu, Nashpaku -> Qingyi, Khor
+	link = { ba = 6837 ba = 6836 ba = 6835 ba = 6834 imperator = 11254 } # TO-MANY: Gissish, Kalkaltu, Kurillu, Nashpaku -> Qingyi, Khor
 	link = { ba = 6833 ba = 6832 ba = 6831 ba = 119 ba = 2082 imperator = 7203 } # Kullu, Harbutu, Hashûr, Elamkû, Huzzû -> Gylus
 	link = { ba = 6842 ba = 6841 ba = 6840 ba = 6839 ba = 6838 imperator = 7204 } # Mishlâ, Sikkatânu, Nassishu, Aqqullu, Dalû -> Sarkoi
 	link = { ba = 1807 ba = 2637 ba = 2204 ba = 6844 ba = 6843 imperator = 7205 } # Ubbubu, Yas, Delma, Ita, Manât -> Labrys Omana
@@ -735,7 +735,7 @@
 	link = { ba = 6873 ba = 6880 ba = 6879 ba = 6878 ba = 6877 imperator = 5415 } # Parâshu, Sillatu, Hili, Al-Ain, Nûni -> Saruq
 	link = { ba = 6869 ba = 6868 ba = 6867 ba = 6874 ba = 6875 ba = 6876 imperator = 5430 } # Urnu, Shammanu, Hulmâhu, Nûnu, Enqêtu, Ersuppu -> Trazel
 	link = { ba = 6865 ba = 6866 ba = 6862 imperator = 5429 } # Serru, Qubirtu, Bâmtu -> Iepana
-	link = { ba = 6863 ba = 6856 ba = 1653 ba = 6855 ba = 6854 ba = 6864 imperator = 8867 imperator = 11249 } # MANY-TO-MANY: Nasku, Muttarrittum, Tell Abraq, Rahû, Zâzu, Bashmu -> Pi, Dur
+	link = { ba = 6863 ba = 6856 ba = 1653 ba = 6855 ba = 6854 ba = 6864 imperator = 11249 } # TO-MANY: Nasku, Muttarrittum, Tell Abraq, Rahû, Zâzu, Bashmu -> Pi, Dur
 	link = { ba = 6859 ba = 6861 imperator = 7210 } # Naiabtu, Halâbu -> Heliou Limen
 	link = { ba = 4954 ba = 4955 ba = 4953 ba = 4952 ba = 4902 imperator = 5537 } # Dakdime, Takattite, Ihla, Inka, Shot-jemet -> Ammon
 	link = { ba = 106 imperator = 3380 } # Adrarre -> Leuke Akte Kyrenaike
