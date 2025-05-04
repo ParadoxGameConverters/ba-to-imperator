@@ -624,18 +624,14 @@ public class Main
             int aq5 = 0;
             int aq6 = 0;
             String[] irOwners;
-            //int globalPopTotal = 4000;//Number of pops to be redistributed
+            int globalPopTotal = 8580;//Number of pops to be redistributed throughout the converted world
 
             while( aq2 < irProvinceList.size()) { // Calculate province totals
                 //aq2 = Processing.getProvByID(irProvinceList,357);
-                //aq2 = Processing.getProvByID(irProvinceList,549);
-                //aq2 = Processing.getProvByID(irProvinceList,413);
-                //aq2 = Processing.getProvByID(irProvinceList,870);
                 Provinces irProvInfo = irProvinceList.get(aq2);
                 try {
                     float totalProvPops = irProvInfo.getPops().size();
-                    //float provinceRatio = (totalProvPops) /baPopTotal;
-                    int provinceTotal = Processing.calcAllocatedPops(baPopTotal,totalProvPops);
+                    int provinceTotal = Processing.calcAllocatedPops(baPopTotal,totalProvPops,globalPopTotal);
 
                     String[] relCultCount = Processing.countPops(irProvInfo.getPops(),"cultureAndReligion");
                     ArrayList<String> relCultCount2 = Processing.condenseArrayStr(relCultCount);

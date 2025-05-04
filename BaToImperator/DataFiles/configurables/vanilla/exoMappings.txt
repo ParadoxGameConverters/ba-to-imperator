@@ -35,9 +35,11 @@
 	link = { ba = 417 imperator = 90 imperator = 7843 imperator = 92 imperator = 95 imperator = 97 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,SYR~~Gov,aristocratic_monarchy_~_" }
 	link = { ba = 418 imperator = 84 imperator = 101 imperator = 87 imperator = 83 imperator = 7837 imperator = 82 imperator = 7838 imperator = 7840 imperator = 88 imperator = 81 imperator = 80 } # Korinthos -> Syracusae, Camarina, Acrae, Leontini, Megara, Catana, Centuripae, Menae, Murgantia, Tauromenium, Messana
-	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon_~_" }
-	link = { ba = 418 imperator = 100 imperator = 98 } # Korinthos -> Calacte, Cephaloedium
+	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,ACR_~_" }
 	link = { ba = 8015 imperator = 86 } # Kameiros -> Acragas
+	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,CLA_~_" }
+	link = { ba = 418 imperator = 100 imperator = 98 } # Korinthos -> Calacte, Cephaloedium
+	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,TYN_~_" }
 	link = { ba = 431 imperator = 99 imperator = 1472 } # Messene -> Tyndaris, Liparae
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Overlord,SYR~~DiploType,feudatory_~_" }
 	link = { ba = 266 imperator = 85 } # Rhodos -> Gela
@@ -70,8 +72,9 @@
 	link = { ba = 389 imperator = 252 imperator = 7908 } # Larissa -> Kyzikos, Antigoneia Kyzikene
 	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon~~Missions,SNP_~_" }
 	link = { ba = 1973 imperator = 1812 imperator = 1810 } # Miletos -> Sinope, Zaliches
-	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon_~_" }
+	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon~~Missions,PHI_~_" }
 	link = { ba = 1973 imperator = 1720 imperator = 1741 imperator = 1738 } # Miletos -> Phasis, Dioscurias, Gyenos
+	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon_~_" }
 	link = { ba = 417 imperator = 207 imperator = 238 } # Megara -> Herakleia Pontike, Diospolis
 	link = { ba = 1973 imperator = 209 } # Miletos -> Tieion
 	link = { ba = 417 imperator = 208 } # Megara -> Sesamos

@@ -2257,15 +2257,9 @@ public class Processing
         return 0;
     }
 
-    public static int calcAllocatedPops(int baPopTotal, float totalProvPops)
+    public static int calcAllocatedPops(int baPopTotal, float totalProvPops, int globalPopTotal)
     {
-
-        //int baPopTotal = 34822;
-        //float totalProvPops = 200;
-        int globalPopTotal = 6000;
-        //System.out.println("------3------");
         float provinceRatio = (totalProvPops) /baPopTotal;
-        //System.out.println(provinceRatio);
         int provinceTotal = Processing.round(provinceRatio * globalPopTotal);
 
         return provinceTotal;

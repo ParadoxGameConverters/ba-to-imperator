@@ -143,3 +143,12 @@ Lycian,Shinuwa,tag=SNP
 isaurian,Shinuwa,tag=SNP
 Lydian,Shinuwa,tag=SNP
 Egyptian,Hut-Sat-Asopis,tag=SNP
+hebrew,Sinufa,tag=SNP
+
+#Acragas
+Arabic,Kirkant,tag=ACR
+
+#Calacte
+Arabic,Shati-Jamil,tag=CLA
+libyan,Tagzirt-Icebhen,tag=CLA
+hebrew,Chof-Yafefa,tag=CLA
