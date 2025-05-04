@@ -743,7 +743,7 @@ public class Output
                 String outputFile = outputDir+"/gfx/coat_of_arms/colored_emblems/"+emblem;
                 copySuperFast(emblemDir,outputFile);
             }catch (Exception e) { //if flag cannot be found, will ignore
-                System.out.println("Error with copying "+emblemDir+", skipping image");
+                //System.out.println("Error with copying "+emblemDir+", skipping image");
             }
             count = count + 1;
         }

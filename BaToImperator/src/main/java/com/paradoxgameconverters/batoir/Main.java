@@ -191,7 +191,7 @@ public class Main
             
             ArrayList<String> customModInstalls = Importer.importBasicFile("configurables/modDirectories.txt");
             
-            boolean invictus = false; //initially just for Invictus, but now for any mod
+            boolean invictus = false; //initially just for Invictus, but now for any mod hybridization
             String hybridName = configDirectories[7];
             if (!hybridName.equals("no")) { //if mod hybridization is enabled
                 invictus = true;
@@ -199,14 +199,17 @@ public class Main
             
             String invictusDir = "";
             if (configDirectories[8].equals("default") && invictus){ //default directory for Steam mods
-                String steamID = "2532715348";
-                if (hybridName.equals("ti")) {
-                    steamID = "2856497654";
-                }
-                String steamInvDir = ":/Program Files (x86)/Steam/steamapps/workshop/content/859580/"+steamID;
-                invictusDir = Directories.detectPathDrive(steamInvDir);
-                if (invictusDir == null) {
-                    LOGGER.severe("Unable to detect "+hybridName+"! If you have a custom, non-standard, or non-Steam installation, select the 'Custom Installation' Invictus Directory option before converting.");
+                ArrayList<String> steamIDs = Importer.importBasicFile("configurables/steamIDs.txt");
+                String steamID = Output.cultureOutput(steamIDs,hybridName);
+                
+                invictusDir = Directories.detectWorkshopFromDir(impGameDir,steamID);
+                
+                if (invictusDir == null) { //Unable to find standard workshop directory from impGameDir, check default as a backup
+                    String steamInvDir = ":/Program Files (x86)/Steam/steamapps/workshop/content/859580/"+steamID;
+                    invictusDir = Directories.detectPathDrive(steamInvDir);
+                    if (invictusDir == null) {
+                        LOGGER.severe("Unable to detect "+hybridName+"! If you have a custom, non-standard, or non-Steam installation, select the 'Custom Installation' Hybrid Directory option before converting.");
+                    }
                 }
                 
             } else if (configDirectories[8].equals("custom")){ //default directory for Invictus
@@ -786,7 +789,7 @@ public class Main
             LOGGER.info("defaultOutput copied after "+outputTimeTot+" minutes");
             LOGGER.finest("69%");
             
-            Output.copyBAFlags(modFlagGFX,modDirectory); //Copies flag gfx, really slow, comment out during testing
+            Output.copyBAFlags(modFlagGFX,modDirectory); //Copies flag gfx
             Output.namedColorCreation(colorList,modDirectory);
 
             flag = 0;

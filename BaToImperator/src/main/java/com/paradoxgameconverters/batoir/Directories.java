@@ -177,6 +177,22 @@ public class Directories
 
         fileOut.close();
     }
+    
+    public static String detectWorkshopFromDir(String irDir, String modID) throws IOException //Detects workshop directory from install directory
+    {
+        int irLength = irDir.length();
+        int irGameLength = "common/ImperatorRome".length();
+        int newEndPoint = irLength-irGameLength;
+        String baseDir = irDir.substring(0,newEndPoint);
+        String fullPath = baseDir+"workshop/content/859580/"+modID;
+        File pathTest = new File(fullPath);
+        if (pathTest.isDirectory()) {
+            System.out.println("Steam mod found at "+fullPath+"!");
+            return fullPath;
+        }
+        
+        return null;
+    }
 
     public static String detectPathDrive(String pathDir) throws IOException //Detects which drive a path is located
     {
