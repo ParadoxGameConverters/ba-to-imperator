@@ -3873,8 +3873,9 @@ public class Processing
                     if (irTag.equals("none")) { //only output localization and setup if country used a dynamic tag
                         convTag = convTag + 1;
                         irTag = genNewTag(convTag);
+                        boolean genderEquality = newExoCountry.hasGenderEquality();
                         Output.localizationCreation(names,irTag,modDirectory);
-                        Output.countrySetupCreation(color,irTag,modDirectory);
+                        Output.countrySetupCreation(color,irTag,genderEquality,modDirectory);
                     }
                     
                     newExoCountry.setUpdatedTag(irTag);

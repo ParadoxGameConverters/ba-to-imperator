@@ -1632,7 +1632,7 @@ public class Output
         fileOut.close();
     }
     
-    public static void countrySetupCreation(String color, String title, String Directory) throws IOException
+    public static void countrySetupCreation(String color, String title, boolean genderEquality, String Directory) throws IOException
     {
 
         //try {
@@ -1674,7 +1674,7 @@ public class Output
         out.flush();
         fileOut.close();
         
-        setupForCountry(color,title,Directory);
+        setupForCountry(color,title,genderEquality,Directory);
         
         //}catch (Exception e) {
         //    genericBlankFile(Directory + "/converted_countries.txt","#Converted Countries from Bronze Age");
@@ -1682,13 +1682,17 @@ public class Output
 
     }
     
-    public static void setupForCountry(String color, String title, String Directory) throws IOException
+    public static void setupForCountry(String color, String title, boolean genderEquality, String Directory) throws IOException
     {
         FileOutputStream fileOut= new FileOutputStream(Directory + "/converted/"+title+".txt");
         PrintWriter out = new PrintWriter(fileOut);
         out.println ("color = rgb { "+color+" }");
         out.println ("color2 = rgb { "+color+" }");
         out.println ("");
+        if (genderEquality) { //if Gender Equality is enabled
+            out.println ("gender_equality = yes");
+            out.println ("");
+        }
         out.println ("ship_names = {");
         out.println ("}");
         out.flush();

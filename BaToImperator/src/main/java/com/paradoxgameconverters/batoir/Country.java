@@ -28,6 +28,7 @@ public class Country
     private int religiousTech;
     private String diplomacy; //Only used by ExoTags
     private ArrayList<CultureRights> countryCultureRights;
+    private boolean genderEquality;
     public Country() {
         int id;
         String culture;
@@ -52,6 +53,7 @@ public class Country
         int religiousTech;
         String diplomacy;
         ArrayList<CultureRights> countryCultureRights;
+        boolean genderEquality;
     }
     public void setGovernment(String name) {
         government = name;
@@ -234,6 +236,13 @@ public class Country
         return countryCultureRights;
     }
     
+    public void setGenderEquality(boolean tagGenderEquality) {
+        genderEquality = tagGenderEquality;
+    }
+    public boolean hasGenderEquality() {
+        return genderEquality;
+    }
+    
     public boolean isTribal() { //Returns true if the country has a tribal government form
         String gov = getGovernment();
         boolean tf = false;
@@ -260,6 +269,7 @@ public class Country
         newCountry.setRuler(countryRuler);
         newCountry.setGovernment(gov);
         newCountry.setAntagonist(false); //Set all nations as not Antagonist by default
+        newCountry.setGenderEquality(false); //Set all nations as not equal by default
         
         //By default, set all technology to level 2
         newCountry.setAllTech(2);

@@ -481,6 +481,9 @@ public class Importer
                                     if (lawArray.size() > 0) {
                                         countryToAdd.setLaws(lawArray);
                                     }
+                                    if (output[2].equals("yes")) {
+                                        countryToAdd.setGenderEquality(true);
+                                    }
 
                                     impTagInfo.add(countryToAdd);
 

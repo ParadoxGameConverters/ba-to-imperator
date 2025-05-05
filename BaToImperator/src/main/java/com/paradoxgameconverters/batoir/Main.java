@@ -869,7 +869,8 @@ public class Main
                             Output.generateCOA(flagList,baTagFlag,newTagID,modDirectory);
                             
                             String countryColor = baTag.getColor();
-                            Output.countrySetupCreation(countryColor,newTagID,modDirectory);
+                            boolean genderEquality = baTag.hasGenderEquality();
+                            Output.countrySetupCreation(countryColor,newTagID,genderEquality,modDirectory);
                             
                             ArrayList<String> countryCharacterFile = Processing.createCharFileForTag(baTag,baCharacters);
                             Output.outputBasicFile(countryCharacterFile,baTag.getUpdatedTag()+"_converted.txt",modDirectory+"/setup/characters");
