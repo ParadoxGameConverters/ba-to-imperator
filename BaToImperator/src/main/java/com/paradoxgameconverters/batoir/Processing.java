@@ -2880,15 +2880,18 @@ public class Processing
         boolean coreFlag = false;
         boolean oneLineFlag = false; //flag for when own_control_core is all on one line
         ArrayList<Integer> convProvinces = getAllProvincesInScope(irProvinceList);
+        //int tagCount = 0;
+        //boolean hasProvs = false;
         
         while (countOldFile < OldLines.size()) {
             String selectedLine = OldLines.get(countOldFile);
             String selectedLineNoComment = selectedLine.split(" #")[0];
             selectedLineNoComment = selectedLineNoComment.split("#")[0];
+            
             if (selectedLine.equals("country = {")) {
                 countrySectionFlag = true;
+                //tagCount = 0;
             }
-            
             if (countrySectionFlag && selectedLineNoComment.contains("own_control_core")) {
                 coreFlag = true;
                 if (!selectedLine.contains("}")) {
@@ -2926,6 +2929,7 @@ public class Processing
                                 
                                 if (!inConvScope || provOwner.equals("9998")) { //Either is in-scope or is a minority mapping
                                     newProvs = newProvs + " " + selectedProv;
+                                    //hasProvs = true;
                                 }
                             
                             //}
@@ -2955,7 +2959,131 @@ public class Processing
                     lines.add(tab+tab+"}");
                 }
                 oneLineFlag = false;
+                
             }
+            countOldFile = countOldFile + 1;
+        }
+        
+        lines = removeGhostTags(lines);
+
+        return lines;
+    }
+    
+    public static ArrayList<String> removeGhostTags(ArrayList<String> OldLines) { //purges landless tags from setup to prevent the multiplayer lobby crash
+        int count = 0;
+        String tab = "	";
+        String quote = '"'+"";
+        String endBracket = " }".replace(" ","");
+        
+        ArrayList<String> lines = new ArrayList<String>();
+        
+        int countOldFile = 0;
+        boolean countrySectionFlag = false;
+        boolean tagFlag = false;
+        boolean coreFlag = false;
+        boolean oneLineFlag = false; //flag for when own_control_core is all on one line
+        int tagCount = 0;
+        boolean hasProvs = false;
+        
+        //int bracketCount = 0;
+        
+        while (countOldFile < OldLines.size()) {
+            String selectedLine = OldLines.get(countOldFile);
+            String selectedLineNoComment = selectedLine.split(" #")[0];
+            if (selectedLineNoComment.length() > 1) {
+                selectedLineNoComment = selectedLineNoComment.split("#")[0];
+            }
+            String selectedLineNoSpaces = selectedLineNoComment.replace(" ","");
+            selectedLineNoSpaces = selectedLineNoSpaces.replace(tab,"");
+            
+            //System.out.println(selectedLineNoComment);
+            
+            if (selectedLineNoComment.contains("country = {")) {
+                countrySectionFlag = true;
+                //System.out.println("Start |"+selectedLineNoComment);
+                lines.add(selectedLine);
+                
+            }
+            
+            
+            else if (selectedLineNoSpaces.contains("=") && countrySectionFlag) {
+                String tag = selectedLineNoSpaces.split("=")[0];
+                hasProvs = false;
+                
+                if (tag.length() == 3 && !tag.equals("BAR")) {
+                    //System.out.println(tag);
+                    int bracketCount = 1;
+                    
+                    
+                    ArrayList<String> tagLines = new ArrayList<String>();
+                    tagLines.add(selectedLine);
+                    
+                    while (bracketCount > 0) {
+                        countOldFile = countOldFile + 1;
+                        selectedLine = OldLines.get(countOldFile);
+                        tagLines.add(selectedLine);
+                        
+                        
+                        selectedLineNoComment = selectedLine.split(" #")[0];
+                        if (selectedLineNoComment.length() > 1) {
+                            selectedLineNoComment = selectedLineNoComment.split("#")[0];
+                        }
+                        
+                        if (selectedLineNoComment.contains("{")) {
+                            bracketCount = bracketCount + 1;
+                        }
+                        if (superStrCharCheck(selectedLineNoComment,"}")) {
+                            bracketCount = bracketCount - 1;
+                        }
+                        
+                        if (selectedLineNoComment.contains("own_control_core")) {
+                            coreFlag = true;
+                        }           
+                        
+                        if (coreFlag) {
+                            String[] removedSpaces = selectedLineNoComment.split(" ");
+                            int spaceCount = 0;
+                            while (removedSpaces.length > spaceCount && !hasProvs) {
+                                try {
+                                    int provID = Integer.parseInt(removedSpaces[spaceCount]);
+                                    hasProvs = true;
+                                    
+                                } catch (Exception e) {
+                                    
+                                }
+                                spaceCount = spaceCount + 1;
+                            }
+                            
+                            
+                        }
+                        
+                        if (superStrCharCheck(selectedLineNoComment,"}")) {
+                            coreFlag = false;
+                        }
+                    }
+                    
+                    //countOldFile = countOldFile + 1;
+                    //selectedLine = OldLines.get(countOldFile);
+                    //tagLines.add(selectedLine);
+                    
+                    if (hasProvs) {
+                        lines.addAll(tagLines);
+                    } else {
+                        System.out.println("Purging |"+tagLines.get(0));
+                    }
+                    
+                    //tagFlag = true;
+                } else {
+                    lines.add(selectedLine);
+                }
+
+            } else {
+                lines.add(selectedLine);
+            }
+            
+            
+            
+            
             countOldFile = countOldFile + 1;
         }
 
@@ -4418,6 +4546,23 @@ public class Processing
         }
         
         return tf;
+    }
+    
+    public static boolean superStrCharCheck(String name, String searchChar) //Bypasses .contains not working on }
+    //Can only check a single character
+    {
+        int count = 0;
+        boolean tf = false;
+        while (count < name.length()) {
+            String strCharacter = name.charAt(count)+"";
+            if (strCharacter.equals(searchChar)) {
+                return true;
+            }
+            count = count + 1;
+        }
+        
+        return tf;
+        
     }
     
     public static ArrayList<Country> applyCRsToCountries(ArrayList<Country> countries, ArrayList<String> cultureMappings,
