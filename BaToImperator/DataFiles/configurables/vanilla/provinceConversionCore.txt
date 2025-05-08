@@ -23,7 +23,7 @@
 	link = { ba = 1927 ba = 1926 ba = 1925 ba = 1917 ba = 1923 ba = 1918 ba = 1919 ba = 1916 ba = 1915 ba = 1963 ba = 1962 ba = 1924 imperator = 3175 } # Eratyra, Tsotili, Krimini, Kalloni, Pentalophos, Dotsiko, Zouzouli, Elatos, Kalokhi, Molakha, Sisani, Zoni -> Eratyra
 	link = { ba = 1998 ba = 2641 ba = 2638 ba = 2640 ba = 2648 ba = 2647 ba = 2646 ba = 2644 ba = 2643 ba = 1996 ba = 1994 ba = 1992 imperator = 1445 } # Arnova, Limyra, Olbaso, Arneai, Kandos, Gagai, Boubon, Arsada, Pinara, Phrasero, Erseki, Khreporio -> Kodrion
 	link = { ba = 2634 ba = 2631 ba = 2630 ba = 2635 ba = 2636 ba = 1893 ba = 2627 ba = 1986 ba = 1989 ba = 1990 ba = 1978 ba = 1991 ba = 1746 imperator = 3356 } # Kidrama, Tlos, Khoma, Tabai, Saleia, Maliko, Tyriaion, Dardha, Voskori, Krekhovi, Miras, Meniko, Pixaria -> Beoue
-	link = { ba = 1967 ba = 1961 ba = 1972 ba = 1970 ba = 1890 ba = 1973 ba = 1969 ba = 1966 ba = 1964 ba = 1977 ba = 2203 ba = 1979 ba = 1922 ba = 1920 ba = 1747 ba = 1748 imperator = 3125 } # Militsa, Vasileiada, Gavros, Dispilio, Antartiko, Koromilia, Kremasto, Simantro, Germas, Tresteniko, Pharso, Barbanoi, Nestorio, Kotili, Molista, Osna -> Keletron
+	link = { ba = 1967 ba = 1961 ba = 1972 ba = 1970 ba = 1890 ba = 1973 ba = 1969 ba = 1966 ba = 1964 ba = 1977 ba = 2203 ba = 1979 ba = 1922 ba = 1920 ba = 1747 ba = 1748 ba = 2626 imperator = 3125 } # Militsa, Vasileiada, Gavros, Dispilio, Antartiko, Koromilia, Kremasto, Simantro, Germas, Tresteniko, Pharso, Barbanoi, Nestorio, Kotili, Molista, Osna, Lagrio -> Keletron
 	link = { ba = 2616 ba = 2623 ba = 2620 ba = 2618 imperator = 405 } # Matar, Edaes, Addaket, Azena -> Stuberra
 	link = { ba = 2600 ba = 2601 ba = 2604 ba = 2606 ba = 2608 ba = 2603 ba = 2612 ba = 2613 imperator = 411 } # Adio, Balaios, Dahet, Kimeros, Meka, Germe, Dadon, Daos -> Herakleia Lynkestis
 	link = { ba = 1948 ba = 1980 ba = 1983 ba = 1955 ba = 1950 ba = 1960 ba = 1959 ba = 1958 ba = 1953 ba = 1957 ba = 2597 ba = 1956 ba = 1882 imperator = 408 } # Ardassa, Philnastro, Phaistino, Philotas, Drosero, Kleisoura, Aetos, Anargyroi, Bokeria, Kleidi, Satine, Kellai, Limni Vegoritida -> Arnisa
@@ -156,6 +156,9 @@
 	link = { ba = 4943 ba = 4931 imperator = 3362 } # Moulou, Iwsaa -> Agabis
 	link = { ba = 4715 ba = 4804 imperator = 3363 } # Adlasse, Katisa -> Darnis
 	link = { ba = 4903 ba = 431 ba = 4930 imperator = 3361 } # Batata, Messolonghi, Ikwa -> Apollonia Kyrenaike
+	link = { ba = 4718 imperator = 3367 } # Iwarkate -> Petras Mikros
+	link = { ba = 4933 imperator = 3366 } # Doushbihe -> Paliouros
+	link = { ba = 4717 imperator = 3368 } # Jaje -> Batrachos
 	link = { ba = 4719 imperator = 3365 } # Tassajate -> Aziris
 	link = { ba = 4716 imperator = 3370 } # Ifista -> Antipyrgos
 	link = { ba = 4709 imperator = 3371 } # Aydy -> Kyrthanion
@@ -544,7 +547,7 @@
 	link = { ba = 5728 ba = 5924 ba = 6669 ba = 5707 ba = 5729 ba = 235 ba = 5730 ba = 5708 ba = 5709 ba = 5731 imperator = 829 } # Aqarbanu, Mari, Urzînu, Nagiati, Buâshu, Nâbqu, Dilhu, Hindanu, Mutellum, Elêlu -> Doura
 	link = { ba = 611 ba = 1356 ba = 5726 ba = 5704 ba = 5705 ba = 5706 ba = 6667 ba = 5727 ba = 6668 imperator = 828 } # Shamnu, Shakâku, Nebarti-Ashur, Terqa, Ershûtu, Kêttu, Tiâlu, Suprum, Arbatu -> Terqa
 	link = { ba = 3599 ba = 552 ba = 614 ba = 3600 ba = 2493 ba = 626 ba = 5703 ba = 5700 ba = 5725 ba = 5327 ba = 2351 imperator = 827 } # Nemed-Ishtar, Gukku, Kipina, Dur-Yahdun, Saggaratum, Samanum, Ganibatum, Mamlu, Rummunina, Yalihum, Mêressu -> Circesium
-	link = { ba = 549 ba = 550 ba = 375 ba = 577 ba = 605 ba = 386 ba = 2633 ba = 6665 ba = 481 ba = 575 ba = 3086 ba = 6666 imperator = 806 } # Upputu, Ripîtu, Halabit, Akullû, Lasqum, Nûru, Shîbu, Alânu, Bu'û, Ensu, Hurshânu, Sarsartu -> Birtha
+	link = { ba = 549 ba = 550 ba = 375 ba = 577 ba = 605 ba = 386 ba = 2633 ba = 6665 ba = 481 ba = 575 ba = 3086 ba = 6666 ba = 3718 imperator = 806 } # Upputu, Ripîtu, Halabit, Akullû, Lasqum, Nûru, Shîbu, Alânu, Bu'û, Ensu, Hurshânu, Sarsartu, Kimsu -> Birtha
 	link = { ba = 14 ba = 1855 ba = 3545 ba = 3496 ba = 455 ba = 1116 ba = 3470 imperator = 819 } # Balihu, Kakkul, Kîdu, Koz-i-tta, Harranu, Humsîru, Sêru -> Carrhae
 	link = { ba = 1676 ba = 1435 ba = 3221 ba = 3317 ba = 139 ba = 1156 ba = 347 ba = 2500 ba = 31 ba = 1988 ba = 1430 ba = 3587 ba = 3417 ba = 3435 imperator = 820 } # Ni'lu, Kurdissu, Marru, Kunshu, Uzzuqu, Sabîtu, Aplu, Gerkinakku, Ussuru, Garîdu, Laqâtu, Kisittu, Tûblu, Ulinnu -> Sahlala
 	link = { ba = 3155 ba = 3183 ba = 160 ba = 182 ba = 3492 ba = 2514 imperator = 849 } # Hadattu, Irridu, Hashdu, Esertu, Sa-tti, Zamâru -> Ballatha
@@ -688,6 +691,9 @@
 	link = { ba = 6546 ba = 6547 ba = 6608 ba = 6553 ba = 6609 ba = 6555 ba = 6556 ba = 6610 imperator = 4949 } # Sharan, Kad, Wardatu, Reshu, Anpa, Nisirtisu, Epesu, Eunir -> Kaupirrish
 	link = { ba = 6536 ba = 6542 ba = 6539 ba = 6541 ba = 6543 ba = 6545 ba = 6548 ba = 6605 ba = 6540 ba = 6544 imperator = 4950 } # Susanian Gates, Salasa, Penu, Samu, Abanaskuppatu, Tanaddassi, Adannu, Niru, Salsu, Shub -> Persides
 	link = { ba = 6487 ba = 6521 ba = 6525 ba = 6522 ba = 6523 ba = 6527 ba = 6526 ba = 6602 ba = 6530 ba = 6615 ba = 6603 ba = 6601 ba = 6529 ba = 6600 ba = 6524 ba = 6531 ba = 6528 imperator = 4782 } # Redum, Shuhadaku, Lequ, Edubba, Kurangun, Tulaspid, Tabalu, Awatum, Esrum, Waklûtu, Isu, Sibum, Sanu, Minam, Kun, Dingiru, Dimtu -> Suravan
+	link = { ba = 6898 ba = 6909 ba = 6910 ba = 6908 ba = 6906 imperator = 4784 } # Kharg, Zarza, Bussuru, Erishânu, Afep -> Arrakia
+	link = { ba = 6901 ba = 6907 ba = 6900 ba = 6899 ba = 6905 imperator = 4786 } # Dalapu, Erissuttu, Anarawa, Dakkannu, Humbabitu -> Temukan
+	link = { ba = 6902 ba = 6896 ba = 6894 ba = 6895 ba = 6903 ba = 6897 ba = 6904 imperator = 4787 } # Maddudu, Karsti, Liyan, Arurtu, Ipopsi, Surissa, Betaniati -> Bushahr
 	link = { ba = 6492 ba = 6488 ba = 6478 ba = 6483 ba = 6618 ba = 6484 ba = 6485 ba = 6486 ba = 6489 ba = 6491 ba = 6490 ba = 6520 ba = 6519 ba = 6479 ba = 6617 ba = 6480 ba = 6481 imperator = 4785 } # Zini, Marudumu, Wasabu, Wasu, Asû, Mahasu, Shargaz, Emush, Kishpu, Zilittu, Ebih, Irnini, Bubutu, Huhnuri, Ashkâpu, Sessum, Masku -> Millonia
 	link = { ba = 6494 ba = 6495 ba = 6493 ba = 6498 ba = 6476 ba = 6477 ba = 6475 ba = 6482 ba = 6473 imperator = 4780 } # La'atzu, Iqbu, Genii, Nagbu, Ahatu, Ahatki, Edu, Wardum, Amelnaru -> Arragan
 	link = { ba = 6399 ba = 6403 ba = 6464 ba = 6518 ba = 6497 ba = 6616 ba = 6499 imperator = 4779 } # Tebîru, Nagitu, Magurur, Suqallulu, Supparruru, Tamkâru, Salahu -> Agines
