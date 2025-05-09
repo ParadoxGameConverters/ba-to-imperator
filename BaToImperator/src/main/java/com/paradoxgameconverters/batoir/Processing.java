@@ -1255,7 +1255,7 @@ public class Processing
         return true;
     }
 
-    public static void fileExcecute(String[] file) throws IOException //checks if file exists or not
+    public static void fileExcecute(String[] file) throws IOException //executes file
     {
         try {
             Runtime runTime = Runtime.getRuntime();
@@ -4132,7 +4132,9 @@ public class Processing
                 updatedMission = purgeStartingLegions(updatedMission);
             }
             boolean check = compareStringLists(missionFile,updatedMission);
-            if (!check) {
+            String defaultOutputMissionDir = missionModDir+"/"+fileName;
+            File defaultOutputMission = new File(defaultOutputMissionDir);
+            if (!check && defaultOutputMission != null) {
                 Output.outputBasicFile(updatedMission,fileName,missionModDir);
             }
 

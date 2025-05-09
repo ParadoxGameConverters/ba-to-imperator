@@ -934,6 +934,7 @@ public class Main
             Processing.updateAllMissions(gameFileDir+"/common/missions",modDirectory+"/common/missions",missions);
             Processing.updateAllMissionEvents(gameFileDir,modDirectory,missions);
             Processing.updateAllMissions(gameFileDir+"/common/scripted_effects",modDirectory+"/common/scripted_effects",missions);
+            Processing.updateAllMissions(gameFileDir+"/common/scripted_triggers",modDirectory+"/common/scripted_triggers",missions);
             
             ArrayList<Diplo> exoDiplo = Processing.genExoDiplo(exoCountries,missions);
             impSubjectInfo = Processing.addNewDiplo(exoDiplo,impSubjectInfo);

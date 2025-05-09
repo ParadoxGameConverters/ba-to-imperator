@@ -1,0 +1,2 @@
+﻿#The missions for Tylos have been disabled, as they spammed the error log, only functioned for republics,
+#and overwrote the generic missions for all tags with Babylonian culture

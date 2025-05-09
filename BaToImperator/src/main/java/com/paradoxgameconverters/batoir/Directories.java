@@ -144,6 +144,9 @@ public class Directories
 
         File f53 = new File(mainModFolder+"/common/scripted_effects");
         f53.mkdir();
+        
+        File f54 = new File(mainModFolder+"/common/scripted_triggers");
+        f54.mkdir();
 
         return aqv;
     }
