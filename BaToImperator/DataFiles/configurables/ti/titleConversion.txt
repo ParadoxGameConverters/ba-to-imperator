@@ -26,3 +26,26 @@ TYR,TYE
 SDN,SID
 GUB,BYB
 RWD,ARA
+
+#These don't have vanilla counterparts
+#but have scripted triggers to prevent them from forming others
+S3M,SU3
+AKK,AK3
+MRI,MR3
+MSW,MW3
+NEG,NE3
+1YM,YM3
+UWU,UW3
+EBL,EB3
+1MI,MT3
+GTM,GT3
+1EM,EL3
+1WS,TR3
+
+1CN,CA3
+AN4,AN4
+1LW,LW3
+P3L,PL3
+1AT,AT3
+HYK,HY3
+1HF,HF3
