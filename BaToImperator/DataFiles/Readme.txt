@@ -43,9 +43,11 @@ An list of those who contributed effort to this mammoth undertaking
 
 Idhrendur                             - Sanity Checks, Review, Workflows, and Fronter integration
 Shinymewtwo99 (aka Dr. Dudelsack)     - Lead Developer, Programmer, Events, and Data Files
-olivenkranz                           - Balancing
+olivenkranz                           - Balancing, Testing
 linkluver                             - Egyptian ExoNames
-Typhion				      - Programmer
+BlinkySauce (aka Changeling33)        - Testing
+Typhion                               - Programmer, Testing
+Zemurin                               - thumbnail.png
 
 A special thanks to Svanley, the creator of the original Bronze Age mod, many of whose assets, such as extinct cultures and religions, were incorporated into the converter.
 The original Bronze Age mod can be found on Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=1797024425

@@ -35,7 +35,7 @@ public class Main
             throw new RuntimeException("Problems with creating the log files");
         }
 
-        LOGGER.info("Converter version 0.0 \"Pre-release\" - compatible with Bronze Age Reborn and Imperator:Rome 2.0+");
+        LOGGER.info("Converter version 0.1 \"Akkad\" - compatible with Bronze Age Reborn and Imperator:Rome 2.0+");
         //System.out.println("Test");
         LOGGER.finest("0%");
         //System.out.println("5%");
@@ -770,6 +770,15 @@ public class Main
             //Output.copyRaw("defaultOutput"+VM+"cultures"+VM+"00_cultures.txt",modDirectory+VM+"common"+VM+"cultures"+VM+"00_cultures.txt");
             //Processing.customDate(date,"defaultOutput/default/bookmarks/50_customBookmark.txt",modDirectory+VM+"common/bookmarks/50_customBookmark.txt");
             String defaultOutputDir = "defaultOutput/";
+            
+            String thumbnailName = "thumbnail.png";
+            
+            try {
+                Output.copySuperFast(defaultOutputDir+"/"+thumbnailName,modDirectory+"/"+thumbnailName);
+                Processing.createReadMe("Readme.txt",modDirectory);
+            } catch (Exception e) {
+                LOGGER.warning("Warning! Unable to copy Readme.txt and "+thumbnailName);
+            }
             String outputOption = "none";
             if (invictus) {
                 defaultOutputDir = defaultOutputDir+hybridName+"/";

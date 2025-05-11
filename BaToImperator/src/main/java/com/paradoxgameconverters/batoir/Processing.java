@@ -4635,4 +4635,18 @@ public class Processing
         return laws;
     }
     
+    public static void createReadMe (String readme, String modDir) throws IOException //outputs a commented ReadMe
+    {
+        int count = 0;
+        ArrayList<String> readMeArray = Importer.importBasicFile(readme);
+        while (count < readMeArray.size()) {
+            String line = readMeArray.get(count);
+            line = "#  "+line;
+            readMeArray.set(count,line);
+            count = count + 1;
+        }
+        Output.outputBasicFile(readMeArray,"Readme.txt",modDir);
+        
+    }
+    
 }
