@@ -151,7 +151,7 @@ public class Directories
         return aqv;
     }
 
-    public static void descriptors(String outputDir, String irModDir, String modName) throws IOException 
+    public static void descriptors(String outputDir, String irModDir, String modName, String submod) throws IOException 
     {
         //Each mod requires a .mod "descriptor" files so the game launcher can
         //read the mod files as a mod
@@ -161,18 +161,27 @@ public class Directories
         irModDir = irModDir.replace(VM,"/");
         //String mainModFolder = irModDir+"/"+modName;
         //String mainModFolder = modName;
-        String mainModFolder = irModDir+"/"+modName;
+        String mainModFolder = "mod/"+modName;
 
         FileOutputStream fileOut= new FileOutputStream(outputDir+"/"+modName+".mod");
         PrintWriter out = new PrintWriter(fileOut);
         String tab = "	";
+        String loadWith = " - Load Under ";
+        if (submod.equals("no") || submod.equals("vanilla")) {
+            submod = "";
+            loadWith = "";
+        } else if (submod.equals("ti")) {
+            submod = "Terra Indomita";
+        } else if (submod.equals("invictus")) {
+            submod = "Invictus"; 
+        }
 
         out.println("version="+quote+"1.0"+quote);
         out.println("tags={");
         out.println(tab+quote+"Overhaul"+quote);
         out.println(tab+quote+"Total Conversions"+quote);
         out.println("}");
-        out.println("name="+quote+"Converted - "+modName+quote);
+        out.println("name="+quote+"Converted - "+modName+loadWith+submod+quote);
         out.println("path="+quote+mainModFolder+"/"+quote);
         out.println("supported_version="+quote+"2.0.5"+quote);
 

@@ -36,9 +36,9 @@ public class Main
         }
 
         LOGGER.info("Converter version 0.0 \"Pre-release\" - compatible with Bronze Age Reborn and Imperator:Rome 2.0+");
-        System.out.println("Test");
+        //System.out.println("Test");
         LOGGER.finest("0%");
-        System.out.println("5%");
+        //System.out.println("5%");
 
         long startTime = System.nanoTime(); //Starts the converter clock, used to tell how much time has passed
 
@@ -91,7 +91,6 @@ public class Main
 
             directories.modFolders (Dir,modName); //Creating the folders to write the mod files
             //along with nessicery sub-folders
-            directories.descriptors(Dir,irModDir,modName); //Basic .mod files required for the launcher
 
             String modDirectory = Dir+VN+modName;
 
@@ -196,6 +195,7 @@ public class Main
             if (!hybridName.equals("no")) { //if mod hybridization is enabled
                 invictus = true;
             }
+            directories.descriptors(Dir,irModDir,modName,hybridName); //Basic .mod files required for the launcher
             
             String invictusDir = "";
             if (configDirectories[8].equals("default") && invictus){ //default directory for Steam mods
@@ -427,11 +427,11 @@ public class Main
             //processing information
 
             baProvInfoList = importer.importProv(saveProvinces);
-            System.out.println(baProvInfoList.get(2200).getNobles().size());
-            System.out.println(baProvInfoList.get(2200).getCitizens().size());
-            System.out.println(baProvInfoList.get(2200).getFreemen().size());
-            System.out.println(baProvInfoList.get(2200).getTribesmen().size());
-            System.out.println(baProvInfoList.get(2200).getSlaves().size());
+            //System.out.println(baProvInfoList.get(2200).getNobles().size());
+            //System.out.println(baProvInfoList.get(2200).getCitizens().size());
+            //System.out.println(baProvInfoList.get(2200).getFreemen().size());
+            //System.out.println(baProvInfoList.get(2200).getTribesmen().size());
+            //System.out.println(baProvInfoList.get(2200).getSlaves().size());
             
             int baPopTotal = 0;//total number of pops in BA save
             totalPop = 0;
@@ -561,9 +561,9 @@ public class Main
                     ////String provReligion = baProvInfo.getReligion();
                     temp = 0;
                     temp2 = 0;
-                    if (ckProvNum == 356) {
-                        System.out.println("Adding BA "+aqq+" to IR "+ ckProvNum +" (" +irProvListID+ ")");
-                    }
+                    //if (ckProvNum == 356) {
+                        //System.out.println("Adding BA "+aqq+" to IR "+ ckProvNum +" (" +irProvListID+ ")");
+                    //}
                     //nation
                     ////if (ck2TagTotals[ckProvNum] == (null)) {
 
@@ -697,7 +697,7 @@ public class Main
                         irTag.setHasLand(true);
                         baTagInfo.set(ownerInt,irTag);
                     }
-                    System.out.println(aq2);
+                    //System.out.println(aq2);
                 } catch (java.lang.NullPointerException exception) {
                     
                 }
@@ -764,7 +764,7 @@ public class Main
             LOGGER.info("Subject data imported after "+subjectTimeTot+" minutes");
             LOGGER.finest("65%");
 
-            LOGGER.info("Copying default output... (This will take 5-6 minutes)");
+            LOGGER.info("Copying default output...");
 
             //Default output, will be included in every conversion regardless of what occured in the save file
             //Output.copyRaw("defaultOutput"+VM+"cultures"+VM+"00_cultures.txt",modDirectory+VM+"common"+VM+"cultures"+VM+"00_cultures.txt");
