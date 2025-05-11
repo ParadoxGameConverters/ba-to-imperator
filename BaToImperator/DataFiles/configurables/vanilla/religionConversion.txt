@@ -1,0 +1,25 @@
+
+#Canaanite becomes Jewish if under a Hebrew realm or Hebrew under a non-Canaanite realm
+canaanite_religion,judaism,tagCulture=hebrew
+#canaanite_religion,carthaginian_pantheon,notTagCulture=hebrew
+canaanite_religion,judaism,culture=hebrew
+canaanite_religion,carthaginian_pantheon
+
+#Hellenic becomes Zalmoxian if under an Odrysian realm or Odrysian under a non-Canaanite realm
+aegean_religion,shamanism,tagCulture=odrysi
+aegean_religion,roman_pantheon,notTagCulture=odrysi
+aegean_religion,shamanism,culture=odrysi
+aegean_religion,roman_pantheon
+
+#Mesopotamian becomes Arabic if under an Arab realm or Arabic under a non-Mesopotamian realm
+mesopotamian_religion,arabian_pantheon,tagCulture=makan
+mesopotamian_religion,mesopotamian_religion,notTagCulture=makan
+mesopotamian_religion,arabian_pantheon,culture=makan
+mesopotamian_religion,mesopotamian_religion
+
+hellenic_religion,roman_pantheon
+anatolian_religion,anatolian_religion
+egyptian_religion,egyptian_pantheon
+berber_religion,berber_religion
+elamite_religion,mesopotamian_religion
+hurrian_religion,hurrian_religion

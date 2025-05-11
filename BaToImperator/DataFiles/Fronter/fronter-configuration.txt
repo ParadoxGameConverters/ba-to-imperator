@@ -1,0 +1,42 @@
+name = BaToImperator
+converterFolder = BaToImperator
+backendExePath = BaToImperator
+enableUpdateChecker = true
+checkForUpdatesOnStartup = true
+latestGitHubConverterReleaseUrl = "https://github.com/ParadoxGameConverters/ImperatorToCk2/releases/download/latest/ImperatorToCK2.zip"
+converterReleaseForumThread = "https://forum.paradoxplaza.com/forum/threads/imperator-to-ck2-release-thread.1496613/"
+pagesCommitIdUrl = "https://paradoxgameconverters.com/commit_ids/ImperatorToCk2.txt"
+displayName = BATOIMPDISPLAYNAME
+sourceGame = BA
+targetGame = IMPERATOR
+#autoGenerateModsFrom = ImperatorModPath
+
+requiredFile = {
+	name = SaveGame
+	displayName = BASAVE
+	tooltip = BASAVETIP
+	mandatory = true
+	outputtable = true
+	searchPathType = windowsUsersFolder
+	searchPath = "Paradox Interactive\Imperator\save games"
+	allowedExtension = "*.rome"
+}
+
+requiredFolder = {
+	name = ImperatorDirectory
+	displayName = IMPERATORFOLDER
+	tooltip = IMPERATORFOLDERTIP
+	mandatory = true
+	searchPathType = storeFolder
+	steamGameID = 859580
+	gogGameID = 2131232214
+}
+
+requiredFolder = {
+	name = targetGameModPath
+	displayName = IMPERATORMOD
+	tooltip = IMPERATORMODTIP
+	mandatory = true
+	searchPathType = windowsUsersFolder
+	searchPath = "Paradox Interactive\Imperator\mod"
+}

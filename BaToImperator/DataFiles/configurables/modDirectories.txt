@@ -1,0 +1,10 @@
+# Specify where your custom mod installation(s) are located to the right of "modName,"
+# Typically these are used for hybridization with major mods, such as Invictus. 
+
+# bronzeAge is an optional field used for cases where BA is installed to a different directory then the one
+# specified in the save file, such as when converting a friend's savegame or using another computer.
+# By default, custom mods are stored in C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod
+
+invictus,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\Invictus
+ti,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\Terra-Indomita
+bronzeAge,none

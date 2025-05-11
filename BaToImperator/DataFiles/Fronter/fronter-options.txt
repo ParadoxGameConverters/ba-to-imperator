@@ -1,0 +1,122 @@
+option = {
+	name = usesInvictus
+	displayName = HYBRIDOPTION
+	tooltip = HYBRIDOPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = no
+			displayName = HYBRIDNO
+			tooltip = HYBRIDNOTIP
+			default = true
+		}
+		radioOption = {
+			name = invictus
+			displayName = HYBRIDINV
+			tooltip = HYBRIDINVTIP
+			default = false
+		}
+		radioOption = {
+			name = ti
+			displayName = HYBRIDTI
+			tooltip = HYBRIDTITIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = invictusDir
+	displayName = INVICTUSDIR
+	tooltip = INVICTUSDIRTIP
+	radioSelector = {
+		radioOption = {
+			name = default
+			displayName = INVICTUSDIRDEFAULT
+			tooltip = INVICTUSDIRDEFAULTTIP
+			default = true
+		}
+		radioOption = {
+			name = custom
+			displayName = INVICTUSDIRCUSTOM
+			tooltip = INVICTUSDIRCUSTOMTIP
+			default = true
+		}
+	}
+}
+
+option = {
+	name = antagonist
+	displayName = ANTAGONISTOPTION
+	tooltip = ANTAGONISTOPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = no
+			displayName = ANTAGONISTNO
+			tooltip = ANTAGONISTNOTIP
+			default = true
+		}
+		radioOption = {
+			name = yes
+			displayName = ANTAGONISTYES
+			tooltip = ANTAGONISTYESTIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = monument
+	displayName = MONUMENT
+	tooltip = MONUMENTTIP
+	radioSelector = {
+		radioOption = {
+			name = baOnly
+			displayName = MONUMENTBAONLY
+			tooltip = MONUMENTBAONLYTIP
+			default = true
+		}
+		radioOption = {
+			name = vanillaOnly
+			displayName = MONUMENTVANILLAONLY
+			tooltip = MONUMENTVANILLAONLYTIP
+			default = false
+		}
+		radioOption = {
+			name = both
+			displayName = MONUMENTBOTH
+			tooltip = MONUMENTBOTHTIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = characterPruning
+	displayName = CHARACTERPRUNINGOPTION
+	tooltip = CHARACTERPRUNINGOPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = min
+			displayName = CHARACTERPRUNINGMIN
+			tooltip = CHARACTERPRUNINGMINTIP
+			default = true
+		}
+		radioOption = {
+			name = extremePrune
+			displayName = CHARACTERPRUNINGEXTREME
+			tooltip = CHARACTERPRUNINGEXTREMEYESTIP
+			default = false
+		}
+	}
+}
+
+option = {
+	name = output_name
+	displayName = MODNAME
+	tooltip = MODNAMETIP
+	textSelector = {	
+		value = ""
+		editable = true
+		tooltip = MODNAMETIP2
+	}
+}

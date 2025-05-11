@@ -1,0 +1,3 @@
+#Any law not specified in this mapping will not be changed from the save file
+
+standing_army_law,work_for_the_best

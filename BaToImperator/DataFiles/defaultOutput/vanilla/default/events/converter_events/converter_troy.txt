@@ -1,0 +1,72 @@
+﻿namespace = converter_troy
+
+converter_troy.1 = {
+	type = country_event
+	title = converter_troy_1_title
+	desc = converter_troy_1_desc
+	picture = great_work_celebration
+
+	left_portrait = current_ruler
+
+	immediate = {
+	}
+
+	option = {	  
+		name = converter_troy_1.a
+		change_religion_effect = {
+			RELIGION = roman_pantheon
+		}
+		custom_tooltip = "converter_troy_switch_culture_tt"
+		hidden_effect = {
+			#Change all old culture characters to new culture			
+			every_character = {
+				limit = {
+					AND = {
+						OR = {
+							from_ruler_family = yes
+							is_minor_character = no
+						}
+						has_culture = root.culture
+					}
+				}
+				set_culture = roman
+			}
+			set_primary_culture_cleanup_effect = {
+				NEW_PRIMARY_CULTURE = roman
+				MAKE_OLD_CULTURE_INTEGRATED = yes
+			}
+		}
+	}
+	option = {	  
+		name = converter_troy_1.b
+		custom_tooltip = "converter_troy_switch_culture_tt"
+		hidden_effect = {
+			#Change all old culture characters to new culture			
+			every_character = {
+				limit = {
+					AND = {
+						OR = {
+							from_ruler_family = yes
+							is_minor_character = no
+						}
+						has_culture = root.culture
+					}
+				}
+				set_culture = roman
+			}
+			set_primary_culture_cleanup_effect = {
+				NEW_PRIMARY_CULTURE = roman
+				MAKE_OLD_CULTURE_INTEGRATED = yes
+			}
+		}
+	}
+	option = {	  
+		name = converter_troy_1.c
+		change_religion_effect = {
+			RELIGION = roman_pantheon
+		}
+	}
+	option = {	  
+		name = converter_troy_1.d
+	}
+}

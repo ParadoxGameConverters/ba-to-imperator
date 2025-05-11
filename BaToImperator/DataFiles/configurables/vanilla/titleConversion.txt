@@ -1,0 +1,43 @@
+#### BA Tag,IR Tag
+
+1EG,EGT
+1PO,PPN
+1IL,ILL
+1HC,CYP
+1IO,ION
+1LK,LYC
+1AS,ASR
+GR3,HLA
+BBL,BBY
+1JU,JUD
+1KY,CYR
+SMR,SMA
+DMN,TYO
+1AK,ATH
+1LD,LYD
+1PN,PAA
+1PA,PPH
+1EP,EPR
+
+#These don't have vanilla counterparts
+#but have scripted triggers to prevent them from forming others
+S3M,SU3
+AKK,AK3
+MRI,MR3
+MSW,MW3
+NEG,NE3
+1YM,YM3
+UWU,UW3
+EBL,EB3
+1MI,MT3
+GTM,GT3
+1EM,EL3
+1WS,TR3
+
+1CN,CA3
+AN4,AN4
+1LW,LW3
+P3L,PL3
+1AT,AT3
+HYK,HY3
+1HF,HF3
