@@ -4,10 +4,9 @@ This program will convert an Bronze Age Reborn modded save game to a standalone 
 IMPORTANT LINKS
 ----
 
-Forum Release Thread: TBD
-Forum Development Thread: TBD
+Forum Release Thread: https://forum.paradoxplaza.com/forum/threads/bronze-age-to-imperator-converter.1745254/
+Forum Development Thread: https://forum.paradoxplaza.com/forum/threads/bronze-age-to-imperator-converter.1745254/
 GitHub project: https://github.com/ParadoxGameConverters/ba-to-imperator
-Windows development build: TBD
 Bronze Age: Reborn mod Download Link: https://steamcommunity.com/sharedfiles/filedetails/?id=2448788091
 
 ----
