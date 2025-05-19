@@ -26,6 +26,15 @@ TYR,TYE
 SDN,SID
 GUB,BYB
 RWD,ARA
+1CA,CIA
+1AL,AET
+1EU,EBO
+1EL,ELI
+1MG,MGA
+1ME,MSE
+1AR,ARK
+AKR,AKR
+1AC,ACH
 
 #These don't have vanilla counterparts
 #but have scripted triggers to prevent them from forming others
