@@ -102,9 +102,15 @@ option = {
 			default = true
 		}
 		radioOption = {
+			name = mediumPrune
+			displayName = CHARACTERPRUNINGMEDIUM
+			tooltip = CHARACTERPRUNINGMEDIUMTIP
+			default = false
+		}
+		radioOption = {
 			name = extremePrune
 			displayName = CHARACTERPRUNINGEXTREME
-			tooltip = CHARACTERPRUNINGEXTREMEYESTIP
+			tooltip = CHARACTERPRUNINGEXTREMETIP
 			default = false
 		}
 	}

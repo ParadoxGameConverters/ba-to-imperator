@@ -3333,7 +3333,7 @@ public class Processing
 
     }
     
-    public static ArrayList<Characters> pruneCharactersExtreme (ArrayList<Characters> convCharacters, ArrayList<Country> convCountries)
+    public static ArrayList<Characters> pruneCharactersExtreme (ArrayList<Characters> convCharacters, ArrayList<Country> convCountries,int level)
     //prune all characters in a country not directly related to a ruler
     {
         int count = 0;
@@ -3353,7 +3353,9 @@ public class Processing
                 ruler.setPruneStatus(false);
             
                 convCharacters = unpruneProgeny(convCharacters,rulerID,convCountries);
-                convCharacters = unpruneParents(convCharacters,rulerID,convCountries);
+                if (level >= 1) { //the most extreme option also prunes parents
+                    convCharacters = unpruneParents(convCharacters,rulerID,convCountries);
+                }
             }
             
             count = count + 1;
