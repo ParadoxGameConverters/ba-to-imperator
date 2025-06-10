@@ -294,12 +294,14 @@ public class Main
             }
             
             boolean pruneMinorCharactersSetting = false;
-            boolean extremePrune = false;
+            int pruneLevel = 10;
             
             if (configDirectories[11].equals("pruneMinorCharacters")){
                 pruneMinorCharactersSetting = true;
+            } else if (configDirectories[11].equals("mediumPrune")){
+                pruneLevel = 5;
             } else if (configDirectories[11].equals("extremePrune")){
-                extremePrune = true;
+                pruneLevel = 0;
             }
             
             ArrayList<String> govMap = Importer.importBasicFile(mappingDir+"governmentConversion.txt"); //government mappings
@@ -717,8 +719,8 @@ public class Main
             ArrayList<Characters> baCharacters = new ArrayList<Characters>();
             baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
             
-            if (extremePrune) {
-                baCharacters = Processing.pruneCharactersExtreme(baCharacters,baTagInfo);
+            if (pruneLevel <= 5) {
+                baCharacters = Processing.pruneCharactersExtreme(baCharacters,baTagInfo,pruneLevel);
             } else {
                 baCharacters = Processing.pruneCharacters(baCharacters,baTagInfo,pruneMinorCharactersSetting);
             }
