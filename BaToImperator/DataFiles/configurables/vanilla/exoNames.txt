@@ -22,6 +22,8 @@ odrysi,Altadeva,tag=SYR
 hebrew,Sirkyoz,tag=SYR
 Lydian,Kofu-Kofuu,tag=SYR
 Lycian,Xabe,tag=SYR
+aramaic,Sicsyria,tag=SYR
+Hurrian,Shiwe-Eshe,tag=SYR
 
 #Carthage
 Egyptian,Niwt-Ipt,tag=CAR
@@ -54,6 +56,7 @@ Arabic,Almas,tag=MAS
 odrysi,Maskadeva,tag=MAS
 Lydian,Atka,tag=MAS
 Egyptian,Masariyu,tag=MAS
+Hurrian,Fashi,tag=MAS
 
 #Glorious Olbia
 isaurian,Wasus,tag=OLB
@@ -82,6 +85,7 @@ libyan,Tagelda'n Tewwurt,tag=BPK
 Lydian,Qallmlluli,tag=BPK
 Illyrian,Magoseriates,tag=BPK
 Egyptian,Muhotep,tag=BPK
+Hurrian,Omini-Lulahhi,tag=BPK
 
 #Byzantion
 hatti,Kashku,tag=BYZ
@@ -127,7 +131,8 @@ Egyptian,Chersunesus,tag=CHS
 
 #Emporion
 elamite,Sha'Udda,tag=EMP
-Hurrian,Tamgari-Eshe,tag=EMP
+#Hurrian,Tamgari-Eshe,tag=EMP
+Hurrian,Tamgari-Umini,tag=EMP
 hebrew,Shuk,tag=EMP
 Arabic,Alsuwq,tag=EMP
 libyan,Ssuq,tag=EMP
@@ -151,3 +156,14 @@ Arabic,Kirkant,tag=ACR
 Arabic,Shati-Jamil,tag=CLA
 libyan,Tagzirt-Icebhen,tag=CLA
 hebrew,Chof-Yafefa,tag=CLA
+
+#Tarentum
+Illyrian,Darandos,tag=TAR
+Hurrian,Tali,tag=TAR
+Arabic,Tarantu,tag=TAR
+libyan,Ttejra,tag=TAR
+hatti,Shawaat,tag=TAR
+sumerian,Ngesh,tag=TAR
+odrysi,Idadeva,tag=TAR
+elamite,Husa,tag=TAR
+hebrew,Alon,tag=TAR
