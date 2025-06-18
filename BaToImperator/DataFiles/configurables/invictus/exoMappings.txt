@@ -83,6 +83,8 @@
 	link = { ba = 1973 imperator = 1795 } # Miletos -> Kotyora
 	link = { ba = 1973 imperator = 1798 } # Miletos -> Kerasous
 	link = { ba = 1973 imperator = 1734 imperator = 1732 imperator = 1797 } # Miletos -> Trapezous, Hyssos, Koralla
+	link = { comment = "_~_Dyn~~~Cult,italiotian~~Rel,roman_pantheon~~Missions,TAR_~_" }
+	link = { ba = 427 imperator = 56 } # Sparta -> Tarentum
 	link = { comment = "_~_Dyn~~~Cult,italiotian~~Rel,roman_pantheon~~Overlord,SYR~~DiploType,feudatory_~_" }
 	link = { ba = 407 imperator = 72 } # Chalcis -> Rhegium
 	link = { ba = 402 imperator = 73 } # Opous -> Locri
@@ -92,7 +94,6 @@
 	link = { ba = 416 imperator = 52 } # Athens -> Thurii
 	link = { ba = 416 imperator = 54 } # Athens -> Heraclea
 	link = { ba = 444 imperator = 55 } # Aigion -> Metapontum
-	link = { ba = 427 imperator = 56 } # Sparta -> Tarentum
 	link = { ba = 285 imperator = 12 } # Kyme -> Velia
 	link = { ba = 418 imperator = 38 } # Korinthos -> Sipontum
 	link = { ba = 418 imperator = 117 } # Korinthos -> Ancona
