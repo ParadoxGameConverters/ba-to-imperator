@@ -20,3 +20,4 @@ hebrew,DYN_HEBREW_KEMETIC_CAR_FLAG,religion=egyptian_pantheon,tag=CAR
 hebrew,DYN_HEBREW_CAR_FLAG,tag=CAR
 Phoenician,DYN_PUNIC_KEMETIC_CAR_FLAG,religion=egyptian_pantheon,tag=CAR
 Phoenician,DYN_PUNIC_JEWISH_CAR_FLAG,religion=judaism,tag=CAR
+Hurrian,DYN_HURRIAN_CAR_FLAG,tag=CAR
