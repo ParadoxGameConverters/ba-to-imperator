@@ -321,4 +321,26 @@ DYN_EGYPTIAN_CAR_FLAG = {
 
 }
 
+DYN_HURRIAN_CAR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "ck2_black"
+	color2 = "frost_blue"
+	
+	colored_emblem = {
+		texture = "ce_border_simple_02_02.dds"
+		color1 = "frost_blue"
+		color2 = "ck2_black"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
 
+	colored_emblem = {
+		texture = "ce_teshub_hand.dds"
+		color1 = "frost_blue"
+		color2 = "epirus_yellow"
+		instance = { 
+			position = { 0.50 0.54 }
+			scale = { 0.95 0.90 }
+		}
+	}
+}
