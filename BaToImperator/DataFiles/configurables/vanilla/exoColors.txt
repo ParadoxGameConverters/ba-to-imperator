@@ -18,4 +18,5 @@ aramaic,158 50 3,tag=SYR
 #Carthage
 Egyptian,198 176 101,tag=CAR
 hebrew,104 173 168,tag=CAR
+ugaritic,37 8 102,tag=CAR
 Hurrian,35 35 35,tag=CAR
