@@ -218,6 +218,29 @@ DYN_EGYPTIAN_CAR_FLAG = {
 
 }
 
+DYN_UGARITIC_CAR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "ugaritic_carthage_flag_color"
+	color2 = "offwhite"
+	
+	colored_emblem = {
+		texture = "ce_border_simple_02.tga"
+		color1 = "offwhite"
+		color2 = "ugaritic_carthage_flag_color"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
+
+	colored_emblem = {
+		texture = "ce_tanit_01.dds"
+		color1 = "offwhite"
+		instance = { 
+			position = { 0.50 0.50 }
+			scale = { 0.75 0.75 }
+		}
+	}
+}
+
 DYN_HURRIAN_CAR_FLAG = {
 	pattern = "pattern_solid.tga"
 	color1 = "ck2_black"

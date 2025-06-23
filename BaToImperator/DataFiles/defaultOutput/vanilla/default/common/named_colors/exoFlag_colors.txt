@@ -10,4 +10,6 @@ colors = {
 	per_sheklesh_color = rgb { 152 163 0 }
 
 	per_khati_color = rgb { 100 44 178 }
+
+	ugaritic_carthage_flag_color = rgb { 79 15 117 }
 }

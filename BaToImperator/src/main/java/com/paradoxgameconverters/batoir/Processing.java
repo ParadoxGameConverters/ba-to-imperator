@@ -1,5 +1,6 @@
 package com.paradoxgameconverters.batoir;
 
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -1932,11 +1933,41 @@ public class Processing
     }
 
     public static String cutQuotes(String word)
-    //Cut off quotes ("Bob" becomes Bob)
+    //Cut off the first and last characters ("Bob" becomes Bob)
     {
         String newWord = word.substring(1,word.length()-1);
 
-        return newWord; //if no pop found, return null
+        return newWord;
+    }
+    
+    public static String cutOnlyQuotes(String word)
+    //Cut off only start and end quotes ("Bob", Bob", or "Bob becomes Bob without changing Bob to o, while "B"o"b" becomes B"o"b)
+    {
+        String quote = '"'+"";
+        int wordLen = word.length();
+        if (word.equals("")) {
+            word = ""; //Return empty string if input is "", ", or empty string
+        } else {
+            String firstChar = word.charAt(0)+"";
+            String lastChar = word.charAt(wordLen-1)+"";
+            
+            int start = 1;
+            int end = wordLen-1;
+            if (!firstChar.equals(quote)) {
+                start = start - 1;
+            }
+            if (!lastChar.equals(quote)) {
+                end = end + 1;
+            }
+            
+            if (end < start) {
+                end = start;
+            }
+            word = word.substring(start,end);
+        }
+        
+
+        return word;
     }
 
     public static ArrayList<String> condenseArrayStr(String[] longArray)
@@ -2590,7 +2621,7 @@ public class Processing
                             int lawCount = 0;
                             while (lawCount < laws.size()) {
                                 String[] law = laws.get(lawCount);
-                                String lawTail = cutQuotes(law[1]);
+                                String lawTail = cutOnlyQuotes(law[1]);
                                 lines.add(tab+tab+tab+law[0]+" = "+lawTail);
                                 lawCount = lawCount + 1;
                             }
@@ -3341,6 +3372,7 @@ public class Processing
             Characters selectedChar = convCharacters.get(count);
             selectedChar.setPruneStatus(true);
             convCharacters.set(count,selectedChar);
+            //System.out.println("Pruning "+count);
             count = count + 1;
         }
         count = 0;
@@ -4625,7 +4657,7 @@ public class Processing
         int count = 0;
         while (count < laws.size()) {
             String[] selectedLawCombo = laws.get(count);
-            String selectedLaw = cutQuotes(selectedLawCombo[1]);
+            String selectedLaw = cutOnlyQuotes(selectedLawCombo[1]);
             String newLaw = Output.cultureOutput(lawMap,selectedLaw);
             if (!newLaw.equals("99999")) {
                 selectedLawCombo[1] = quote+newLaw+quote;
