@@ -22,3 +22,4 @@ Phoenician,DYN_PUNIC_KEMETIC_CAR_FLAG,religion=egyptian_pantheon,tag=CAR
 Phoenician,DYN_PUNIC_JEWISH_CAR_FLAG,religion=judaism,tag=CAR
 ugaritic,DYN_UGARITIC_CAR_FLAG,tag=CAR
 Hurrian,DYN_HURRIAN_CAR_FLAG,tag=CAR
+sumerian,DYN_SUMERIAN_CAR_FLAG,tag=CAR

@@ -367,3 +367,35 @@ DYN_HURRIAN_CAR_FLAG = {
 		}
 	}
 }
+
+DYN_SUMERIAN_CAR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "offwhite"
+	color2 = "sumerian_carthage_flag_color"
+
+	colored_emblem = {
+		texture = "ce_border_simple_02.tga"
+		color1 = "sumerian_carthage_flag_color"
+		color2 = "offwhite"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
+
+	colored_emblem = {
+		texture = "ce_sumerian_carthage.dds"
+		color1 = "sumerian_carthage_flag_color"
+		instance = { 
+			position = { 0.49 0.75 }
+			scale = { 0.50 0.50 }
+		}
+	}
+
+	colored_emblem = {
+		texture = "ce_cuneiform_star_2.dds"
+		color1 = "sumerian_carthage_flag_color"
+		instance = { 
+			position = { 0.50 0.40 }
+			scale = { 0.75 0.75 }
+		}
+	}
+}
