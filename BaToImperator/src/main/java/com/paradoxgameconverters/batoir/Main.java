@@ -60,7 +60,7 @@ public class Main
             String VM = "\\";
             VM = VM.substring(0);
             String VN = "//";
-            VN = VN.substring(0);
+            VN = VN.substring(0,1);
             //Dir2 = configDirectories[1]; //I:R game dir in steamapps/
             String irModDir = configDirectories[2];
             //Dir = configDirectories[3];
@@ -74,7 +74,7 @@ public class Main
             if (configDirectories[6].equals("")) { //if there is a name or not
                 modName = Processing.formatSaveName(modName);
             } else {
-                modName = configDirectories[6];
+                modName = Processing.formatSaveName(configDirectories[6]); //format custom names
             }
             
             String date = "100.1.1"; //default date in case something goes wrong
