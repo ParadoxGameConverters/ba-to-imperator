@@ -60,7 +60,7 @@ public class Main
             String VM = "\\";
             VM = VM.substring(0);
             String VN = "//";
-            VN = VN.substring(0);
+            VN = VN.substring(0,1);
             //Dir2 = configDirectories[1]; //I:R game dir in steamapps/
             String irModDir = configDirectories[2];
             //Dir = configDirectories[3];
