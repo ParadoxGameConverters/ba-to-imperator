@@ -12,4 +12,6 @@ colors = {
 	per_khati_color = rgb { 100 44 178 }
 
 	ugaritic_carthage_flag_color = rgb { 79 15 117 }
+
+	sumerian_carthage_flag_color = rgb { 15 90 69 }
 }

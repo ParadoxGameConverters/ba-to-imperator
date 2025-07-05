@@ -8,7 +8,7 @@
 ~META~Lycian,lycian=carian
 ~META~Lydian,lydian=trojan
 ~META~Illyrian,taulantian=paeonian
-~META~Babylonian,babylonian=assyrian=dilmunite
+~META~Babylonian,babylonian=dilmunite
 ~META~Arabic,makan=nabatean
 
 #Syracuse
@@ -20,3 +20,7 @@ Egyptian,198 176 101,tag=CAR
 hebrew,104 173 168,tag=CAR
 ugaritic,37 8 102,tag=CAR
 Hurrian,35 35 35,tag=CAR
+sumerian,43 89 74,tag=CAR
+assyrian,139 206 72,tag=CAR
+Babylonian,65 86 53,tag=CAR
+eblaite,27 132 116,tag=CAR

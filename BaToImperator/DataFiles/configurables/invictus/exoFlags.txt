@@ -7,7 +7,7 @@
 ~META~Lycian,lycian=carian
 ~META~Lydian,lydian=trojan
 ~META~Illyrian,taulantian=paeonian
-~META~Babylonian,babylonian=assyrian=dilmunite
+~META~Babylonian,babylonian=dilmunite
 ~META~Arabic,makan=nabatean
 
 #Syracuse
@@ -22,3 +22,8 @@ Phoenician,DYN_PUNIC_KEMETIC_CAR_FLAG,religion=egyptian_pantheon,tag=CAR
 Phoenician,DYN_PUNIC_JEWISH_CAR_FLAG,religion=judaism,tag=CAR
 ugaritic,DYN_UGARITIC_CAR_FLAG,tag=CAR
 Hurrian,DYN_HURRIAN_CAR_FLAG,tag=CAR
+sumerian,DYN_SUMERIAN_CAR_FLAG,tag=CAR
+assyrian,DYN_ASSYRIAN_CAR_FLAG,tag=CAR
+Babylonian,DYN_BABYLONIAN_CAR_FLAG,tag=CAR
+eblaite,DYN_EBLAITE_CAR_FLAG,tag=CAR
+Arabic,DYN_ARABIC_CAR_FLAG,tag=CAR
