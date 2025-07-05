@@ -297,7 +297,7 @@ DYN_SUMERIAN_CAR_FLAG = {
 	}
 }
 
-DYN_ASSYRIAN_CAR = {
+DYN_ASSYRIAN_CAR_FLAG = {
 	pattern = "pattern_solid.tga"
 	color1 = "offwhite"
 	color2 = rgb { 109 162 57 }
@@ -329,7 +329,7 @@ DYN_ASSYRIAN_CAR = {
 	}
 }
 
-DYN_BABYLONIAN_CAR = {
+DYN_BABYLONIAN_CAR_FLAG = {
 	pattern = "pattern_solid.tga"
 	color1 = "offwhite"
 	color2 = rgb { 65 86 53 }
@@ -361,7 +361,7 @@ DYN_BABYLONIAN_CAR = {
 	}
 }
 
-DYN_EBLAITE_CAR = {
+DYN_EBLAITE_CAR_FLAG = {
 	pattern = "pattern_solid.tga"
 	color1 = "offwhite"
 	color2 = rgb { 21 104 92 }
@@ -393,7 +393,7 @@ DYN_EBLAITE_CAR = {
 	}
 }
 
-DYN_ARABIC_CAR = { #Reference to EU4 Tunis/Hafsids
+DYN_ARABIC_CAR_FLAG = { #Reference to EU4 Tunis/Hafsids
 	pattern = "pattern_diagonal_split_04.tga"
 	color1 = "offwhite"
 	color2 = rgb { 146 106 57 }
