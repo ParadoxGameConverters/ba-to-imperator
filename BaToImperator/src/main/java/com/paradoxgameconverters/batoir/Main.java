@@ -195,7 +195,9 @@ public class Main
             if (!hybridName.equals("no")) { //if mod hybridization is enabled
                 invictus = true;
             }
-            directories.descriptors(Dir,irModDir,modName,hybridName); //Basic .mod files required for the launcher
+            ArrayList<String> hybridNamesFull = Importer.importBasicFile("configurables/modAbbreviations.txt");
+            String hybridNameFull = Output.cultureOutput(hybridNamesFull,hybridName); //ti becomes Terra Indomita, for example
+            directories.descriptors(Dir,irModDir,modName,hybridName,hybridNameFull); //Basic .mod files required for the launcher
             
             String invictusDir = "";
             if (configDirectories[8].equals("default") && invictus){ //default directory for Steam mods
@@ -343,6 +345,7 @@ public class Main
             
             String provDir = impGameDir+"/game/setup/provinces";
             String gameFileDir = impGameDir+"/game";
+            String originalGameFileDir = gameFileDir; //The path to the original game files
             if (invictus) {
                 provDir = invictusDir+"/setup/provinces";
                 gameFileDir = invictusDir;
@@ -359,8 +362,14 @@ public class Main
             
             //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
             
-            ArrayList<String> buildingNames = Importer.importBuildingNames(gameFileDir+"/common/buildings/00_default.txt");
-            
+            ArrayList<String> buildingNames = new ArrayList<String>();
+            try {
+                buildingNames = Importer.importBuildingNames(gameFileDir+"/common/buildings/00_default.txt");
+            } catch (Exception e) { //Mod has no custom buildings, default to vanilla buildings
+                LOGGER.info("No custom buildings detected for "+hybridNameFull+" ("+hybridName+"), using vanilla buildings instead");
+                buildingNames = Importer.importBuildingNames(originalGameFileDir+"/common/buildings/00_default.txt");
+            }
+            LOGGER.info("Building definitions parsed successfully");
             ArrayList<Provinces> vanillaProvinces = new ArrayList<Provinces>();
             
             vanillaProvinces = Importer.importProvSetupAdv(provDir,buildingNames,vanillaProvinces);

@@ -83,8 +83,10 @@
 	link = { ba = 1652 ba = 1646 ba = 1642 ba = 1674 ba = 1560 ba = 1648 ba = 1644 ba = 1638 ba = 1639 ba = 1535 ba = 1537 ba = 1377 imperator = 7941 } # Erha, Ghoke, Ukiuha, Wanamatara, Gib, Nurahu, Eriahe, Agurne, Ela, Amradrili, Atna, Maraki -> Kranaos
 	link = { ba = 1662 ba = 1666 ba = 1659 ba = 1360 ba = 1369 ba = 1376 ba = 1658 ba = 1661 imperator = 1962 } # Osanri, Mawrahana, Uwamwa, Beti, Praili, Marlini, Priyaram, Pewuraha -> Athymbra
 	link = { ba = 1416 ba = 1665 ba = 1664 imperator = 1967 } # Bartaurgi, Anaruva, Usurva -> Alabanda
-	link = { ba = 1400 ba = 1408 ba = 1410 ba = 1417 ba = 1419 ba = 2501 ba = 1421 ba = 2502 imperator = 1968 } # Prikanti, Parlita, Dinos, Orokoteros, Ari, Hapis, Iyalanda, Suriyas -> Alexandreia pros to Latmo
-	link = { ba = 1390 ba = 1393 ba = 1394 ba = 1388 ba = 1397 ba = 1398 imperator = 1972 } # Jokar, Kiret, Pariyana, Tarhu, Ziprilya, Amro -> Priene
+	link = { ba = 1410 ba = 1417 ba = 1419 ba = 2501 ba = 1421 ba = 2502 ba = 1408 imperator = 1968 } # Dinos, Orokoteros, Ari, Hapis, Iyalanda, Suriyas, Parlita -> Alexandreia pros to Latmo
+	link = { ba = 1398 ba = 1400 imperator = 9472 } # Amro, Prikanti -> Myous
+	link = { ba = 1390 ba = 1393 ba = 1388 imperator = 9471 } # Jokar, Kiret, Tarhu -> Anaia
+	link = { ba = 1394 ba = 1397 imperator = 1972 } # Pariyana, Ziprilya -> Priene
 	link = { ba = 1409 ba = 1668 ba = 1414 ba = 1349 ba = 1350 ba = 1359 imperator = 1966 } # Rawukli, Rupili, Wukairas, Igin, Waris, Sikat -> Tralles
 	link = { ba = 1337 ba = 1340 ba = 1339 ba = 1322 ba = 1320 ba = 1345 imperator = 294 } # Gari, Eki, Sanes, Sesan, Phaion, Kibali -> Larisa Ionias
 	link = { ba = 1386 ba = 1341 ba = 1344 ba = 1402 ba = 1403 ba = 1407 ba = 1406 imperator = 1969 } # Iokir, Kale, Lekik, Kosor, Toros, Ioposo, Atriya -> Magnesia pros Maiandro
@@ -98,7 +100,8 @@
 	link = { ba = 2260 ba = 2262 ba = 2582 ba = 1358 ba = 1354 ba = 1348 ba = 1361 ba = 1365 ba = 1370 ba = 1366 ba = 1373 ba = 2263 ba = 1372 imperator = 295 } # Azoruwa, Pradawatta, Uswisz, Kaleg, Wiluita, Axer, Kawili, Ilab, Afep, Sarikli, Bawili, Sardeis, Matirla -> Hypaipa
 	link = { ba = 2574 ba = 2575 ba = 2569 ba = 2284 ba = 2577 ba = 2536 ba = 2538 ba = 2540 ba = 2541 ba = 2579 ba = 2545 imperator = 293 } # Lahunti, Hishiti, Anati, Ulur, Hapirsa, Assaratta, Wantis, Dakkuis, Marway, Tiyhur, Atipalis -> Myloukome
 	link = { ba = 1316 ba = 1317 ba = 1319 ba = 1274 ba = 1269 ba = 2269 ba = 2275 ba = 2278 ba = 2281 ba = 2276 ba = 2265 ba = 1237 ba = 2267 imperator = 292 } # Penthia, Phasti, Kolni, Inrekaro, Ertater, Ilatu, Irata, Makrawa, Patrawa, Utorali, Alidra, Ixut, Pramaru -> Sardis
-	link = { ba = 2246 ba = 2247 ba = 2244 ba = 2242 ba = 2243 ba = 2241 ba = 2240 ba = 2239 imperator = 284 } # Arisba, Kravison, Methymna, Argiso, Antissa, Provaso, Eresos, Sigron -> Eresos
+	link = { ba = 2244 ba = 2242 ba = 2246 ba = 2247 imperator = 9470 } # Methymna, Argiso, Arisba, Kravison -> Methymna
+	link = { ba = 2243 ba = 2241 ba = 2240 ba = 2239 imperator = 284 } # Antissa, Provaso, Eresos, Sigron -> Eresos
 	link = { ba = 2251 ba = 2252 ba = 2248 ba = 2250 ba = 2254 imperator = 283 } # Hiera, Pyrra, Therma, Mytilene, Osai -> Mytilene
 	link = { ba = 1285 ba = 1287 ba = 1308 ba = 1311 ba = 2314 ba = 2316 ba = 2317 ba = 2315 ba = 2312 imperator = 287 } # Hampho, Venel, Smyrne, Vesio, Ipakassa, Ewrewatta, Itusawa, Apux, Afuruna -> Smyrna
 	link = { ba = 1293 ba = 1292 ba = 1297 ba = 1294 ba = 1300 ba = 2593 imperator = 291 } # Teos, Etrino, Kao, Lebedos, Kolophon, Cretame -> Colophon
@@ -594,7 +597,7 @@
 	link = { ba = 3517 ba = 3512 ba = 3511 ba = 3621 ba = 3514 ba = 3623 ba = 3507 ba = 3509 ba = 3684 ba = 3620 ba = 3619 imperator = 791 } # Chettia, Zawf, Barga, Darkush, Arzigana, Bârishâ, Sefiun, Alalakh, Taldou, Mu'arrasat, Kalota -> Darkus
 	link = { ba = 3502 ba = 3503 ba = 3501 ba = 3504 ba = 3518 ba = 3519 imperator = 789 } # Tekbal, Benseri, Mimoun, Moksi, Hamri, Kesab -> Palaeopolis
 	link = { ba = 3387 ba = 3382 ba = 3370 ba = 3376 ba = 3381 ba = 3377 ba = 3367 ba = 3378 ba = 3380 ba = 3379 imperator = 1872 } # Koz-ôs-o, Pal-lae, Mâ-sse, Kul-itt-e, Kepânol, Ôs-i-mâ, Mân-i-a, Paduwanda, Lefa-tta, Kul-le -> Cilician Gates
-	link = { ba = 3438 ba = 3441 ba = 3440 ba = 3439 imperator = 1878 } # Simigi, Ase-uzi, Irde-uri, Puxxi -> Sipha
+	link = { ba = 3438 ba = 3441 ba = 3440 ba = 3439 imperator = 1878 } # Simigi, Ase-uzi, Irde-uri, Puxxi -> Pindenissa
 	link = { ba = 4447 ba = 3437 ba = 3458 ba = 3460 ba = 3465 ba = 3459 ba = 3461 ba = 3442 ba = 3463 ba = 3484 imperator = 1875 } # Wayri, Kusuy, Shummi, Pab-a-ni, Sal-xiuri, Tiye-su, Wayr-usi, Sini-asxe, Time-ri, Pahara -> Kastabala
 	link = { ba = 3391 ba = 3395 ba = 3393 ba = 3427 ba = 3394 ba = 3392 imperator = 1877 } # Su-mitti, Tima-ri, Apsi-ri, Fasi-ri, Ban-tiye, Radi-inu -> Anazarbos
 	link = { ba = 3396 ba = 3397 ba = 3398 ba = 3390 ba = 3385 ba = 3368 ba = 3383 ba = 3399 ba = 3400 ba = 3384 ba = 3386 ba = 3388 ba = 3389 imperator = 1882 } # Sawayri, Kus-ri, Pab-ese, Aw-keri, Pal-i-mâ, Adaniya, Pass-ien, Simi-siwe, Un-itti, Ûr-i-uffa, Pass-êt-i, Aw-i-ab, Asti-ri -> Adana
@@ -841,8 +844,9 @@
 	link = { ba = 1104 imperator = 1996 } # Astypalea -> Astypalaia
 	link = { ba = 1036 ba = 1037 ba = 1035 ba = 1153 imperator = 454 } # Akrotiri, Thera, Thirasia, Anafi -> Thera
 	link = { ba = 1030 ba = 1032 ba = 1031 ba = 1028 ba = 1029 imperator = 263 } # Kalanto, Azalas, Apollonas, Naxos, Pirgaki -> Naxos
-	link = { ba = 1090 ba = 2518 ba = 1089 ba = 1085 ba = 2517 ba = 1091 ba = 1129 ba = 1093 ba = 1094 ba = 1128 imperator = 358 } # Knossos, Gazi, Tylissos, Apollonia, Eltynia, Raukos, Arkalokhori, Nirou Khani, Oaxos, Partira -> Knossos
-	link = { ba = 1082 ba = 2519 ba = 1083 ba = 1080 ba = 1081 ba = 1086 ba = 1084 ba = 1087 imperator = 351 } # Pantomatroin, Kaudos, Eleutherna, Rithymna, Phalanna, Astale, Panormos, Axos -> Rhithymna
+	link = { ba = 1089 ba = 1085 ba = 1087 imperator = 9474 } # Tylissos, Apollonia, Axos -> Tylissos
+	link = { ba = 1090 ba = 2517 ba = 1129 ba = 1093 ba = 1094 ba = 1128 ba = 1091 ba = 2518 imperator = 358 } # Knossos, Eltynia, Arkalokhori, Nirou Khani, Oaxos, Partira, Raukos, Gazi -> Knossos
+	link = { ba = 1082 ba = 2519 ba = 1083 ba = 1080 ba = 1081 ba = 1086 ba = 1084 imperator = 351 } # Pantomatroin, Kaudos, Eleutherna, Rithymna, Phalanna, Astale, Panormos -> Rhithymna
 	link = { ba = 1145 ba = 1141 ba = 1140 ba = 1139 ba = 1137 ba = 1138 imperator = 372 } # Korion, Soulia, Apodhoulou, Sata, Dawa, Phaistos -> Korion
 	link = { ba = 1074 ba = 1075 ba = 1077 ba = 1076 ba = 1078 ba = 1079 imperator = 8016 } # Amphimala, Dramia, Gerani, Lappa, Lamon, Armenoi -> Lappa
 	link = { ba = 440 ba = 480 ba = 1088 ba = 1072 ba = 1552 ba = 1566 ba = 1073 ba = 1565 imperator = 367 } # Maleme, Polikhna, Kudoni, Minoa, Edroruti, Proso, Aptera, Okot -> Kydonia

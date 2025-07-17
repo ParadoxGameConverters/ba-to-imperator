@@ -1,6 +1,5 @@
 package com.paradoxgameconverters.batoir;
 
-
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -2917,7 +2916,11 @@ public class Processing
         while (countOldFile < OldLines.size()) {
             String selectedLine = OldLines.get(countOldFile);
             String selectedLineNoComment = selectedLine.split(" #")[0];
-            selectedLineNoComment = selectedLineNoComment.split("#")[0];
+            try {
+                selectedLineNoComment = selectedLineNoComment.split("#")[0];
+            } catch (Exception e) { //Selected line is either empty or just a comment
+                selectedLineNoComment = " ";
+            }
             
             if (selectedLine.equals("country = {")) {
                 countrySectionFlag = true;

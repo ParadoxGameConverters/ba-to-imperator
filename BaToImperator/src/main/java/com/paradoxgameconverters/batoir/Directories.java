@@ -151,7 +151,7 @@ public class Directories
         return aqv;
     }
 
-    public static void descriptors(String outputDir, String irModDir, String modName, String submod) throws IOException 
+    public static void descriptors(String outputDir, String irModDir, String modName, String submod, String submodName) throws IOException 
     {
         //Each mod requires a .mod "descriptor" files so the game launcher can
         //read the mod files as a mod
@@ -170,10 +170,8 @@ public class Directories
         if (submod.equals("no") || submod.equals("vanilla")) {
             submod = "";
             loadWith = "";
-        } else if (submod.equals("ti")) {
-            submod = "Terra Indomita";
-        } else if (submod.equals("invictus")) {
-            submod = "Invictus"; 
+        } else if (!submodName.equals("99999")) {
+            submod = submodName;
         }
 
         out.println("version="+quote+"1.0"+quote);
