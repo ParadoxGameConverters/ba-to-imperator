@@ -147,6 +147,9 @@ public class Directories
         
         File f54 = new File(mainModFolder+"/common/scripted_triggers");
         f54.mkdir();
+        
+        File f55 = new File(mainModFolder+"/common/heritage");
+        f55.mkdir();
 
         return aqv;
     }

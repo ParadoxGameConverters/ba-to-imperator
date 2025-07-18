@@ -29,6 +29,7 @@ public class Country
     private String diplomacy; //Only used by ExoTags
     private ArrayList<CultureRights> countryCultureRights;
     private boolean genderEquality;
+    private String heritage;
     public Country() {
         int id;
         String culture;
@@ -241,6 +242,13 @@ public class Country
     }
     public boolean hasGenderEquality() {
         return genderEquality;
+    }
+    
+    public void setHeritage(String tagHeritage) {
+        heritage = tagHeritage;
+    }
+    public String getHeritage() {
+        return heritage;
     }
     
     public boolean isTribal() { //Returns true if the country has a tribal government form

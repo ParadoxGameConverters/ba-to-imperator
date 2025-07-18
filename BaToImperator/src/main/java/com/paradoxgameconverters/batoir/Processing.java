@@ -1930,6 +1930,79 @@ public class Processing
 
         return null; //if no pop found, return null
     }
+    
+    public static Heritage getHeritageFromID(String name, ArrayList<Heritage> heritageList)
+    //Select a Heritage from it's name
+    {
+        int count = 0;
+        while (count < heritageList.size()) {
+            Heritage selectedHeritage = heritageList.get(count);
+            if (selectedHeritage.getName().equals(name)) {
+                return selectedHeritage;
+            }
+            count = count + 1;
+        }
+
+        return null; //if no heritage found, return null
+    }
+    
+    public static ArrayList<Heritage> applyHeritageLoc(ArrayList<String> locList, ArrayList<Heritage> heritageList)
+    //Select a Heritage from it's name
+    {
+        int count = 0;
+        int heritageSize = heritageList.size();
+        int locSize = locList.size();
+        String tab = "	";
+        while (count < heritageSize) {
+            Heritage selectedHeritage = heritageList.get(count);
+            String heritageName = selectedHeritage.getID();
+            String heritageDesc = heritageName+"_desc";
+            String newName = "";
+            String newDesc = "";
+            int locCount = 0;
+            //newName = Importer.importLocalisation(locList,heritageName,"")[0];
+            //newDesc = Importer.importLocalisation(locList,heritageDesc,"")[0];
+            while (locCount < locSize) {
+                String selectedLoc = locList.get(locCount);
+                String front = " ";
+                String back = " ";
+                try {
+                    selectedLoc = selectedLoc.split("#")[0];
+                    selectedLoc = selectedLoc.replace(":0",":");
+                    selectedLoc = selectedLoc.replace(":1",":");
+                    selectedLoc = selectedLoc.replace(": ",":");
+                    String[] locSplit = selectedLoc.split(":");
+                    front = locSplit[0].replace(" ","");
+                    front = front.replace(tab,"");
+                    front = cutOnlyQuotes(front);
+                    back = cutOnlyQuotes(locSplit[1]);
+                } catch (Exception e) {
+                    //System.out.println("Error with "+selectedLoc);
+                    selectedLoc = " ";
+                }
+                //System.out.println("|"+front+"|"+heritageName+"|");
+                if (front.equals(heritageName)) {
+                    newName = back;
+                } else if (front.equals(heritageName)) {
+                    newDesc = back;
+                    if (newDesc.equals("")) {
+                        newDesc = " ";
+                    }
+                }
+                if (!newName.equals("") && !newDesc.equals("")) {
+                    locCount = locSize+100;
+                }
+                locCount = locCount + 1;
+            }
+            selectedHeritage.setName(newName);
+            selectedHeritage.setDesc(newDesc);
+            
+            heritageList.set(count,selectedHeritage);
+            count = count + 1;
+        }
+
+        return heritageList; //if no heritage found, return null
+    }
 
     public static String cutQuotes(String word)
     //Cut off the first and last characters ("Bob" becomes Bob)
@@ -3798,6 +3871,99 @@ public class Processing
             System.out.println("Malformatted family name! Ignoring");
         }
         return false;
+    }
+    
+    public static ArrayList<String> createHeritageFile(ArrayList<Heritage> heritages, ArrayList<Country> countries)
+    //Goes through and assigns each country a heritage
+    {
+        int count = 0;
+        ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+
+        boolean countrySectionFlag = false;
+        lines.add("#Converted Bronze Age Heritages");
+        
+        while (count < heritages.size()) {
+            Heritage selectedHeritage = heritages.get(count);
+            ArrayList<String> tags = new ArrayList<String>();
+            String heritageID = selectedHeritage.getID();
+            int count2 = 0;
+            while (count2 < countries.size()) {
+                Country selectedCountry = countries.get(count2);
+                String countryTag = selectedCountry.getUpdatedTag();
+                String countryHeritage = selectedCountry.getHeritage();
+                boolean hasLand = selectedCountry.getHasLand();
+                if (countryHeritage == null) {
+                    countryHeritage = "none";
+                }
+                if (countryHeritage.equals(heritageID) && hasLand) {
+                    tags.add(countryTag);
+                }
+                count2 = count2 + 1;
+            }
+            
+            if (tags.size() > 0) {
+                int count3 = 0;
+                lines.add("converted_"+heritageID+" = {");
+                lines.add(tab+"modifier = {");
+                ArrayList<Modifier> modifiers = selectedHeritage.getModifiers();
+                while (count3 < modifiers.size()) {
+                    Modifier selectedModifier = modifiers.get(count3);
+                    String modifierName = selectedModifier.getName();
+                    String modifierValue = selectedModifier.getValue();
+                    lines.add(tab+tab+modifierName+" = "+modifierValue);
+                    count3 = count3 + 1;
+                }
+                lines.add(tab+"}");
+                lines.add(tab+"trigger = {");
+                lines.add(tab+tab+"OR = {");
+                int count4 = 0;
+                while (count4 < tags.size()) {
+                    String selectedTag = tags.get(count4);
+                    lines.add(tab+tab+tab+"tag = "+selectedTag);
+                    count4 = count4 + 1;
+                }
+                lines.add(tab+tab+"}");
+                lines.add(tab+"}");
+                lines.add("}");
+            }
+            
+            count = count + 1;
+        }
+
+        return lines;
+    }
+    
+    public static ArrayList<String> createHeritageLoc(ArrayList<Heritage> heritages)
+    //Goes through and outputs localization for all heritages
+    {
+        int count = 0;
+        ArrayList<String> lines = new ArrayList<String>();
+        String tab = "	";
+        String quote = '"'+"";
+
+        boolean countrySectionFlag = false;
+        lines.add("#Converted Bronze Age Heritages");
+        lines.add("l_english:");
+        
+        while (count < heritages.size()) {
+            Heritage selectedHeritage = heritages.get(count);
+            ArrayList<String> tags = new ArrayList<String>();
+            String heritageID = selectedHeritage.getID();
+            heritageID = "converted_"+heritageID;
+            String heritageDescID = heritageID+"_desc";
+            String heritageDesc = selectedHeritage.getDesc();
+            String heritageName = selectedHeritage.getName();
+            
+            lines.add(" "+heritageID+":0 "+quote+heritageName+quote);
+            lines.add(" "+heritageDescID+":0 "+quote+heritageDesc+quote);
+            
+            count = count + 1;
+        }
+        
+        lines.add("}");
+        return lines;
     }
     
     public static ArrayList<Provinces> addExoProvinces (ArrayList<Provinces> convProvinces, ArrayList<String[]> exoProvinces,
