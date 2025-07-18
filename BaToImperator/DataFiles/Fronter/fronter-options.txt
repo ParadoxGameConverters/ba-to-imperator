@@ -117,6 +117,26 @@ option = {
 }
 
 option = {
+	name = heritage
+	displayName = HERITAGEOPTION
+	tooltip = HERITAGEOPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = yes
+			displayName = HERITAGEYES
+			tooltip = HERITAGEYESTIP
+			default = true
+		}
+		radioOption = {
+			name = no
+			displayName = HERITAGENO
+			tooltip = HERITAGENOTIP
+			default = false
+		}
+	}
+}
+
+option = {
 	name = output_name
 	displayName = MODNAME
 	tooltip = MODNAMETIP

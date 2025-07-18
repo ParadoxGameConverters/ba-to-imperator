@@ -43,3 +43,10 @@ l_english:
  CHARACTERPRUNINGMEDIUMTIP: "All characters except for the ruler, ruler's descendents, spouse, and parents will get pruned. Warning: This may result in broken family trees if continued into Crusader Kings!"
  CHARACTERPRUNINGEXTREME: "Extreme"
  CHARACTERPRUNINGEXTREMETIP: "The same as Medium, while also removing the family history of every ruler. Recommended for extreme late-game saves from years 1750 and above."
+ 
+ HERITAGEOPTION: "Heritage Conversion"
+ HERITAGEOPTIONTIP: "How should country heritages be handled?"
+ HERITAGEYES: "Convert From Bronze Age"
+ HERITAGEYESTIP: "Countries will have their heritages carried over from Bronze Age."
+ HERITAGENO: "Use Vanilla (or Hybrid) Heritages"
+ HERITAGENOTIP: "Heritages from Bronze Age will not be converted over, and instead countries will use new heritages selected from vanilla or the hybrid mod, based off of the country's tag, culture, and capital terrain."
