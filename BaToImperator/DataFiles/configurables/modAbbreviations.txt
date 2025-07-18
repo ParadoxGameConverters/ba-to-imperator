@@ -1,0 +1,5 @@
+#The full name of hybrid mod ID's, primarily used for the "- Load Under X" abbreviated at the end of the name
+
+invictus,Invictus
+ti,Terra Indomita
+age_of_iron,Age of Iron

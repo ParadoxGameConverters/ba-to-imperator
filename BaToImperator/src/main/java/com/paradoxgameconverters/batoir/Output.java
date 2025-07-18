@@ -1,4 +1,5 @@
 package com.paradoxgameconverters.batoir;
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -443,6 +444,46 @@ public class Output
 
         out.println (title+":0 "+quote+name[0]+quote);
         out.println (title+"_ADJ:0 "+quote+name[1]+quote);
+        out.flush();
+        fileOut.close();
+    }
+    
+    public static void addLocalization(ArrayList<String> newLoc, String Directory) throws IOException
+    {
+
+        String VM = "\\"; 
+        VM = VM.substring(0);
+        char quote = '"';
+
+        ArrayList<String> oldFile = new ArrayList<String>();
+
+        oldFile = Importer.importBasicFile(Directory);
+
+        FileOutputStream fileOut= new FileOutputStream(Directory);
+        PrintWriter out = new PrintWriter(fileOut);
+
+        int flag = 0;
+        int aqq = 0;
+
+        try {
+
+            while (flag == 0) {
+                out.println (oldFile.get(aqq));
+                aqq = aqq + 1;
+
+            }
+
+        }catch (java.lang.IndexOutOfBoundsException exception){
+            flag = 1;
+
+        } 
+
+        int count = 0;
+        
+        while (count < newLoc.size()) {
+            out.println(newLoc.get(count));
+            count = count + 1;
+        }
         out.flush();
         fileOut.close();
     }

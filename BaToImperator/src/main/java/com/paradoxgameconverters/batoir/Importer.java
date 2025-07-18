@@ -254,7 +254,7 @@ public class Importer
         String vmm = scnr.nextLine();
         String qaaa = vmm;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[25];
+        output = new String[26];
 
         output[0] = "9999"; //default for no tag
         output[1] = "6969"; //default for no flag seed
@@ -279,6 +279,7 @@ public class Importer
         output[22] = "k"; //depreciated
         output[23] = "noFlag"; //default for no flag
         output[24] = "no"; //default for no antagonist
+        output[25] = "none"; //default for no heritage
         
         ArrayList<String[]> lawArray = new ArrayList<String[]>();
 
@@ -380,6 +381,10 @@ public class Importer
                                 else if (qaaa.split("=")[0].equals( tab+tab+tab+"religion" ) ) {
                                     output[7] = qaaa.split("=")[1];
                                     output[7] = output[7].substring(1,output[7].length()-1);
+                                }
+                                else if (qaaa.split("=")[0].equals( tab+tab+tab+"heritage" ) ) {
+                                    output[25] = qaaa.split("=")[1];
+                                    output[25] = Processing.cutOnlyQuotes(output[25]);
                                 }
                                 //Technology
                                 else if (qaaa.split("=")[0].equals( tab+tab+tab+tab+"military_tech" ) ) {
@@ -484,6 +489,7 @@ public class Importer
                                     if (output[2].equals("yes")) {
                                         countryToAdd.setGenderEquality(true);
                                     }
+                                    countryToAdd.setHeritage(output[25]);
 
                                     impTagInfo.add(countryToAdd);
 
@@ -512,6 +518,7 @@ public class Importer
                                     output[22] = "k"; //default for no rank, ranks are not stored in the save file, will be calculated during output
                                     output[23] = "noFlag"; //default for no flag
                                     output[24] = "no"; //default for antagonist
+                                    output[25] = "none"; //default for no heritage
                                     
                                     lawArray = new ArrayList<String[]>();
 
@@ -964,7 +971,7 @@ public class Importer
 
         String qaaa;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[12];
+        output = new String[13];
 
         output[0] = "bad"; //default for no Bronze Age directory
         output[1] = "bad"; //default for no IR game directory
@@ -978,6 +985,7 @@ public class Importer
         output[9] = "bad"; //default for no monument conversion
         output[10] = "bad"; //default for no antagonist conversion
         output[11] = "bad"; //default for no character pruning
+        output[12] = "bad"; //default for no heritage conversion
 
         try {
             while (endOrNot = true){
@@ -1040,6 +1048,11 @@ public class Importer
                 else if (qaaa.split(" = ")[0].equals("characterPruning")){
                     output[11] = qaaa.split(" = ")[1];
                     output[11] = output[11].substring(1,output[11].length()-1);
+
+                }
+                else if (qaaa.split(" = ")[0].equals("heritage")){
+                    output[12] = qaaa.split(" = ")[1];
+                    output[12] = output[12].substring(1,output[12].length()-1);
 
                 }
 
@@ -1181,7 +1194,7 @@ public class Importer
 
     }
 
-    public static String[] importLocalisation (ArrayList<String> locList, String tag, String dynasty) throws IOException
+    public static String[] importLocalisation (ArrayList<String> locList, String tag, String dynasty)
     {
         char quote = '"';
         String[] output;
@@ -2010,6 +2023,122 @@ public class Importer
         allColors.addAll(vanillaColors);
 
         return allColors;
+    }
+    
+    public static ArrayList<Heritage> importHeritage (String name) throws IOException //imports all heritages from a single file
+    {
+
+        FileInputStream fileIn= new FileInputStream(name);
+        Scanner scnr= new Scanner(fileIn);
+
+        ArrayList<Heritage> heritageList = new ArrayList<Heritage>();
+
+        String tab = "	";
+        char quote = '"';
+        String strQuote = quote+"_";
+        strQuote = strQuote.split("_")[0];
+        int flag = 0;
+
+        String line;
+        
+        boolean modifierFlag = false;
+        
+        ArrayList<Modifier> modifiers = new ArrayList<Modifier>();
+        
+        String heritageName = "";
+        
+
+        try {
+
+            while (flag == 0) {
+                line = scnr.nextLine();
+                try {
+                    line = line.split("#")[0];
+                } catch (Exception e) { //Empty string error handling
+                    line = " ";
+                }
+                line = line.replace(" "+tab,"");
+                line = line.replace(tab,"");
+                line = line.replace("    ","");
+                line = line.replace(" = ","=");
+                line = line.replace("= ","=");
+                line = line.replace(" =","=");
+                line = line.replace("﻿",""); //newline character
+                
+                
+                if (line.contains("=")) {
+                    String[] splitLine = line.split("=");
+                    String lineFront = splitLine[0];
+                    String lineBack = splitLine[1];
+                    if (modifierFlag) {
+                        String modifierName = lineFront;
+                        //Double modifierValue = Double.parseDouble(lineBack);
+                        Modifier selectedModifier = Modifier.newModifier(modifierName,lineBack);
+                        modifiers.add(selectedModifier);
+                    }
+                    else if (lineFront.equals("modifier")) {
+                        modifierFlag = true;
+                    }
+                    else if (heritageName.equals(""))  {
+                        heritageName = lineFront;
+                    }
+                }
+                
+                if (line.equals("}") && modifierFlag) {
+                    modifierFlag = false;
+                }
+                else if (line.equals( "}" ) && !modifierFlag && !heritageName.equals("")) { //ends here
+
+                    Heritage packedHeritage = Heritage.newHeritage(heritageName);
+                    packedHeritage.setModifiers(modifiers);
+
+                    heritageList.add(packedHeritage);
+
+                    modifiers = new ArrayList<Modifier>();
+        
+                    heritageName = "";
+                    
+                    modifierFlag = false;
+
+                }
+
+            }
+
+        }catch (java.util.NoSuchElementException exception){
+
+        }   
+
+        return heritageList;
+
+    }
+    
+    public static ArrayList<Heritage> importAllHeritages (String name, ArrayList<String> modDirs) throws IOException
+    {
+        ArrayList<Heritage> allHeritages = new ArrayList<Heritage>();
+        ArrayList<Heritage> vanillaHeritages = importHeritage(name+"/game/common/heritage/99_default.txt");
+        int aqq = 0;
+        while (modDirs.size() > aqq) {
+            if (!modDirs.get(aqq).equals("none")) {
+                String modDir = modDirs.get(aqq)+"/common/heritage";
+                File heritageInfo = new File (modDir);
+                String[] heritageList = heritageInfo.list();
+
+                if (heritageList != null) {
+                    int aq2 = 0;
+                    while (aq2 < heritageList.length) {
+                        ArrayList<Heritage> modHeritages = importHeritage(modDir+"/"+heritageList[aq2]);
+                        allHeritages.addAll(modHeritages);
+                        aq2 = aq2 + 1;
+                    }
+
+                }
+            }
+            aqq = aqq + 1;
+        }
+
+        allHeritages.addAll(vanillaHeritages);
+
+        return allHeritages;
     }
     
     public static ArrayList<String> importRegions (String name) throws IOException //list of all regions

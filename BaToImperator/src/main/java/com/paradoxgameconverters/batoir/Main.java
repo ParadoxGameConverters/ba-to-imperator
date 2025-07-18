@@ -195,7 +195,9 @@ public class Main
             if (!hybridName.equals("no")) { //if mod hybridization is enabled
                 invictus = true;
             }
-            directories.descriptors(Dir,irModDir,modName,hybridName); //Basic .mod files required for the launcher
+            ArrayList<String> hybridNamesFull = Importer.importBasicFile("configurables/modAbbreviations.txt");
+            String hybridNameFull = Output.cultureOutput(hybridNamesFull,hybridName); //ti becomes Terra Indomita, for example
+            directories.descriptors(Dir,irModDir,modName,hybridName,hybridNameFull); //Basic .mod files required for the launcher
             
             String invictusDir = "";
             if (configDirectories[8].equals("default") && invictus){ //default directory for Steam mods
@@ -304,6 +306,11 @@ public class Main
                 pruneLevel = 0;
             }
             
+            boolean convertHeritage = true;
+            if (configDirectories[12].equals("no")){ //default will convert over BA heritages
+                convertHeritage = false;
+            }
+            
             ArrayList<String> govMap = Importer.importBasicFile(mappingDir+"governmentConversion.txt"); //government mappings
             LOGGER.info("Importing mod directories...");
   
@@ -320,6 +327,9 @@ public class Main
             LOGGER.info("Importing color information...");
             
             ArrayList<String[]> colorList = Importer.importAllColors(impGameDir,modDirs);
+            LOGGER.info("Importing heritage information...");
+            
+            ArrayList<Heritage> heritageList = Importer.importAllHeritages(impGameDir,modDirs);
             
             LOGGER.info("Importing localization information...");
             
@@ -334,6 +344,10 @@ public class Main
             locList.addAll(moddedLoc);
             //ArrayList<String> locList = Importer.importAllLoc(impGameDir,modDirs);
             
+            
+            
+            LOGGER.info("Importing regions and areas...");
+            
             ArrayList<String> regionDirList = Importer.importModRegionDirs(modDirs);
             
             String regionDir = Importer.getRegionDir(impGameDir,regionDirList,modDirs);
@@ -343,6 +357,7 @@ public class Main
             
             String provDir = impGameDir+"/game/setup/provinces";
             String gameFileDir = impGameDir+"/game";
+            String originalGameFileDir = gameFileDir; //The path to the original game files
             if (invictus) {
                 provDir = invictusDir+"/setup/provinces";
                 gameFileDir = invictusDir;
@@ -359,8 +374,14 @@ public class Main
             
             //extraProvInfo = Importer.importProvSetup(impGameDir+"/game/setup/provinces",extraProvInfo);
             
-            ArrayList<String> buildingNames = Importer.importBuildingNames(gameFileDir+"/common/buildings/00_default.txt");
-            
+            ArrayList<String> buildingNames = new ArrayList<String>();
+            try {
+                buildingNames = Importer.importBuildingNames(gameFileDir+"/common/buildings/00_default.txt");
+            } catch (Exception e) { //Mod has no custom buildings, default to vanilla buildings
+                LOGGER.info("No custom buildings detected for "+hybridNameFull+" ("+hybridName+"), using vanilla buildings instead");
+                buildingNames = Importer.importBuildingNames(originalGameFileDir+"/common/buildings/00_default.txt");
+            }
+            LOGGER.info("Building definitions parsed successfully");
             ArrayList<Provinces> vanillaProvinces = new ArrayList<Provinces>();
             
             vanillaProvinces = Importer.importProvSetupAdv(provDir,buildingNames,vanillaProvinces);
@@ -464,6 +485,8 @@ public class Main
             ArrayList<Monument> baMonumentInfo = new ArrayList<Monument>();
             baMonumentInfo = importer.importMonuments(saveMonuments);
             baMonumentInfo = Processing.convertMonuments(baMonumentInfo,monumentMappings);
+            
+            LOGGER.finest("10%");
             int allTagCount = 0;
             while (allTagCount < baTagInfo.size()) {
                 Country baTag = baTagInfo.get(allTagCount);
@@ -495,6 +518,8 @@ public class Main
                 baTag.setReligion(newReligion);
                 allTagCount = allTagCount + 1;
             }
+            
+            LOGGER.finest("15%");
             
             baProvInfoList = Processing.convertAllPops(baProvInfoList,baTagInfo,cultureMappings,religionMappings);
             
@@ -966,6 +991,18 @@ public class Main
             ArrayList<String> exoFlagFile = Importer.importBasicFile(defaultOutputDir+"templates/exoFlagFiles.txt");
             exoFlagFile = Processing.assignExoFlags(exoCountries,exoFlags,exoFlagFile);
             Output.outputBasicFile(exoFlagFile,"01_exo_tags.txt",modDirectory+"/common/coat_of_arms/coat_of_arms");
+            
+            LOGGER.finest("95%");
+            
+            if (convertHeritage) {
+                LOGGER.info("Converting Heritages");
+                heritageList = Processing.applyHeritageLoc(locList,heritageList);
+                ArrayList<String> heritageFile = Processing.createHeritageFile(heritageList,baTagInfo);
+                Output.outputBasicFile(heritageFile,"000_converted_heritages.txt",modDirectory+"/common/heritage/");
+                ArrayList<String> heritageLoc = Processing.createHeritageLoc(heritageList);
+                Output.addLocalization(heritageLoc,modDirectory+"/localization/english/converted_heritage_l_english.yml");
+            }
+            
             
             
             Provinces test01 = irProvinceList.get(Processing.getProvByID(irProvinceList,4957));
