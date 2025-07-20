@@ -9,7 +9,7 @@
 	secondary_navy = octere
 	flank_navy = liburnian
 	
-	levy_template = levy_greek
+	levy_template = levy_general_greek
 
 	male_names = {
 		Aetas	Agelawos	Agetas	Agroquolos	Aigyptios	Ainumenos	Aithaios	Aiwolos	Akhilawos	Alatas	Alektruon	Alxanor	Amphiagoros	Amphialawos	Amphialos	Amphiarewos	Amphidoros	Amphiwastos	Antinor	Antiphamos	Armenos	Arnumenos	Atukhos	Aupnos	Awistodotos	Dektos	Dexelawos	Dexiwos	Dolikhanor	Dwoios	Edilawos	Ekedamos	Ekhanor	Eriweros	Etewastus	Etewoklewes	Eudamos	Eugoros	Eukalos	Eukhomenos	Eumetas	Eunawos	Eupharos	Euplowos	Euporos	Eurydamos	Euryptoleus	Eutroquos	Hiketas	Hoplomenos	Iskhuodotos	Iwasos	Kasos	Kassamenos	Keramewos	Kerlainos	Klumenos	Komatas	Komawens	Korudawos	Kosouphos	Kullanos	Kuprios	Kutaios	Kutheros	Lakadanor	Lamiakos	Lawodokos	Lawoguhomos	Lawopoquos	Leprios	Leukasos	Leukophrus	Lukios	Lukoworos	Lurnassos	Makhatas	Malanios	Metanor	Mnasiwerogs	Mologuros	Naputios	Nestianor	Newokitos	Oikhalios	Okunawos	Okus	Ophelanor	Opheltas	Opilimnios	Orestas	Ortinawos	Pamisios	Perithowos	Pharaios	Philiotos	Philowergos	Phulakos	Podargos	Polukastos	Pontios	Psellos	Simos	Skhoinewatas	Souphos	Tomarkos	Tridalos	Tylisios	Tyrios	Wadukhaserwos	Wadus	Wastuokhos	Widwoios	Wiphinoos	Woinoqus
