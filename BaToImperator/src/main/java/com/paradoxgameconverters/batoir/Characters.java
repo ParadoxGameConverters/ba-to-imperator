@@ -428,11 +428,17 @@ public class Characters
                     else if (qaaa.split("=")[0].equals( tab+"corruption" ) ) {
                         output[17] = qaaa.split("=")[1];
                     }
-
-                    else if (qaaa.split("=")[0].equals( Integer.toString(impCharList.size()+1) ) ) { //Somehow has gone past checks, immediately end
-                        aqq = aqq + 1;
-                        flag = 1; //end loop
-                        output[6] = "0";
+                    
+                    try {
+                        int charNum = Integer.parseInt(qaaa.split("=")[0]);
+                        if (charNum == impCharList.size()+1) { //Somehow has gone past checks, immediately end
+                            aqq = aqq + 1;
+                            flag = 1; //end loop
+                            output[6] = "0";
+                            System.out.println(charNum+" managed to get past "+(impCharList.size()+1)+", ending importChar function.");
+                        }
+                    } catch (java.lang.NumberFormatException Exception) {
+                        
                     }
 
                     if (flag == 1) {
