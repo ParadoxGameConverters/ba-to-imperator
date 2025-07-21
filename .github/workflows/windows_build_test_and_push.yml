@@ -33,7 +33,8 @@ jobs:
       - name: "Build converter jar"
         run: |
           cd $Env:GITHUB_WORKSPACE\BaToImperator
-          mvn package -Xmx6G
+          mvn export MAVEN_OPTS="-Xmx6G"
+          mvn package
 
       - name: "Copy jar to Release directory"
         run: |
