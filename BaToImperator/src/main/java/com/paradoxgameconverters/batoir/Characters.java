@@ -272,7 +272,7 @@ public class Characters
         
         int idCount = 0;
 
-        ArrayList<String[]> impCharList= new ArrayList<String[]>();
+        //ArrayList<String[]> impCharList= new ArrayList<String[]>();
         ArrayList<Characters> baCharacters = new ArrayList<Characters>();
 
         boolean endOrNot = true;
@@ -432,11 +432,11 @@ public class Characters
                     
                     try {
                         int charNum = Integer.parseInt(qaaa.split("=")[0]);
-                        if (charNum == impCharList.size()+1) { //Somehow has gone past checks, immediately end
+                        if (charNum == baCharacters.size()+1) { //Somehow has gone past checks, immediately end
                             aqq = aqq + 1;
                             flag = 1; //end loop
                             output[6] = "0";
-                            System.out.println(charNum+" managed to get past "+(impCharList.size()+1)+", ending importChar function.");
+                            System.out.println(charNum+" managed to get past "+(baCharacters.size()+1)+", ending importChar function.");
                         }
                     } catch (java.lang.NumberFormatException Exception) {
                         
@@ -453,7 +453,7 @@ public class Characters
                             aq2 = aq2 + 1;
                         }
 
-                        impCharList.add(tmpOutput);
+                        //impCharList.add(tmpOutput);
                         
                         int dynID = Integer.parseInt(tmpOutput[7]);
                         
@@ -544,7 +544,7 @@ public class Characters
         }catch (java.lang.OutOfMemoryError exception){
             endOrNot = false;
             System.out.println("Error! Out of Memory, ending character conversion.");
-            System.out.println("Characters cut at "+idCount);
+            System.out.println("Characters cut at "+idCount+", this may cause issues!");
 
         } 
 
