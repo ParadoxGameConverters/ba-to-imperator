@@ -1,4 +1,5 @@
 package com.paradoxgameconverters.batoir;
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -271,7 +272,7 @@ public class Characters
         
         int idCount = 0;
 
-        ArrayList<String[]> impCharList= new ArrayList<String[]>();
+        //ArrayList<String[]> impCharList= new ArrayList<String[]>();
         ArrayList<Characters> baCharacters = new ArrayList<Characters>();
 
         boolean endOrNot = true;
@@ -428,11 +429,17 @@ public class Characters
                     else if (qaaa.split("=")[0].equals( tab+"corruption" ) ) {
                         output[17] = qaaa.split("=")[1];
                     }
-
-                    else if (qaaa.split("=")[0].equals( Integer.toString(impCharList.size()+1) ) ) { //Somehow has gone past checks, immediately end
-                        aqq = aqq + 1;
-                        flag = 1; //end loop
-                        output[6] = "0";
+                    
+                    try {
+                        int charNum = Integer.parseInt(qaaa.split("=")[0]);
+                        if (charNum == baCharacters.size()+1) { //Somehow has gone past checks, immediately end
+                            aqq = aqq + 1;
+                            flag = 1; //end loop
+                            output[6] = "0";
+                            System.out.println(charNum+" managed to get past "+(baCharacters.size()+1)+", ending importChar function.");
+                        }
+                    } catch (java.lang.NumberFormatException Exception) {
+                        
                     }
 
                     if (flag == 1) {
@@ -446,7 +453,7 @@ public class Characters
                             aq2 = aq2 + 1;
                         }
 
-                        impCharList.add(tmpOutput);
+                        //impCharList.add(tmpOutput);
                         
                         int dynID = Integer.parseInt(tmpOutput[7]);
                         
@@ -534,7 +541,12 @@ public class Characters
         }catch (java.util.NoSuchElementException exception){
             endOrNot = false;
 
-        }   
+        }catch (java.lang.OutOfMemoryError exception){
+            endOrNot = false;
+            System.out.println("Error! Out of Memory, ending character conversion.");
+            System.out.println("Characters cut at "+idCount+", this may cause issues!");
+
+        } 
 
         return baCharacters;
 
