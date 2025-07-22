@@ -1,4 +1,5 @@
 package com.paradoxgameconverters.batoir;
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -540,7 +541,12 @@ public class Characters
         }catch (java.util.NoSuchElementException exception){
             endOrNot = false;
 
-        }   
+        }catch (java.lang.OutOfMemoryError exception){
+            endOrNot = false;
+            System.out.println("Error! Out of Memory, ending character conversion.");
+            System.out.println("Characters cut at "+idCount);
+
+        } 
 
         return baCharacters;
 
