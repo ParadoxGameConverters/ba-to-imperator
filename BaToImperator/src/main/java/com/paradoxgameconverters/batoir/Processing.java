@@ -624,7 +624,7 @@ public class Processing
         ArrayList<Provinces> baProvInfoListNew = new ArrayList<Provinces>();
         baProvInfoListNew.add(blankProv);
         int count = 1;
-        while (count < baProvInfoListOld.size()) {
+        while (count < baProvInfoListOld.size()+1) {
             int baProvID = getProvByID(baProvInfoListOld,count);
             Provinces baProv = baProvInfoListOld.get(baProvID);
             baProvInfoListNew.add(baProv);
