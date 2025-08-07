@@ -2336,10 +2336,13 @@ public class Processing
         int count = 0;
         while (count < charList.size()) { 
             Characters selectedChar = charList.get(count);
-            int selectedCharID = selectedChar.getIrID();
-            if (selectedCharID == id) {
-                return count;
+            if (selectedChar != null) {
+                int selectedCharID = selectedChar.getIrID();
+                if (selectedCharID == id) {
+                    return count;
+                }
             }
+            
             count = count + 1;
         }
 
@@ -3204,7 +3207,7 @@ public class Processing
         int count = 0;
         while (count < convCharacters.size()) {
             Characters selectedChar = convCharacters.get(count);
-            if (!selectedChar.isPruned()) { //if pruned, don't assign new ID
+            if (selectedChar != null && !selectedChar.isPruned()) { //if pruned, don't assign new ID
                 int newID = availableID;
                 selectedChar.setIrID(newID);
                 availableID = availableID + 1;
@@ -3220,31 +3223,33 @@ public class Processing
     public static ArrayList<Characters> adjustBirthdays (ArrayList<Characters> convCharacters, int baYear, int irYear, String irDate)
     {
 
-        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        //ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
         int count = 0;
         int difference = baYear - irYear;
         int minYear = 1;
         while (count < convCharacters.size()) {
             Characters selectedChar = convCharacters.get(count);
-            String birthday = selectedChar.getBirthday();
-            String newBirthday = Processing.birthDeathLogic(difference,birthday,minYear,irDate);
-            
-            selectedChar.setBirthday(newBirthday);
-            
-            String deathday = selectedChar.getDeathday(); 
-            int age = selectedChar.getAge();
-
-            if (!deathday.equals("none")) { //if character is still alive, don't set death
-                String newDeathday = Processing.birthDeathLogic(difference,deathday,age+1,irDate);
-            
-                selectedChar.setDeathday(newDeathday);
+            if (selectedChar != null) {
+                String birthday = selectedChar.getBirthday();
+                String newBirthday = Processing.birthDeathLogic(difference,birthday,minYear,irDate);
+                
+                selectedChar.setBirthday(newBirthday);
+                
+                String deathday = selectedChar.getDeathday(); 
+                int age = selectedChar.getAge();
+    
+                if (!deathday.equals("none")) { //if character is still alive, don't set death
+                    String newDeathday = Processing.birthDeathLogic(difference,deathday,age+1,irDate);
+                    
+                    selectedChar.setDeathday(newDeathday);
+                }
+                
+                convCharacters.set(count,selectedChar);
             }
-            
-            convCharactersNew.add(selectedChar);
             
             count = count + 1;
         }
-        return convCharactersNew;
+        return convCharacters;
 
     }
     
@@ -3302,75 +3307,78 @@ public class Processing
     ArrayList<Provinces> baProvInfoList, ArrayList<String> cultureMappings, ArrayList<String> religionMappings) throws IOException
     {
         
-        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        //ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
         int count = 0;
         while (count < convCharacters.size()) {
             Characters selectedChar = convCharacters.get(count);
-            int charCountry = selectedChar.getCountry();
-            Country selectedCountry = baTagInfo.get(charCountry);
-            String capital = selectedCountry.getCapital();
-            int capInt = Integer.parseInt(capital);
-            Provinces capitalBAProv = baProvInfoList.get(capInt);
-            String capitalArea = capitalBAProv.getArea();
-            String capitalRegion = capitalBAProv.getRegion();
-            String tagCulture = selectedCountry.getCulture();
-            
-            String oldCulture = selectedChar.getCulture();
-            String oldReligion = selectedChar.getReligion();
-            
-            if (capitalRegion == null || capitalArea == null) {
-                //System.out.println("Area "+capitalArea+" of province "+capInt+" has no region!");
-                capitalRegion = "debug";
-                capitalArea = "debug";
+            if (selectedChar != null) {
+                int charCountry = selectedChar.getCountry();
+                Country selectedCountry = baTagInfo.get(charCountry);
+                String capital = selectedCountry.getCapital();
+                int capInt = Integer.parseInt(capital);
+                Provinces capitalBAProv = baProvInfoList.get(capInt);
+                String capitalArea = capitalBAProv.getArea();
+                String capitalRegion = capitalBAProv.getRegion();
+                String tagCulture = selectedCountry.getCulture();
+                
+                String oldCulture = selectedChar.getCulture();
+                String oldReligion = selectedChar.getReligion();
+                
+                if (capitalRegion == null || capitalArea == null) {
+                    //System.out.println("Area "+capitalArea+" of province "+capInt+" has no region!");
+                    capitalRegion = "debug";
+                    capitalArea = "debug";
+                }
+                
+                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none");
+                String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none");
+                
+                if (newCulture.equals("99999")) {
+                    newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
+                    System.out.println("Warning, culture "+oldCulture+" is unmapped, setting to 'Roman'");
+                }
+                
+                selectedChar.setCulture(newCulture);
+                selectedChar.setReligion(newReligion);
+                
+                convCharacters.set(count,selectedChar);           
             }
-            
-            String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none");
-            String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none");
-            
-            if (newCulture.equals("99999")) {
-                newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
-                System.out.println("Warning, culture "+oldCulture+" is unmapped, setting to 'Roman'");
-            }
-            
-            selectedChar.setCulture(newCulture);
-            selectedChar.setReligion(newReligion);
-            
-            convCharactersNew.add(selectedChar);
-            
             count = count + 1;
         }
-        return convCharactersNew;
+        return convCharacters;
     }
     
     public static ArrayList<Characters> applyDynastiesToCharacters (ArrayList<Characters> convCharacters, ArrayList<String> dynList)
     {
 
-        ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
+        //ArrayList<Characters> convCharactersNew = new ArrayList<Characters>();
         int count = 0;
         while (count < convCharacters.size()) {
             Characters selectedChar = convCharacters.get(count);
-            int charDynID = selectedChar.getDynastyID();
-            String tempDyn = selectedChar.getDynastyName();
-            int count2 = 0;
-            while (count2 < dynList.size()) {
-                String[] dynInfo = dynList.get(count2).split(",");
-                int dynID = Integer.parseInt(dynInfo[1]);
-                String dynName = dynInfo[0];
-                if (charDynID == dynID && !dynName.contains("minor ") && !dynName.equals("")) {
-                    dynName = dynName.replace(" ","_");
-                    selectedChar.setDynastyName(dynName);
-                    count2 = dynList.size() + 1;
+            if (selectedChar != null) {
+                int charDynID = selectedChar.getDynastyID();
+                String tempDyn = selectedChar.getDynastyName();
+                int count2 = 0;
+                while (count2 < dynList.size()) {
+                    String[] dynInfo = dynList.get(count2).split(",");
+                    int dynID = Integer.parseInt(dynInfo[1]);
+                    String dynName = dynInfo[0];
+                    if (charDynID == dynID && !dynName.contains("minor ") && !dynName.equals("")) {
+                        dynName = dynName.replace(" ","_");
+                        selectedChar.setDynastyName(dynName);
+                        count2 = dynList.size() + 1;
+                    }
+                    
+                    count2 = count2 + 1;
                 }
-                
-                count2 = count2 + 1;
+                charDynID = charDynID + 100000; //set not to conflict with regular I:R dynasties
+                selectedChar.setDynastyID(charDynID);
+                convCharacters.set(count,selectedChar);
             }
-            charDynID = charDynID + 100000; //set not to conflict with regular I:R dynasties
-            selectedChar.setDynastyID(charDynID);
-            convCharactersNew.add(selectedChar);
             
             count = count + 1;
         }
-        return convCharactersNew;
+        return convCharacters;
 
     }
     
@@ -3382,52 +3390,58 @@ public class Processing
         int count = 0;
         while (count < convCharacters.size()) {
             Characters selectedChar = convCharacters.get(count);
-            int charCountryID = selectedChar.getCountry();
-            Country charCountry = convCountries.get(charCountryID);
-            boolean hasLand = charCountry.getHasLand();
-            boolean isDead = true;
-            if (selectedChar.getDeathday().equals("none")) {
-                isDead = false;
-            }
+            if (selectedChar != null) {
+                int charCountryID = selectedChar.getCountry();
+                Country charCountry = convCountries.get(charCountryID);
+                boolean hasLand = charCountry.getHasLand();
+                boolean isDead = true;
+                if (selectedChar.getDeathday().equals("none")) {
+                    isDead = false;
+                }
+                
+                if (!hasLand) {
+                    selectedChar.setPruneStatus(true); // pruned
+                    //System.out.println("Prunning "+count);
+                }
+                
+                //if (isDead) { //Prune dead characters
+                //    selectedChar.setPruneStatus(true); // pruned
+                    //System.out.println("Prunning "+count);
+                //}
             
-            if (!hasLand) {
-                selectedChar.setPruneStatus(true); // pruned
-                //System.out.println("Prunning "+count);
-            }
-            
-            //if (isDead) { //Prune dead characters
-            //    selectedChar.setPruneStatus(true); // pruned
-                //System.out.println("Prunning "+count);
-            //}
-            
-            if (pruneMinorSetting && !isDead) { //Prune minor living characters
-                String charDynasty = selectedChar.getDynastyName();
-                if (minorFamilyCheck(charDynasty)) {
-                    //System.out.println(count+" is minor");
-                    boolean relatedToMajor = false;
-                    int spouseID = selectedChar.getSpouse();
-                    if (spouseID >= 0) {
-                        Characters selectedSpouse = convCharacters.get(spouseID);
-                        String spouseFamily = selectedSpouse.getDynastyName();
-                        if (!minorFamilyCheck(spouseFamily)) {
-                            relatedToMajor = true;
-                            //System.out.println("Relative "+spouseID+" is major");
+                if (pruneMinorSetting && !isDead) { //Prune minor living characters
+                    String charDynasty = selectedChar.getDynastyName();
+                    if (minorFamilyCheck(charDynasty)) {
+                        //System.out.println(count+" is minor");
+                        boolean relatedToMajor = false;
+                        int spouseID = selectedChar.getSpouse();
+                        if (spouseID >= 0) {
+                            Characters selectedSpouse = convCharacters.get(spouseID);
+                            if (selectedSpouse != null) {
+                                String spouseFamily = selectedSpouse.getDynastyName();
+                                if (!minorFamilyCheck(spouseFamily)) {
+                                    relatedToMajor = true;
+                                    //System.out.println("Relative "+spouseID+" is major");
+                                }
+                            }
                         }
-                    }
-                    int childCount = 0;
-                    ArrayList<Integer> charChildren = selectedChar.getChildren();
-                    while (childCount < charChildren.size() && !relatedToMajor) {
-                        int selectedChildID = charChildren.get(childCount);
-                        Characters selectedChild = convCharacters.get(selectedChildID);
-                        String childDynasty = selectedChild.getDynastyName();
-                        if (!minorFamilyCheck(childDynasty)) {
-                            relatedToMajor = true;
+                        int childCount = 0;
+                        ArrayList<Integer> charChildren = selectedChar.getChildren();
+                        while (childCount < charChildren.size() && !relatedToMajor) {
+                            int selectedChildID = charChildren.get(childCount);
+                            Characters selectedChild = convCharacters.get(selectedChildID);
+                            if (selectedChild != null) {
+                                String childDynasty = selectedChild.getDynastyName();
+                                if (!minorFamilyCheck(childDynasty)) {
+                                    relatedToMajor = true;
+                                }
+                            }
+                            childCount = childCount + 1;
                         }
-                        childCount = childCount + 1;
-                    }
-                    if (!relatedToMajor) {
-                        selectedChar.setPruneStatus(true); // pruned
-                        //System.out.println("Prunning "+count);
+                        if (!relatedToMajor) {
+                            selectedChar.setPruneStatus(true); // pruned
+                            //System.out.println("Prunning "+count);
+                        }
                     }
                 }
             }
@@ -3446,8 +3460,10 @@ public class Processing
         int count = 0;
         while (count < convCharacters.size()) { //prune all characters, then unprune ruler family
             Characters selectedChar = convCharacters.get(count);
-            selectedChar.setPruneStatus(true);
-            convCharacters.set(count,selectedChar);
+            if (selectedChar != null) {
+                selectedChar.setPruneStatus(true);
+                convCharacters.set(count,selectedChar);
+            }
             //System.out.println("Pruning "+count);
             count = count + 1;
         }
@@ -3480,20 +3496,21 @@ public class Processing
         int spouseID = startingChar.getSpouse();
         if (spouseID > -1) {
             Characters spouse = convCharacters.get(spouseID);
-            
-            int spouseDynastyID = spouse.getDynastyID();
-            //if (spouseDynastyID != charDynID) {
-            //    spouse.setDynastyID(-1);
-            //    spouse.setDynastyName(null);
-            //}
-            int spouseCountryID = spouse.getCountry();
-            Country spouseCountry = convCountries.get(spouseCountryID);
-            boolean hasLand = spouseCountry.getHasLand();
-            if (hasLand) {
-                spouse.setPruneStatus(false);
-                convCharacters.set(spouseID,spouse);
+            if (spouse != null) {
+                int spouseDynastyID = spouse.getDynastyID();
+                //if (spouseDynastyID != charDynID) {
+                //    spouse.setDynastyID(-1);
+                //    spouse.setDynastyName(null);
+                //}
+                int spouseCountryID = spouse.getCountry();
+                Country spouseCountry = convCountries.get(spouseCountryID);
+                boolean hasLand = spouseCountry.getHasLand();
+                if (hasLand) {
+                    spouse.setPruneStatus(false);
+                    convCharacters.set(spouseID,spouse);
+                }
+                //System.out.println("Restoring "+spouseID);
             }
-            //System.out.println("Restoring "+spouseID);
             
         }
         
@@ -3502,16 +3519,18 @@ public class Processing
         while (count < charChildren.size()) { //unprune children
             int childID = charChildren.get(count);
             Characters selectedChar = convCharacters.get(childID);
-            //If child moved to a non-existant country, don't unprune
-            int childCountryID = selectedChar.getCountry();
-            Country childCountry = convCountries.get(childCountryID);
-            boolean hasLand = childCountry.getHasLand();
-            if (hasLand) {
-                selectedChar.setPruneStatus(false);
-                convCharacters.set(childID,selectedChar);
+            if (selectedChar != null) {
+                //If child moved to a non-existant country, don't unprune
+                int childCountryID = selectedChar.getCountry();
+                Country childCountry = convCountries.get(childCountryID);
+                boolean hasLand = childCountry.getHasLand();
+                if (hasLand) {
+                    selectedChar.setPruneStatus(false);
+                    convCharacters.set(childID,selectedChar);
+                }
+                //System.out.println("Restoring "+childID);
+                convCharacters = unpruneProgeny(convCharacters,childID,convCountries); //recursion to get child's children and spouse
             }
-            //System.out.println("Restoring "+childID);
-            convCharacters = unpruneProgeny(convCharacters,childID,convCountries); //recursion to get child's children and spouse
             count = count + 1;
         }
         
@@ -3526,15 +3545,17 @@ public class Processing
         int motherID = startingChar.getMother();
         if (motherID > -1) {
             Characters mother = convCharacters.get(motherID);
-            boolean pruneStatus = mother.isPruned();
-            int motherCountryID = mother.getCountry();
-            Country motherCountry = convCountries.get(motherCountryID);
-            boolean hasLand = motherCountry.getHasLand();
-            if (pruneStatus && hasLand) { //if pruned, unprune
-                mother.setPruneStatus(false);
-                convCharacters.set(motherID,mother);
-                //System.out.println("Restoring "+motherID);
-                convCharacters = unpruneParents(convCharacters,motherID,convCountries); //recursion
+            if (mother != null) {
+                boolean pruneStatus = mother.isPruned();
+                int motherCountryID = mother.getCountry();
+                Country motherCountry = convCountries.get(motherCountryID);
+                boolean hasLand = motherCountry.getHasLand();
+                if (pruneStatus && hasLand) { //if pruned, unprune
+                    mother.setPruneStatus(false);
+                    convCharacters.set(motherID,mother);
+                    //System.out.println("Restoring "+motherID);
+                    convCharacters = unpruneParents(convCharacters,motherID,convCountries); //recursion
+                }
             }
             
         }
@@ -3542,15 +3563,18 @@ public class Processing
         int fatherID = startingChar.getFather();
         if (fatherID > -1) {
             Characters father = convCharacters.get(fatherID);
-            boolean pruneStatus = father.isPruned();
-            int fatherCountryID = father.getCountry();
-            Country fatherCountry = convCountries.get(fatherCountryID);
-            boolean hasLand = fatherCountry.getHasLand();
-            if (pruneStatus && hasLand) { //if pruned, unprune
-                father.setPruneStatus(false);
-                convCharacters.set(fatherID,father);
-                //System.out.println("Restoring "+fatherID);
-                convCharacters = unpruneParents(convCharacters,fatherID,convCountries); //recursion
+            if (father != null) {
+                
+                boolean pruneStatus = father.isPruned();
+                int fatherCountryID = father.getCountry();
+                Country fatherCountry = convCountries.get(fatherCountryID);
+                boolean hasLand = fatherCountry.getHasLand();
+                if (pruneStatus && hasLand) { //if pruned, unprune
+                    father.setPruneStatus(false);
+                    convCharacters.set(fatherID,father);
+                    //System.out.println("Restoring "+fatherID);
+                    convCharacters = unpruneParents(convCharacters,fatherID,convCountries); //recursion
+                }
             }
             
         }
@@ -3771,84 +3795,86 @@ public class Processing
         while (count < convCharacters.size()) {
             //lines.add(selectedLine);
             Characters selectedChar = convCharacters.get(count);
-            int charCountryID = selectedChar.getCountry();
-            boolean isPruned = selectedChar.isPruned();
-            if (charCountryID == countryID && !isPruned) {
-                int charID = selectedChar.getIrID();
-                //System.out.println("Printing " +charID+" in "+tag);
-                //if (charID == 456) { //isn't printing
-                //    System.out.println("Printing " +charID+" in "+tag);
-                //}
-                lines.add(tab+charID+"={"+tab);
-                lines.add(tab+tab+"first_name="+quote+selectedChar.getName()+quote);
-                String family = selectedChar.getDynastyName();
-                if (family == null) {
-                    lines.add(tab+tab+"#No Family");   
-                    //System.out.println("Character "+count+" ("+charID+" )"+" has a null family!");
-                }
-                else if (minorFamilyCheck(family)) {
-                    family = family.replace("minor_","");
-                    family = family.replace("minor ","");
-                    lines.add(tab+tab+"family_name="+quote+family+quote);
-                } else {
-                    lines.add(tab+tab+"family = c:"+tag+".fam:"+family);
-                }
-                String sex = selectedChar.getSex();
-                if (sex.equals("f")) {
-                    lines.add(tab+tab+"female=yes");
-                }
-                lines.add(tab+tab+"birth_date="+selectedChar.getBirthday());
-                String deathday = selectedChar.getDeathday();
-                if (!deathday.equals("none")) {
-                    lines.add(tab+tab+"death_date="+deathday);
-                }
-                lines.add(tab+tab+"culture="+quote+selectedChar.getCulture()+quote);
-                lines.add(tab+tab+"religion="+quote+selectedChar.getReligion()+quote);
-                lines.add(tab+tab+"no_stats=yes");
-                lines.add(tab+tab+"add_martial="+selectedChar.getMartial());
-                lines.add(tab+tab+"add_charisma="+selectedChar.getCharisma());
-                lines.add(tab+tab+"add_finesse="+selectedChar.getFinesse());
-                lines.add(tab+tab+"add_zeal="+selectedChar.getZeal());
-                lines.add(tab+tab+"no_traits=yes");
-                int traitCount = 0;
-                ArrayList<String> traits = selectedChar.getTraits();
-                if (traits != null) {
-                    while (traitCount < traits.size()) {
-                        String selectedTrait = traits.get(traitCount);
-                        lines.add(tab+tab+"add_trait="+quote+selectedTrait+quote);
-                        traitCount = traitCount + 1;
+            if (selectedChar != null) {
+                int charCountryID = selectedChar.getCountry();
+                boolean isPruned = selectedChar.isPruned();
+                if (charCountryID == countryID && !isPruned) {
+                    int charID = selectedChar.getIrID();
+                    //System.out.println("Printing " +charID+" in "+tag);
+                    //if (charID == 456) { //isn't printing
+                    //    System.out.println("Printing " +charID+" in "+tag);
+                    //}
+                    lines.add(tab+charID+"={"+tab);
+                    lines.add(tab+tab+"first_name="+quote+selectedChar.getName()+quote);
+                    String family = selectedChar.getDynastyName();
+                    if (family == null) {
+                        lines.add(tab+tab+"#No Family");   
+                        //System.out.println("Character "+count+" ("+charID+" )"+" has a null family!");
                     }
-                }
-                int spouse = selectedChar.getSpouse();
-                if (spouse > -1 && deathday.equals("none")) {
-                    Characters selectedCharSpouse = convCharacters.get(spouse);
-                    if (!selectedCharSpouse.isPruned()) {
-                        int spouseID = selectedCharSpouse.getIrID();
-                        lines.add(tab+tab+"marry_character=char:"+spouseID);
+                    else if (minorFamilyCheck(family)) {
+                        family = family.replace("minor_","");
+                        family = family.replace("minor ","");
+                        lines.add(tab+tab+"family_name="+quote+family+quote);
+                    } else {
+                        lines.add(tab+tab+"family = c:"+tag+".fam:"+family);
                     }
-                }
-                int father = selectedChar.getFather();
-                if (father > -1) {
-                    Characters selectedCharFather = convCharacters.get(father);
-                    if (!selectedCharFather.isPruned()) {
-                        int fatherID = selectedCharFather.getIrID();
-                        lines.add(tab+tab+"father="+quote+"char:"+fatherID+quote);
+                    String sex = selectedChar.getSex();
+                    if (sex.equals("f")) {
+                        lines.add(tab+tab+"female=yes");
                     }
-                }
-                int mother = selectedChar.getMother();
-                if (mother > -1) {
-                    Characters selectedCharMother = convCharacters.get(mother);
-                    if (!selectedCharMother.isPruned()) {
-                        int motherID = selectedCharMother.getIrID();
-                        lines.add(tab+tab+"mother="+quote+"char:"+motherID+quote);
+                    lines.add(tab+tab+"birth_date="+selectedChar.getBirthday());
+                    String deathday = selectedChar.getDeathday();
+                    if (!deathday.equals("none")) {
+                        lines.add(tab+tab+"death_date="+deathday);
                     }
+                    lines.add(tab+tab+"culture="+quote+selectedChar.getCulture()+quote);
+                    lines.add(tab+tab+"religion="+quote+selectedChar.getReligion()+quote);
+                    lines.add(tab+tab+"no_stats=yes");
+                    lines.add(tab+tab+"add_martial="+selectedChar.getMartial());
+                    lines.add(tab+tab+"add_charisma="+selectedChar.getCharisma());
+                    lines.add(tab+tab+"add_finesse="+selectedChar.getFinesse());
+                    lines.add(tab+tab+"add_zeal="+selectedChar.getZeal());
+                    lines.add(tab+tab+"no_traits=yes");
+                    int traitCount = 0;
+                    ArrayList<String> traits = selectedChar.getTraits();
+                    if (traits != null) {
+                        while (traitCount < traits.size()) {
+                            String selectedTrait = traits.get(traitCount);
+                            lines.add(tab+tab+"add_trait="+quote+selectedTrait+quote);
+                            traitCount = traitCount + 1;
+                        }
+                    }
+                    int spouse = selectedChar.getSpouse();
+                    if (spouse > -1 && deathday.equals("none")) {
+                        Characters selectedCharSpouse = convCharacters.get(spouse);
+                        if (!selectedCharSpouse.isPruned()) {
+                            int spouseID = selectedCharSpouse.getIrID();
+                            lines.add(tab+tab+"marry_character=char:"+spouseID);
+                        }
+                    }
+                    int father = selectedChar.getFather();
+                    if (father > -1) {
+                        Characters selectedCharFather = convCharacters.get(father);
+                        if (!selectedCharFather.isPruned()) {
+                            int fatherID = selectedCharFather.getIrID();
+                            lines.add(tab+tab+"father="+quote+"char:"+fatherID+quote);
+                        }
+                    }
+                    int mother = selectedChar.getMother();
+                    if (mother > -1) {
+                        Characters selectedCharMother = convCharacters.get(mother);
+                        if (!selectedCharMother.isPruned()) {
+                            int motherID = selectedCharMother.getIrID();
+                            lines.add(tab+tab+"mother="+quote+"char:"+motherID+quote);
+                        }
+                    }
+                    if (countryRulerID == charID) {
+                        lines.add(tab+tab+"c:"+tag+"={");
+                        lines.add(tab+tab+tab+"set_as_ruler=char:"+charID);
+                        lines.add(tab+tab+"}");
+                    }
+                    lines.add(tab+"}");
                 }
-                if (countryRulerID == charID) {
-                    lines.add(tab+tab+"c:"+tag+"={");
-                    lines.add(tab+tab+tab+"set_as_ruler=char:"+charID);
-                    lines.add(tab+tab+"}");
-                }
-                lines.add(tab+"}");
             }
             
             
