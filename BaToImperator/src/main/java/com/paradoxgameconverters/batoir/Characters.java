@@ -255,7 +255,7 @@ public class Characters
         return newCharacter;
     }
     
-    public static ArrayList<Characters> importChar (String name,int compressedOrNot) throws IOException
+    public static ArrayList<Characters> importChar (String name,int compressedOrNot,int cutoff) throws IOException
     {
 
         String tab = "	";
@@ -433,6 +433,7 @@ public class Characters
                     try {
                         int charNum = Integer.parseInt(qaaa.split("=")[0]);
                         if (charNum == baCharacters.size()+1) { //Somehow has gone past checks, immediately end
+                            //if (charNum == idCount+1) { //Somehow has gone past checks, immediately end
                             aqq = aqq + 1;
                             flag = 1; //end loop
                             output[6] = "0";
@@ -486,6 +487,7 @@ public class Characters
                         
                         ArrayList<Integer> tmpChildren = new ArrayList<Integer>();
                         String childrenArray[] = tmpOutput[15].split(" ");
+                        
                         aq2 = 0;
                         while (aq2 < childrenArray.length) {
                             int selectedChild = Integer.parseInt(childrenArray[aq2]);
@@ -501,6 +503,19 @@ public class Characters
                         int tmpMother = Integer.parseInt(tmpOutput[21]);
                         int tmpFather = Integer.parseInt(tmpOutput[22]);
                         
+                        if (cutoff > -1) { //if relatives are above the cutoff point, purge in order to save memory
+                            //Children will never have an ID higher then their parents
+                            if (tmpSpouse < cutoff) {
+                                tmpSpouse = -1;
+                            }
+                            if (tmpMother < cutoff) {
+                                tmpMother = -1;
+                            }
+                            if (tmpFather < cutoff) {
+                                tmpFather = -1;
+                            }
+                        }
+                        
                         Characters convertedCharacter = newCharacter(idCount,tmpOutput[1],tmpOutput[2],tmpOutput[4],dynID,traitsList,
                         tmpM,tmpF,tmpC,tmpZ,tmpSpouse,tmpChildren,tmpCorruption,tmpOutput[18],tmpOutput[19],tmpAge,tmpOutput[0],tmpCountry,tmpMother,
                         tmpFather);
@@ -509,7 +524,12 @@ public class Characters
                             convertedCharacter.setDynastyName("minor_"+tmpOutput[16]);
                         }
                         
-                        baCharacters.add(convertedCharacter);
+                        if (cutoff <= -1 || idCount >= cutoff) { //Only add to memory if above the cutoff point
+                            baCharacters.add(convertedCharacter);
+                        } else {
+                            baCharacters.add(null);
+                        }
+                        
                         
                         idCount = idCount + 1;
 
@@ -541,12 +561,7 @@ public class Characters
         }catch (java.util.NoSuchElementException exception){
             endOrNot = false;
 
-        }catch (java.lang.OutOfMemoryError exception){
-            endOrNot = false;
-            System.out.println("Error! Out of Memory, ending character conversion.");
-            System.out.println("Characters cut at "+idCount+", this may cause issues!");
-
-        } 
+        }
 
         return baCharacters;
 
@@ -752,7 +767,7 @@ public class Characters
         while (count < baCharacters.size()) {
             Characters selectedCharacter = baCharacters.get(count);
             int tmpHighestID = 0;
-            if (!selectedCharacter.isPruned()) {
+            if (selectedCharacter != null && !selectedCharacter.isPruned()) {
                 tmpHighestID = selectedCharacter.getIrID();
                 if (tmpHighestID > highestID) {
                     highestID = tmpHighestID;

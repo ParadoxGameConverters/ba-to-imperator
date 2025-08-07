@@ -57,6 +57,12 @@ public class Main
             //LOGGER.info("Please input your system profile username");
 
             String[] configDirectories = Importer.importDir("configuration.txt");
+            int configCount = 0;
+            while (configCount < configDirectories.length) {
+                LOGGER.info("configuration setting "+configCount+" is "+configDirectories[configCount]);
+                configCount = configCount + 1;
+            }
+            
             String VM = "\\";
             VM = VM.substring(0);
             String VN = "//";
@@ -82,6 +88,8 @@ public class Main
             int irProvTot = 15000;
 
             String impGameDir = configDirectories[1];
+            
+            impGameDir = Directories.removeGameFromDir(impGameDir); // removes "game from Dir"
 
             //String baDir = configDirectories[0];
 
@@ -125,10 +133,6 @@ public class Main
 
             int[] ck2LandTot;   // The ammount of land each country has
             ck2LandTot = new int[5000];
-
-            ArrayList<String> convertedCharacters = new ArrayList<String>(); //characters who have been converted
-
-            convertedCharacters.add("0"); //Debug at id 0 so list will never be empty
 
             ArrayList<Diplo> impSubjectInfo = new ArrayList<Diplo>(); //Overlord-Subject relations
 
@@ -742,13 +746,21 @@ public class Main
             int firstAvailableCharID = Characters.getAvailableID(gameFileDir);
             
             ArrayList<Characters> baCharacters = new ArrayList<Characters>();
-            baCharacters = Characters.importChar(saveCharacters,compressedOrNot);
+            int cutoffNum = 450000;
+            try {
+                baCharacters = Characters.importChar(saveCharacters,compressedOrNot,-1);
+            } catch (java.lang.OutOfMemoryError exception){ //Replace likely long-dead characters with null as a fail-safe for memory-related crashes
+                LOGGER.warning("Error! Ran out of memory while converting characters, attempting to purge characters below ID "+cutoffNum+".");
+                baCharacters = Characters.importChar(saveCharacters,compressedOrNot,cutoffNum);
+            } 
             
             if (pruneLevel <= 5) {
                 baCharacters = Processing.pruneCharactersExtreme(baCharacters,baTagInfo,pruneLevel);
             } else {
                 baCharacters = Processing.pruneCharacters(baCharacters,baTagInfo,pruneMinorCharactersSetting);
             }
+            
+            baCharacters = Processing.divorceLongDistanceRelationships(baCharacters);
             
             baCharacters = Processing.applyNewIdsToChars(baCharacters,firstAvailableCharID);
             

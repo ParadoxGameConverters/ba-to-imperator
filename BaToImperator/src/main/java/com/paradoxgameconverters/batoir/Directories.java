@@ -235,5 +235,42 @@ public class Directories
         }
         return null;
     }
+    
+    public static String removeGameFromDir(String irDir) throws IOException //GOG auto-detection sometimes adds "game" to the end of the I:R Dir
+    {
+        try {
+            String VN = "//";
+            VN = VN.substring(0,1);
+            String VM = "\\";
+            VM = VM.substring(0);
+            String newIrDir = irDir.replace(VN,"~~~");
+            newIrDir = newIrDir.replace(VN,"~~~");
+            
+            String[] splitIRDir = newIrDir.split("~~~");
+            String end = splitIRDir[splitIRDir.length-1];
+            
+            if (end.equals("game")) {
+                int count = 0;
+                String newerDir = "";
+                while (count < splitIRDir.length-1) {
+                   String component = splitIRDir[count];
+                   if (count == 0) {
+                       newerDir = component + "/";
+                   } else {
+                       newerDir = newerDir + component + "/";
+                   }
+                   count = count + 1;
+                }
+                System.out.println("/game/ removed from input I:R Directory");
+                return newerDir;
+            }
+        }
+        
+        catch (Exception e) {
+            System.out.println("Warning, something went wrong reading "+irDir+", attempting to convert anyway");
+        }
+        
+        return irDir;
+    }
 
 }
