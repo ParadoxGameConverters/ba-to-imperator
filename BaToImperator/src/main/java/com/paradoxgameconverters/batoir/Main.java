@@ -760,6 +760,8 @@ public class Main
                 baCharacters = Processing.pruneCharacters(baCharacters,baTagInfo,pruneMinorCharactersSetting);
             }
             
+            baCharacters = Processing.divorceLongDistanceRelationships(baCharacters);
+            
             baCharacters = Processing.applyNewIdsToChars(baCharacters,firstAvailableCharID);
             
             Processing.checkForIDHoles(baCharacters,firstAvailableCharID,baTagInfo);

@@ -3583,6 +3583,40 @@ public class Processing
 
     }
     
+    public static ArrayList<Characters> divorceLongDistanceRelationships (ArrayList<Characters> convCharacters)
+    //The game has issues handling spouses who live in different countries on setup, so this method divorces characters who live in different countries
+    {
+        int count = 0;
+        int countSize = convCharacters.size();
+        while (count < countSize) {
+            Characters selectedChar = convCharacters.get(count);
+            if (selectedChar != null) {
+                int spouseID = selectedChar.getSpouse();
+                if (spouseID != -1) {
+                    Characters spouseChar = convCharacters.get(spouseID);
+                    if (spouseChar == null) { //remove references to null as well
+                        selectedChar.setSpouse(-1);
+                        System.out.println(spouseID+" is null, divorcing "+count+" and "+spouseID);
+                    } else {
+                        int selectedCharTag = selectedChar.getCountry();
+                        int spouseCharTag = spouseChar.getCountry();
+                        if (selectedCharTag != spouseCharTag) {
+                            System.out.println("Long-distance relationship detected, divorcing "+count+" from "+spouseID);
+                            selectedChar.setSpouse(-1);
+                        }
+                        //convCharacters.set(spouseID,spouseChar);
+                    }
+                    convCharacters.set(count,selectedChar);
+                }
+            }
+            
+            count = count + 1;
+        }
+        
+        return convCharacters;
+
+    }
+    
     public static void checkForIDHoles (ArrayList<Characters> convCharacters, int start,ArrayList<Country> convCountries)
     //check for holes in CharacterID chain
     {
