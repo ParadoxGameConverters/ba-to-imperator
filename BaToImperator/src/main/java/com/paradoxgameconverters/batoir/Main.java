@@ -201,7 +201,8 @@ public class Main
             }
             ArrayList<String> hybridNamesFull = Importer.importBasicFile("configurables/modAbbreviations.txt");
             String hybridNameFull = Output.cultureOutput(hybridNamesFull,hybridName); //ti becomes Terra Indomita, for example
-            directories.descriptors(Dir,irModDir,modName,hybridName,hybridNameFull); //Basic .mod files required for the launcher
+            directories.descriptors(Dir,irModDir,modName,hybridName,hybridNameFull,false); //Basic .mod files required for the launcher
+            directories.descriptors(Dir+"/"+modName,irModDir,modName,hybridName,hybridNameFull,true); //Descriptor for uploading to the Steam workshop
             
             String invictusDir = "";
             if (configDirectories[8].equals("default") && invictus){ //default directory for Steam mods

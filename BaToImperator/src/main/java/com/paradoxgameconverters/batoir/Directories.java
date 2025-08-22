@@ -154,7 +154,7 @@ public class Directories
         return aqv;
     }
 
-    public static void descriptors(String outputDir, String irModDir, String modName, String submod, String submodName) throws IOException 
+    public static void descriptors(String outputDir, String irModDir, String modName, String submod, String submodName, boolean desc) throws IOException 
     {
         //Each mod requires a .mod "descriptor" files so the game launcher can
         //read the mod files as a mod
@@ -166,7 +166,11 @@ public class Directories
         //String mainModFolder = modName;
         String mainModFolder = "mod/"+modName;
 
-        FileOutputStream fileOut= new FileOutputStream(outputDir+"/"+modName+".mod");
+        String fileName = modName;
+        if (desc) {
+            fileName = "descriptor";
+        }
+        FileOutputStream fileOut = new FileOutputStream(outputDir+"/"+fileName+".mod");
         PrintWriter out = new PrintWriter(fileOut);
         String tab = "	";
         String loadWith = " - Load Under ";
@@ -183,7 +187,9 @@ public class Directories
         out.println(tab+quote+"Total Conversions"+quote);
         out.println("}");
         out.println("name="+quote+"Converted - "+modName+loadWith+submod+quote);
-        out.println("path="+quote+mainModFolder+"/"+quote);
+        if (!desc) {
+            out.println("path="+quote+mainModFolder+"/"+quote);
+        }
         out.println("supported_version="+quote+"2.0.5"+quote);
 
         out.flush();
