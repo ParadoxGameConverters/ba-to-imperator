@@ -12235,34 +12235,8 @@ country = {
 #			}
 #		}
 
-		SRD = { #Sardis
-			government = stratocratic_monarchy
-			primary_culture = macedonian
-			religion = roman_pantheon
-			diplomatic_stance=warmongering_stance
 
-			capital = 1969
-
-			poptype_rights = {
-				{
-					culture = lydian
-					type = citizen
-				}
-			}
-
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-
-			own_control_core = 	{
-				274 292 293 295 299 300 301 305 1947
-				296 298
-			}
-
-		}
+		#SRD Removed
 
 		RHO = {
 			family = 48
@@ -12391,37 +12365,7 @@ country = {
 
 		}
 
-		TRD = {#Troas / Ilion Koinon of Athena Ilias
-			government = democratic_republic
-			primary_culture = aeolian
-			religion = roman_pantheon
-			diplomatic_stance=appeasement_stance
-			republic_election_reforms = republican_election_2
-
-			capital = 257 #Ilion
-			
-			poptype_rights = { 
-				{
-					culture = thracian
-					type = citizen
-				}
-			}
-
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-
-			own_control_core = 	{
-				255 256 257 258 259 260 261 262 267 268
-				264 265 #264 265 #Baris and Argiza (Mining colonies of Skepsis)
-			}
-
-			treasures = { 97 106 217 }
-			
-		}
+		#TRD Removed
 
 		LSB = { #Lesbos
 			government = democratic_republic
@@ -13376,34 +13320,7 @@ country = {
 			}
 		}
 
-		MAN = { #Anabura - Temple State (Cult of Mên Askaenos)
-			government = theocratic_monarchy
-			primary_culture = pisidian
-			religion = anatolian_religion
-			#succession_law = elective_succession_law
-			#monarchy_divinity_statutes = elevate_monarch_monarchy
-			#monarchy_religious_laws = religious_integration_efforts			
-			
-			capital = 1926 
-
-			technology={
-				military_tech={ level=1 progress=0 }
-				civic_tech={ level=1 progress=0 }
-				oratory_tech={ level=1 progress=0 }
-				religious_tech= { level=1 progress=0  }
-			}
-			
-			own_control_core = {
-				1928 1930 1925 1926
-			}
-
-			pantheon = {
-				{ deity = 382 }
-				{ deity = 104 }
-				{ deity = 352 }
-				{ deity = 355 }
-			}			
-		}
+		#MAN Removed
 
 		BMB = { #Bambyce, Religious State under Antigonids, later Seleukids.
 			family = 59
