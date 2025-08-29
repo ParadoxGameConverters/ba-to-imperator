@@ -33,7 +33,7 @@
 	link = { ba = 539 imperator = 5547 } # Krokodilopolis -> Philoteris
 	link = { ba = 541 imperator = 540 } # Karanis -> Dionysias
 	link = { comment = "_~_VanillaTag~~~Cult,syracusan~~Rel,roman_pantheon_~_" }
-	link = { ba = 417 imperator = 90 imperator = 7843 imperator = 92 imperator = 95 imperator = 97 } # Miletos -> Themiskyra, Side Pontike
+	link = { ba = 417 imperator = 90 imperator = 7843 imperator = 92 imperator = 95 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,SYR~~Gov,aristocratic_monarchy_~_" }
 	link = { ba = 418 imperator = 84 imperator = 101 imperator = 87 imperator = 83 imperator = 7837 imperator = 82 imperator = 7838 imperator = 7840 imperator = 88 imperator = 81 imperator = 80 } # Korinthos -> Syracusae, Camarina, Acrae, Leontini, Megara, Catana, Centuripae, Menae, Murgantia, Tauromenium, Messana
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,ACR_~_" }
