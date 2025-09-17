@@ -334,6 +334,21 @@ yarbrudui,aramaic
 
 amoritic,aramaic
 
+apeqi,aramaic
+qarnayimi,aramaic
+siri_basani,aramaic
+kanahta,aramaic
+salkhadi,aramaic
+dammaseqi,aramaic
+sa_arui,aramaic
+hulhulitui,aramaic
+aramean,aramaic
+barada,aramaic
+
+hazi,aramaic
+hermeli,aramaic
+qadeshi,aramaic
+
 #Pelasgian
 kepahllenians,kuretes
 teleboans,kuretes
@@ -450,20 +465,6 @@ tyrian,phoenician
 acrean,phoenician
 qedesi,phoenician
 raqqati,phoenician
-apeqi,phoenician
-qarnayimi,phoenician
-siri_basani,phoenician
-kanahta,phoenician
-salkhadi,phoenician
-raqqati,phoenician
-dammaseqi,phoenician
-sa_arui,phoenician
-hulhulitui,phoenician
-aramean,phoenician
-barada,phoenician
-hazi,phoenician
-hermeli,phoenician
-qadeshi,phoenician
 
 irqata,phoenician
 ardata,phoenician
