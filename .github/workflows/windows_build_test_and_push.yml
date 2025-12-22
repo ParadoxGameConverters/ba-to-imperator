@@ -81,7 +81,7 @@ jobs:
           .\7z.exe a $Env:GITHUB_WORKSPACE\BaToImperator-win-x64.zip $Env:GITHUB_WORKSPACE\Release\*
           cp $Env:GITHUB_WORKSPACE\BaToImperator-win-x64.zip $Env:GITHUB_WORKSPACE\BaToImperator-latest.zip
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: ${{ github.event_name != 'push' }}
         with:
           path: Release/
@@ -160,7 +160,7 @@ jobs:
           fronter_dir: 'Fronter.NET'
           release_dir: 'Release'
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: ${{ github.event_name != 'push' }}
         with:
           path: Release/
