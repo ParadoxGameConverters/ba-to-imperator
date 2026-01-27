@@ -4891,10 +4891,17 @@ public class Processing
             String[] selectedLawCombo = laws.get(count);
             String selectedLaw = cutOnlyQuotes(selectedLawCombo[1]);
             //String newLaw = Output.cultureOutput(lawMap,selectedLaw);
-            String newLaw = Output.paramMapOutput(lawMap,"none","none","date",selectedLawCombo[1],"none","none","none","none",lawSetting);
+            String newLaw = Output.paramMapOutput(lawMap,"none","none","date",selectedLaw,"none","none","none","none",lawSetting);
             if (!newLaw.equals("roman")) {
                 selectedLawCombo[1] = quote+newLaw+quote;
                 laws.set(count,selectedLawCombo);
+            }
+            
+            if (selectedLaw.equals("standing_army_law")) {
+                System.out.println("standing_army_law Detected");
+                System.out.println("Was mapped to |"+newLaw+"| from |"+selectedLawCombo[1]+"|");
+                System.out.println("standing_army_law Detected");
+                //
             }
             count = count + 1;
         }
