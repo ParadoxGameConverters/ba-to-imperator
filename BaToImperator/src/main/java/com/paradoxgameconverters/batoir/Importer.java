@@ -971,7 +971,7 @@ public class Importer
 
         String qaaa;
         String[] output;   // Owner Culture Religeon PopTotal Buildings
-        output = new String[13];
+        output = new String[14];
 
         output[0] = "bad"; //default for no Bronze Age directory
         output[1] = "bad"; //default for no IR game directory
@@ -986,6 +986,7 @@ public class Importer
         output[10] = "bad"; //default for no antagonist conversion
         output[11] = "bad"; //default for no character pruning
         output[12] = "bad"; //default for no heritage conversion
+        output[13] = "bad"; //default for no law conversion
 
         try {
             while (endOrNot = true){
@@ -1053,6 +1054,11 @@ public class Importer
                 else if (qaaa.split(" = ")[0].equals("heritage")){
                     output[12] = qaaa.split(" = ")[1];
                     output[12] = output[12].substring(1,output[12].length()-1);
+
+                }
+                else if (qaaa.split(" = ")[0].equals("law")){
+                    output[13] = qaaa.split(" = ")[1];
+                    output[13] = output[13].substring(1,output[13].length()-1);
 
                 }
 

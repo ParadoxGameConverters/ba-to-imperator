@@ -1,3 +1,26 @@
-#Any law not specified in this mapping will not be changed from the save file
+#Any law not specified in this mapping will not be changed from the save file (unless noLaws)
+
+work_for_the_best,relaxed_recruiting_standards,lawSetting=technology
+standing_army_law,relaxed_recruiting_standards,lawSetting=technology
+
+free_ports_monarchy_law,slave_oarsmen,lawSetting=technology
+antipiracy_edict,slave_oarsmen,lawSetting=technology
+
+local_investment_policy,land_tithe,lawSetting=technology
+heritage_tax_exemption,land_tithe,lawSetting=technology
+
+increased_citizenship_quotas,foreign_law_for_minorities,lawSetting=technology
+established_courts_for_landholders,foreign_law_for_minorities,lawSetting=technology
+
+religious_integration_efforts,religious_tolerance_monarchy,lawSetting=technology
+monarchy_religious_mandate_military,religious_tolerance_monarchy,lawSetting=technology
+
+scholarly_pursuits_law,renowned_lineage,lawSetting=technology
+royal_bureaucracy,renowned_lineage,lawSetting=technology
+
+public_notaries_law,no_contract_law,lawSetting=technology
+vast_bureaucracy,no_contract_law,lawSetting=technology
+
+
 
 standing_army_law,work_for_the_best
