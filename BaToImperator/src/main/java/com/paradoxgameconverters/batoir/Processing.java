@@ -4896,13 +4896,6 @@ public class Processing
                 selectedLawCombo[1] = quote+newLaw+quote;
                 laws.set(count,selectedLawCombo);
             }
-            
-            if (selectedLaw.equals("standing_army_law")) {
-                System.out.println("standing_army_law Detected");
-                System.out.println("Was mapped to |"+newLaw+"| from |"+selectedLawCombo[1]+"|");
-                System.out.println("standing_army_law Detected");
-                //
-            }
             count = count + 1;
         }
         
