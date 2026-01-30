@@ -50,3 +50,12 @@ l_english:
  HERITAGEYESTIP: "Countries will have their heritages carried over from Bronze Age."
  HERITAGENO: "Use Vanilla (or Hybrid) Heritages"
  HERITAGENOTIP: "Heritages from Bronze Age will not be converted over, and instead countries will use new heritages selected from vanilla or the hybrid mod, based off of the country's tag, culture, and capital terrain."
+ 
+ LAWOPTION: "Law Conversion"
+ LAWOPTIONTIP: "How should country laws be converted?"
+ LAWALL: "Convert All"
+ LAWALLTIP: "All laws will convert over from Bronze Age. This may give certain countries from the converted save a considerable advantage."
+ LAWTECHNOLOGY: "Balanced"
+ LAWTECHNOLOGYTIP: "Only laws which do not require technology to obtain (such as succession laws) will be converted."
+ LAWNO: "Do Not Convert"
+ LAWNOTIP: "Countries will not have their laws carry over from Bronze Age."

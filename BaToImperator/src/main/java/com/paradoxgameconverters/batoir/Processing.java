@@ -2910,8 +2910,8 @@ public class Processing
                     Pop selectedPop = provPops.get(popCount);
                     String popCulture = selectedPop.getCulture();
                     String popReligion = selectedPop.getReligion();
-                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,baTagCulture,"date",popCulture,provRegion,provArea,"none","none");
-                    popReligion = Output.paramMapOutput(religionMappings,popCulture,baTagCulture,"date",popReligion,provRegion,provArea,"none","none");
+                    popCulture = Output.paramMapOutput(cultureMappings,popCulture,baTagCulture,"date",popCulture,provRegion,provArea,"none","none","none");
+                    popReligion = Output.paramMapOutput(religionMappings,popCulture,baTagCulture,"date",popReligion,provRegion,provArea,"none","none","none");
                     selectedPop.setCulture(popCulture);
                     selectedPop.setReligion(popReligion);
                     newProvPops.add(selectedPop);
@@ -3330,8 +3330,8 @@ public class Processing
                     capitalArea = "debug";
                 }
                 
-                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none");
-                String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none");
+                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,tagCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none","none");
+                String newReligion = Output.paramMapOutput(religionMappings,newCulture,tagCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none","none");
                 
                 if (newCulture.equals("99999")) {
                     newCulture = "roman"; //Game will crash when a country has a non-existant primary culture
@@ -4112,7 +4112,7 @@ public class Processing
                 if (!changeCulture.equals("none") ) {
                     tmpProv.setExoTagRequirement(changeCulture);
                     if (culture.equals(changeCulture)) {
-                        String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area,"none","none");
+                        String tmpCulture = Output.paramMapOutput(exoCultureMappings,masterProvCulture,masterProvCulture,"date",masterProvCulture,region,area,"none","none","none");
                         if (!tmpCulture.equals("roman")) {
                             masterProvCulture = tmpCulture; //If no special regional culture, use original culture from the motherland
                         }
@@ -4233,7 +4233,7 @@ public class Processing
                     if (!missions.equals("none")) {
                         newExoCountry.setMissions(missions);
                         String baseTag = missions;
-                        String specialName = Output.paramMapOutput(exoNames,"none","none","date",culture,"none","none","none",baseTag);
+                        String specialName = Output.paramMapOutput(exoNames,"none","none","date",culture,"none","none","none",baseTag,"none");
                         if (!specialName.equals("roman")) {
                             name = specialName;
                             names[0] = name;
@@ -4242,7 +4242,7 @@ public class Processing
                             newExoCountry.setLoc(name);
                             newExoCountry.setAdj(adjective);
                         }
-                        String specialColor = Output.paramMapOutput(exoColors,"none","none","date",culture,"none","none","none",baseTag);
+                        String specialColor = Output.paramMapOutput(exoColors,"none","none","date",culture,"none","none","none",baseTag,"none");
                         if (!specialColor.equals("roman")) {
                             color = specialColor;
                             newExoCountry.setColor(color);
@@ -4299,7 +4299,7 @@ public class Processing
             if (exoRole != null) {
                 String culture = selectedExoCountry.getCulture();
                 String religion = selectedExoCountry.getReligion();
-                String exoFlag = Output.paramMapOutput(flagMappings,"none","noTagCulture","date",culture,"noRegion","noArea",religion,exoRole);
+                String exoFlag = Output.paramMapOutput(flagMappings,"none","noTagCulture","date",culture,"noRegion","noArea",religion,exoRole,"none");
                 System.out.println("Flag:"+exoFlag+" | culture:"+culture+" | religion:"+religion+" | tag:"+exoRole);
                 if (!exoFlag.equals("roman")) { //exoFlag detected, update template
                     String exoTag = selectedExoCountry.getUpdatedTag();
@@ -4881,14 +4881,18 @@ public class Processing
         return tf;
     }
     
-    public static ArrayList<String[]> updateLaws(ArrayList<String[]> laws, ArrayList<String> lawMap) throws IOException {
+    public static ArrayList<String[]> updateLaws(ArrayList<String[]> laws, ArrayList<String> lawMap, String lawSetting) throws IOException {
         String quote = '"'+""; // " character, Java doesn't like isoated " characters
+        if (lawSetting.equals("noLaws")) { //if noLaws is set, no laws will be converted and universal defaults will be used by game
+            return null;
+        }
         int count = 0;
         while (count < laws.size()) {
             String[] selectedLawCombo = laws.get(count);
             String selectedLaw = cutOnlyQuotes(selectedLawCombo[1]);
-            String newLaw = Output.cultureOutput(lawMap,selectedLaw);
-            if (!newLaw.equals("99999")) {
+            //String newLaw = Output.cultureOutput(lawMap,selectedLaw);
+            String newLaw = Output.paramMapOutput(lawMap,"none","none","date",selectedLaw,"none","none","none","none",lawSetting);
+            if (!newLaw.equals("roman")) {
                 selectedLawCombo[1] = quote+newLaw+quote;
                 laws.set(count,selectedLawCombo);
             }

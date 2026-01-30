@@ -137,6 +137,32 @@ option = {
 }
 
 option = {
+	name = law
+	displayName = LAWOPTION
+	tooltip = LAWOPTIONTIP
+	radioSelector = {
+		radioOption = {
+			name = all
+			displayName = LAWALL
+			tooltip = LAWALLTIP
+			default = false
+		}
+		radioOption = {
+			name = technology
+			displayName = LAWTECHNOLOGY
+			tooltip = LAWTECHNOLOGYTIP
+			default = true
+		}
+		radioOption = {
+			name = noLaws
+			displayName = LAWNO
+			tooltip = LAWNOTIP
+			default = false
+		}
+	}
+}
+
+option = {
 	name = output_name
 	displayName = MODNAME
 	tooltip = MODNAMETIP

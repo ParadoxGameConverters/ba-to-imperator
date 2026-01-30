@@ -316,6 +316,13 @@ public class Main
                 convertHeritage = false;
             }
             
+            String lawSetting = "all";
+            if (configDirectories[13].equals("technology")){ //default will convert over all laws
+                lawSetting = "technology";
+            } else if (configDirectories[13].equals("noLaws")){ //default will convert over all laws
+                lawSetting = "noLaws";
+            }
+            
             ArrayList<String> govMap = Importer.importBasicFile(mappingDir+"governmentConversion.txt"); //government mappings
             LOGGER.info("Importing mod directories...");
   
@@ -509,8 +516,8 @@ public class Main
                     System.out.println(capInt);
                 }
                             
-                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none");
-                String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none");
+                String newCulture = Output.paramMapOutput(cultureMappings,oldCulture,oldCulture,"date",oldCulture,capitalRegion,capitalArea,"none","none","none");
+                String newReligion = Output.paramMapOutput(religionMappings,newCulture,newCulture,"date",oldReligion,capitalRegion,capitalArea,"none","none","none");
                 if (!convertAntagonists) { //if user selected option not to convert antagonists, all tags loose their antagonist modifier
                     baTag.setAntagonist(false);
                 }
@@ -907,7 +914,7 @@ public class Main
                             String capitalRegion = capitalBAProv.getRegion();
                             
                             ArrayList<String[]> laws = baTag.getLaws();
-                            ArrayList<String[]> newLaws = Processing.updateLaws(laws,lawMappings);
+                            ArrayList<String[]> newLaws = Processing.updateLaws(laws,lawMappings,lawSetting);
                             baTag.setLaws(newLaws);
                             
                             String oldGovernment = baTag.getGovernment();
