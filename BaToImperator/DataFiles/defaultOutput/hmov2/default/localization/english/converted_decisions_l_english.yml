@@ -1,0 +1,15 @@
+﻿l_english:
+
+converter_form_trojan_rome:0 "Claim Aeneas' Legacy"
+converter_form_trojan_rome_desc:0 "Legend tells us that long ago, great warriors from Troy crossed over from our Asian homeland and established themselves in the area of Rome, laying the foundation for what would become a spectacular city. Now that we have repeated their epic voyage and conquest of these lands, to assert our legitimacy, perhaps we can claim Aeneas' legacy for our own, and establish a new Rome in our image."
+converter_form_trojan_rome_tt:0 "Roman culture is integrated."
+converter_form_trojan_rome_tt2:0 "We will have the option to switch our primary culture to Roman."
+converter_formable_not_trojan_rome_exists:0 "Rome must not currently exist!"
+
+converter_troy_1_title:0 "Aeneas' Legacy"
+converter_troy_1_desc:0 "Now that we have successfully claimed the legacy of Aeneas for our own, the city of Rome accepts our rightful rule without serious opposition, giving us a free hand to justly reign and govern over our new territories as we please. The only question remaining, however, is whether to completely adopt the foreign customs of our subjects, or to remain true to the ways of our Anatolian ancestors."
+converter_troy_1.a:0 "Fully embrace the legacies of Rome and Aeneas!"
+converter_troy_1.b:0 "Embrace the cultural legacy of Rome, but retain our priesthood."
+converter_troy_1.c:0 "Embrace the Roman gods, but retain our culture."
+converter_troy_1.d:0 "Remain true to Wilusa and our ancestors!"
+converter_troy_switch_culture_tt:0 "Our primary culture and all characters of our primary culture shall switch to Roman."

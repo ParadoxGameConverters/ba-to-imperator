@@ -1,0 +1,51 @@
+﻿l_english:
+#Anatolian
+kizzuwatnan:0 "Kizzuwatnan"
+trojan:0 "Trojan"
+luwian:0 "Luwian"
+#East Levantine
+eblaite:0 "Eblaite"
+sumerian:0 "Sumerian"
+#Gutian
+gutian_group:0 "Gutian"
+gutian:0 "Gutian"
+gutian_group_malename:0 "$NAME_MALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+gutian_group_femalename:0 "$NAME_FEMALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+#Hattian
+hattian_group:0 "Hattian"
+hatti:0 "Hatti"
+hattian_group_malename:0 "$NAME_MALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+hattian_group_femalename:0 "$NAME_FEMALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+#Hurrian
+hurrian_group:0 "Hurro-Urartian"
+hurrian:0 "Hurrian"
+syro_hurrian:0 "Syro-Hurrian"
+subarian:0 "Subarian"
+tukri:0 "Tukri"
+lullubi:0 "Lullubi"
+hurrian_group_malename:0 "$NAME_MALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+hurrian_group_femalename:0 "$NAME_FEMALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+#Minoan
+minoan_group:0 "Minoan"
+minoan:0 "Minoan"
+cycladic:0 "Cycladic"
+leleges:0 "Leleges"
+telchines:0 "Telchines"'
+minoan_group_malename:0 "$NAME_MALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+minoan_group_femalename:0 "$NAME_FEMALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+#North African (Egyptian)
+per_sheklesh:0 "Per-Sheklesh"
+niwt_ipt:0 "Niwt-Ipt"
+#Pelasgian
+pelasgian_group:0 "Pelasgian"
+kadmeian:0 "Kadmeian"
+sithonian:0 "Sithonian"
+kranaoi:0 "Kranaoi"
+kuretes:0 "Kuretes"
+phthiotai:0 "Phthiotai"
+mukanai:0 "Mukanai"
+pelasgian_group_malename:0 "$NAME_MALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+pelasgian_group_femalename:0 "$NAME_FEMALE$ $REGNALNUMBER$ $FAMILY_MALE$ $NICKNAME$"
+#West Levantine
+alasiyan:0 "Alasiyan"
+ugaritic:0 "Ugaritic"

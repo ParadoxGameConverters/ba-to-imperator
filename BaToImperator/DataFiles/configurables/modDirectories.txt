@@ -7,4 +7,6 @@
 
 invictus,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\Invictus
 ti,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\Terra-Indomita
+age_of_iron,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\AgeOfIron
+hmov2,C:\Users\<USER>\Documents\Paradox Interactive\Imperator\mod\huge_multiplayer_overhaul
 bronzeAge,none

@@ -1,0 +1,9 @@
+﻿hurrian_religion = {#Copied From Bronze Age: Reborn 
+	color = hsv { 0.33 0.46 0.63 }
+	modifier = { ### Divination, Songs, some form of Ancestor veneration; Probably many smaller festivals were observed.
+		global_monthly_state_loyalty = 0.05 #ppl are happier bcs of songs, festivals etc. I didn't want to use same_religion_happiness AGAIN and a pop-onl version wouldn't make sense
+		global_monthly_food_modifier = 0.1 #they were skilled farmers and like all religions of the area focused on agriculture to a great degree
+		global_freemen_desired_pop_ratio = 0.05 #skilled artisans, blacksmith, traders etc
+	}
+	religion_category = pantheon
+}
