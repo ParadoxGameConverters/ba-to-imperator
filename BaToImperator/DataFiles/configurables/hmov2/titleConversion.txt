@@ -18,7 +18,7 @@ DMN,TYO
 1PN,PAA
 1PA,PPH
 1EP,EPI
-1KR,1KR
+1KR,KRE
 
 #These don't have vanilla counterparts
 #but have scripted triggers to prevent them from forming others

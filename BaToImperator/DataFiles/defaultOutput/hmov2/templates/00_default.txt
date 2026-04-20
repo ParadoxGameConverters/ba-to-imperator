@@ -8955,57 +8955,6 @@ country = {
 
 		}
 
-		MAC = {
-			family = 22
-			family = 23
-			government = aristocratic_monarchy
-			primary_culture = macedonian
-			monarchy_military_reforms=relaxed_recruiting_standards
-			religion = roman_pantheon
-			diplomatic_stance=warmongering_stance
-			capital = 379
-
-			technology={
-				military_tech={ level=2 progress=0 }
-				civic_tech={ level=2 progress=0 }
-				oratory_tech={ level=2 progress=0 }
-				religious_tech= { level=2 progress=0  }
-			}
-
-			is_antagonist = yes
-
-			pantheon = {
-
-			{ deity = 102 }
-			{ deity = 112 }
-			{ deity = 110 }
-			{ deity = 108 }
-
-			}
-
-			treasures = { 62 90 91 104 }
-
-			historical_regnal_numbers = {
-				Perdikkas = 3
-				Alexandros = 3
-				Philippos = 3
-				Amyntas = 3
-				Aeropos = 2
-				Krateros = 1
-				Orestes = 1
-				Archelaos = 2
-				Pausanias = 1
-				Antipatros = 1
-			}
-
-			own_control_core = 	{
-				371 373 379 381 382 383 384 385 386 380 428 369 6399 #Macedonia
-				356 414 497 #Chalkidiki
-
-			}
-
-		}
-
 		MAD = {
 			government = tribal_kingdom
 			primary_culture = paeonian
@@ -9016,6 +8965,7 @@ country = {
 			own_control_core = 	{
 				498 4153 #macedonia_salutaris_area
 				4306 #chalkidiki_area
+				414
 			}
 
 		}
