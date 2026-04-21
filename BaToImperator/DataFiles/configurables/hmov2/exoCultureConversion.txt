@@ -26,6 +26,8 @@ Greek,massalian,region=baetica_region
 Greek,massalian,region=lusitania_region
 Greek,massalian,region=gallaecia_region
 Greek,massalian,region=aquitaine_region
+Greek,massalian,region=armorica_region
+Greek,massalian,region=britain_region
 Greek,thracian,area=europa_area
 Greek,thracian,area=bithynia_inferior_area
 Greek,thracian,region=asia_region
@@ -39,6 +41,7 @@ Greek,cyrenaican,region=cyrenaica_region
 Greek,cyrenaican,region=africa_region
 Greek,cyrenaican,region=numidia_region
 Greek,cyrenaican,region=mauretainia_region
+Greek,cyrenaican,region=africa_minor_region
 
 #Fallback
 Greek,macedonian
@@ -60,5 +63,11 @@ Egyptian,niwt_ipt,region=baetica_region
 Egyptian,niwt_ipt,region=lusitania_region
 Egyptian,niwt_ipt,region=gallaecia_region
 Egyptian,niwt_ipt,area=tripolitania_centralis_area
+Egyptian,niwt_ipt,region=africa_minor_region
+Egyptian,niwt_ipt,region=first_provincia_region
+Egyptian,niwt_ipt,region=aquitaine_region
+Egyptian,niwt_ipt,region=armorica_region
+Egyptian,niwt_ipt,region=britain_region
+
 #Fallback
 Egyptian,~SOURCE~

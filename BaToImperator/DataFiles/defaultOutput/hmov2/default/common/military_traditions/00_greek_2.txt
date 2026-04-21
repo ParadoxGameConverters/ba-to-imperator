@@ -1,0 +1,154 @@
+﻿greek_philosophy_2 = {
+	#Greek Kingdom Tree
+	color = {
+		0.6
+		0.8
+		0.5
+	}
+	image = greek_states_path_end_bonus
+	allow = {
+		trigger_if = {
+			limit = {
+				OR = {
+					country_culture_group = hellenic
+					country_culture_group = pelasgian_group
+					country_culture_group = minoan_group
+				}
+			}
+			custom_tooltip = {
+				text = "began_with_tradition_group"
+			}
+			OR = {
+				country_culture_group = hellenic
+				country_culture_group = pelasgian_group
+				country_culture_group = minoan_group
+			}
+		}
+		trigger_else = {
+			custom_tooltip = {
+				text = "tradition_unlock_requirement_cultural_decision"
+				has_variable = greek_influence
+			}
+			custom_tooltip = {
+				text = "tradition_unlock_requirement_greek_ecd"
+				any_country_culture = {
+					is_integrated = yes
+					country_culture_pop_count >= percent_size_culture_group_comparison
+					OR = {
+						this.culture.culture_group = culture_group:hellenic
+						this.culture.culture_group = culture_group:pelasgian_group
+						this.culture.culture_group = culture_group:minoan_group
+					}
+				}
+			}
+		}
+	}
+	greek_seleucid_path_1 = {
+		allow = {
+			NOT = {
+				has_variable = light_infantry_super_unit
+			}
+		}
+		on_activate = {
+			set_variable = light_infantry_super_unit
+		}
+		modifier = {
+			light_infantry_morale = 0.1
+			light_infantry_hills_combat_bonus = 0.1
+			light_infantry_plains_combat_bonus = 0.1
+			army_maintenance_cost = 0.01
+		}
+		icon = greek_seleucid_path_1
+		requires = {
+		}
+	}
+	greek_antigonid_path_end_bonus = {
+		modifier = {
+			light_infantry_offensive = 0.1
+			light_infantry_farmland_combat_bonus = 0.1
+			light_infantry_mountain_combat_bonus = 0.1
+			army_maintenance_cost = 0.01
+		}
+		requires = {
+			greek_seleucid_path_1
+		}
+		icon = greek_antigonid_path_end_bonus
+	}
+	greek_seleucid_path_5 = {
+		allow = {
+			NOT = {
+				has_variable = light_cavalry_super_unit
+			}
+		}
+		on_activate = {
+			set_variable = light_cavalry_super_unit
+		}
+		modifier = {
+			light_cavalry_offensive = 0.1
+			light_cavalry_hills_combat_bonus = 0.1
+			light_cavalry_plains_combat_bonus = 0.1
+			army_maintenance_cost = 0.01
+		}
+		requires = {
+		}
+		icon = greek_seleucid_path_5
+	}
+	greek_antigonid_path_3 = {
+		modifier = {
+			light_cavalry_morale = 0.1
+			light_cavalry_farmland_combat_bonus = 0.1
+			light_cavalry_mountain_combat_bonus = 0.1
+			army_maintenance_cost = 0.01
+		}
+		requires = {
+			greek_seleucid_path_5
+		}
+		icon = greek_antigonid_path_3
+	}
+	# Super Unit
+	greek_states_path_1 = {
+		allow = {
+			NOT = {
+				has_variable = heavy_infantry_super_unit
+			}
+		}
+		on_activate = {
+			set_variable = heavy_infantry_super_unit
+		}
+		modifier = {
+			heavy_infantry_morale = 0.1
+			heavy_infantry_hills_combat_bonus = 0.1
+			heavy_infantry_plains_combat_bonus = 0.1
+			army_maintenance_cost = 0.01
+		}
+		requires = {
+		}
+		icon = greek_states_path_1
+	}
+	greek_states_path_end_bonus = {
+		modifier = {
+			heavy_infantry_defensive = 0.1
+			heavy_infantry_discipline = 0.1
+			heavy_infantry_farmland_combat_bonus = 0.1
+			heavy_infantry_mountain_combat_bonus = 0.1
+			army_maintenance_cost = 0.02
+		}
+		requires = {
+			greek_states_path_1
+		}
+		icon = greek_states_path_end_bonus
+	}
+	greek_philosophy_start_bonus = {
+		modifier = {
+			heavy_infantry_offensive = 0.1
+			heavy_infantry_cost = -0.15
+			heavy_infantry_movement_speed = 0.1
+			army_maintenance_cost = 0.02
+		}
+		enable_tactic = greek_phalanx
+		requires = {
+			greek_states_path_1
+		}
+		icon = greek_philosophy_start_bonus
+	}
+}

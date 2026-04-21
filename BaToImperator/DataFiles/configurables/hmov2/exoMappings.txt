@@ -32,6 +32,8 @@
 	link = { comment = "_~_NoChange~~~Cult,macedonian~~Rel,roman_pantheon_~_" }
 	link = { ba = 539 imperator = 5547 } # Krokodilopolis -> Philoteris
 	link = { ba = 541 imperator = 540 } # Karanis -> Dionysias
+	link = { comment = "_~_VanillaTag~~~Cult,cyrenaican~~Rel,roman_pantheon_~_" }
+	link = { ba = 3344 imperator = 3342 imperator = 3341 imperator = 3340 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_VanillaTag~~~Cult,syracusan~~Rel,roman_pantheon_~_" }
 	link = { ba = 417 imperator = 90 imperator = 7843 imperator = 92 imperator = 95 imperator = 97 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_Dyn~~~Cult,syracusan~~Rel,roman_pantheon~~Missions,SYR~~Gov,aristocratic_monarchy_~_" }
@@ -133,9 +135,8 @@
 	link = { ba = 743 imperator = 1465 imperator = 1467 imperator = 1468 imperator = 1466 } # Tyrus -> Leptis Magna
 	link = { comment = "_~_Dyn~~~Cult,carthaginian~~Rel,carthaginian_pantheon~~Gov,democratic_republic_~_" }
 	link = { ba = 743 imperator = 94 imperator = 95 imperator = 92 imperator = 7843 imperator = 90 imperator = 7841 imperator = 7842 imperator = 97 imperator = 96 } # Tyrus -> Leptis Magna
-
-	link = { comment = "_~_Dyn~~~Cult,carthaginian~~Rel,carthaginian_pantheon~~Missions,GAD_~_" }
-	link = { ba = 743 imperator = 1344 imperator = 1345 imperator = 1348 } # Tyrus -> Gadir, Mergablum
+	link = { comment = "_~_Dyn~~~Cult,phoenician~~Rel,carthaginian_pantheon~~Missions,GAD_~_" }
+	link = { ba = 743 imperator = 1344 imperator = 1345 imperator = 1348 imperator = 1347 } # Tyrus -> Gadir, Mergablum
 	link = { comment = "_~_VanillaTag~~~Cult,greco_pontic~~Rel,roman_pantheon_~_" }
 	link = { ba = 1973 imperator = 1806 imperator = 1793 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_VanillaTag~~~Cult,thracian~~Rel,roman_pantheon_~_" }
@@ -146,9 +147,12 @@
 	link = { ba = 407 imperator = 7 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_VanillaTag~~~Cult,massalian~~Rel,roman_pantheon_~_" }
 	link = { ba = 285 imperator = 3515 } # Miletos -> Themiskyra, Side Pontike
+	link = { comment = "_~_VanillaTag~~~Cult,bosporan~~Rel,roman_pantheon_~_" }
+	link = { ba = 285 imperator = 7188 imperator = 7187 imperator = 7186 imperator = 7185 imperator = 4918 imperator = 4524 imperator = 4522 imperator = 4521 imperator = 4800 imperator = 7191 imperator = 6118 imperator = 6123 imperator = 6119 imperator = 6142 imperator = 6145 imperator = 6144 imperator = 6124 imperator = 7190 imperator = 4532 imperator = 4533 imperator = 4551 imperator = 4552 imperator = 4535 imperator = 4547 imperator = 4548 imperator = 4557 imperator = 5884 imperator = 4558 imperator = 7634 imperator = 7617 imperator = 7612 imperator = 7600 imperator = 8399 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_VanillaTag~~~Rel,roman_pantheon_~_" }
 	link = { ba = 1973 imperator = 4547 imperator = 4548 } # Miletos -> Themiskyra, Side Pontike
 	link = { ba = 417 imperator = 4517 imperator = 4518 imperator = 4515 } # Megara -> Callatis, Tirizis
 	link = { comment = "_~_VanillaTag~~~Cult,carthaginian~~Rel,carthaginian_pantheon_~_" }
 	link = { ba = 743 imperator = 1341 imperator = 1340 imperator = 1339 imperator = 1335 imperator = 1415 imperator = 1359 imperator = 1358 imperator = 1342 } # Tyrus -> Themiskyra, Side Pontike
+	link = { ba = 743 imperator = 3229 imperator = 3225 imperator = 3226 imperator = 3227 imperator = 3161 imperator = 3160 imperator = 3150 imperator = 3145 imperator = 3144 imperator = 3095 imperator = 3080 imperator = 8267 imperator = 8258 imperator = 3326 imperator = 3327 imperator = 3329 imperator = 3334 imperator = 3494 imperator = 3493 imperator = 8260 imperator = 3338 imperator = 3339 imperator = 3340 imperator = 3342 } # Tyrus -> Hadrametum
 }
