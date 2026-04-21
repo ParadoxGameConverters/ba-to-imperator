@@ -148,7 +148,7 @@
 	link = { comment = "_~_VanillaTag~~~Cult,massalian~~Rel,roman_pantheon_~_" }
 	link = { ba = 285 imperator = 3515 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_VanillaTag~~~Cult,bosporan~~Rel,roman_pantheon_~_" }
-	link = { ba = 285 imperator = 7188 imperator = 7187 imperator = 7186 imperator = 7185 imperator = 4918 imperator = 4524 imperator = 4522 imperator = 4521 imperator = 4800 imperator = 7191 imperator = 6118 imperator = 6123 imperator = 6119 imperator = 6142 imperator = 6145 imperator = 6144 imperator = 6124 imperator = 7190 imperator = 4532 imperator = 4533 imperator = 4551 imperator = 4552 imperator = 4535 imperator = 4547 imperator = 4548 imperator = 4557 imperator = 5884 imperator = 4558 imperator = 7634 imperator = 7617 imperator = 7612 imperator = 7600 imperator = 8399 } # Miletos -> Themiskyra, Side Pontike
+	link = { ba = 1973 imperator = 7188 imperator = 7187 imperator = 7186 imperator = 7185 imperator = 4918 imperator = 4524 imperator = 4522 imperator = 4521 imperator = 4800 imperator = 7191 imperator = 6118 imperator = 6123 imperator = 6119 imperator = 6142 imperator = 6145 imperator = 6144 imperator = 6124 imperator = 7190 imperator = 4532 imperator = 4533 imperator = 4551 imperator = 4552 imperator = 4535 imperator = 4547 imperator = 4548 imperator = 4557 imperator = 5884 imperator = 4558 imperator = 7634 imperator = 7617 imperator = 7612 imperator = 7600 imperator = 8399 } # Miletos -> Themiskyra, Side Pontike
 	link = { comment = "_~_VanillaTag~~~Rel,roman_pantheon_~_" }
 	link = { ba = 1973 imperator = 4547 imperator = 4548 } # Miletos -> Themiskyra, Side Pontike
 	link = { ba = 417 imperator = 4517 imperator = 4518 imperator = 4515 } # Megara -> Callatis, Tirizis
