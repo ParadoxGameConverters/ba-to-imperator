@@ -407,3 +407,28 @@ DYN_ARABIC_CAR_FLAG = { #Reference to EU4 Tunis/Hafsids
 		}
 	}
 }
+
+DYN_THRACIAN_CAR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "offwhite"
+	color2 = "thracian_carthage_flag_color"
+	
+	
+	
+	colored_emblem = {
+		texture = "ce_border_simple_02.tga"
+		color1 = "thracian_carthage_flag_color"
+		color2 = "offwhite"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
+
+	colored_emblem = {
+		texture = "ce_dacian_02.dds"
+		color1 = "thracian_carthage_flag_color"
+		instance = { 
+			position = { 0.50 0.50 }
+			scale = { 0.80 0.80 }
+		}
+	}
+}

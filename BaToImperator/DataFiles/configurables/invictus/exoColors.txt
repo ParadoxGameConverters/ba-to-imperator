@@ -24,3 +24,5 @@ sumerian,43 89 74,tag=CAR
 assyrian,139 206 72,tag=CAR
 Babylonian,65 86 53,tag=CAR
 eblaite,27 132 116,tag=CAR
+Arabic,146 106 57,tag=CAR
+odrysi,8 178 99,tag=CAR
