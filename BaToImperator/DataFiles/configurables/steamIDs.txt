@@ -1,3 +1,5 @@
 #Steam ID's for hybrid mods, used for the Steam Default setting
 invictus,2532715348
 ti,2856497654
+age_of_iron,2660002180
+hmov2,2723164890

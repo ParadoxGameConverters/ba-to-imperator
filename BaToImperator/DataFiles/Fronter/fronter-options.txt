@@ -21,6 +21,12 @@ option = {
 			tooltip = HYBRIDTITIP
 			default = false
 		}
+		radioOption = {
+			name = hmov2
+			displayName = HYBRIDHMOV2
+			tooltip = HYBRIDHMOV2TIP
+			default = false
+		}
 	}
 }
 

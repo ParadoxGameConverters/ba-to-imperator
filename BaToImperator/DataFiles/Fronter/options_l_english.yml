@@ -11,6 +11,8 @@ l_english:
  HYBRIDINVTIP: "The converter will create a sub-mod for Imperator:Invictus. (Requires Invictus to be installed)"
  HYBRIDTI: "Yes, Terra Indomita"
  HYBRIDTITIP: "The converter will create a sub-mod for Terra Indomita. (Requires Terra Indomita to be installed)"
+ HYBRIDHMOV2: "Yes, HMOv2"
+ HYBRIDHMOV2TIP: "The converter will create a sub-mod for Huge Multiplayer Overhaul V2. (Requires Huge Multiplayer Overhaul V2 to be installed)"
  
  INVICTUSDIR: "Hybridization Directory"
  INVICTUSDIRTIP: "If hybridizing with a major mod, what directory is that mod located in?"

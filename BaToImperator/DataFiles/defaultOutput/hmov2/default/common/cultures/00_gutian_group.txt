@@ -1,0 +1,115 @@
+﻿gutian_group = {	
+	color = hsv { 0.97 0.93 0.55 }
+	levy_template = levy_iran
+	
+	primary = chariots
+	second = light_infantry
+	flank = archers
+ 
+	primary_navy = tetrere
+	secondary_navy = octere
+	flank_navy = liburnian
+
+
+	male_names = { 
+		Inkishush
+		Zarlagab
+		Shulme
+		Yarlagash
+		Silulumesh
+		Silulu
+		Inimabakesh
+		Igeshaush
+		Yarlagab
+		Ibate
+		Yarla
+		Kurum
+		Apilkin
+		La-erabum
+		Irarum
+		Ibranum
+		Hablum
+		Puzur-Suen
+		Yarlaganda
+		Tirigan
+		Duga
+		Ilu-An
+		Yarlangab
+		Erridupizir
+		Imta
+		Nibia
+		Sarlagab
+	}
+	
+	female_names = {
+		Demeetheresu
+		Nigsummulugal
+		Deemethereesu
+		Niiqarquusu
+		Manishtusu
+		Seluku
+		Nur-Ayya
+		Amata
+		Belessunu
+		Arahunaa
+		Ahatsunu
+		Ubalnu
+		Gemeti
+		Ettu
+		Zakiti
+		Humusi
+		Alittum
+		Arwia
+		Kullaa
+		Mushezibti
+		Nidintu
+		Enheduana
+		
+	}
+	
+	family = {
+		Ahmid.Ahmid.Ahmid.Ahmid
+		Galestus.Galestid.Galestid.Galestid
+		Kenamus.Kenamid.Kenamid.Kenamid
+		Naravid.Naravid.Naravid.Naravid
+		Penamus.Penamid.Penamid.Penamid
+		Senuid.Senuid.Senuid.Senuid
+		Setnid.Setnid.Setnid.Setnid
+		Arganid.Arganid.Arganid.Arganid
+		Psammid.Psammid.Psammid.Psammid
+		Philothid.Philothid.Philothid.Philothid
+		Timolid.Timolid.Timolid.Timolid
+		Zosid.Zosid.Zosid.Zosid
+		Phileid.Phileid.Phileid.Phileid
+		Nicodemid.Nicodemid.Nicodemid.Nicodemid
+		Nefarid.Nefarid.Nefarid.Nefarid
+		Bastid.Bastid.Bastid.Bastid
+		Xeneid.Xeneid.Xeneid.Xeneid
+		Naravid.Naravid.Naravid.Naravid
+		Ezanid.Ezanid.Ezanid.Ezanid
+		Ahmid.Ahmid.Ahmid.Ahmid
+		Alarus.Alara.Alarid.Alarid
+		Harsiotes.Harsiotes.Harsiotid.Harsiotid
+		Henus.Hena.Henid.Henid
+		Ibus.Iba.Ibid.Ibid
+		Khabbash.Khabbash.Khabbashid.Khabbashid	
+		Amasus.Amasa.Amasid.Amasid
+		Nectanebo.Nectanebo.Nectanebid.Nectanebid
+		Petubast.Petubast.Petubastes.Petubastid
+		Djedhid.Djedhid.Djedhid.Djedhid
+		Tachys.Tachya.Tachyes.Tachyid
+		Mago.Mago.Mago.Magid	
+	}
+	culture = {
+		gutian = {}
+	}
+	
+	barbarian_names = { 
+		"Mago"
+	}
+	
+	graphical_culture = persian_gfx
+	ethnicities = {
+		10 = persian
+	}
+}
