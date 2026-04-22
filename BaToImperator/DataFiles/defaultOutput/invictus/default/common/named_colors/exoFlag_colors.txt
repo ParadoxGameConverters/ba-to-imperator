@@ -16,4 +16,7 @@ colors = {
 	sumerian_carthage_flag_color = rgb { 15 90 69 }
 
 	thracian_carthage_flag_color = hsv { 0.443 0.95 0.60 }
+
+	elamite_carthage_flag_color = rgb { 50 50 80 }
+	elamite_carthage_flag_secondary_color = rgb { 70 70 100 }
 }

@@ -26,3 +26,5 @@ Babylonian,65 86 53,tag=CAR
 eblaite,27 132 116,tag=CAR
 Arabic,146 106 57,tag=CAR
 odrysi,8 178 99,tag=CAR
+elamite,40 40 80,tag=CAR
+Greek,0 50 155,tag=CAR

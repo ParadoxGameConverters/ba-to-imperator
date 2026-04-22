@@ -432,3 +432,76 @@ DYN_THRACIAN_CAR_FLAG = {
 		}
 	}
 }
+
+DYN_ELAMITE_CAR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "offwhite"
+	color2 = "elamite_carthage_flag_color"
+	
+	colored_emblem = {
+		texture = "ce_border_simple_02.tga"
+		color1 = "elamite_carthage_flag_color"
+		color2 = "offwhite"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
+
+	colored_emblem = {
+		texture = "ce_goatfish_01.dds"
+		color1 = "elamite_carthage_flag_secondary_color"
+		instance = { 
+			position = { 0.27 0.395 }
+			scale = { -0.575 0.575 }
+		}
+		instance = { 
+			position = { 0.73 0.395 }
+			scale = { 0.575 0.575 }
+		}
+	}
+	colored_emblem = {
+		texture = "ce_aal_puhuna_elamite.dds"
+		color1 = "elamite_carthage_flag_color"
+		instance = { 
+			position = { 0.5 0.72 }
+			scale = { 0.87 0.87 }
+		}
+	}
+}
+
+DYN_GREEK_CAR_FLAG = {
+	pattern = "pattern_solid.tga"
+	color1 = "offwhite"
+	color2 = "ck2_blue"
+	
+	colored_emblem = {
+		texture = "ce_border_simple_02.tga"
+		color1 = "ck2_blue"
+		color2 = "offwhite"
+		instance = { rotation = 0 }
+		instance = { rotation = 180 }
+	}
+
+	colored_emblem = {
+		texture = "ce_10.dds"
+		color1 = "ck2_blue"
+		instance = { 
+			position = { 0.20 0.55 }
+			scale = { -0.575 0.635 }
+			rotation = 210
+		}
+		instance = { 
+			position = { 0.80 0.55 }
+			scale = { 0.575 0.635 }
+			rotation = 150
+		}
+	}
+
+	colored_emblem = {
+		texture = "ce_hellenic_3.dds"
+		color1 = "ck2_blue"
+		instance = { 
+			position = { 0.50 0.475 }
+			scale = { 0.625 0.625 }
+		}
+	}
+}
