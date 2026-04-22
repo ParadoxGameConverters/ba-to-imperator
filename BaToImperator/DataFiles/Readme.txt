@@ -54,5 +54,7 @@ The original Bronze Age mod can be found on Steam: https://steamcommunity.com/sh
 A special thanks to the Bronze Age: Reborn team for allowing the converter to use many of its assets, such as extinct cultures and religions.
 The Bronze Age: Reborn mod can be found on Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=2448788091
 
+In addition, the Linear Elamite script used for various country flags is based upon the readings devised by François Desset and his team
+
 
  - AND ALL THE OTHERS WHO GAVE THEIR INPUT ON THE FORUM AND DISCORD -
