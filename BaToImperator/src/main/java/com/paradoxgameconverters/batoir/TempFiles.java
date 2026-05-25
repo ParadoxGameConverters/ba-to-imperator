@@ -28,6 +28,8 @@ public class TempFiles
 
         FileOutputStream fileOut= new FileOutputStream(type);
         PrintWriter out = new PrintWriter(fileOut);   
+        
+        String alternativeEnding = endword + " }"; //Sections which aren't filled, such as an empty road_network, have the } on the same line
 
         String vmm = scnr.nextLine();
 
@@ -46,7 +48,7 @@ public class TempFiles
 
             while (flag == 1) {
                 out.println (vmm);
-                if (vmm.equals(endword)) {
+                if (vmm.equals(endword) || vmm.equals(alternativeEnding)) {
                     flag = 2; 
 
                 }
@@ -58,6 +60,8 @@ public class TempFiles
         }
         catch (java.util.NoSuchElementException exception){
             flag = 2;
+            System.out.println("Warning! Ran until the end of the save file while generating "+type);
+            System.out.println("No line containing '"+endword+"' or '"+alternativeEnding+"' exists!");
 
         }  
         out.flush();
