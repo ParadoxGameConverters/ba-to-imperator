@@ -80,7 +80,7 @@
 	link = { ba = 1973 imperator = 1812 imperator = 1810 imperator = 1814 imperator = 1815 imperator = 1816 } # Miletos -> Sinope, Zaliches
 	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon~~Missions,PHI_~_" }
 	link = { ba = 1973 imperator = 1720 imperator = 1741 imperator = 1738 } # Miletos -> Phasis, Dioscurias, Gyenos
-	#link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon~~Missions,KYA~~Overlord,ODR~~DiploType,feudatory_~_" }
+	#link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon~~Missions,KRS~~Overlord,ODR~~DiploType,feudatory_~_" }
 	#link = { ba = 1973 imperator = 1795 } # Miletos -> Kotyora
 	link = { comment = "_~_Dyn~~~Cult,greco_pontic~~Rel,roman_pantheon~~Missions,AMS_~_" }
 	link = { ba = 1973 imperator = 1807 imperator = 1809 imperator = 1806 imperator = 1793 } # Miletos -> Amisos
